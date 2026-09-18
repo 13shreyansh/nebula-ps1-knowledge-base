@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 27)
+        self.assertEqual(len(matrix["cases"]), 29)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -118,6 +118,17 @@ class PublicFixtureTests(unittest.TestCase):
                     / "runs"
                     / "independent_coupled_tradeoff_v1_repair10_matrix_w1"
                     / f"{row['scenario'].lower()}_seed_1"
+                )
+            elif row["case"].startswith("independent_irregular_partial_"):
+                data = ROOT / "fixtures" / "independent_irregular_partial_v1"
+                submission = (
+                    ROOT
+                    / "runs"
+                    / (
+                        "independent_irregular_partial_v1_corrected_production_w8/b_seed_1"
+                        if row["scenario"] == "B"
+                        else "independent_irregular_partial_v1_guarded_independent_c120_costrepair_w8"
+                    )
                 )
             else:
                 self.assertTrue(row["case"].startswith("independent_"))
@@ -1297,6 +1308,46 @@ class PublicFixtureTests(unittest.TestCase):
             report["bridge_safe_cost_repair_activities"], ["A036", "A059"]
         )
 
+    def test_staged_c_runs_guarded_cost_repair_on_derived_contributors(self) -> None:
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            self.assertEqual(scenario, "C")
+            _copy_submission(ROOT / "deliverables" / "public" / "C", Path(output_dir))
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=62.7,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=1,
+                time_limit_seconds=1.0,
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ) as solve:
+            report = solve_staged_scenario(
+                self.instance,
+                Path(temp_dir) / "submission",
+                "C",
+                audit_output_dir=Path(temp_dir) / "audit",
+                heuristic_attempts=1,
+                local_repair_time_limit_seconds=1.0,
+            )
+        self.assertEqual(solve.call_count, 3)
+        cost_call = solve.call_args_list[2]
+        self.assertTrue(cost_call.kwargs["freeze_access_hint"])
+        self.assertEqual(cost_call.kwargs["freeze_access_except"], {"A036", "A059"})
+        self.assertEqual(
+            report["bridge_safe_cost_repair_activities"], ["A036", "A059"]
+        )
+
     def test_staged_solver_repairs_only_detected_conflict_activities_first(self) -> None:
         unsafe_access, unsafe_occupancy, _ = load_submission(PACK / "03_submission_sample")
         strict_conflicts = screen_closures(
@@ -1393,6 +1444,33 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(report["selected_objective_score"], 0.0)
             self.assertTrue((audit / "STAGED_C.json").exists())
 
+    def test_staged_c_uses_checked_direct_path_only_after_a_failure(self) -> None:
+        failure = RuntimeError(
+            "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent"
+        )
+        direct = {
+            "selected_objective_score": 52.0,
+            "selected_submission_hash": "checked-direct-c",
+        }
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged_c.solve_staged_scenario",
+            side_effect=(failure, direct),
+        ) as solve:
+            report = solve_staged_c_portfolio(
+                self.instance,
+                Path(temp_dir) / "submission",
+                audit_output_dir=Path(temp_dir) / "audit",
+                a_heuristic_attempts=1,
+                a_fallback_attempts=1,
+                c_heuristic_attempts=1,
+            )
+        self.assertEqual(solve.call_count, 2)
+        self.assertEqual(solve.call_args_list[0].args[2], "A")
+        self.assertEqual(solve.call_args_list[1].args[2], "C")
+        self.assertEqual(report["selected_stage"], "scenario_c_direct_after_a_failure")
+        self.assertEqual(report["selected_objective_score"], 52.0)
+        self.assertEqual(report["selected_submission_hash"], "checked-direct-c")
+
     def test_staged_c_selects_checked_heuristic_then_soundly_verifies_it(self) -> None:
         def fake_staged(instance, output_dir, scenario, **kwargs):
             self.assertEqual(scenario, "A")
@@ -1436,9 +1514,12 @@ class PublicFixtureTests(unittest.TestCase):
                 c_heuristic_attempts=1,
                 forbid_buffer_overlap=True,
             )
-        self.assertEqual(solve.call_count, 2)
+        self.assertEqual(solve.call_count, 3)
         self.assertEqual(solve.call_args_list[0].kwargs["separator_mode"], "direct_heuristic")
+        self.assertIsNone(solve.call_args_list[0].kwargs["sample_hint_dir"])
         self.assertEqual(solve.call_args_list[1].kwargs["separator_mode"], "bridge_safe")
+        self.assertEqual(solve.call_args_list[2].kwargs["separator_mode"], "bridge_safe")
+        self.assertTrue(solve.call_args_list[2].kwargs["freeze_access_hint"])
         self.assertEqual(report["selected_stage"], "scenario_c_heuristic")
         self.assertEqual(report["scenario_c_heuristic_selected_attempt"], 1)
         self.assertAlmostEqual(report["selected_objective_score"], 62.7)

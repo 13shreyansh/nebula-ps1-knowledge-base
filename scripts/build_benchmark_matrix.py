@@ -39,6 +39,8 @@ CASES = (
     ("independent_coupled_tradeoff_A", "fixtures/independent_coupled_tradeoff_v1", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/a_seed_1", "A", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/a_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_coupled_tradeoff_B", "fixtures/independent_coupled_tradeoff_v1", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/b_seed_1", "B", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/b_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_coupled_tradeoff_C", "fixtures/independent_coupled_tradeoff_v1", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/c_seed_1", "C", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/c_seed_1_audit/stages/scenario_c_verification_raw/TELEMETRY.json", None, None),
+    ("independent_irregular_partial_B", "fixtures/independent_irregular_partial_v1", "runs/independent_irregular_partial_v1_corrected_production_w8/b_seed_1", "B", "runs/independent_irregular_partial_v1_corrected_production_w8/b_seed_1_audit/bridge_safe_cost_repair_raw/TELEMETRY.json", None, None),
+    ("independent_irregular_partial_C", "fixtures/independent_irregular_partial_v1", "runs/independent_irregular_partial_v1_guarded_independent_c120_costrepair_w8", "C", "runs/independent_irregular_partial_v1_guarded_independent_c120_costrepair_w8_audit/stages/scenario_c_direct_after_a_failure_audit/bridge_safe_cost_repair_raw/TELEMETRY.json", None, None),
 )
 
 

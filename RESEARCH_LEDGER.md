@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Status | Reconciled on 2026-09-18; new research stopped at user request |
+| Status | Active continuous improvement through the competition deadline |
 | Started | 2026-09-18 |
 | Scope | Railway possession scheduling, optimisation, validation, failure modes, robustness, and competition execution |
 | Canonical decisions | `README.md` |
@@ -481,6 +481,34 @@ Confidence labels:
 - **Relevance:** Closure repair is globally coupled through transitive possession groups, frozen access timing, workfronts, and capacity. Do not select neighborhoods from pairwise conflict counts alone. Validate repair operators end to end, preserve failed outputs, and move to an independent fixture or different formulation before further tuning a solved public instance.
 - **Limitation:** The tight activity is spatially isolated, so the result does not cover ECLO decisions coupled to possession conflicts or C's global two-week line window.
 - **Confidence:** High for the tested trade-off; medium for coupled cases.
+
+### `R059` Count possession capacity by compatible batches, not surplus rows
+
+- **Status:** Confirmed on the independent irregular fixture.
+- **Finding:** The first lower-bound argument assigned two surplus C rows to two excess possessions and predicted C=`52.0`. The rows can co-share one legal additional possession. The correct count is two mandatory ECLO rows (`10`) plus one excess group across three occupied locations (`21`), giving `31`.
+- **Relevance:** Lower bounds must combine workload compression, weekly/workfront limits, legal batch size, nominal group capacity, and footprint width. Counting rows without maximum compatible packing can materially overstate the bound.
+- **Confidence:** High; a strict-clean schedule attains `31.0` and a focused exact repair returns the same bound.
+
+### `R060` A feasible cross-scenario seed can suppress the intended search
+
+- **Status:** Demonstrated on guarded Scenario C.
+- **Finding:** A valid but poor A=`13160.0` schedule became C's protected hint and prevented the structural C constructor from running. The controller returned the same poor C score even though independent C construction plus repair reaches `31.0`.
+- **Relevance:** Preserve cross-scenario incumbents as fallbacks, not exclusive initialisations. At least one scenario-native challenger must run without the inherited sample hint, and selection must compare only fully checked candidates.
+- **Confidence:** High for the observed architecture failure and correction; transfer remains to be tested across more fixtures.
+
+### `R061` Cost-contributor neighborhoods can turn a weak safe incumbent into a proof
+
+- **Status:** Confirmed for B and C under implemented rules.
+- **Finding:** Freezing unrelated access decisions while releasing every activity participating in ECLO or an excess location-week reduced irregular C from `38.0` to `31.0` in 0.645 seconds and from `52.0` to `31.0` in 0.296 seconds. Both repairs returned matching bounds.
+- **Relevance:** Once any checked incumbent exists, derive the neighborhood from actual objective contributors rather than identifiers or pairwise conflict counts. Keep the incumbent protected because an empty or insufficient neighborhood remains possible, especially when cost is delay-only.
+- **Confidence:** High for the two irregular repairs and public B regression; medium for broad C transfer.
+
+### `R062` Per-round retry caps must not silently discard total search budget
+
+- **Status:** Corrected and regression-tested.
+- **Finding:** Repeated `UNKNOWN` responses stopped once the active solve cap reached 30 seconds even when the caller requested 120 seconds. The corrected loop expands into the remaining authorized time. A protected verification then consumed the full 120 seconds instead of stopping near 75.
+- **Relevance:** Treat total and per-round budgets as separate contracts. Telemetry must expose both, and an exhausted retry cap must not be reported as an exhausted caller budget or evidence of optimality.
+- **Confidence:** High for budget accounting; no public score gain is attributed to this change.
 
 ## Current method candidates
 

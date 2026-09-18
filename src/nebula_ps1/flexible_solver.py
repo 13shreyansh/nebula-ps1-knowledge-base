@@ -786,9 +786,14 @@ def solve_flexible_supply_relaxation(
             if safe_objective_tenths is not None and status_code == cp_model.INFEASIBLE:
                 safe_proven_optimal = True
             if status_code == cp_model.UNKNOWN:
-                next_limit = min(30.0, active_round_limit * 2)
-                if next_limit > active_round_limit and deadline - time.monotonic() > 0:
-                    active_round_limit = next_limit
+                remaining_after_solve = deadline - time.monotonic()
+                if remaining_after_solve > 0:
+                    # An UNKNOWN response is not evidence that the incumbent is
+                    # optimal. Spend the caller's remaining budget instead of
+                    # silently stopping once the per-round cap reaches 30s.
+                    active_round_limit = min(
+                        remaining_after_solve, active_round_limit * 2
+                    )
                     unknown_retries += 1
                     continue
             break

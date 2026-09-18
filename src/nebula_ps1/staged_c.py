@@ -10,7 +10,7 @@ from .flexible_solver import solve_flexible_supply_relaxation
 from .instance import Instance
 from .portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from .prune import prune_submission
-from .staged import solve_staged_scenario
+from .staged import _scenario_b_cost_contributing_activities, solve_staged_scenario
 from .submission import relabel_submission_scenario
 
 
@@ -59,22 +59,61 @@ def solve_staged_c_portfolio(
     verification_raw = stages / "scenario_c_verification_raw"
     verification_pruned = stages / "scenario_c_verification_pruned"
 
-    a_report = solve_staged_scenario(
-        instance,
-        a_stage,
-        "A",
-        audit_output_dir=a_audit,
-        heuristic_time_limit_seconds=a_heuristic_time_limit_seconds,
-        local_repair_time_limit_seconds=a_local_repair_time_limit_seconds,
-        fallback_time_limit_seconds=a_fallback_time_limit_seconds,
-        verification_time_limit_seconds=a_verification_time_limit_seconds,
-        workers=workers,
-        seed=seed,
-        heuristic_attempts=a_heuristic_attempts,
-        fallback_attempts=a_fallback_attempts,
-        closure_round_limit=closure_round_limit,
-        forbid_buffer_overlap=forbid_buffer_overlap,
-    )
+    try:
+        a_report = solve_staged_scenario(
+            instance,
+            a_stage,
+            "A",
+            audit_output_dir=a_audit,
+            heuristic_time_limit_seconds=a_heuristic_time_limit_seconds,
+            local_repair_time_limit_seconds=a_local_repair_time_limit_seconds,
+            fallback_time_limit_seconds=a_fallback_time_limit_seconds,
+            verification_time_limit_seconds=a_verification_time_limit_seconds,
+            workers=workers,
+            seed=seed,
+            heuristic_attempts=a_heuristic_attempts,
+            fallback_attempts=a_fallback_attempts,
+            closure_round_limit=closure_round_limit,
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+    except RuntimeError as error:
+        if str(error) != (
+            "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent"
+        ):
+            raise
+        direct_report = solve_staged_scenario(
+            instance,
+            output,
+            "C",
+            audit_output_dir=stages / "scenario_c_direct_after_a_failure_audit",
+            heuristic_time_limit_seconds=c_heuristic_time_limit_seconds,
+            local_repair_time_limit_seconds=a_local_repair_time_limit_seconds,
+            fallback_time_limit_seconds=a_fallback_time_limit_seconds,
+            verification_time_limit_seconds=c_verification_time_limit_seconds,
+            workers=workers,
+            seed=seed,
+            heuristic_attempts=c_heuristic_attempts,
+            fallback_attempts=a_fallback_attempts,
+            closure_round_limit=closure_round_limit,
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+        report: dict[str, object] = {
+            "scenario": "C",
+            "selected_stage": "scenario_c_direct_after_a_failure",
+            "selected_objective_score": direct_report["selected_objective_score"],
+            "selected_submission_hash": direct_report["selected_submission_hash"],
+            "selection_rule": "use checked direct C only when guarded A construction fails",
+            "strict_buffer_overlap_checked": forbid_buffer_overlap,
+            "reference_validator_confirmed": False,
+            "submission_files": list(SUBMISSION_FILES),
+            "scenario_a_failure": str(error),
+            "direct_c_staged_report": direct_report,
+        }
+        (audit_output / "STAGED_C.json").write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        return report
     relabel_submission_scenario(instance, a_stage, fallback_raw, "C")
     fallback_prune = prune_submission(
         instance,
@@ -104,7 +143,10 @@ def solve_staged_c_portfolio(
             workers=workers,
             seed=seed + attempt,
             closure_round_limit=closure_round_limit,
-            sample_hint_dir=fallback_pruned,
+            # The first challenger must be independent of the A-derived
+            # fallback. Otherwise a feasible but poor A schedule can suppress
+            # the structural C construction that handles ECLO/excess tradeoffs.
+            sample_hint_dir=None if attempt == 0 else fallback_pruned,
             forbid_buffer_overlap=forbid_buffer_overlap,
             separator_mode="direct_heuristic",
             use_structural_hints=attempt == 0,
@@ -166,6 +208,49 @@ def solve_staged_c_portfolio(
         selected_stage = "scenario_c_bridge_safe_improvement"
         selected_dir = verification_pruned
         selected = verified
+
+    cost_repair = None
+    cost_repair_prune = None
+    cost_repair_activities: list[str] = []
+    if a_local_repair_time_limit_seconds > 0:
+        cost_repair_activities = _scenario_b_cost_contributing_activities(
+            instance, selected_dir
+        )
+        if cost_repair_activities:
+            cost_repair_raw = stages / "scenario_c_cost_repair_raw"
+            cost_repair_pruned = stages / "scenario_c_cost_repair_pruned"
+            cost_repair = solve_flexible_supply_relaxation(
+                instance,
+                cost_repair_raw,
+                "C",
+                time_limit_seconds=a_local_repair_time_limit_seconds,
+                workers=workers,
+                seed=seed,
+                closure_round_limit=closure_round_limit,
+                sample_hint_dir=selected_dir,
+                round_time_limit_seconds=5.0,
+                forbid_buffer_overlap=forbid_buffer_overlap,
+                freeze_access_hint=True,
+                freeze_access_except=set(cost_repair_activities),
+                separator_mode="bridge_safe",
+            )
+            if (
+                cost_repair.objective_score is not None
+                and cost_repair.remaining_closure_conflicts == 0
+            ):
+                cost_repair_prune = prune_submission(
+                    instance,
+                    cost_repair_raw,
+                    cost_repair_pruned,
+                    "C",
+                    report_path=audit_output / "C_COST_REPAIR_PRUNE.json",
+                    forbid_buffer_overlap=forbid_buffer_overlap,
+                )
+                repaired = evaluate_submission(instance, cost_repair_pruned, "C")
+                if _candidate_is_better(repaired, selected):
+                    selected_stage = "scenario_c_cost_repair"
+                    selected_dir = cost_repair_pruned
+                    selected = repaired
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, "C")
@@ -202,6 +287,13 @@ def solve_staged_c_portfolio(
         "scenario_c_heuristic_selected_attempt": selected_heuristic_attempt,
         "scenario_c_verification_telemetry": asdict(verification_telemetry),
         "scenario_c_verification_prune": asdict(verification_prune),
+        "scenario_c_cost_repair_activities": cost_repair_activities,
+        "scenario_c_cost_repair_telemetry": (
+            asdict(cost_repair) if cost_repair is not None else None
+        ),
+        "scenario_c_cost_repair_prune": (
+            asdict(cost_repair_prune) if cost_repair_prune is not None else None
+        ),
     }
     (audit_output / "STAGED_C.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",

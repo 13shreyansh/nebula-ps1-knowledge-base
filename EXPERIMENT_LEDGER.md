@@ -732,3 +732,29 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Escape-week experiments: freeing A075, the sole distinct-group blocker in a simple week-30 probe, produced ten final conflicts. Freeing the three week-28 blockers produced four. Static pairwise blocker counts did not capture transitive grouping and closure interactions.
 - Diagnostic correction retained: `STAGED_FAILURES.json` now includes the exact local-repair free set and telemetry. This changes observability only.
 - Decision: stop tuning public one-worker A. The public submission is already officially optimal, and further seed-specific neighborhood changes create an overfitting risk. Resume on an independently generated irregular partial-hint fixture or compare a fundamentally different sound formulation.
+
+### E073: Irregular partial-hint fixture catches a workfront error and short-budget failure
+
+- Timestamp: 2026-09-19 05:27:39 +08
+- Fixture: `scripts/make_irregular_partial_hint_fixture.py` transforms the independent dense holdout without public rows. Five same-footprint C activities become one priority-3 contract with one workfront and one access night per week; three need three workload units and two need two. The corrected dataset hash is `1b3e96d407ebea08d44af862da6f20d5695c2ec14e605ef555874dfa2306066d`.
+- Integrity correction: the first generated version misunderstood workfront granularity and was regenerated in place, making its retained outputs incompatible with the current input hash. Those runs are quarantined and support no claim.
+- Corrected evidence: the separately constructed A oracle is dual-scored and hard-feasible at `105.0`; it is not claimed optimal. The fixed 30/10/30/10 eight-worker policy failed A, proved B=`30.0`, and failed guarded C because its A foundation failed. A standalone direct C run returned checked `52.0`, while a repeated guarded direct attempt failed, exposing eight-worker nondeterminism.
+- Decision: retain B=`30.0`, reject reliability claims from the single C=`52.0` run, and add a fail-closed direct-C path after the exact A-construction failure.
+
+### E074: The irregular C bound is corrected from 52 to 31
+
+- Timestamp: 2026-09-19 05:41:32 +08
+- Result: a 120-second direct C run produced a dual-scored, standard-clean, strict-clean `31.0` schedule with two ECLO rows, three excess local groups, zero delay, and hash `269ca2c39ce12bd2c7693055b6e14b6810543149a3e9599f7a59f4e248aae940`.
+- Corrected bound: one workfront and one access night per week require at least 12 rows by week 12; 13 workload units therefore require at least two ECLO rows, cost `10`. The affected corridor has 38 C rows before the deadline but 12 nominal groups can hold at most 36, forcing at least one excess group at each of its three locations, cost `21`. The lower bound is `31`, not `52`.
+- Failed alternatives: fixed six-second rounds left three conflicts. A 120-second protected bridge-safe solve and a 120-second footprint-wide neighborhood found no improvement and no model proof. The analytical counting proof plus the matching checked construction establishes the result under implemented rules.
+- Solver correction: repeated `UNKNOWN` responses no longer stop merely because the active per-round cap reached 30 seconds; the caller's remaining authorized budget is consumed. Fifty-two regressions passed after the change.
+
+### E075: Independent C construction and exact cost repair close both controller traps
+
+- Timestamp: 2026-09-19 05:53:43 +08
+- First trap: extending the generic B cost-contributor neighborhood to C reduced a checked `38.0` incumbent to `31.0` in 0.645 seconds, with matching model bound and full checks.
+- Second trap: a longer A stage produced a feasible A=`13160.0`; the old controller seeded C exclusively from that schedule and returned C=`13160.0`. Any feasible A was incorrectly allowed to suppress C-specific construction.
+- Correction: Scenario C retains A as a protected fallback but runs its first C challenger without the A sample hint. Both generic and A-success C paths apply bridge-safe repair to activities participating in ECLO or excess groups. Promotion remains strictly lower and fully checked.
+- End-to-end evidence: a fresh guarded run generated C=`52.0`, repaired it to the proved `31.0` in 0.296 seconds, and emitted hash `12f8415537193b2f45fb8a4dac0c8c95caece0fb6116181d1195db476a6d29bb`. Both scorers agree; standard and strict conflicts are zero; the repair reports `OPTIMAL` with bound `31.0`.
+- Regression: 53 tests pass. `BENCHMARK_MATRIX.json` now contains 29 dual-scored, bound-matching cases, including irregular B=`30.0` and C=`31.0`. Its first regression run exposed and corrected a test router that sent the new cases to an older fixture.
+- Limitation: direct C construction remains nondeterministic and must first return a safe cost-bearing incumbent. One optimal end-to-end run is not a distributional reliability result.

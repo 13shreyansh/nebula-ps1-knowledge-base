@@ -16,7 +16,7 @@ from .solver import SolveTelemetry
 def _scenario_b_cost_contributing_activities(
     instance: Instance, submission_dir: str | Path
 ) -> list[str]:
-    """Return activities that directly participate in B's ECLO or excess costs."""
+    """Return activities that directly participate in ECLO or excess costs."""
 
     access, occupancy, _ = load_submission(submission_dir)
     contributors = {row.activity_id for row in access if row.eclo == 1}
@@ -323,7 +323,7 @@ def solve_staged_scenario(
     cost_repair: SolveTelemetry | None = None
     cost_repair_prune = None
     cost_repair_activities: list[str] = []
-    if scenario == "B" and local_repair_time_limit_seconds > 0:
+    if scenario in {"B", "C"} and local_repair_time_limit_seconds > 0:
         cost_repair_activities = _scenario_b_cost_contributing_activities(
             instance, selected_dir
         )

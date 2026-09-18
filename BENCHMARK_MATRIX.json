@@ -431,6 +431,38 @@
       "standard_feasible": true,
       "strict_conflicts": 0,
       "submission_hash": "76742e7f7f547b077ed6a17cf5a537e75cc8a4b2c9ba61baa0a093bd69e95395"
+    },
+    {
+      "case": "independent_irregular_partial_B",
+      "dataset_hash": "1b3e96d407ebea08d44af862da6f20d5695c2ec14e605ef555874dfa2306066d",
+      "delay_score": 0.0,
+      "eclo_nights": 6,
+      "excess_nights": 0,
+      "proof_bound": 30.0,
+      "proof_matches_score": true,
+      "proof_status": "OPTIMAL",
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 30.0,
+      "standard_feasible": true,
+      "strict_conflicts": 0,
+      "submission_hash": "0ddde6e24754623f821c506ace6ef308447668e0a7e42c9ca2c54381113a0dfd"
+    },
+    {
+      "case": "independent_irregular_partial_C",
+      "dataset_hash": "1b3e96d407ebea08d44af862da6f20d5695c2ec14e605ef555874dfa2306066d",
+      "delay_score": 0.0,
+      "eclo_nights": 2,
+      "excess_nights": 3,
+      "proof_bound": 31.0,
+      "proof_matches_score": true,
+      "proof_status": "OPTIMAL",
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 31.0,
+      "standard_feasible": true,
+      "strict_conflicts": 0,
+      "submission_hash": "12f8415537193b2f45fb8a4dac0c8c95caece0fb6116181d1195db476a6d29bb"
     }
   ],
   "integrity_rule": "main and independent scores must agree; hard violations abort generation",
