@@ -538,3 +538,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - C lower bound: A059 needs two ECLO nights to complete its seven units within weeks 14–19. A036 can use at most two ECLO nights in C's two-week line window and therefore needs six access weeks from week 22 through 27, forcing C006 seven days late (`42.7`). The four necessary ECLO nights cost `20.0`; excess location capacity cannot bypass one access per activity per week. Total lower bound is `62.7`, reached by the candidate.
 - Official C-001: feasible at `62.7`, with 7 overrun days across one contract, 0 excess, and 4 ECLO; four runs remain.
 - Current official public scores: A=`137.9`, B=`30.0`, C=`62.7`, combined penalty=`230.6`. All three portal results agree with the corrected local scorers.
+
+### E052: Corrected hidden-like structural benchmark and strict-hedge falsification
+
+- Timestamp: 2026-09-19 03:13:16 +08
+- Input: `fixtures/structural_seed_20260919`, which reduces 67 of 76 location capacities to 1 and permutes contract/activity priorities. No public schedule hint was used.
+- Scenario A: standard staged construction reached strict-screen-feasible `4599.7` from raw input in 23.573 seconds; a 15-second bridge-safe phase retained it with lower bound `4559.8`, a `39.9` absolute / `0.87%` gap.
+- Scenario B strict hedge: the 90-second heuristic retained `30.0` with 14 strict conflicts. Thirty-second local repair and two 60-second sound fallbacks also remained unsafe; the workflow failed closed. The same input and seed without the unconfirmed buffer-to-buffer hedge reached checked `30.0` in 18.740 seconds and bridge-safe verification proved `<30.0` infeasible in 0.181 seconds.
+- Scenario C standard workflow: reconstructed A=`4599.7` from raw input, then reached checked C=`59.9` in 1.834 seconds. Bridge-safe verification proved `<59.9` infeasible in 0.367 seconds.
+- Conclusion: corrected scoring does not break raw-input construction, but the strict buffer-to-buffer hedge can destroy reliability on altered inputs and is contradicted by the organizer sample. Keep it as an audit signal, not the default hidden-instance policy. Validator-confirmed standard closure remains the selection gate.
+- Integrity: no failed strict candidate was promoted; no public official incumbent changed; all negative telemetry is preserved.

@@ -1,0 +1,87 @@
+{
+  "bridge_safe_fallback_attempts": [
+    {
+      "attempt": 1,
+      "repair_hint_heuristic_attempt": 1,
+      "telemetry": {
+        "best_bound": null,
+        "branches": 136916,
+        "closure_rounds": 18,
+        "conflicts": 0,
+        "deterministic_time_seconds": 316.3257971285772,
+        "formulation": "scenario_b_iterative_bridge_safe_strict_buffer_closure_relaxation",
+        "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective.",
+        "maximum_round_time_seconds": 4.0,
+        "model_constraints": 305385,
+        "model_variables": 110468,
+        "objective_score": 74.0,
+        "primary_score_proven_optimal": false,
+        "remaining_closure_conflicts": 20,
+        "round_time_limit_seconds": 1.0,
+        "seed": 1,
+        "solve_rounds": 21,
+        "status": "UNKNOWN",
+        "tie_break_proven_optimal": false,
+        "time_limit_seconds": 60.0,
+        "unknown_retries": 2,
+        "wall_time_seconds": 60.11246537500119,
+        "workers": 8
+      }
+    },
+    {
+      "attempt": 2,
+      "repair_hint_heuristic_attempt": null,
+      "telemetry": {
+        "best_bound": null,
+        "branches": 157806,
+        "closure_rounds": 18,
+        "conflicts": 0,
+        "deterministic_time_seconds": 335.5298077957667,
+        "formulation": "scenario_b_iterative_bridge_safe_strict_buffer_closure_relaxation",
+        "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective.",
+        "maximum_round_time_seconds": 4.0,
+        "model_constraints": 323673,
+        "model_variables": 116560,
+        "objective_score": 197.0,
+        "primary_score_proven_optimal": false,
+        "remaining_closure_conflicts": 11,
+        "round_time_limit_seconds": 1.0,
+        "seed": 2,
+        "solve_rounds": 21,
+        "status": "UNKNOWN",
+        "tie_break_proven_optimal": false,
+        "time_limit_seconds": 60.0,
+        "unknown_retries": 2,
+        "wall_time_seconds": 60.04092154200771,
+        "workers": 8
+      }
+    }
+  ],
+  "bridge_safe_repair_hint_source_attempt": 1,
+  "heuristic_attempts": [
+    {
+      "best_bound": null,
+      "branches": 577552,
+      "closure_rounds": 97,
+      "conflicts": 0,
+      "deterministic_time_seconds": 336.4814626481674,
+      "formulation": "scenario_b_iterative_direct_heuristic_strict_buffer_closure_relaxation",
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "maximum_round_time_seconds": 1.0,
+      "model_constraints": 62705,
+      "model_variables": 29431,
+      "objective_score": 30.0,
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 14,
+      "round_time_limit_seconds": 1.0,
+      "seed": 1,
+      "solve_rounds": 97,
+      "status": "FEASIBLE",
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 90.0,
+      "unknown_retries": 0,
+      "wall_time_seconds": 90.02918079200026,
+      "workers": 8
+    }
+  ]
+}
