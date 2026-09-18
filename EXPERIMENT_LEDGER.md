@@ -870,3 +870,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Checked artifacts: the incumbent is dual-scored, standard-clean, and strict-clean at C=`10.0`; the independently authored oracle is equally checked at C=`0.0`. Dataset hash: `bff7db75338331b9957deda68d00f8798fdff2f3799aca03611e3323c1fbab6f`.
 - Pre-exposure hypothesis: the current one-pass selector returns `DIRECT` and footprint-added `COMP` but omits `FOLLOW`, because precedence expansion already ran. Freezing `FOLLOW` should force a misleading conditional optimum above zero.
 - Protocol: generator, data, incumbent, oracle, hash, scope assertion, and feasibility regression are committed before invoking either the current repair or any broader variant.
+
+### E090: One bounded precedence revisit fixes the frozen holdout
+
+- Timestamp: 2026-09-19 07:10:05 +08
+- Falsification: the unchanged one-pass repair freed only `COMP` and `DIRECT`, retained C=`10.0`, and reported a matching bound in 0.004 seconds. Telemetry correctly labels this as a frozen-neighborhood proof. Hash: `fc4c3a72ec0380378e2ac0be59dab53754625b186b7df0149cd51a8218b3fb8e`.
+- Correction: Scenario C now revisits transitive precedence once after footprint expansion. The three-activity neighborhood freed `FOLLOW` and proved C=`0.0` in 0.011 seconds. Both scorers and both closure policies accept hash `d80ceb453972ee6c796b4b2d5d0713c7f01051d0e28fd3fc362e2448235b635b`.
+- Growth and score checks: public `43→45`, C=`62.7`, proved; irregular `27→29`, C=`31.0`, safe but unproved within 30 seconds; coupled `23→25`, C=`920.0`, proved; cross-module delay `18→18`, C=`76.0`, proved. Every output is dual-scored, standard-clean, and strict-clean.
+- Evidence matrix: the new zero-score case raises the retained matrix to 32 cases. Machine-readable rows now declare proof scope, including legacy inference from formulation names.
+- Decision: accept the single post-footprint precedence pass. Do not recurse contracts and footprints to a fixed point without another frozen counterexample and matched runtime evidence.

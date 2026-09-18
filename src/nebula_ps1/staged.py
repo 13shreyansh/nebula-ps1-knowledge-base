@@ -20,9 +20,17 @@ def _scenario_b_cost_contributing_activities(
     expand_footprints: bool = False,
     expand_contracts: bool = False,
     expand_precedence: bool = False,
+    revisit_precedence_after_footprints: bool = False,
     include_delays: bool = False,
 ) -> list[str]:
     """Return direct cost participants and selected scheduling dependencies."""
+
+    if revisit_precedence_after_footprints and not (
+        expand_precedence and expand_footprints
+    ):
+        raise ValueError(
+            "revisit_precedence_after_footprints requires precedence and footprint expansion"
+        )
 
     access, occupancy, results = load_submission(submission_dir)
     contributors = {row.activity_id for row in access if row.eclo == 1}
@@ -56,8 +64,9 @@ def _scenario_b_cost_contributing_activities(
             for activity_id, activity in instance.activities.items()
             if activity.contract_number in affected_contracts
         )
-    if expand_precedence and contributors:
-        precedence_neighbors: dict[str, set[str]] = {
+    precedence_neighbors: dict[str, set[str]] = {}
+    if expand_precedence:
+        precedence_neighbors = {
             activity_id: set() for activity_id in instance.activities
         }
         for activity_id, activity in instance.activities.items():
@@ -65,12 +74,17 @@ def _scenario_b_cost_contributing_activities(
             if predecessor:
                 precedence_neighbors[activity_id].add(predecessor)
                 precedence_neighbors[predecessor].add(activity_id)
+
+    def expand_precedence_component() -> None:
         pending = list(contributors)
         while pending:
             activity_id = pending.pop()
             for neighbor in precedence_neighbors[activity_id] - contributors:
                 contributors.add(neighbor)
                 pending.append(neighbor)
+
+    if expand_precedence and contributors:
+        expand_precedence_component()
     if expand_footprints and contributors:
         affected_locations = {
             row.location_id for row in occupancy if row.activity_id in contributors
@@ -78,6 +92,8 @@ def _scenario_b_cost_contributing_activities(
         contributors.update(
             row.activity_id for row in occupancy if row.location_id in affected_locations
         )
+    if revisit_precedence_after_footprints and contributors:
+        expand_precedence_component()
     return sorted(contributors)
 
 
@@ -378,6 +394,7 @@ def solve_staged_scenario(
             expand_footprints=scenario == "C",
             expand_contracts=scenario == "C",
             expand_precedence=scenario == "C",
+            revisit_precedence_after_footprints=scenario == "C",
             include_delays=scenario == "C",
         )
         if cost_repair_activities:

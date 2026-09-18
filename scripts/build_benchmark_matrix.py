@@ -43,6 +43,7 @@ CASES = (
     ("independent_irregular_partial_C", "fixtures/independent_irregular_partial_v1", "runs/independent_irregular_partial_v1_guarded_independent_c120_costrepair_w8", "C", "runs/independent_irregular_partial_v1_guarded_independent_c120_costrepair_w8_audit/stages/scenario_c_direct_after_a_failure_audit/bridge_safe_cost_repair_raw/TELEMETRY.json", None, None),
     ("independent_multimodule_tradeoff_C", "fixtures/independent_multimodule_tradeoff_v1", "runs/postb651753_multimodule_c_seed1_w8", "C", "runs/postb651753_multimodule_c_seed1_w8_audit/stages/scenario_c_verification_raw/TELEMETRY.json", None, None),
     ("independent_predecessor_tradeoff_C", "fixtures/independent_predecessor_tradeoff_v1", "runs/postprecedenceexpand_delayed7_repair30", "C", "runs/postprecedenceexpand_delayed7_repair30_raw/TELEMETRY.json", None, None),
+    ("independent_footprint_dependency_C", "fixtures/independent_footprint_dependency_v1", "runs/c_footprint_dependency_postprecedence", "C", "runs/c_footprint_dependency_postprecedence/TELEMETRY.json", None, None),
 )
 
 
@@ -69,6 +70,16 @@ def main() -> None:
             if telemetry_rel is not None
             else None
         )
+        if telemetry is None:
+            proof_scope = "full_instance"
+        elif "primary_bound_scope" in telemetry:
+            proof_scope = telemetry["primary_bound_scope"]
+        elif "_partially_frozen_access" in telemetry["formulation"]:
+            proof_scope = "frozen_access_neighborhood"
+        elif "_frozen_access" in telemetry["formulation"]:
+            proof_scope = "fixed_access_schedule"
+        else:
+            proof_scope = "full_instance"
         rows.append(
             {
                 "case": name,
@@ -82,6 +93,7 @@ def main() -> None:
                 "standard_feasible": True,
                 "strict_conflicts": len(strict_conflicts),
                 "proof_status": telemetry["status"] if telemetry else stated_proof,
+                "proof_scope": proof_scope,
                 "proof_bound": telemetry["best_bound"] if telemetry else stated_bound,
                 "proof_matches_score": (
                     telemetry["best_bound"] == evaluation.objective_score

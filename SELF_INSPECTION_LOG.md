@@ -856,3 +856,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity controls: the fixture uses public-independent identifiers and a pre-existing synthetic topology; all expected scores, hash, and the incomplete selector result are asserted before any solver call. It proves one mechanism, not hidden-distribution frequency.
 - Confidence: very high in official incumbents; high in fixture validity and expected selector behavior; no confidence yet in the actual repair result.
 - Immediate next action: commit the untouched holdout, run the current one-pass repair, preserve its result, then test the smallest second-tier expansion that reaches `FOLLOW`.
+
+## 2026-09-19 07:10:05 +08
+
+- Interval: 3 minutes 52 seconds since the previous inspection; triggered early because the precommitted holdout produced the predicted failure and a bounded correction passed cross-regime checks.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- Proven failure: the old selector freed two activities and proved C=`10.0` conditionally while a checked C=`0.0` oracle existed. This confirms that the prior neighborhood was incomplete, not that CP-SAT or the objective was wrong.
+- Corrective result: one post-footprint precedence pass freed `FOLLOW` and proved zero. Public, irregular, coupled, and cross-module scores did not regress; all are independently rescored and clean under both closure policies.
+- Paranoid alternative check: full fixed-point expansion would be logically broader but needlessly expands three retained neighborhoods to `54`, `53`, and `49`. The accepted pass grows them only to `45`, `29`, and `25` and directly targets the observed ordering defect.
+- Integrity audit: the old score-10 conditional proof and corrected score-0 result are preserved separately. The evidence matrix records proof scope, and the irregular score-31 run is not called proved because its bound is absent.
+- Remaining risk: contract or footprint dependencies introduced by the final precedence pass can still be frozen. No evidence yet shows that another tier improves score enough to justify its search cost.
+- Confidence: very high in official incumbents; high in the counterexample, correction, and current cross-regime safety; medium in hidden runtime and dependency transfer.
+- Immediate next action: run the full regression suite, commit the correction and artifacts, then search for a fresh counterexample involving a contract peer introduced by the final precedence step.

@@ -558,6 +558,15 @@ Confidence labels:
 - **Integrity control:** Frozen-access telemetry now records `primary_bound_scope` and states the conditional scope in plain language. A proven neighborhood optimum is evidence about that neighborhood only.
 - **Confidence:** High in the measured set growth; medium in the recommended two-tier policy; low in hidden-instance runtime transfer.
 
+### `R069` A second precedence pass closes the measured ordering gap cheaply
+
+- **Status:** Confirmed on a precommitted holdout and four retained regimes.
+- **Finding:** One-pass repair froze a footprint competitor's successor and proved C=`10.0` inside the wrong neighborhood despite a checked C=`0.0` oracle. Re-running only precedence closure after footprint expansion freed one additional activity and proved zero.
+- **Scale evidence:** The targeted pass changed public `43→45`, irregular `27→29`, coupled `23→25`, and cross-module delay `18→18`. This is materially smaller than recursive fixed-point closure (`54`, `53`, `49`, `18`). Scores remained public `62.7`, irregular `31.0`, coupled `920.0`, and cross-module `76.0`; all outputs were dual-scored and clean under both closure policies.
+- **Relevance:** Dependency ordering should be repaired at the boundary that produced the omission, not by automatically consuming the whole connected scheduling graph. Bounds remain neighborhood-conditional unless an independent lower bound makes the score globally decisive.
+- **Limitation:** The second pass does not recursively add contract peers or footprint competitors of newly added dependencies. A future counterexample may justify another bounded tier, but this evidence does not justify fixed-point expansion.
+- **Confidence:** High in the failure and correction; high in measured neighborhood growth; medium in hidden-instance transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

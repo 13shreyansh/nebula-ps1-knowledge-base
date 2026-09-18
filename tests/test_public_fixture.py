@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 31)
+        self.assertEqual(len(matrix["cases"]), 32)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -136,6 +136,9 @@ class PublicFixtureTests(unittest.TestCase):
             elif row["case"] == "independent_predecessor_tradeoff_C":
                 data = ROOT / "fixtures" / "independent_predecessor_tradeoff_v1"
                 submission = ROOT / "runs" / "postprecedenceexpand_delayed7_repair30"
+            elif row["case"] == "independent_footprint_dependency_C":
+                data = ROOT / "fixtures" / "independent_footprint_dependency_v1"
+                submission = ROOT / "runs" / "c_footprint_dependency_postprecedence"
             else:
                 self.assertTrue(row["case"].startswith("independent_"))
                 data = ROOT / "fixtures" / "independent_synthetic_v1"
@@ -153,6 +156,11 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(evaluation.objective_score, row["score"], row["case"])
             self.assertEqual(independent.objective_score, row["score"], row["case"])
             self.assertTrue(row["proof_matches_score"], row["case"])
+            self.assertIn(
+                row["proof_scope"],
+                {"full_instance", "frozen_access_neighborhood", "fixed_access_schedule"},
+                row["case"],
+            )
 
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"
@@ -380,6 +388,53 @@ class PublicFixtureTests(unittest.TestCase):
             ),
             ["COMP", "DIRECT"],
         )
+        self.assertEqual(
+            _scenario_b_cost_contributing_activities(
+                instance,
+                incumbent,
+                expand_footprints=True,
+                expand_contracts=True,
+                expand_precedence=True,
+                revisit_precedence_after_footprints=True,
+                include_delays=True,
+            ),
+            ["COMP", "DIRECT", "FOLLOW"],
+        )
+
+    def test_post_footprint_precedence_repair_reaches_oracle(self) -> None:
+        data = ROOT / "fixtures" / "independent_footprint_dependency_v1"
+        source = ROOT / "fixtures" / "independent_footprint_dependency_v1_incumbent"
+        instance = load_instance(data)
+        free = _scenario_b_cost_contributing_activities(
+            instance,
+            source,
+            expand_footprints=True,
+            expand_contracts=True,
+            expand_precedence=True,
+            revisit_precedence_after_footprints=True,
+            include_delays=True,
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            telemetry = solve_flexible_supply_relaxation(
+                instance,
+                temp_dir,
+                "C",
+                time_limit_seconds=1.0,
+                workers=1,
+                seed=1,
+                sample_hint_dir=source,
+                freeze_access_hint=True,
+                freeze_access_except=set(free),
+                separator_mode="bridge_safe",
+            )
+            evaluation = evaluate_submission(instance, temp_dir, "C")
+            independent = independently_score(data, temp_dir)
+        self.assertEqual(telemetry.primary_bound_scope, "frozen_access_neighborhood")
+        self.assertTrue(telemetry.primary_score_proven_optimal)
+        self.assertEqual(telemetry.best_bound, 0.0)
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 0.0)
+        self.assertEqual(independent.objective_score, 0.0)
 
     def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_holdout_v1"
@@ -911,6 +966,7 @@ class PublicFixtureTests(unittest.TestCase):
                 expand_footprints=True,
                 expand_contracts=True,
                 expand_precedence=True,
+                revisit_precedence_after_footprints=True,
                 include_delays=True,
             )
         )
@@ -927,6 +983,7 @@ class PublicFixtureTests(unittest.TestCase):
             expand_footprints=True,
             expand_contracts=True,
             expand_precedence=True,
+            revisit_precedence_after_footprints=True,
             include_delays=True,
         )
         kmm = {
@@ -1528,6 +1585,7 @@ class PublicFixtureTests(unittest.TestCase):
             expand_footprints=True,
             expand_contracts=True,
             expand_precedence=True,
+            revisit_precedence_after_footprints=True,
             include_delays=True,
         )
 
