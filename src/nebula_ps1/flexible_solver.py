@@ -9,7 +9,7 @@ from pathlib import Path
 from ortools.sat.python import cp_model
 
 from .closure import screen_closures
-from .evaluate import AccessRow, OccupancyRow, load_submission
+from .evaluate import AccessRow, OccupancyRow, evaluate_submission, load_submission
 from .instance import Instance
 from .solver import SolveTelemetry, _activity_costs, _add_sample_hints
 from .topology import activity_footprint, affects_interchange_cross_line, split_sector_location
@@ -249,6 +249,7 @@ def solve_flexible_supply_relaxation(
     primary_score = model.new_int_var(0, max_primary, "primary_score_tenths")
     model.add(primary_score == sum(primary_terms))
 
+    hint_root: Path | None = None
     if sample_hint_dir is not None:
         hint_root = Path(sample_hint_dir)
         _add_sample_hints(model, instance, hint_root, access, night, member)
@@ -338,7 +339,28 @@ def solve_flexible_supply_relaxation(
     active_round_limit = effective_round_limit
     maximum_round_limit_used = 0.0
     unknown_retries = 0
-    cut_signatures: set[tuple[int, tuple[str, ...], tuple[str, ...]]] = set()
+
+    if hint_root is not None:
+        hint_evaluation = evaluate_submission(instance, hint_root, scenario)
+        hint_access_rows, hint_occupancy_rows, _ = load_submission(hint_root)
+        hint_strict_conflicts = (
+            screen_closures(
+                instance,
+                hint_access_rows,
+                hint_occupancy_rows,
+                forbid_buffer_overlap=True,
+            )
+            if forbid_buffer_overlap
+            else ()
+        )
+        if hint_evaluation.internally_feasible and not hint_strict_conflicts:
+            safe_access_rows = list(hint_access_rows)
+            safe_occupancy_rows = list(hint_occupancy_rows)
+            safe_objective_tenths = int(round(hint_evaluation.objective_score * 10))
+            # The checked hint is already a deliverable incumbent. Search only
+            # for a strict primary-score improvement; equal-score row cleanup is
+            # handled by the full-gate pruner.
+            model.add(primary_score <= safe_objective_tenths - 1)
 
     while closure_rounds <= closure_round_limit:
         remaining = deadline - time.monotonic()
@@ -388,45 +410,50 @@ def solve_flexible_supply_relaxation(
             break
 
         cuts_added = 0
-        for conflict in final_conflicts:
+        # A valid repair must move one conflicting activity or add an edge that
+        # expands the first component. Any direct or transitive merge with the
+        # second component necessarily starts with such an edge. This is stronger
+        # than an exact-layout no-good but preserves the public bridge pattern.
+        for conflict_index, conflict in enumerate(final_conflicts):
             first = tuple(sorted(conflict.first_activities))
             second = tuple(sorted(conflict.second_activities))
-            signature = (conflict.week, first, second)
-            if signature in cut_signatures:
-                continue
-            cut_signatures.add(signature)
-            cross_share: list[cp_model.IntVar] = []
+            first_set = set(first)
+            involved = set(first + second)
+            repair_literals: list[cp_model.LiteralT] = [
+                access[(activity_id, conflict.week)].Not()
+                for activity_id in sorted(involved)
+            ]
+
             for first_activity in first:
-                for second_activity in second:
+                for other_activity in sorted(instance.activities):
+                    if other_activity in first_set:
+                        continue
+                    if (other_activity, conflict.week) not in access:
+                        continue
                     common_locations = set(footprints[first_activity]) & set(
-                        footprints[second_activity]
+                        footprints[other_activity]
                     )
-                    for location_id in common_locations:
+                    for location_id in sorted(common_locations):
                         for group in range(group_limit(location_id, conflict.week)):
                             first_member = member.get(
                                 (first_activity, conflict.week, location_id, group)
                             )
-                            second_member = member.get(
-                                (second_activity, conflict.week, location_id, group)
+                            other_member = member.get(
+                                (other_activity, conflict.week, location_id, group)
                             )
-                            if first_member is None or second_member is None:
+                            if first_member is None or other_member is None:
                                 continue
                             together = model.new_bool_var(
-                                "closure_merge["
-                                f"{closure_rounds},{first_activity},{second_activity},"
-                                f"{conflict.week},{location_id},{group}]"
+                                "closure_direct_join["
+                                f"{closure_rounds},{conflict_index},{first_activity},"
+                                f"{other_activity},{conflict.week},{location_id},{group}]"
                             )
                             model.add(together <= first_member)
-                            model.add(together <= second_member)
-                            model.add(together >= first_member + second_member - 1)
-                            cross_share.append(together)
-            involved = first + second
-            # Repeating the full conflicting component is allowed only if a
-            # cross-component local share joins it into one possession.
-            model.add(
-                sum(access[(activity_id, conflict.week)] for activity_id in involved)
-                <= len(involved) - 1 + sum(cross_share)
-            )
+                            model.add(together <= other_member)
+                            model.add(together >= first_member + other_member - 1)
+                            repair_literals.append(together)
+
+            model.add_bool_or(repair_literals)
             cuts_added += 1
         if cuts_added == 0:
             break
@@ -539,7 +566,7 @@ def solve_flexible_supply_relaxation(
     proto = model.proto
     telemetry = SolveTelemetry(
         formulation=(
-            f"scenario_{scenario.lower()}_iterative_"
+            f"scenario_{scenario.lower()}_iterative_bridge_safe_"
             f"{'strict_buffer' if forbid_buffer_overlap else 'sample_consistent'}_closure_relaxation"
         ),
         status=status,

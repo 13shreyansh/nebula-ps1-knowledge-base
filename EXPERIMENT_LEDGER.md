@@ -307,3 +307,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - C stage: `OPTIMAL` at `26.1` with matching bound in 19.088 seconds, 17 solves/16 closure rounds. The candidate has 191 access rows, two ECLO rows, `16.1` delay, zero excess, zero hard violations, and zero strict conflicts.
 - Release gate: the selected directory contains exactly the three CSVs; main and independent scorers agree; strict pruning reports are present only in the separate audit directory. Final hash `56c649621654ae3fac62c64b839e576de1d7862e220e247bba3b8313219b01c1`.
 - Decision: retain the existing protected C because its score, components, row counts, and dual-policy feasibility are equal. Preserve this run as independent no-hint construction evidence, not as a score improvement.
+
+### E026: Closure-cut soundness correction
+
+- Timestamp: 2026-09-19 01:20:00 +08
+- Invalidated proof mechanism: the former cut required conflicting possession components to merge directly. A legal repair may instead add a third activity that bridges them transitively, as demonstrated by the public sample. Feasible schedules remain valid, but matching bounds from that cut model are not sound global-optimality evidence.
+- Exact-layout no-good: logically safe but impractical. A strict A run exhausted 300 seconds after 424 closure rounds, returned a `6065.5` candidate with ten conflicts, and never rediscovered the checked hint. It exited nonzero.
+- Incumbent correction: a fully checked hint is now a protected safe fallback, not only CP-SAT guidance. Search is constrained to strict primary-score improvement; a zero-time regression proves the fallback survives without solver cooperation.
+- Bridge-safe cut: if conflicting activities remain in the week, permit the first component to join any activity sharing a local footprint, which preserves every possible direct or transitive path. A 300-second strict A run retained the checked `32.2` fallback with zero conflicts but did not prove a lower bound; 127 solves, 123 closure rounds, three `UNKNOWN` retries, 127,564 variables, and 362,941 constraints.
+- Consequence: A=`32.2`, B=`30.0`, and C=`26.1` remain the protected dual-screen feasible scores. B's `30.0` still matches its independent workload/deadline lower bound. C=`26.1` is no longer described as proven optimal; its closure-free lower bound remains `25.2`.
+- Next direction: reduce connectivity-cut growth or encode possession connectivity exactly. Do not regain speed by restoring the unsound direct-component cut.

@@ -15,6 +15,7 @@ from unittest.mock import patch
 from nebula_ps1.cli import main as cli_main
 from nebula_ps1.closure import _blocked_locations, _external_buffer_sectors, screen_closures
 from nebula_ps1.evaluate import evaluate_submission, load_submission
+from nebula_ps1.flexible_solver import solve_flexible_supply_relaxation
 from nebula_ps1.independent_score import independently_score
 from nebula_ps1.instance import load_instance
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
@@ -538,6 +539,30 @@ class PublicFixtureTests(unittest.TestCase):
             )
         self.assertTrue(report.strict_buffer_overlap_checked)
         self.assertEqual(report.removed_accesses, ())
+        self.assertEqual(strict_conflicts, ())
+
+    def test_checked_hint_is_a_protected_incumbent_not_only_a_search_hint(self) -> None:
+        source = ROOT / "deliverables" / "public" / "A"
+        with tempfile.TemporaryDirectory() as temp_dir:
+            telemetry = solve_flexible_supply_relaxation(
+                self.instance,
+                temp_dir,
+                "A",
+                time_limit_seconds=0.0,
+                sample_hint_dir=source,
+                forbid_buffer_overlap=True,
+            )
+            evaluation = evaluate_submission(self.instance, temp_dir, scenario="A")
+            access, occupancy, _ = load_submission(temp_dir)
+            strict_conflicts = screen_closures(
+                self.instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            )
+        self.assertEqual(telemetry.status, "FEASIBLE_SAFE_INCUMBENT")
+        self.assertAlmostEqual(telemetry.objective_score, 32.2)
+        self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(strict_conflicts, ())
 
     def test_packaged_public_answer_keys_match_manifest(self) -> None:
