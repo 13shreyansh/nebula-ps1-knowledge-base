@@ -879,3 +879,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Growth and score checks: public `43→45`, C=`62.7`, proved; irregular `27→29`, C=`31.0`, safe but unproved within 30 seconds; coupled `23→25`, C=`920.0`, proved; cross-module delay `18→18`, C=`76.0`, proved. Every output is dual-scored, standard-clean, and strict-clean.
 - Evidence matrix: the new zero-score case raises the retained matrix to 32 cases. Machine-readable rows now declare proof scope, including legacy inference from formulation names.
 - Decision: accept the single post-footprint precedence pass. Do not recurse contracts and footprints to a fixed point without another frozen counterexample and matched runtime evidence.
+
+### E091: Post-precedence contract-peer holdout is frozen before repair
+
+- Timestamp: 2026-09-19 07:12:23 +08
+- Fixture: `independent_post_precedence_contract_v1` adds `PEER` to the final successor's contract. The incumbent fixes `PEER` in week 6; the zero-score oracle moves it to week 4 so `COMP`/`FOLLOW` can use weeks 5/6 and `DIRECT` can avoid ECLO in weeks 2–4.
+- Checked artifacts: incumbent C=`10.0`, oracle C=`0.0`, both dual-scored and clean under standard and strict closures. Dataset hash: `e5f513a65637232af1d6263763c5f4e437772dee505c7c611464ec188ed9d267`.
+- Pre-exposure hypothesis: the accepted post-footprint precedence pass returns `COMP`, `DIRECT`, and `FOLLOW` but omits same-contract `PEER`, because contract expansion ran before `FOLLOW` entered the set. The repair should therefore remain conditionally stuck above zero.
+- Protocol: generator, data, oracle, incumbent, hash, and selector assertion are committed before the first repair run. This is an authored mechanism test, not evidence of hidden frequency.

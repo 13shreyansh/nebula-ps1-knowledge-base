@@ -1,0 +1,7 @@
+activity_id,access_seq,week,eclo,access_night
+DIRECT,1,2,0,1
+DIRECT,2,3,0,1
+DIRECT,3,4,0,1
+COMP,1,5,0,1
+FOLLOW,1,6,0,1
+PEER,1,4,0,1

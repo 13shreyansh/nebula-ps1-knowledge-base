@@ -868,3 +868,13 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Remaining risk: contract or footprint dependencies introduced by the final precedence pass can still be frozen. No evidence yet shows that another tier improves score enough to justify its search cost.
 - Confidence: very high in official incumbents; high in the counterexample, correction, and current cross-regime safety; medium in hidden runtime and dependency transfer.
 - Immediate next action: run the full regression suite, commit the correction and artifacts, then search for a fresh counterexample involving a contract peer introduced by the final precedence step.
+
+## 2026-09-19 07:12:23 +08
+
+- Interval: 2 minutes 18 seconds since the previous inspection; triggered early because the next predicted dependency-ordering holdout is frozen.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- New holdout: a final-pass successor shares a one-workfront contract with `PEER`. The current selector reaches the successor but not its contract peer. The checked incumbent costs `10.0`; the checked oracle costs zero by moving all four activities coherently.
+- Why this matters: repeated one-off fixes can create a whack-a-mole dependency order. The prior correction may be locally right but still systematically incomplete when contract, precedence, and footprint relations alternate.
+- Integrity controls: all inputs and expected artifacts are public-independent, dual-scored, closure-clean, hashed, and asserted before solver exposure. The test does not justify full fixed-point expansion unless the unchanged repair actually fails.
+- Confidence: very high in official incumbents; high in fixture validity and selector omission; no confidence yet in repair outcome or the correct general closure policy.
+- Immediate next action: commit this holdout, run the unchanged accepted repair, preserve the outcome, and compare a bounded contract revisit against fixed-point size and runtime.
