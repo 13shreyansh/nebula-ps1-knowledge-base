@@ -358,6 +358,14 @@ Confidence labels:
 - **Limitation:** This validates the component construction needed to reproduce the sample under our topology expansion; it does not independently validate the expansion or hidden validator.
 - **Confidence:** High.
 
+### `R042` `access_night` is accounting-local, not a possession identity
+
+- **Evidence:** Official output schema and public sample week 16.
+- **Finding:** A003 and A007 belong to the same contract C001 and directly co-share group `b1` at both BET interchange platforms and the connecting sector, yet their `access_night` values are 3 and 1. The organizer still describes the sample as feasible. Therefore equal possession membership does not require equal `access_night`, even within one contract.
+- **Relevance:** Use `access_night` only for the published contract/type weekly allocation and workfront counts. Do not link it across contracts, equate it with `co_share_group`, or use it as a global physical-night identifier.
+- **Limitation:** This settles the invalid equality constraint; it does not reveal any unlisted validator checks on night indices.
+- **Confidence:** High.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

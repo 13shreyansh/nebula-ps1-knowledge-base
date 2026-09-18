@@ -190,6 +190,28 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertEqual(direct_collision, {"SEC:BET:S16_S17:EB"})
 
+    def test_access_night_is_not_a_global_possession_identifier(self) -> None:
+        access, occupancy, _ = load_submission(PACK / "03_submission_sample")
+        nights = {(row.activity_id, row.week): row.access_night for row in access}
+        self.assertEqual(nights[("A003", 16)], 3)
+        self.assertEqual(nights[("A007", 16)], 1)
+        self.assertEqual(
+            self.instance.activities["A003"].contract_number,
+            self.instance.activities["A007"].contract_number,
+        )
+        shared = {
+            (row.activity_id, row.location_id, row.co_share_group)
+            for row in occupancy
+            if row.week == 16 and row.activity_id in {"A003", "A007"}
+        }
+        for location_id in (
+            "PLAT:BET:H01:EB",
+            "PLAT:BET:H02:EB",
+            "SEC:BET:H01_H02:EB",
+        ):
+            self.assertIn(("A003", location_id, "b1"), shared)
+            self.assertIn(("A007", location_id, "b1"), shared)
+
     def test_solve_a_cli_does_not_reference_an_undefined_audit_argument(self) -> None:
         telemetry = SimpleNamespace(
             objective_score=0.0,
