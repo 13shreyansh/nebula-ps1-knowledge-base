@@ -25,7 +25,7 @@ def solve_flexible_supply_relaxation(
     seed: int = 1,
     closure_round_limit: int = 50,
     sample_hint_dir: str | Path | None = None,
-    round_time_limit_seconds: float = 3.0,
+    round_time_limit_seconds: float | None = None,
 ) -> SolveTelemetry:
     """Solve a scenario with iterative cuts from the inferred closure screen.
 
@@ -38,7 +38,12 @@ def solve_flexible_supply_relaxation(
 
     if scenario not in {"A", "B", "C"}:
         raise ValueError("scenario must be A, B, or C")
-    if round_time_limit_seconds <= 0:
+    effective_round_limit = (
+        round_time_limit_seconds
+        if round_time_limit_seconds is not None
+        else (1.0 if scenario in {"A", "B"} else 3.0)
+    )
+    if effective_round_limit <= 0:
         raise ValueError("round_time_limit_seconds must be positive")
 
     model = cp_model.CpModel()
@@ -52,7 +57,7 @@ def solve_flexible_supply_relaxation(
     start: dict[str, cp_model.IntVar] = {}
     scaled_delay: dict[str, cp_model.IntVar] = {}
 
-    for activity_id, activity in instance.activities.items():
+    for activity_id, activity in sorted(instance.activities.items()):
         project = instance.projects[activity.contract_number]
         first_week = max(1, instance.week_for_date(activity.planned_start_date))
         last_week = (
@@ -123,14 +128,15 @@ def solve_flexible_supply_relaxation(
         )
         model.add_element(completion[activity_id] - 1, costs, scaled_delay[activity_id])
 
-    for activity_id, activity in instance.activities.items():
+    for activity_id, activity in sorted(instance.activities.items()):
         if activity.predecessor_activity_id:
             model.add(start[activity_id] >= completion[activity.predecessor_activity_id] + 1)
 
     activities_by_contract: dict[str, list[str]] = defaultdict(list)
-    for activity_id, activity in instance.activities.items():
+    for activity_id, activity in sorted(instance.activities.items()):
         activities_by_contract[activity.contract_number].append(activity_id)
-    for contract_number, activity_ids in activities_by_contract.items():
+    for contract_number, activity_ids in sorted(activities_by_contract.items()):
+        activity_ids.sort()
         project = instance.projects[contract_number]
         for week in range(1, horizon + 1):
             for access_night in range(1, project.number_of_maximum_access_per_week + 1):
@@ -145,7 +151,7 @@ def solve_flexible_supply_relaxation(
     if scenario == "C":
         line_window_start = {
             line: model.new_int_var(1, horizon, f"eclo_window_start[{line}]")
-            for line in instance.lines
+            for line in sorted(instance.lines)
         }
         for (activity_id, week), variable in eclo.items():
             activity = instance.activities[activity_id]
@@ -153,12 +159,12 @@ def solve_flexible_supply_relaxation(
             affected_lines = set(instance.lines) if affects_interchange_cross_line(
                 instance, activity
             ) else {line}
-            for affected_line in affected_lines:
+            for affected_line in sorted(affected_lines):
                 model.add(line_window_start[affected_line] <= week).only_enforce_if(variable)
                 model.add(line_window_start[affected_line] + 1 >= week).only_enforce_if(variable)
 
     candidates_by_location_week: dict[tuple[str, int], list[str]] = defaultdict(list)
-    for activity_id, weeks in eligible.items():
+    for activity_id, weeks in sorted(eligible.items()):
         for week in weeks:
             for location_id in footprints[activity_id]:
                 candidates_by_location_week[(location_id, week)].append(activity_id)
@@ -166,7 +172,8 @@ def solve_flexible_supply_relaxation(
     member: dict[tuple[str, int, str, int], cp_model.IntVar] = {}
     used: dict[tuple[str, int, int], cp_model.IntVar] = {}
     excess_terms: list[cp_model.IntVar] = []
-    for (location_id, week), activity_ids in candidates_by_location_week.items():
+    for (location_id, week), activity_ids in sorted(candidates_by_location_week.items()):
+        activity_ids.sort()
         supply = instance.locations[location_id].supply_capacity
         if scenario == "B":
             group_limit = len(activity_ids)
@@ -234,7 +241,7 @@ def solve_flexible_supply_relaxation(
     if scenario in {"B", "C"}:
         primary_terms.extend(50 * term for term in eclo.values())
     max_primary = (
-        sum(max(_activity_costs(instance, activity_id)) for activity_id in instance.activities)
+        sum(max(_activity_costs(instance, activity_id)) for activity_id in sorted(instance.activities))
         + 70 * len(excess_terms)
         + 50 * len(eclo)
     )
@@ -246,7 +253,7 @@ def solve_flexible_supply_relaxation(
         _add_sample_hints(model, instance, hint_root, access, night, member)
         hint_access, _, _ = load_submission(hint_root)
         hinted_eclo = {(row.activity_id, row.week): row.eclo for row in hint_access}
-        for key, variable in eclo.items():
+        for key, variable in sorted(eclo.items()):
             model.add_hint(variable, hinted_eclo.get(key, 0))
 
     # Official penalty is lexicographically dominant; row count only removes
@@ -326,13 +333,18 @@ def solve_flexible_supply_relaxation(
     solve_rounds = 0
     total_conflicts = 0
     total_branches = 0
+    active_round_limit = effective_round_limit
+    maximum_round_limit_used = 0.0
+    unknown_retries = 0
     cut_signatures: set[tuple[int, tuple[str, ...], tuple[str, ...]]] = set()
 
     while closure_rounds <= closure_round_limit:
         remaining = deadline - time.monotonic()
         if remaining <= 0:
             break
-        solver.parameters.max_time_in_seconds = min(remaining, round_time_limit_seconds)
+        solve_limit = min(remaining, active_round_limit)
+        maximum_round_limit_used = max(maximum_round_limit_used, solve_limit)
+        solver.parameters.max_time_in_seconds = solve_limit
         status_code = solver.solve(model)
         solve_rounds += 1
         total_conflicts += solver.num_conflicts
@@ -341,7 +353,16 @@ def solve_flexible_supply_relaxation(
         if not has_solution:
             if safe_objective_tenths is not None and status_code == cp_model.INFEASIBLE:
                 safe_proven_optimal = True
+            if status_code == cp_model.UNKNOWN:
+                next_limit = min(30.0, active_round_limit * 2)
+                if next_limit > active_round_limit and deadline - time.monotonic() > 0:
+                    active_round_limit = next_limit
+                    unknown_retries += 1
+                    continue
             break
+        # Once a cut-augmented model needs a longer round, keep that budget.
+        # Resetting after one feasible solve causes repeated UNKNOWN/retry cycles
+        # as the relaxation becomes progressively harder.
         final_access_rows, final_occupancy_rows = extract_rows(solver)
         final_conflicts = screen_closures(instance, final_access_rows, final_occupancy_rows)
         current_objective_tenths = solver.value(primary_score)
@@ -459,7 +480,7 @@ def solve_flexible_supply_relaxation(
             activity_id: max(
                 row.week for row in final_access_rows if row.activity_id == activity_id
             )
-            for activity_id in instance.activities
+            for activity_id in sorted(instance.activities)
         }
         results_output: list[dict[str, object]] = []
         for contract_number in sorted(instance.projects):
@@ -523,8 +544,10 @@ def solve_flexible_supply_relaxation(
         ),
         closure_rounds=closure_rounds,
         remaining_closure_conflicts=len(final_conflicts),
-        round_time_limit_seconds=round_time_limit_seconds,
+        round_time_limit_seconds=effective_round_limit,
         solve_rounds=solve_rounds,
+        maximum_round_time_seconds=maximum_round_limit_used,
+        unknown_retries=unknown_retries,
     )
     (output_root / "TELEMETRY.json").write_text(telemetry.as_json() + "\n", encoding="utf-8")
     return telemetry

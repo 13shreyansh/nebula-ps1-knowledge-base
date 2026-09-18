@@ -73,7 +73,7 @@ def _external_buffer_sectors(instance: Instance, activity_id: str) -> set[str]:
 
 def _blocked_locations(instance: Instance, component: set[str]) -> set[str]:
     blocked: set[str] = set()
-    for activity_id in component:
+    for activity_id in sorted(component):
         activity = instance.activities[activity_id]
         project = instance.projects[activity.contract_number]
         footprint = set(activity_footprint(instance, activity))
@@ -111,7 +111,8 @@ def screen_closures(
         shared_groups[(row.week, row.location_id, row.co_share_group)].append(row.activity_id)
 
     conflicts: list[ClosureConflict] = []
-    for week, activity_ids in activities_by_week.items():
+    for week in sorted(activities_by_week):
+        activity_ids = sorted(activities_by_week[week])
         parent = {activity_id: activity_id for activity_id in activity_ids}
 
         def find(activity_id: str) -> str:
@@ -125,21 +126,25 @@ def screen_closures(
             if first_root != second_root:
                 parent[second_root] = first_root
 
-        for (group_week, _, _), grouped_activities in shared_groups.items():
+        for (group_week, _, _), grouped_activities in sorted(shared_groups.items()):
             if group_week != week or len(grouped_activities) < 2:
                 continue
-            first = grouped_activities[0]
-            for other in grouped_activities[1:]:
+            ordered_group = sorted(set(grouped_activities))
+            first = ordered_group[0]
+            for other in ordered_group[1:]:
                 union(first, other)
 
         components: dict[str, set[str]] = defaultdict(set)
         for activity_id in activity_ids:
             components[find(activity_id)].add(activity_id)
         component_data: list[tuple[set[str], set[str], set[str]]] = []
-        for component in components.values():
+        ordered_components = sorted(
+            components.values(), key=lambda component: tuple(sorted(component))
+        )
+        for component in ordered_components:
             work = {
                 location_id
-                for activity_id in component
+                for activity_id in sorted(component)
                 for location_id in activity_footprint(instance, instance.activities[activity_id])
             }
             component_data.append((component, work, _blocked_locations(instance, component)))

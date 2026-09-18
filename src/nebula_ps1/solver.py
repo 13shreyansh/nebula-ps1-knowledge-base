@@ -33,6 +33,8 @@ class SolveTelemetry:
     remaining_closure_conflicts: int = 0
     round_time_limit_seconds: float | None = None
     solve_rounds: int = 1
+    maximum_round_time_seconds: float | None = None
+    unknown_retries: int = 0
 
     def as_json(self) -> str:
         return json.dumps(asdict(self), indent=2, sort_keys=True)
@@ -173,7 +175,7 @@ def solve_scenario_a_relaxation(
     start: dict[str, cp_model.IntVar] = {}
     scaled_cost: dict[str, cp_model.IntVar] = {}
 
-    for activity_id, activity in instance.activities.items():
+    for activity_id, activity in sorted(instance.activities.items()):
         first_week = max(1, instance.week_for_date(activity.planned_start_date))
         eligible[activity_id] = range(first_week, horizon + 1)
         footprints[activity_id] = activity_footprint(instance, activity)
@@ -218,14 +220,15 @@ def solve_scenario_a_relaxation(
         scaled_cost[activity_id] = model.new_int_var(0, max(costs), f"cost10[{activity_id}]")
         model.add_element(completion[activity_id] - 1, costs, scaled_cost[activity_id])
 
-    for activity_id, activity in instance.activities.items():
+    for activity_id, activity in sorted(instance.activities.items()):
         if activity.predecessor_activity_id:
             model.add(start[activity_id] >= completion[activity.predecessor_activity_id] + 1)
 
     activities_by_contract: dict[str, list[str]] = defaultdict(list)
-    for activity_id, activity in instance.activities.items():
+    for activity_id, activity in sorted(instance.activities.items()):
         activities_by_contract[activity.contract_number].append(activity_id)
-    for contract_number, activity_ids in activities_by_contract.items():
+    for contract_number, activity_ids in sorted(activities_by_contract.items()):
+        activity_ids.sort()
         project = instance.projects[contract_number]
         for week in range(1, horizon + 1):
             for access_night in range(1, project.number_of_maximum_access_per_week + 1):
@@ -238,14 +241,15 @@ def solve_scenario_a_relaxation(
                     model.add(sum(variables) <= project.number_of_workfronts)
 
     candidates_by_location_week: dict[tuple[str, int], list[str]] = defaultdict(list)
-    for activity_id, weeks in eligible.items():
+    for activity_id, weeks in sorted(eligible.items()):
         for week in weeks:
             for location_id in footprints[activity_id]:
                 candidates_by_location_week[(location_id, week)].append(activity_id)
 
     member: dict[tuple[str, int, str, int], cp_model.IntVar] = {}
     used: dict[tuple[str, int, int], cp_model.IntVar] = {}
-    for (location_id, week), activity_ids in candidates_by_location_week.items():
+    for (location_id, week), activity_ids in sorted(candidates_by_location_week.items()):
+        activity_ids.sort()
         capacity = instance.locations[location_id].supply_capacity
         for group in range(capacity):
             used[(location_id, week, group)] = model.new_bool_var(

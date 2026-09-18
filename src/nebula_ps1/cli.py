@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import json
 
 from .evaluate import evaluate_submission
 from .flexible_solver import solve_flexible_supply_relaxation
 from .independent_score import independently_score
 from .instance import load_instance
+from .portfolio import solve_scenario_c_portfolio
 from .solver import solve_scenario_a_relaxation
 from .submission import relabel_submission_scenario
 
@@ -47,7 +49,24 @@ def main() -> None:
     flexible_parser.add_argument("--seed", type=int, default=1)
     flexible_parser.add_argument("--closure-rounds", type=int, default=50)
     flexible_parser.add_argument("--sample-hint")
-    flexible_parser.add_argument("--round-time-limit", type=float, default=3.0)
+    flexible_parser.add_argument(
+        "--round-time-limit",
+        type=float,
+        help="per-solve cap; defaults to 1s for A/B and 3s for C",
+    )
+    portfolio_parser = subparsers.add_parser(
+        "solve-c-portfolio",
+        help="protect a checked A-as-C fallback before attempting a better C solve",
+    )
+    portfolio_parser.add_argument("--data", required=True)
+    portfolio_parser.add_argument("--output", required=True)
+    portfolio_parser.add_argument("--a-time-limit", type=float, default=120.0)
+    portfolio_parser.add_argument("--c-time-limit", type=float, default=120.0)
+    portfolio_parser.add_argument("--workers", type=int, default=8)
+    portfolio_parser.add_argument("--seed", type=int, default=1)
+    portfolio_parser.add_argument("--closure-rounds", type=int, default=500)
+    portfolio_parser.add_argument("--a-round-time-limit", type=float, default=1.0)
+    portfolio_parser.add_argument("--c-round-time-limit", type=float, default=3.0)
     relabel_parser = subparsers.add_parser(
         "relabel-scenario",
         help="reuse a schedule unchanged and recompute result rows for another scenario",
@@ -106,6 +125,21 @@ def main() -> None:
         if telemetry.objective_score is None:
             raise SystemExit(3)
         raise SystemExit(0 if telemetry.remaining_closure_conflicts == 0 else 4)
+    if args.command == "solve-c-portfolio":
+        instance = load_instance(args.data)
+        report = solve_scenario_c_portfolio(
+            instance,
+            args.output,
+            a_time_limit_seconds=args.a_time_limit,
+            c_time_limit_seconds=args.c_time_limit,
+            workers=args.workers,
+            seed=args.seed,
+            closure_round_limit=args.closure_rounds,
+            a_round_time_limit_seconds=args.a_round_time_limit,
+            c_round_time_limit_seconds=args.c_round_time_limit,
+        )
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return
     if args.command == "relabel-scenario":
         instance = load_instance(args.data)
         relabel_submission_scenario(instance, args.source, args.output, args.scenario)

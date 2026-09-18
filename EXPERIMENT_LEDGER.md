@@ -171,3 +171,38 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Scenario B: `OPTIMAL` at `30.0` after 154 solves/153 closure rounds in 154.713 seconds. Both scorers report six ECLO rows, zero delay/excess, and zero implemented violations. Submission hash `9e5ec2a550be74f4efe1486297ef973c54d92259e47f202db9633d996ce54072`.
 - Result: complete-schedule hints are not necessary on the public instance. No-hint runtime remains a material risk for larger hidden inputs, especially A/B.
 - Decision: promote the no-hint outputs as the current-code protected incumbents; retain hinted variants as faster fallbacks for the public deliverable.
+
+### E013: Scenario-specific solve-round budget
+
+- Timestamp: 2026-09-18 23:41:10 +08
+- Hypothesis: shorter separation rounds improve time to the same protected score by adding closure cuts sooner.
+- Method: repeat no-hint seed-1 eight-worker A/B/C solves with one-second rounds; compare against the E012 three-second-round runs. All other solver logic and total budgets remain unchanged.
+- Result: A reproduced `32.2` in 99.533 seconds versus 209.412; B reproduced `30.0` in 101.731 seconds versus 154.713; C reproduced `26.1` in 120.856 seconds versus 84.967. Every retained output has zero implemented violations.
+- Interpretation: one-second rounds materially helped A/B but hurt C. This is one multithreaded seed, so the time differences are directional rather than stable performance estimates.
+- Decision: use one-second default rounds for A/B and three seconds for C; continue recording an explicit override and benchmark additional seeds before a stronger runtime claim.
+
+### E014: Renamed/shuffled fixture falsification and protected C portfolio
+
+- Timestamp: 2026-09-18 23:58:20 +08
+- Hypothesis: the generic solver should retain feasibility and score when all identifiers are bijectively renamed and every input CSV is row-shuffled.
+- Dataset hash: `ee1e97246c45b1a91d49aa3fe23a69ce0ff9d8783e78f6b3f5a7d99afbaf7aa1`
+- Transformation check: an independent multiset reconstruction exactly matches all eight expected transformed tables; no deadlines, capacities, priorities, predecessors, workload, topology, or activity semantics changed.
+- Failed direct-C evidence: a 180-second no-hint run ended `UNKNOWN` with one closure conflict and no safe incumbent. After canonicalising model and closure iteration, a second 180-second run still ended `FEASIBLE` with six closure conflicts and no safe incumbent. Neither output was promoted.
+- Staged evidence: transformed A solved without a hint at `32.2` in 96.102 seconds. Using that generated A schedule only as a C hint produced `26.1` in 22.767 seconds. Both scorers report `16.1` delay, two ECLO rows, zero excess, and zero implemented violations.
+- Portfolio verification: the executable portfolio independently rebuilt transformed A at `32.2`, relabelled and checked it as the protected C fallback, then selected a checked C=`26.1` candidate after 102.930 seconds for A and 20.187 seconds for C. Final submission hash: `30075901e8ecc15d364ef6b45f797256f1d4483697c1adda6a2aa7809712ae7c`.
+- Interpretation: direct C search is not robust to a semantics-preserving rename under the tested budget. The data-derived A-to-C portfolio is robust on this falsification and never replaces the fallback with an infeasible or non-improving candidate.
+- Limitation: this is still one topology and one transformed seed; both acceptance and separation use the inferred closure semantics, and no reference-validator result exists.
+- Decision: make protected A-to-C staging the default robust C strategy; retain both direct-C failures and test further topology/capacity perturbations.
+
+### E015: Deterministic transformed-fixture construction failures
+
+- Timestamp: 2026-09-19 00:10:02 +08
+- Hypothesis: the protected transformed A-to-C portfolio can remove eight-worker scheduling luck by using one worker.
+- Failure 1: one-second A rounds stopped after 21.222 seconds when one round returned `UNKNOWN`, despite 159 seconds remaining. No safe incumbent existed.
+- Correction 1: retry `UNKNOWN` with a bounded doubled round budget rather than abandoning the remaining total budget.
+- Failure 2: the corrected run consumed all 180 seconds but repeatedly returned to one-second rounds after intermediate solutions; it ended with two closure conflicts and no safe A output.
+- Correction 2: preserve the escalated per-round budget as accumulated cuts make later relaxations harder.
+- Failure 3: persistent escalation consumed the full 300-second A budget and ended on a `3482.5` candidate with seven closure conflicts; it was rejected. One worker therefore still lacks a generic no-hint transformed A constructor under the tested budget.
+- Alternative failure: forbidding every singleton closure-conflicting activity pair up front made A infeasible in 0.571 seconds. This is too conservative because legal possession-component merging is necessary; the option was removed from production code.
+- Integrity result: every failed portfolio exited nonzero, produced no selected final submission, and left the eight-worker incumbents unchanged.
+- Decision: retain adaptive `UNKNOWN` handling because it fixes premature abandonment, but do not claim deterministic transformed-instance robustness. Do not use the over-conservative formulation. Prioritise official semantic evidence and the working checked eight-worker portfolio over additional blind runtime spending.
