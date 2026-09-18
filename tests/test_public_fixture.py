@@ -255,12 +255,14 @@ class PublicFixtureTests(unittest.TestCase):
             "unused",
             "--audit-output",
             "custom-audit",
+            "--strict-buffer-overlap",
         ]
         with patch("sys.argv", argv), patch(
             "nebula_ps1.cli.solve_scenario_c_portfolio", return_value={}
         ) as solve:
             cli_main()
         self.assertEqual(solve.call_args.kwargs["audit_output_dir"], "custom-audit")
+        self.assertTrue(solve.call_args.kwargs["forbid_buffer_overlap"])
 
     def test_minimal_32_2_repair_passes_sample_consistent_closure_screen(self) -> None:
         candidate = ROOT / "runs" / "a_repair_late_a035_a038"
@@ -516,6 +518,28 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report.removed_accesses, ())
         self.assertAlmostEqual(evaluation.objective_score, 32.2)
 
+    def test_strict_pruner_preserves_dual_policy_answer_key(self) -> None:
+        source = ROOT / "deliverables" / "public" / "A"
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir) / "strict-pruned"
+            report = prune_submission(
+                self.instance,
+                source,
+                output,
+                "A",
+                forbid_buffer_overlap=True,
+            )
+            access, occupancy, _ = load_submission(output)
+            strict_conflicts = screen_closures(
+                self.instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            )
+        self.assertTrue(report.strict_buffer_overlap_checked)
+        self.assertEqual(report.removed_accesses, ())
+        self.assertEqual(strict_conflicts, ())
+
     def test_packaged_public_answer_keys_match_manifest(self) -> None:
         deliverables = ROOT / "deliverables" / "public"
         if not deliverables.exists():
@@ -550,6 +574,14 @@ class PublicFixtureTests(unittest.TestCase):
                 )
                 self.assertAlmostEqual(audit.objective_score, evaluation.objective_score)
                 self.assertEqual(evaluation.submission_hash, expected["submission_hash"])
+                prune_report = json.loads(
+                    (deliverables / f"{scenario}_PRUNE.json").read_text(encoding="utf-8")
+                )
+                self.assertTrue(prune_report["strict_buffer_overlap_checked"])
+                self.assertEqual(
+                    prune_report["final_submission_hash"],
+                    expected["submission_hash"],
+                )
 
 
 if __name__ == "__main__":

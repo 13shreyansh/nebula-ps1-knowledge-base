@@ -74,6 +74,11 @@ def main() -> None:
     portfolio_parser.add_argument("--closure-rounds", type=int, default=500)
     portfolio_parser.add_argument("--a-round-time-limit", type=float, default=1.0)
     portfolio_parser.add_argument("--c-round-time-limit", type=float, default=3.0)
+    portfolio_parser.add_argument(
+        "--strict-buffer-overlap",
+        action="store_true",
+        help="preserve the published buffer-to-buffer hedge through all portfolio stages",
+    )
     relabel_parser = subparsers.add_parser(
         "relabel-scenario",
         help="reuse a schedule unchanged and recompute result rows for another scenario",
@@ -97,6 +102,11 @@ def main() -> None:
     prune_parser.add_argument("--output", required=True)
     prune_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
     prune_parser.add_argument("--report")
+    prune_parser.add_argument(
+        "--strict-buffer-overlap",
+        action="store_true",
+        help="reject removals that introduce strict buffer-to-buffer conflicts",
+    )
     args = parser.parse_args()
 
     if args.command == "inspect":
@@ -155,6 +165,7 @@ def main() -> None:
             closure_round_limit=args.closure_rounds,
             a_round_time_limit_seconds=args.a_round_time_limit,
             c_round_time_limit_seconds=args.c_round_time_limit,
+            forbid_buffer_overlap=args.strict_buffer_overlap,
         )
         print(json.dumps(report, indent=2, sort_keys=True))
         return
@@ -173,6 +184,7 @@ def main() -> None:
             args.output,
             args.scenario,
             report_path=args.report,
+            forbid_buffer_overlap=args.strict_buffer_overlap,
         )
         print(report.as_json())
 

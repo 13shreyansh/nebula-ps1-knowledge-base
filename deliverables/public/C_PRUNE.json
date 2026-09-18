@@ -7,5 +7,6 @@
   "initial_submission_hash": "091c030ac19f360b9cb5a8a58ef6998211bbc00801c3bf1b0ad03e586a6b0630",
   "reference_validator_confirmed": false,
   "removed_accesses": [],
-  "scenario": "C"
+  "scenario": "C",
+  "strict_buffer_overlap_checked": true
 }

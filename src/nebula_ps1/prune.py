@@ -6,6 +6,7 @@ import tempfile
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
+from .closure import screen_closures
 from .evaluate import AccessRow, Evaluation, OccupancyRow, evaluate_submission, load_submission
 from .instance import Instance
 
@@ -24,6 +25,7 @@ class PruneReport:
     initial_submission_hash: str
     final_submission_hash: str
     reference_validator_confirmed: bool = False
+    strict_buffer_overlap_checked: bool = False
 
     def as_json(self) -> str:
         return json.dumps(asdict(self), indent=2, sort_keys=True)
@@ -104,6 +106,7 @@ def prune_submission(
     scenario: str,
     *,
     report_path: str | Path | None = None,
+    forbid_buffer_overlap: bool = False,
 ) -> PruneReport:
     """Remove score-neutral or score-improving access rows behind a full-check gate."""
 
@@ -115,6 +118,13 @@ def prune_submission(
     initial = evaluate_submission(instance, source, scenario)
     if not initial.internally_feasible:
         raise ValueError("cannot prune an infeasible submission")
+    if forbid_buffer_overlap and screen_closures(
+        instance,
+        access_rows,
+        occupancy_rows,
+        forbid_buffer_overlap=True,
+    ):
+        raise ValueError("cannot strict-prune a submission with buffer-overlap conflicts")
 
     current_access = _resequence(list(access_rows))
     current_occupancy = list(occupancy_rows)
@@ -165,9 +175,20 @@ def prune_submission(
                     instance, trial_dir, scenario, candidate_access, candidate_occupancy
                 )
                 evaluation = evaluate_submission(instance, trial_dir, scenario)
+                strict_conflicts = (
+                    screen_closures(
+                        instance,
+                        candidate_access,
+                        candidate_occupancy,
+                        forbid_buffer_overlap=True,
+                    )
+                    if forbid_buffer_overlap
+                    else ()
+                )
                 if (
                     evaluation.internally_feasible
                     and evaluation.objective_score <= current_evaluation.objective_score
+                    and not strict_conflicts
                 ):
                     current_access = candidate_access
                     current_occupancy = candidate_occupancy
@@ -180,7 +201,21 @@ def prune_submission(
 
     _write_submission(instance, output, scenario, current_access, current_occupancy)
     final = evaluate_submission(instance, output, scenario)
-    if not final.internally_feasible or final.objective_score > initial.objective_score:
+    final_strict_conflicts = (
+        screen_closures(
+            instance,
+            current_access,
+            current_occupancy,
+            forbid_buffer_overlap=True,
+        )
+        if forbid_buffer_overlap
+        else ()
+    )
+    if (
+        not final.internally_feasible
+        or final.objective_score > initial.objective_score
+        or final_strict_conflicts
+    ):
         raise RuntimeError("pruned submission failed final feasibility/score gate")
     if sorted(path.name for path in output.iterdir()) != sorted(SUBMISSION_FILES):
         raise RuntimeError("pruned submission directory contains files beyond the three CSVs")
@@ -193,6 +228,7 @@ def prune_submission(
         removed_accesses=tuple(removed),
         initial_submission_hash=initial.submission_hash,
         final_submission_hash=final.submission_hash,
+        strict_buffer_overlap_checked=forbid_buffer_overlap,
     )
     if report_path is not None:
         Path(report_path).write_text(report.as_json() + "\n", encoding="utf-8")

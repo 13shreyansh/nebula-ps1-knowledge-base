@@ -40,6 +40,7 @@ def solve_scenario_c_portfolio(
     closure_round_limit: int = 500,
     a_round_time_limit_seconds: float = 1.0,
     c_round_time_limit_seconds: float = 3.0,
+    forbid_buffer_overlap: bool = False,
 ) -> dict[str, object]:
     """Protect a checked A-as-C fallback before attempting a lower-scoring C solve.
 
@@ -77,6 +78,7 @@ def solve_scenario_c_portfolio(
         seed=seed,
         closure_round_limit=closure_round_limit,
         round_time_limit_seconds=a_round_time_limit_seconds,
+        forbid_buffer_overlap=forbid_buffer_overlap,
     )
     if a_telemetry.objective_score is None or a_telemetry.remaining_closure_conflicts:
         raise RuntimeError("Scenario A stage did not produce a closure-safe fallback")
@@ -88,6 +90,7 @@ def solve_scenario_c_portfolio(
         fallback_stage,
         "C",
         report_path=audit_output / "FALLBACK_PRUNE.json",
+        forbid_buffer_overlap=forbid_buffer_overlap,
     )
     fallback = evaluate_submission(instance, fallback_stage, "C")
     if not fallback.internally_feasible:
@@ -106,6 +109,7 @@ def solve_scenario_c_portfolio(
         closure_round_limit=closure_round_limit,
         sample_hint_dir=fallback_stage,
         round_time_limit_seconds=c_round_time_limit_seconds,
+        forbid_buffer_overlap=forbid_buffer_overlap,
     )
     candidate: Evaluation | None = None
     candidate_prune: dict[str, object] | None = None
@@ -116,6 +120,7 @@ def solve_scenario_c_portfolio(
             candidate_stage,
             "C",
             report_path=audit_output / "CANDIDATE_PRUNE.json",
+            forbid_buffer_overlap=forbid_buffer_overlap,
         )
         candidate_prune = asdict(prune_report)
         candidate = evaluate_submission(instance, candidate_stage, "C")
@@ -140,6 +145,7 @@ def solve_scenario_c_portfolio(
         "selected_objective_score": final.objective_score,
         "selected_submission_hash": final.submission_hash,
         "reference_validator_confirmed": False,
+        "strict_buffer_overlap_checked": forbid_buffer_overlap,
         "submission_files": list(SUBMISSION_FILES),
         "scenario_a_telemetry": asdict(a_telemetry),
         "scenario_c_telemetry": asdict(c_telemetry),
