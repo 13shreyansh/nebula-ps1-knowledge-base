@@ -1,0 +1,59 @@
+{
+  "bridge_safe_fallback_attempts": [
+    {
+      "attempt": 1,
+      "repair_hint_heuristic_attempt": 1,
+      "telemetry": {
+        "best_bound": null,
+        "branches": 26588,
+        "closure_rounds": 10,
+        "conflicts": 0,
+        "deterministic_time_seconds": 161.67373335262073,
+        "formulation": "scenario_c_iterative_bridge_safe_strict_buffer_closure_relaxation",
+        "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This output is a hedge, not validator confirmation. The row-count tie-breaker cannot alter the official penalty objective.",
+        "maximum_round_time_seconds": 3.0,
+        "model_constraints": 95291,
+        "model_variables": 39785,
+        "objective_score": null,
+        "primary_score_proven_optimal": false,
+        "remaining_closure_conflicts": 6,
+        "round_time_limit_seconds": 3.0,
+        "seed": 1,
+        "solve_rounds": 12,
+        "status": "UNKNOWN",
+        "tie_break_proven_optimal": false,
+        "time_limit_seconds": 30.0,
+        "unknown_retries": 1,
+        "wall_time_seconds": 30.01969995800755,
+        "workers": 8
+      }
+    }
+  ],
+  "bridge_safe_repair_hint_source_attempt": 1,
+  "heuristic_attempts": [
+    {
+      "best_bound": null,
+      "branches": 774256,
+      "closure_rounds": 102,
+      "conflicts": 0,
+      "deterministic_time_seconds": 934.5039330779022,
+      "formulation": "scenario_c_iterative_direct_heuristic_strict_buffer_closure_relaxation",
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "maximum_round_time_seconds": 3.0,
+      "model_constraints": 50523,
+      "model_variables": 24688,
+      "objective_score": 112.2,
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 5,
+      "round_time_limit_seconds": 3.0,
+      "seed": 1,
+      "solve_rounds": 102,
+      "status": "FEASIBLE",
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 180.0,
+      "unknown_retries": 0,
+      "wall_time_seconds": 180.02003675000742,
+      "workers": 8
+    }
+  ]
+}

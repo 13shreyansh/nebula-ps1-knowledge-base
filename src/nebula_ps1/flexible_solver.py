@@ -356,6 +356,8 @@ def solve_flexible_supply_relaxation(
     deadline = started + time_limit_seconds
     status_code = cp_model.UNKNOWN
     has_solution = False
+    had_solution = False
+    latest_objective_tenths: int | None = None
     final_access_rows: list[AccessRow] = []
     final_occupancy_rows: list[OccupancyRow] = []
     final_conflicts = ()
@@ -422,6 +424,7 @@ def solve_flexible_supply_relaxation(
         # Resetting after one feasible solve causes repeated UNKNOWN/retry cycles
         # as the relaxation becomes progressively harder.
         final_access_rows, final_occupancy_rows = extract_rows(solver)
+        had_solution = True
         final_conflicts = screen_closures(
             instance,
             final_access_rows,
@@ -429,6 +432,7 @@ def solve_flexible_supply_relaxation(
             forbid_buffer_overlap=forbid_buffer_overlap,
         )
         current_objective_tenths = solver.value(primary_score)
+        latest_objective_tenths = current_objective_tenths
         if not final_conflicts:
             if safe_objective_tenths is None or current_objective_tenths < safe_objective_tenths:
                 safe_access_rows = final_access_rows
@@ -518,7 +522,10 @@ def solve_flexible_supply_relaxation(
 
     output_root = Path(output_dir)
     output_root.mkdir(parents=True, exist_ok=True)
-    output_available = safe_access_rows is not None or has_solution
+    # A terminal UNKNOWN must not erase the last complete candidate. Unsafe rows
+    # remain in the audit tree only and can seed repair; staged gates still
+    # require zero closure conflicts before selection.
+    output_available = safe_access_rows is not None or had_solution
     if output_available:
         access_output: list[dict[str, object]] = []
         occupancy_output: list[dict[str, object]] = []
@@ -601,8 +608,8 @@ def solve_flexible_supply_relaxation(
 
     if safe_objective_tenths is not None:
         objective = safe_objective_tenths / 10.0
-    elif has_solution:
-        objective = solver.value(primary_score) / 10.0
+    elif latest_objective_tenths is not None:
+        objective = latest_objective_tenths / 10.0
     else:
         objective = None
     if separator_mode == "direct_heuristic":

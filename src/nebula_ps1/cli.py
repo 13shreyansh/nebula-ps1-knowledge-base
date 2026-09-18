@@ -11,6 +11,7 @@ from .portfolio import solve_scenario_c_portfolio
 from .prune import prune_submission
 from .solver import solve_scenario_a_relaxation
 from .staged import solve_staged_scenario
+from .staged_c import solve_staged_c_portfolio
 from .submission import relabel_submission_scenario
 
 
@@ -122,6 +123,25 @@ def main() -> None:
     staged_parser.add_argument("--fallback-attempts", type=int, default=2)
     staged_parser.add_argument("--closure-rounds", type=int, default=500)
     staged_parser.add_argument("--strict-buffer-overlap", action="store_true")
+    staged_c_parser = subparsers.add_parser(
+        "solve-staged-c",
+        help="construct a guarded A fallback, then verify and improve it under Scenario C",
+    )
+    staged_c_parser.add_argument("--data", required=True)
+    staged_c_parser.add_argument("--output", required=True)
+    staged_c_parser.add_argument("--audit-output")
+    staged_c_parser.add_argument("--a-heuristic-time-limit", type=float, default=120.0)
+    staged_c_parser.add_argument("--a-fallback-time-limit", type=float, default=120.0)
+    staged_c_parser.add_argument("--a-verification-time-limit", type=float, default=120.0)
+    staged_c_parser.add_argument("--c-heuristic-time-limit", type=float, default=120.0)
+    staged_c_parser.add_argument("--c-verification-time-limit", type=float, default=120.0)
+    staged_c_parser.add_argument("--workers", type=int, default=8)
+    staged_c_parser.add_argument("--seed", type=int, default=1)
+    staged_c_parser.add_argument("--a-heuristic-attempts", type=int, default=3)
+    staged_c_parser.add_argument("--a-fallback-attempts", type=int, default=2)
+    staged_c_parser.add_argument("--c-heuristic-attempts", type=int, default=3)
+    staged_c_parser.add_argument("--closure-rounds", type=int, default=500)
+    staged_c_parser.add_argument("--strict-buffer-overlap", action="store_true")
     relabel_parser = subparsers.add_parser(
         "relabel-scenario",
         help="reuse a schedule unchanged and recompute result rows for another scenario",
@@ -233,6 +253,27 @@ def main() -> None:
             seed=args.seed,
             heuristic_attempts=args.heuristic_attempts,
             fallback_attempts=args.fallback_attempts,
+            closure_round_limit=args.closure_rounds,
+            forbid_buffer_overlap=args.strict_buffer_overlap,
+        )
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return
+    if args.command == "solve-staged-c":
+        instance = load_instance(args.data)
+        report = solve_staged_c_portfolio(
+            instance,
+            args.output,
+            audit_output_dir=args.audit_output,
+            a_heuristic_time_limit_seconds=args.a_heuristic_time_limit,
+            a_fallback_time_limit_seconds=args.a_fallback_time_limit,
+            a_verification_time_limit_seconds=args.a_verification_time_limit,
+            c_heuristic_time_limit_seconds=args.c_heuristic_time_limit,
+            c_verification_time_limit_seconds=args.c_verification_time_limit,
+            workers=args.workers,
+            seed=args.seed,
+            a_heuristic_attempts=args.a_heuristic_attempts,
+            a_fallback_attempts=args.a_fallback_attempts,
+            c_heuristic_attempts=args.c_heuristic_attempts,
             closure_round_limit=args.closure_rounds,
             forbid_buffer_overlap=args.strict_buffer_overlap,
         )

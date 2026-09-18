@@ -337,3 +337,53 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Strongest remaining runtime test: repeat under an equal 120-second budget across several seeds or use deterministic-work caps. However, B's score is already proven and additional runs do not improve the public result, so runtime sampling should not displace work on unresolved full-instance A/C construction or official validation.
 - Confidence: high in public B score/feasibility under implemented semantics; medium in recovering B within a two-minute eight-worker attempt; low in schedule/time reproducibility; zero in official validation.
 - Next action: commit the current success/failure corpus, then move away from B score chasing. Prioritise an unresolved assumption or full-instance A/C fresh-construction weakness.
+
+## 2026-09-19 02:18:12 +08
+
+- Interval: 3 minutes 34 seconds since the previous inspection; early because full-instance A construction completed.
+- Best independently validated score: no official/reference-validator result. Protected public internal optima remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero.
+- What improved: the current staged solver reconstructed strict A=`32.2` from raw public input with no schedule hint in 134.381 wall / 607.104 deterministic seconds. Both scorers, both closure policies, pruning, serialization, and exact-file checks pass.
+- What did not improve: 30 seconds of sound verification retained the incumbent but produced no lower bound. The model grew to 51,185 variables and 133,351 constraints. The direct heuristic's success cannot certify optimality.
+- Integrity boundary: A's optimum is supported only by the existing analytical conflict/delay lower bound under implemented semantics. No solver-bound claim was added, no equal-score artifact replaced the pinned deliverable, and no official validation is claimed.
+- What is going well: fresh A and B construction now work on current code; B has a sound encoded proof and A has an independent analytical proof. Failed seeds and runtime variance remain preserved.
+- Remaining high-risk path: current full-instance C fresh construction has not been exercised through the new staged controller. C's score proof is analytical, but a hidden-instance workflow still needs reliable construction.
+- Confidence: high in public A artifact and implemented optimality argument; medium in two-to-three-minute fresh A construction; low in arbitrary hidden-instance runtime; zero in official validation.
+- Next action: exercise current staged Scenario C from raw input with no schedule hint. Accept only a dual-scored strict candidate; do not use the public C deliverable as a warm start.
+
+## 2026-09-19 02:22:10 +08
+
+- Interval: 3 minutes 58 seconds since the previous inspection; early because the full-instance C falsification completed.
+- Best independently validated score: no official/reference-validator result. Protected public internal optima remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero.
+- Failure: current direct C construction spent 180.020 wall / 934.504 deterministic seconds and ended with an unsafe `112.2` candidate carrying five strict conflicts. Thirty seconds of repair-hinted sound search produced no safe objective and six conflicts. The controller emitted no final submission.
+- What this disproves: the general staged controller is not yet a reliable direct C constructor at public scale, despite A/B successes. More time on the same C seed is not justified by this evidence.
+- Better structural alternative: every strict-feasible A schedule uses no ECLO and respects nominal capacity, so it is a valid C fallback after deterministic relabelling and full C re-evaluation. The current A staged path just reconstructed `32.2` from raw input. Protecting that result before C optimization prevents total failure and gives the C solver a feasible basin.
+- Integrity audit: the unsafe `112.2` and repair failure were not called improvements; no public artifact changed; the analytical C=`26.1` result remains separate from construction reliability.
+- Main risks in the proposed A→C workflow: an A constructor can still fail; C relabelling must recompute results rather than edit scenario text only; strict pruning must not split possession components; equal-score C candidates must not displace the fallback; audit and submission files must remain separated.
+- Confidence: high in protected C artifact and analytical bound under implemented semantics; low in direct fresh C construction; medium in A→C fallback feasibility because the older portfolio succeeded before the cut correction; zero in official validation.
+- Next action: implement a guarded staged A→C portfolio using the current A constructor, then test it first on the single-activity fixture and finally on the public instance under fixed budgets.
+
+## 2026-09-19 02:29:15 +08
+
+- Interval: 7 minutes 5 seconds since the previous inspection; triggered by completion of the prescribed guarded A-to-C falsification.
+- Best independently validated score: no official/reference-validator result. Protected public internal optima remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero. The new generated C fallback scores `32.2` and does not replace the incumbent.
+- What improved: the A-to-C safety controller passes 35 regressions, a forced-fallback fixture, and a full public run. It rebuilt A=`32.2`, recomputed and checked it under C, and guaranteed a strict-feasible C=`32.2` output after direct C construction had previously failed completely.
+- What failed: 120 seconds of full-scale bridge-safe C optimization did not beat the fallback. The model reached 89,095 variables and 243,434 constraints. Its displayed `0.0` bound is not usable evidence because the iterative closure model was not exhaustively completed.
+- Integrity audit: both scorers agree; strict conflicts are zero; exactly three CSVs were emitted; the protected C=`26.1` deliverable was not replaced by the worse candidate; no official score or solver proof is claimed.
+- Strongest counterexample: the workflow is now robust against total C failure but can still return `32.2` when a known checked `26.1` schedule exists. Safety without competitive construction is insufficient for hidden instances.
+- Most plausible correction: use the protected A schedule as a nonbinding hint for bounded direct-heuristic C attempts, full-check and strict-prune any safe candidate, then pass the best checked incumbent to a separate bridge-safe phase. This preserves safety while recovering the historically faster C search path without importing its unsound bounds.
+- Remaining risks: timed eight-worker search is nondeterministic; prior fast C=`26.1` evidence predates the soundness correction and must be reproduced under the staged gates; the analytical lower bound remains tied to the public structure; the official validator is unavailable.
+- Confidence: high in fallback safety and reported `32.2`; high in the protected public `26.1` under implemented semantics; low in sound-only C improvement at full scale; zero in official validation.
+- Next action: implement and fixture-test guarded heuristic C attempts before sound verification, then run one declared public budget and retain failures as well as success.
+
+## 2026-09-19 02:34:11 +08
+
+- Interval: 4 minutes 56 seconds since the previous inspection; early because the first guarded-heuristic public run failed before reaching C.
+- Best independently validated score: no official/reference-validator result. Protected public internal optima remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero. No new final artifact was emitted.
+- What improved: guarded C heuristic and sound-verification control flow passes 36 regressions and two fixture modes. What failed is upstream A construction: seed 2 produced no safe incumbent in 120 seconds, and the 60-second sound fallback also failed.
+- Falsification result: the full workflow is not robust merely because A succeeded for seed 1 and in older seed-2 runs. Fixed seeds plus eight-worker timed search are not reproducible recipes. The clean failure prevents a false claim but exposes the real construction bottleneck.
+- Hidden implementation loss: the heuristic retained two conflicts before a terminal `UNKNOWN`, yet the solver serialized only when the final solve itself had a solution. A complete but unsafe intermediate was therefore lost and could not seed repair. This is neither cheating nor a valid incumbent; it is useful search state that should be preserved with an explicit unsafe label.
+- Integrity audit: no failed schedule was scored as a result; C was not run without a valid fallback; the existing `26.1` was not touched; budgets were not extended; negative evidence is retained.
+- Strongest corrective experiment: preserve the latest complete candidate and objective across terminal `UNKNOWN`, rerun the exact same declared seed-2 budgets, and test whether repair-hinted sound fallback recovers a checked A schedule. Compare against this failure rather than against a favorable seed.
+- Risks: retaining stale solver rows could be mistaken for safe output unless telemetry conflicts and staged gates remain strict; the repair hint may worsen search; wall-time nondeterminism can confound before/after comparison; official validation remains unavailable.
+- Confidence: high in failure handling and diagnosis of discarded intermediate state; medium that hint preservation improves recovery; low in public-scale fallback reliability; zero in official validation.
+- Next action: implement the last-complete-candidate retention invariant, add regression coverage where possible, and rerun the same seed-2 configuration without changing budgets.

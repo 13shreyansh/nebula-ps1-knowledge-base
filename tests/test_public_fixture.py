@@ -22,6 +22,7 @@ from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_s
 from nebula_ps1.prune import prune_submission
 from nebula_ps1.solver import SolveTelemetry, _activity_costs
 from nebula_ps1.staged import solve_staged_scenario
+from nebula_ps1.staged_c import solve_staged_c_portfolio
 from nebula_ps1.submission import relabel_submission_scenario
 from nebula_ps1.topology import (
     activity_footprint,
@@ -358,6 +359,50 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(solve.call_args.kwargs["heuristic_attempts"], 7)
         self.assertEqual(solve.call_args.kwargs["fallback_time_limit_seconds"], 17.0)
         self.assertEqual(solve.call_args.kwargs["fallback_attempts"], 4)
+
+    def test_staged_c_cli_forwards_all_stage_budgets(self) -> None:
+        argv = [
+            "nebula-ps1",
+            "solve-staged-c",
+            "--data",
+            str(PACK / "01_data"),
+            "--output",
+            "unused",
+            "--audit-output",
+            "custom-c-audit",
+            "--a-heuristic-time-limit",
+            "11",
+            "--a-fallback-time-limit",
+            "12",
+            "--a-verification-time-limit",
+            "13",
+            "--c-heuristic-time-limit",
+            "14",
+            "--c-verification-time-limit",
+            "15",
+            "--a-heuristic-attempts",
+            "5",
+            "--a-fallback-attempts",
+            "6",
+            "--c-heuristic-attempts",
+            "7",
+            "--strict-buffer-overlap",
+        ]
+        with patch("sys.argv", argv), patch(
+            "nebula_ps1.cli.solve_staged_c_portfolio", return_value={}
+        ) as solve:
+            cli_main()
+        kwargs = solve.call_args.kwargs
+        self.assertEqual(kwargs["audit_output_dir"], "custom-c-audit")
+        self.assertEqual(kwargs["a_heuristic_time_limit_seconds"], 11.0)
+        self.assertEqual(kwargs["a_fallback_time_limit_seconds"], 12.0)
+        self.assertEqual(kwargs["a_verification_time_limit_seconds"], 13.0)
+        self.assertEqual(kwargs["c_heuristic_time_limit_seconds"], 14.0)
+        self.assertEqual(kwargs["c_verification_time_limit_seconds"], 15.0)
+        self.assertEqual(kwargs["a_heuristic_attempts"], 5)
+        self.assertEqual(kwargs["a_fallback_attempts"], 6)
+        self.assertEqual(kwargs["c_heuristic_attempts"], 7)
+        self.assertTrue(kwargs["forbid_buffer_overlap"])
 
     def test_minimal_32_2_repair_passes_sample_consistent_closure_screen(self) -> None:
         candidate = ROOT / "runs" / "a_repair_late_a035_a038"
@@ -807,6 +852,90 @@ class PublicFixtureTests(unittest.TestCase):
             report["verification_telemetry"]["status"],
             "FEASIBLE_SAFE_INCUMBENT",
         )
+
+    def test_staged_c_preserves_checked_a_derived_fallback(self) -> None:
+        tiny_instance = load_instance(ROOT / "fixtures" / "single_a001")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir) / "submission"
+            audit = Path(temp_dir) / "audit"
+            report = solve_staged_c_portfolio(
+                tiny_instance,
+                output,
+                audit_output_dir=audit,
+                a_heuristic_time_limit_seconds=0.0,
+                a_fallback_time_limit_seconds=1.0,
+                a_verification_time_limit_seconds=0.0,
+                c_heuristic_time_limit_seconds=0.0,
+                c_verification_time_limit_seconds=0.0,
+                workers=1,
+                seed=21,
+                a_heuristic_attempts=1,
+                a_fallback_attempts=1,
+                c_heuristic_attempts=1,
+                closure_round_limit=50,
+                forbid_buffer_overlap=True,
+            )
+            evaluation = evaluate_submission(tiny_instance, output, "C")
+            audit_score = independently_score(ROOT / "fixtures" / "single_a001", output)
+            self.assertEqual(
+                sorted(path.name for path in output.iterdir()), sorted(SUBMISSION_FILES)
+            )
+            self.assertEqual(evaluation.hard_violations, ())
+            self.assertEqual(evaluation.objective_score, 0.0)
+            self.assertEqual(audit_score.objective_score, 0.0)
+            self.assertTrue(report["strict_buffer_overlap_checked"])
+            self.assertEqual(report["selected_objective_score"], 0.0)
+            self.assertTrue((audit / "STAGED_C.json").exists())
+
+    def test_staged_c_selects_checked_heuristic_then_soundly_verifies_it(self) -> None:
+        def fake_staged(instance, output_dir, scenario, **kwargs):
+            self.assertEqual(scenario, "A")
+            _copy_submission(ROOT / "deliverables" / "public" / "A", Path(output_dir))
+            return {"selected_objective_score": 32.2}
+
+        def fake_c_solve(instance, output_dir, scenario, **kwargs):
+            self.assertEqual(scenario, "C")
+            _copy_submission(ROOT / "deliverables" / "public" / "C", Path(output_dir))
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="HEURISTIC_SAFE_INCUMBENT",
+                objective_score=26.1,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=kwargs["workers"],
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged_c.solve_staged_scenario", side_effect=fake_staged
+        ), patch(
+            "nebula_ps1.staged_c.solve_flexible_supply_relaxation",
+            side_effect=fake_c_solve,
+        ) as solve:
+            report = solve_staged_c_portfolio(
+                self.instance,
+                Path(temp_dir) / "submission",
+                audit_output_dir=Path(temp_dir) / "audit",
+                workers=1,
+                seed=4,
+                a_heuristic_attempts=1,
+                a_fallback_attempts=1,
+                c_heuristic_attempts=1,
+                forbid_buffer_overlap=True,
+            )
+        self.assertEqual(solve.call_count, 2)
+        self.assertEqual(solve.call_args_list[0].kwargs["separator_mode"], "direct_heuristic")
+        self.assertEqual(solve.call_args_list[1].kwargs["separator_mode"], "bridge_safe")
+        self.assertEqual(report["selected_stage"], "scenario_c_heuristic")
+        self.assertEqual(report["scenario_c_heuristic_selected_attempt"], 1)
+        self.assertAlmostEqual(report["selected_objective_score"], 26.1)
 
     def test_packaged_public_answer_keys_match_manifest(self) -> None:
         deliverables = ROOT / "deliverables" / "public"

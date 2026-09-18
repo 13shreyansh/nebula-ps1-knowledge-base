@@ -432,3 +432,38 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: checked `30.0` again, in 82.114 wall / 296.162 deterministic seconds versus E038's 68.117 / 247.174. Sound verification again proved `<30.0` infeasible in 0.167 wall / 0.505 deterministic seconds. Both scorers and the strict screen agree.
 - Variation: the repeat's hash `f169774b61fb20db19b810d8753e86bf9bd735b3a224970e177c5138d7fc3f27` differs from E038's hash despite equal objective, components, and row counts. Parallel timed search is not schedule-reproducible under a fixed seed.
 - Evidence boundary: seed 3 is 2/2 successful in these current-code 120-second runs; seed 4 is 0/1 at 90 seconds. This sample is too small and budgets differ, so it is descriptive rather than a calibrated success probability.
+
+### E040: Current staged public A from raw input
+
+- Timestamp: 2026-09-19 02:18:12 +08
+- Method: strict public Scenario A, no submission hint, eight workers, seed 1, one 180-second direct-heuristic attempt, and 30 seconds of protected bridge-safe verification.
+- Construction: checked `32.2` in 134.381 wall / 607.104 deterministic seconds over 146 solves and 145 closure rounds. Pruning removed nothing; 192 access rows, 928 occupancy rows, zero ECLO/excess, and `32.2` priority-weighted delay.
+- Verification: the sound phase retained the protected `32.2` after 30.050 wall / 62.663 deterministic seconds but did not prove a solver lower bound; it grew to 51,185 variables and 133,351 constraints.
+- Independent gate: main and raw-CSV scorers agree, both closure policies pass, and the final directory contains exactly three files. Hash `bcbe989f675585eab14b05d682e95c6723543954952a6c166e5c17a50c67deb3`.
+- Evidence boundary: A's optimality under implemented semantics comes from the separate analytical lower bound, not heuristic telemetry or this incomplete sound search. Retain the existing equal-score public deliverable.
+
+### E041: Direct current-code public C construction failure
+
+- Timestamp: 2026-09-19 02:22:10 +08
+- Method: strict public Scenario C, no submission hint, eight workers, seed 1, one 180-second direct-heuristic attempt, one 30-second repair-hinted sound fallback, and no use of the protected C deliverable.
+- Heuristic result: `FEASIBLE` internal objective `112.2` but five strict conflicts after 180.020 wall / 934.504 deterministic seconds, 102 closure rounds, 24,688 variables, and 50,523 constraints. It was rejected.
+- Repair result: the unsafe heuristic output was used only as a hint. Sound fallback exhausted 30.020 wall / 161.674 deterministic seconds, returned no objective, and retained six conflicts in a 39,785-variable / 95,291-constraint model. The final directory remained empty.
+- Conclusion: direct full-instance C construction is not reliable enough as the primary path. Scenario A's feasible region is a subset of C's policy region, so a fully checked A schedule can be relabelled and protected as a legitimate C fallback before any C-specific improvement search.
+- Next implementation: compose the guarded staged A constructor with A→C relabelling, strict pruning, and protected bridge-safe C search. Do not rely on the older C portfolio's raw bridge-safe A construction.
+
+### E042: Guarded staged A-to-C fallback
+
+- Timestamp: 2026-09-19 02:29:15 +08
+- Implementation gate: `solve-staged-c` first completes the current staged A workflow, recomputes that schedule under C, strict-prunes and fully checks it, then protects it while running bridge-safe C search. A C candidate can replace the fallback only at a strictly lower fully checked score. Tests cover every CLI budget and an end-to-end forced-fallback fixture; 35 regressions pass.
+- Fixture result: with zero heuristic and verification time, one second of sound A fallback solved the one-activity fixture at the `0.0` floor. Relabelled C, zero-time protected C search, both scorers, strict closure screen, exact-three-file gate, and final-copy hash all pass.
+- Public result: A was rebuilt from raw input at strict-feasible `32.2` in 103.620 wall / 473.762 deterministic seconds. Ten seconds of sound A verification retained it. The recomputed C fallback is strict-feasible `32.2`; main and independent scorers agree, the directory contains exactly three CSVs, and hash `35fe4c913d49df933d179b9092e2817fd4c935c8c634f65d09222d6df753f74e` is stable across the final copy.
+- C search: 120.018 wall / 665.522 deterministic seconds, 46 rounds, 89,095 variables, and 243,434 constraints retained `32.2` without improvement. Its `0.0` internal bound is not a proof because the solve ended with a protected incumbent rather than an exhaustive result.
+- Falsification: the safety objective succeeded, but sound-only full-scale C improvement is not competitive. The next version should try bounded direct-heuristic C construction from the protected A hint, accept it only through full evaluation and strict pruning, then use bridge-safe search solely to protect, improve, or prove the checked candidate.
+
+### E043: Guarded C workflow blocked by A construction variance
+
+- Timestamp: 2026-09-19 02:34:11 +08
+- Method: current guarded A-to-C workflow, strict public input, seed 2, one 120-second A heuristic attempt, one 60-second sound A fallback, then planned 90-second C heuristic and 30-second C verification. No schedule hint or protected public answer was supplied.
+- Failure: the A heuristic ended `UNKNOWN` with two unresolved strict conflicts after 120.010 wall / 524.597 deterministic seconds and 143 solves. The sound fallback ended `UNKNOWN` with nine conflicts after 60.036 wall / 178.373 deterministic seconds. No checked A incumbent existed, so C stages did not run and the final directory remained empty.
+- New implementation defect: the heuristic had generated a complete unsafe schedule before its final solve returned `UNKNOWN`, but the solver discarded those last rows and reported no objective. The staged controller therefore had no repair hint. Preserving the latest complete unsafe candidate for hinting can improve recovery without making it eligible for selection.
+- Decision: do not retry a favorable A seed yet. First preserve last complete candidates across a terminal `UNKNOWN`, keep their conflicts explicit, and allow the sound fallback to use them only as non-protected hints.
