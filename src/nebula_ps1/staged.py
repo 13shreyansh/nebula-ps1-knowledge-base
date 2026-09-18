@@ -19,11 +19,21 @@ def _scenario_b_cost_contributing_activities(
     *,
     expand_footprints: bool = False,
     expand_contracts: bool = False,
+    include_delays: bool = False,
 ) -> list[str]:
     """Return direct cost participants and selected scheduling dependencies."""
 
-    access, occupancy, _ = load_submission(submission_dir)
+    access, occupancy, results = load_submission(submission_dir)
     contributors = {row.activity_id for row in access if row.eclo == 1}
+    if include_delays:
+        delayed_contracts = {
+            row.contract_number for row in results if row.overrun_days > 0
+        }
+        contributors.update(
+            activity_id
+            for activity_id, activity in instance.activities.items()
+            if activity.contract_number in delayed_contracts
+        )
     groups_by_location_week: dict[tuple[int, str], set[str]] = {}
     activities_by_location_week: dict[tuple[int, str], set[str]] = {}
     for row in occupancy:
@@ -351,6 +361,7 @@ def solve_staged_scenario(
             selected_dir,
             expand_footprints=scenario == "C",
             expand_contracts=scenario == "C",
+            include_delays=scenario == "C",
         )
         if cost_repair_activities:
             cost_repair_raw = audit_output / "bridge_safe_cost_repair_raw"

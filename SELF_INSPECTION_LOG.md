@@ -799,3 +799,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity audit: C=`101.0` remains a valid incumbent and its conditional proof remains labelled conditional. C=`76.0` is locally proved, not official-validator-confirmed. No result was promoted from an internal metric alone.
 - Confidence: very high in official incumbents; high in the repair counterexample and correction; high in tested cross-regime safety; medium in scale/runtime transfer; low-to-medium in untested cross-contract predecessor dependencies.
 - Immediate next action: commit the corrected algorithm and evidence, then stress neighborhood growth or a cross-contract predecessor case without changing the protected public artifacts.
+
+## 2026-09-19 06:55:21 +08
+
+- Interval: 2 minutes 33 seconds since the previous inspection; triggered early because the next objective-level omission was confirmed and corrected.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No official artifact or portal attempt changed.
+- Falsification: the checked cross-module A-derived fallback scores C=`126.0` with zero ECLO and zero excess. The prior selector returned no repair activities because it ignored the delay term entirely, even though C=`76.0` is proved feasible and optimal.
+- Accepted correction: Scenario C now seeds repair from overdue contracts as well as ECLO and excess contributors, then follows direct contract and footprint dependencies. The 18-activity repair proved `76.0` in 0.451 seconds; both scorers and both closure screens accept the output.
+- Cross-regime evidence: public C=`62.7`, irregular seed-5 C=`31.0`, and coupled C=`920.0` remain unchanged under the exact code path. Fifty-seven regressions pass.
+- Adversarial interpretation: the earlier “cost-contributor” name hid an incomplete definition of cost. An optimizer can be mathematically sound yet never improve if neighborhood discovery omits one objective term. Delayed-contract inclusion is correct but may widen large instances.
+- Integrity audit: the delay-only `126.0` incumbent is preserved as a regression fixture; the prior empty set is asserted explicitly; the corrected `76.0` result is locally proved but not reference-validator-confirmed.
+- Confidence: very high in official incumbents; high in the objective-selector correction and tested safety; medium in broad-neighborhood runtime; low-to-medium in cross-contract predecessor and transitive dependency coverage.
+- Immediate next action: commit this objective-complete selector and evidence, then test whether frozen cross-contract predecessors can still create a misleading conditional optimum.

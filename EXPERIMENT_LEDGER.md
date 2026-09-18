@@ -831,3 +831,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: the corrected eight-activity neighborhood reduced `101.0` to dual-scored, standard-clean, strict-clean C=`76.0` and proved the bound in 0.114 seconds. The repaired hash is `958a1b2fc5a3552ea0a76ddbc6e8085d4c260e32460769450d034844e6671325`.
 - Cross-regime checks: public C retained and proved `62.7` in 0.332 seconds; irregular seed 5 recovered `31.0` in 30.008 seconds; coupled C retained and proved `920.0` in 0.070 seconds. The public repair set grew to 43 activities, so component growth remains a runtime risk.
 - Regression: the first 30-case matrix run failed because its expected count remained 29; the second misrouted the new case to the older synthetic fixture. Both harness assumptions were corrected before the 56-test pass.
+
+### E085: Delay-only incumbents require delay contributors in the repair seed
+
+- Timestamp: 2026-09-19 06:55:21 +08
+- Falsification: the checked cross-module A-derived C fallback scores `126.0` entirely from delay, with zero ECLO and zero excess. The previous selector returned an empty repair neighborhood although the proved C=`76.0` schedule exists.
+- Correction: Scenario C now seeds repair with every activity in an overdue contract as well as direct ECLO/excess participants, then applies contract and footprint expansion. Scenario B remains unchanged because overrun is infeasible there.
+- Result: the resulting 18-activity neighborhood reduced `126.0` to proved C=`76.0` in 0.451 seconds. Both scorers and both closure policies accept hash `6e78596d5ac3b795887a5e6d162ec0fa864553dc636c8113612eae5695416302`.
+- Cross-regime checks: public C retained and proved `62.7` in 0.321 seconds; irregular seed 5 again recovered `31.0` in 30.007 seconds; coupled C retained and proved `920.0` in 0.070 seconds. Fifty-seven regressions pass.

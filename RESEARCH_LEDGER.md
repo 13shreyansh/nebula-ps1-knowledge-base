@@ -534,6 +534,14 @@ Confidence labels:
 - **Limitation:** Contract-plus-footprint expansion can approach the full instance, as 43/54 public activities did. Preserve a checked incumbent, cap time, report neighborhood size, and do not interpret a frozen-neighborhood bound as global.
 - **Confidence:** High for the mechanism and tested correction; medium for runtime transfer.
 
+### `R066` An improvement neighborhood must seed every objective component
+
+- **Status:** Confirmed on a checked delay-only Scenario C incumbent.
+- **Finding:** Selecting only ECLO and excess participants produced an empty neighborhood for C=`126.0`, whose entire avoidable loss was delay. Adding activities from overdue contracts allowed the same guarded repair to prove C=`76.0`.
+- **Relevance:** Scenario C has three objective sources: delay, ECLO, and excess. Neighborhood discovery must start from all three before following contract and footprint dependencies; otherwise a valid incumbent can suppress a known improvement.
+- **Limitation:** Delayed-contract expansion can make the neighborhood broad when many projects are late. The protected incumbent and time cap preserve correctness, not runtime.
+- **Confidence:** High for the omission and correction; medium for scale transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

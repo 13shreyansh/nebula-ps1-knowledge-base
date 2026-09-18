@@ -850,6 +850,7 @@ class PublicFixtureTests(unittest.TestCase):
                 ROOT / "deliverables" / "public" / "C",
                 expand_footprints=True,
                 expand_contracts=True,
+                include_delays=True,
             )
         )
         self.assertEqual(direct, {"A036", "A059"})
@@ -864,6 +865,7 @@ class PublicFixtureTests(unittest.TestCase):
             ROOT / "fixtures" / "independent_multimodule_tradeoff_v1_delayed_incumbent",
             expand_footprints=True,
             expand_contracts=True,
+            include_delays=True,
         )
         kmm = {
             activity_id
@@ -872,6 +874,35 @@ class PublicFixtureTests(unittest.TestCase):
         }
         self.assertTrue(kmm <= set(contributors))
         self.assertIn("R0101", contributors)
+
+    def test_scenario_c_cost_repair_includes_delay_only_contracts(self) -> None:
+        data = ROOT / "fixtures" / "independent_multimodule_tradeoff_v1"
+        instance = load_instance(data)
+        source = (
+            ROOT / "fixtures" / "independent_multimodule_tradeoff_v1_delay_only_incumbent"
+        )
+        self.assertEqual(
+            _scenario_b_cost_contributing_activities(
+                instance,
+                source,
+                expand_footprints=True,
+                expand_contracts=True,
+            ),
+            [],
+        )
+        contributors = _scenario_b_cost_contributing_activities(
+            instance,
+            source,
+            expand_footprints=True,
+            expand_contracts=True,
+            include_delays=True,
+        )
+        kmm = {
+            activity_id
+            for activity_id, activity in instance.activities.items()
+            if activity.contract_number == "KMM"
+        }
+        self.assertTrue(kmm <= set(contributors))
 
     def test_relabelled_a_incumbent_is_a_safe_scenario_c_fallback(self) -> None:
         source = ROOT / "deliverables" / "public" / "A"
@@ -1381,6 +1412,7 @@ class PublicFixtureTests(unittest.TestCase):
             ROOT / "deliverables" / "public" / "C",
             expand_footprints=True,
             expand_contracts=True,
+            include_delays=True,
         )
 
         def fake_solve(instance, output_dir, scenario, **kwargs):
