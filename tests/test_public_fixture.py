@@ -1893,6 +1893,57 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report["selected_stage"], "bridge_safe_expanded_cost_repair")
         self.assertEqual(final.objective_score, 0.0)
 
+    def test_staged_solver_integrates_terminal_precedence_revisit(self) -> None:
+        data = ROOT / "fixtures" / "independent_post_contract_precedence_v1"
+        incumbent = ROOT / "fixtures/independent_post_contract_precedence_v1_incumbent"
+        oracle = ROOT / "fixtures" / "independent_post_contract_precedence_v1_oracle"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            source = oracle if calls == 4 else incumbent
+            _copy_submission(source, Path(output_dir))
+            objective = 0.0 if calls == 4 else 10.0
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="OPTIMAL",
+                objective_score=objective,
+                best_bound=objective,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=1,
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+                primary_score_proven_optimal=True,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ) as solve:
+            report = solve_staged_scenario(
+                instance,
+                Path(temp_dir) / "submission",
+                "C",
+                audit_output_dir=Path(temp_dir) / "audit",
+                heuristic_attempts=1,
+                local_repair_time_limit_seconds=1.0,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+        self.assertEqual(solve.call_count, 4)
+        self.assertEqual(
+            solve.call_args_list[3].kwargs["freeze_access_except"],
+            {"COMP", "DIRECT", "FOLLOW", "PEER", "PREPEER"},
+        )
+        self.assertEqual(report["selected_stage"], "bridge_safe_expanded_cost_repair")
+        self.assertEqual(final.objective_score, 0.0)
+
     def test_staged_solver_repairs_only_detected_conflict_activities_first(self) -> None:
         unsafe_access, unsafe_occupancy, _ = load_submission(PACK / "03_submission_sample")
         strict_conflicts = screen_closures(
@@ -1988,6 +2039,65 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertTrue(report["strict_buffer_overlap_checked"])
             self.assertEqual(report["selected_objective_score"], 0.0)
             self.assertTrue((audit / "STAGED_C.json").exists())
+
+    def test_staged_c_portfolio_integrates_terminal_precedence_revisit(self) -> None:
+        data = ROOT / "fixtures" / "independent_post_contract_precedence_v1"
+        incumbent = ROOT / "fixtures/independent_post_contract_precedence_v1_incumbent"
+        oracle = ROOT / "fixtures" / "independent_post_contract_precedence_v1_oracle"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_staged(instance, output_dir, scenario, **kwargs):
+            _copy_submission(incumbent, Path(output_dir))
+            return {"selected_objective_score": 10.0}
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            source = oracle if calls == 4 else incumbent
+            _copy_submission(source, Path(output_dir))
+            objective = 0.0 if calls == 4 else 10.0
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="OPTIMAL",
+                objective_score=objective,
+                best_bound=objective,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=1,
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+                primary_score_proven_optimal=True,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged_c.solve_staged_scenario", side_effect=fake_staged
+        ), patch(
+            "nebula_ps1.staged_c.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ) as solve:
+            report = solve_staged_c_portfolio(
+                instance,
+                Path(temp_dir) / "submission",
+                audit_output_dir=Path(temp_dir) / "audit",
+                a_local_repair_time_limit_seconds=1.0,
+                c_heuristic_time_limit_seconds=1.0,
+                c_verification_time_limit_seconds=1.0,
+                c_heuristic_attempts=1,
+                workers=1,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+        self.assertEqual(solve.call_count, 4)
+        self.assertEqual(
+            solve.call_args_list[3].kwargs["freeze_access_except"],
+            {"COMP", "DIRECT", "FOLLOW", "PEER", "PREPEER"},
+        )
+        self.assertEqual(report["selected_stage"], "scenario_c_expanded_cost_repair")
+        self.assertEqual(final.objective_score, 0.0)
 
     def test_staged_c_uses_checked_direct_path_only_after_a_failure(self) -> None:
         failure = RuntimeError(

@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.21
+version: 0.8.22
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -332,7 +332,7 @@ Each protected public answer matches its bound and has passed the official valid
 - The current controller reconstructed all three optimum scores from scratch in 15/15 fixed-policy runs across five seeds: A 15.425–25.742 seconds, B 9.902–23.039, and production C 17.360–37.354. Every schedule hash differed and only local validation applies, so the official ZIPs remain the release artifacts.
 - Both local scorers reproduce every official score exactly. The earlier activity-completion proxy was rejected after A-002 exposed the correct contract-completion aggregation.
 - The corrected closure checker reproduces the five A-001 violations exactly and accepts all three official incumbents under both standard and strict buffer screens.
-- All 67 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, incumbent protection, full heuristic-portfolio execution, guarded B/C cost-contributor repair, Scenario C delay-only, alternating contract/precedence/footprint dependency repairs, two-tier repair escalation, and its five-seed irregular matrix, conditional-bound scope telemetry, independent C construction behind a protected A fallback, complete-versus-partial structural-hint policy, independently constructed synthetic oracles, dense no-hint construction, guarded dense C fallback, additive, coupled, irregular, and cross-module nonzero trade-offs, and recomputation of the benchmark matrix.
+- All 69 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, incumbent protection, full heuristic-portfolio execution, guarded B/C cost-contributor repair, Scenario C delay-only, alternating contract/precedence/footprint dependency repairs, both production integrations of the terminal precedence revisit, two-tier repair escalation, and its five-seed irregular matrix, conditional-bound scope telemetry, independent C construction behind a protected A fallback, complete-versus-partial structural-hint policy, independently constructed synthetic oracles, dense no-hint construction, guarded dense C fallback, additive, coupled, irregular, and cross-module nonzero trade-offs, and recomputation of the benchmark matrix.
 - On the altered-capacity/priority fixture, no-hint standard construction reaches A=`4599.7` with a 0.87% bound gap, and proves B=`30.0` and C=`59.9`. The stricter buffer-to-buffer hedge fails to construct B after 240 seconds while the validator-confirmed standard rule solves it in 18.7 seconds; strict overlap is therefore audit-only on unseen inputs.
 - On a separately generated two-line topology with novel identifiers and no public-submission input, the staged solver reconstructs and proves A=`7.0`, B=`10.0`, and C=`7.0`. The independent oracle is generated with separate footprint/result logic; B pays two necessary ECLO nights while C rationally accepts seven points of delay instead.
 - Experimental `solve-flexible-relaxation` flags expose per-solve deterministic time and OR-Tools interleaved search. Two structural-B repetitions were byte-identical at `30.0`, but took 98.8–104.9 seconds versus 16.6–21.2 seconds for successful ordinary portfolio seeds. Keep this as an audit mode, not the default score path.
@@ -654,3 +654,4 @@ When sources conflict:
 | `0.8.19` | 2026-09-19 | Verified the two-tier controller end to end on irregular seed 5 and normalized repair telemetry across guarded-A success and failure report branches. |
 | `0.8.20` | 2026-09-19 | Added a reproducible serial five-seed two-tier repair matrix; all seeds reached the analytical C=`31.0` optimum with distinct checked schedules. |
 | `0.8.21` | 2026-09-19 | Preserved a predecessor-of-final-contract-peer failure, added one terminal precedence closure with zero retained-regime growth, and reached 34 proof cases with 67 regressions. |
+| `0.8.22` | 2026-09-19 | Pinned the terminal precedence revisit in both Scenario C production controllers, completed fallback prune aliases, and reached 69 regressions. |

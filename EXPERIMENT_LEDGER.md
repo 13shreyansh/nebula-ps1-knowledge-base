@@ -928,3 +928,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Correction: one terminal transitive precedence pass adds `PREPEER`. The five-activity repair proved C=`0.0` in 0.014 seconds; both scorers and both closure policies accept hash `02092a079563ecc2d331c033b2cb42055081edd39546ccba8864e867c51bfb75`.
 - Cross-regime scope: activity counts remain public `46`, irregular `29`, coupled `25`, and cross-module `18`. No fixed-point contract or footprint recursion was added.
 - Evidence: the new zero-score case raises the matrix to 34 cases; 67 regressions pass.
+
+### E097: Both production controllers execute the terminal dependency repair
+
+- Timestamp: 2026-09-19 07:40:00 +08
+- Risk: the selector-level test proved the final precedence revisit, but it did not prove that either production controller passed the flag or promoted its checked result.
+- Falsification harness: both the generic staged Scenario C controller and the guarded A-to-C portfolio start from the frozen score-`10.0` post-contract-precedence incumbent. Their narrow and earlier expanded calls retain `10.0`; only the terminal five-activity expansion is supplied the checked score-`0.0` oracle.
+- Result: each controller makes the terminal expanded call with exactly `COMP`, `DIRECT`, `FOLLOW`, `PEER`, and `PREPEER`, selects the zero-score artifact, and independently re-evaluates it. The full suite passes 69 tests.
+- Scope: this is controller-wiring evidence, not new optimizer or hidden-distribution evidence. Official scores and protected artifacts are unchanged.
