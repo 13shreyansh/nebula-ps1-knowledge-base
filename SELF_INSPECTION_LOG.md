@@ -749,3 +749,27 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Delivery state: commits through `1a494f7` remain local because HTTPS GitHub credentials are unavailable; repeated push attempts fail before authentication.
 - Confidence: very high in public incumbents; high in expanded-repair safety on the tested regimes; high in one-worker failure; medium in eight-worker irregular robustness; low in hidden compute portability.
 - Immediate next action: test four workers under the identical irregular policy. If it fails, stop worker-count probing and investigate a generic feasibility decomposition; if it succeeds, record the threshold as empirical and continue with a held-out structural case.
+
+## 2026-09-19 06:27:03 +08
+
+- Interval: 11 minutes 52 seconds since the previous inspection; triggered by completion of the matched one/two/four-worker falsification series.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- Four-worker evidence: direct C reached the independently bounded `31.0` optimum in 120.007 seconds. Both local scorers agree, standard and strict closure screens are clean, and the final hash is `d45951d25022b6485eebb58a5c2c3d57272fb4fa8d67e0fd2a1f1bb6cd9f74a4`.
+- Strongest falsification: two workers produced a valid but extremely poor C=`63420.0` incumbent. One worker failed validity entirely. The matched series therefore shows a steep empirical compute dependence, not a proven minimum-worker threshold.
+- Repair audit: `63210/63420` two-worker points came from delay, so the ten-second cost-contributor repair was mismatched to the incumbent. Extending the same nearly global footprint neighborhood to 120 seconds improved it to checked C=`1914.0`, but still missed `31.0`; its `1824.6` bound is conditional on frozen decisions and supplies no global proof.
+- Adversarial interpretation: the algorithm's score quality still depends on CP-SAT trajectory and parallelism. Repair quality is not monotonic enough to substitute for reliable construction, and low-worker tuning on this co-developed fixture now poses greater overfit risk than value.
+- Integrity audit: C=`63420.0` and `1914.0` remain experimental only; neither replaces the C=`31.0` independent incumbent or any official artifact. The four-worker result was independently scored before being recorded. Local commit `5431f06` preserves the one/four-worker evidence; its push remains blocked before GitHub authentication.
+- Confidence: very high in official incumbents; high in the measured one/two/four-worker outcomes; high in C=`31.0` feasibility and analytical optimality; medium in corrected eight-worker seed reliability; low in low-worker portability.
+- Immediate next action: stop worker-count tuning and run fresh, unfiltered eight-worker seeds 4 and 5 under the unchanged corrected policy. Preserve all outcomes and use them to decide whether construction reliability is adequate before designing any new mechanism.
+
+## 2026-09-19 06:40:30 +08
+
+- Interval: 13 minutes 27 seconds since the previous inspection; within the 15-minute requirement and triggered by the fresh-seed production-budget replay.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No official artifact or portal attempt changed.
+- Fresh-seed evidence: seed 4 reached irregular C=`31.0` with the compressed ten-second repair. Seed 5 stopped at checked C=`63.0` under that policy, disproving five-seed reliability at ten seconds.
+- Corrective test, not post-hoc concealment: seed 5's identical repair neighborhood reached `31.0` at 30 seconds. The full end-to-end controller then reached dual-scored, standard-clean, strict-clean `31.0` under its existing 30-second production default. No code or default was changed to fit seed 5.
+- Strict-policy discrepancy: seed 4's optimum has one conflict only under the intentionally stronger buffer-to-buffer hedge; seed 5's optimum has none. The official-example-consistent standard policy accepts both. Strict status remains separately reported and cannot be described as official feasibility evidence.
+- Adversarial interpretation: the result supports 5/5 irregular optimum recovery only for the production repair budget and eight workers. Seeds 1–3 influenced implementation; only seeds 4–5 are fresh transfer checks. Wall-time nondeterminism, authored-fixture bias, and unknown hidden scale remain.
+- Integrity audit: the failed seed-5 `63.0`, its unchanged ten-second repair, and seed-4 strict diagnostic are preserved. The analytical `31.0` bound is unchanged; model bounds from frozen neighborhoods are not promoted to global proofs.
+- Confidence: very high in official incumbents; high in five-seed eight-worker production-budget recovery on this fixture; high in seed-5 budget causality; medium in repair transfer across related regimes; low-to-medium in hidden-instance runtime reliability.
+- Immediate next action: preserve and regression-test the 30-second production budget explicitly, then create a precommitted structurally different repair fixture or run a scale stress test without altering the algorithm from observed failures.

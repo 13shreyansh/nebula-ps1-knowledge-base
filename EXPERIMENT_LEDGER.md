@@ -791,3 +791,19 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: A again failed closed, but direct C reached checked `31.0` in 120.007 seconds after 35 solves and 29 closure rounds. Verification and footprint-expanded repair each retained `31.0`; neither supplied a global solver proof. The final hash is `d45951d25022b6485eebb58a5c2c3d57272fb4fa8d67e0fd2a1f1bb6cd9f74a4`.
 - Independent checks: both local scorers report two ECLO rows, three excess groups, zero delay, and objective `31.0`; standard and strict closure screens are clean. The analytical bound from E074 supplies the optimality proof under implemented rules.
 - Interpretation: four workers are sufficient on this one seed where one worker failed. This is an empirical compute-sensitivity result, not a universal minimum-worker claim. Test two workers next under the identical policy.
+
+### E080: Two workers reach feasibility but expose a delay-repair gap
+
+- Timestamp: 2026-09-19 06:27:03 +08
+- Matched result: the E078/E079 policy with two workers returned a dual-scored, standard-clean, strict-clean C=`63420.0` schedule. Its loss is `63210` priority-weighted delay, 30 excess groups (`210`), and no ECLO. Hash: `77415bedf879cacb7509b2f0d77124bb1475adbd81e99741bf638bf406fa7d5f`.
+- Extended repair: increasing the footprint-expanded repair budget from 10 to 120 seconds reduced the same checked incumbent to C=`1914.0`: `1820` delay, two ECLO rows, and 12 excess groups. Both scorers agree, both closure policies are clean, and the hash is `35c4b5bead72eb0ff0fc4836975a144e275e8cde6ecb15740f41fe63fa4502de`.
+- Falsification: more repair time helps substantially but does not recover the C=`31.0` optimum. The run ended feasible with a conditional model bound of `1824.6`, not a global proof. Ten-second cost repair is not adequate when the first safe incumbent is dominated by delay.
+- Decision: do not tune production around two-worker behavior or promote either result. Production uses eight workers; test fresh eight-worker seeds to measure the corrected controller's relevant reliability.
+
+### E081: Fresh seeds separate the compressed test budget from production repair
+
+- Timestamp: 2026-09-19 06:40:30 +08
+- Seed 4, compressed policy: direct C returned `77.0`, verification `63.0`, and the ten-second footprint repair reached the bounded optimum `31.0`. Both scorers agree and the standard closure screen is clean; the strict unpublished hedge reports one conflict. Hash: `fb73e49ad8ee476b017f69424edf4d93ef47cbb509259e65762c3316ab57397a`.
+- Seed 5 falsification: the same compressed policy stopped at checked, strict-clean C=`63.0`, consisting of `35` delay and four excess groups (`28`). The ten-second repair returned the incumbent unchanged despite a lower conditional bound.
+- Budget test: the identical seed-5 neighborhood reached C=`31.0` in 30.044 seconds. A full controller replay with the existing 30-second production default independently reached C=`31.0`, hash `7c4f563e23a270edb643983c2326b124cee3de77bcd65de02a258f222013b1da`; both scorers agree and both closure screens are clean.
+- Conclusion: the footprint expansion transfers to the two fresh seeds, but the compressed ten-second repair is not a reliable production policy. No algorithm or default changed: the CLI already defaults to 30 seconds for this repair. Across irregular seeds 1–5, the corrected controller reaches `31.0` when the production repair budget is used; only seeds 1–3 informed the implementation.

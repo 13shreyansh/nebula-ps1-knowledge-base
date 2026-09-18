@@ -1542,6 +1542,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertIsNone(solve.call_args_list[0].kwargs["sample_hint_dir"])
         self.assertEqual(solve.call_args_list[1].kwargs["separator_mode"], "bridge_safe")
         self.assertEqual(solve.call_args_list[2].kwargs["separator_mode"], "bridge_safe")
+        self.assertEqual(solve.call_args_list[2].kwargs["time_limit_seconds"], 30.0)
         self.assertTrue(solve.call_args_list[2].kwargs["freeze_access_hint"])
         self.assertEqual(report["selected_stage"], "scenario_c_heuristic")
         self.assertEqual(report["scenario_c_heuristic_selected_attempt"], 1)
