@@ -1,5 +1,6 @@
 .DS_Store
 .playwright-cli/
+current-problem-statement/
 *.m4a
 *.wav
 *.mp3
