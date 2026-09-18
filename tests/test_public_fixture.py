@@ -7,6 +7,7 @@ import json
 import shutil
 import tempfile
 from dataclasses import replace
+from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -41,6 +42,17 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(len(self.instance.activities), 54)
         self.assertEqual(len(self.instance.locations), 76)
         self.assertEqual(self.instance.horizon_weeks, 30)
+
+    def test_hard_deadline_uses_last_completed_week_not_containing_week(self) -> None:
+        midweek_deadline = date(2027, 1, 13)
+        self.assertEqual(self.instance.week_for_date(midweek_deadline), 2)
+        self.assertEqual(self.instance.last_week_completing_by(midweek_deadline), 1)
+        self.assertLessEqual(self.instance.completion_date(1), midweek_deadline)
+        self.assertGreater(self.instance.completion_date(2), midweek_deadline)
+        self.assertEqual(
+            self.instance.last_week_completing_by(date(2027, 1, 17)),
+            2,
+        )
 
     def test_generated_work_footprints_match_all_public_occupancy_keys(self) -> None:
         access, occupancy, _ = load_submission(PACK / "03_submission_sample")

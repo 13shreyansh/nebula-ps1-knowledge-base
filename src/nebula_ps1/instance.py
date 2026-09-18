@@ -92,6 +92,11 @@ class Instance:
     def completion_date(self, week: int) -> date:
         return self.horizon_start + timedelta(days=7 * week - 1)
 
+    def last_week_completing_by(self, value: date) -> int:
+        """Return the final week whose Sunday completion does not exceed value."""
+
+        return max(0, ((value - self.horizon_start).days + 1) // 7)
+
 
 FILES = {
     "lines": "01_LINES.csv",
@@ -357,4 +362,3 @@ def load_instance(data_dir: str | Path) -> Instance:
         horizon_start=horizon_start,
         horizon_weeks=horizon_weeks,
     )
-

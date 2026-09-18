@@ -282,3 +282,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Verification: full-gate pruning removed no rows; the main checker and independent raw-CSV scorer agree; each promoted answer key passes both closure screens; the manifest pins normalized file hashes and marks `strict_buffer_overlap_checked=true`; 22 regressions pass.
 - Result: all three protected scores are unchanged while no longer depending on the known buffer-only ambiguity. This is stronger robustness evidence, not reference-validator confirmation, because other closure details remain inferred.
 - Implementation defect found during the same audit: `solve-a-relaxation` referenced an undefined CLI argument and `solve-c-portfolio --audit-output` ignored its value. Both routes are corrected and directly regression-tested.
+
+### E023: Hidden-date boundary hardening
+
+- Timestamp: 2026-09-19 01:03:00 +08
+- Defect: Scenario B bounded eligible weeks with `week_for_date(planned_completion_date)`. That is equivalent to the final on-time week only when the date is the week's Sunday, as in the public instance. A midweek hidden deadline would admit the containing week even though its Sunday completion is late.
+- Correction: compute the latest week whose derived completion date is on or before the hard deadline. A regression uses Wednesday 2027-01-13: it is contained in week 2, but week 1 is the latest week completing by that date. Public-instance behaviour is unchanged.
+- Related semantic guards: sample regressions now prove that possession closure exemption propagates through transitive local co-sharing links, while `access_night` remains a contract/type accounting index and must not equal physical possession membership.
+- Verification: all 25 regressions and `git diff --check` pass. No score or answer-key artifact changed.

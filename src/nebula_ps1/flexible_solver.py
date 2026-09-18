@@ -62,7 +62,7 @@ def solve_flexible_supply_relaxation(
         project = instance.projects[activity.contract_number]
         first_week = max(1, instance.week_for_date(activity.planned_start_date))
         last_week = (
-            instance.week_for_date(project.planned_completion_date)
+            instance.last_week_completing_by(project.planned_completion_date)
             if scenario == "B"
             else horizon
         )
