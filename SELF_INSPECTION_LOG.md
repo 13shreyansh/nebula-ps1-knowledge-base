@@ -913,3 +913,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity controls: the new fixture and exact omission are committed before solver exposure. The authored chain tests a general alternating dependency boundary, not a public identifier or score-specific rule.
 - Confidence: very high in official incumbents; high in five-seed same-regime reliability and fixture validity; no confidence yet in the new repair outcome; medium in hidden transfer.
 - Immediate next action: commit the holdout, run the unchanged expanded repair, preserve its result, then test one final targeted precedence pass without introducing fixed-point recursion.
+
+## 2026-09-19 07:39:03 +08
+
+- Interval: 6 minutes 51 seconds since the previous inspection; triggered by the user's audit-status challenge and completion of the reporting check.
+- Best independently validated public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- What improved: the terminal precedence correction is covered by 67 passing regressions, and the direct-C fallback now exposes narrow and expanded prune decisions at stable top-level keys. This makes future audit consumers less likely to miss why a candidate was retained or rejected.
+- Adversarial finding: the solver result did not regress, but audit evidence was branch-dependent. A successful fallback could expose activities and telemetry at the top level while leaving pruning evidence nested, creating a risk of incomplete automated summaries.
+- Integrity check: the reporting patch changes no schedule, score, objective, seed, time limit, or selection rule. Its targeted test and the full 67-test suite pass. The official incumbent remains protected.
+- Remaining uncertainty: five-seed reliability covers one independent irregular regime, not unseen official data. The expanded tier still has no general full-instance proof, and no new official validator call has been made.
+- Falsification result: the feared solver regression is absent in the current test suite; the actual confirmed defect is incomplete report normalization. No claim of score improvement follows from this correction.
+- Confidence: very high in official incumbents and report-only scope; high in regression evidence; medium in transfer of the two-tier repair; low in unknown hidden-instance behavior.
+- Immediate next action: commit the report normalization, then run a cross-regime production-path audit that verifies every selected artifact, score, feasibility result, proof scope, and manifest hash using the current code.

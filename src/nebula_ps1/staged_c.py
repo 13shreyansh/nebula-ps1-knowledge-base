@@ -114,11 +114,17 @@ def solve_staged_c_portfolio(
             "scenario_c_cost_repair_telemetry": direct_report.get(
                 "bridge_safe_cost_repair_telemetry"
             ),
+            "scenario_c_cost_repair_prune": direct_report.get(
+                "bridge_safe_cost_repair_prune"
+            ),
             "scenario_c_expanded_cost_repair_activities": direct_report.get(
                 "bridge_safe_expanded_cost_repair_activities", []
             ),
             "scenario_c_expanded_cost_repair_telemetry": direct_report.get(
                 "bridge_safe_expanded_cost_repair_telemetry"
+            ),
+            "scenario_c_expanded_cost_repair_prune": direct_report.get(
+                "bridge_safe_expanded_cost_repair_prune"
             ),
         }
         (audit_output / "STAGED_C.json").write_text(
