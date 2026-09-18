@@ -669,3 +669,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity audit: the universal gate, cross-footprint screen, and longer-repair failures are preserved; only the measured scenario-aware rule remains. No internal candidate replaced an official artifact and no portal run was consumed.
 - Confidence: high that the new gate improves public A/C tail runtime without score regression; high in complete-hint synthetic regimes; low in one-worker A/C reliability; medium in hidden transfer.
 - Immediate next action: commit the gate and evidence, then attack the remaining two-conflict one-worker A repair using conflict structure rather than more wall time or random attempts.
+
+## 2026-09-19 05:11:34 +08
+
+- Interval: 6 minutes 12 seconds since the previous inspection; triggered by three failed targeted-repair hypotheses.
+- Best official public scores remain unchanged. No portal attempt or protected artifact changed.
+- Exact residual: the best one-worker A local repair retained two week-19 conflicts, both involving A074 against A002/A065 at `PLAT:BET:S13:WB`. Expanding the free set through predecessor/successor closure preserved both conflicts.
+- Rejected search optimization: seeding sound cuts from the unsafe hint reduced 51-round wall time from 8.108 to 6.335 seconds, but retained the same two conflicts. At 500 rounds it timed out after 73 cut rounds with the same conflicts; the full staged controller still failed. Faster failure is not an outcome improvement, so the solver change was reverted.
+- Rejected neighborhood expansions: adding A075 as the sole apparent week-30 blocker produced ten conflicts; adding the lower-blocker week-28 set produced four. Local hypothetical blocker counts did not predict a globally repairable neighborhood.
+- Integrity audit: every negative output remains audit-only; the attempted solver refactor was reverted exactly; 51 passing regressions and the accepted scenario-aware hint gate remain. The failure ledger now records local-repair activities and telemetry so future audits need not reconstruct them from files.
+- Adversarial conclusion: continued tuning against this one public seed risks overfitting while the official score is already optimal. The failure is a portability diagnostic, not a submission blocker. Stop this branch and return to independent hidden-style regimes or a fundamentally different sound formulation.
+- Confidence: very high in protected public results; high that the tested local fixes do not solve one-worker A; low that further small neighborhood tweaks are worth the overfit risk.
+- Immediate next action: commit the diagnostic improvement and rejected experiments, then construct a pre-generated irregular partial-hint fixture independent of public data before changing the algorithm again.

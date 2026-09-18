@@ -33,3 +33,9 @@ runs/public_complete_hint_gate_w1/
 runs/public_a_partial_gate_repair30_w1/
 runs/public_partial_hint_gate_regression_w8/
 runs/public_partial_hint_gate_variance_w8/
+runs/public_a_dependency_repair10_w1/
+runs/public_a_seeded_cut_repair10_w1/
+runs/public_a_seeded_cut_repair10_r500_w1/
+runs/public_a_seeded_cut_staged_w1/
+runs/public_a_escape_blocker_repair10_w1/
+runs/public_a_escape_week28_repair10_w1/

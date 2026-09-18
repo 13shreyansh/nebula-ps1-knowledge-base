@@ -261,6 +261,10 @@ def solve_staged_scenario(
                     {
                         "heuristic_attempts": attempt_telemetry,
                         "bridge_safe_repair_hint_source_attempt": repair_hint_attempt,
+                        "bridge_safe_local_repair_activities": local_repair_activities,
+                        "bridge_safe_local_repair_telemetry": (
+                            asdict(local_repair) if local_repair is not None else None
+                        ),
                         "bridge_safe_fallback_attempts": fallback_attempt_telemetry,
                     },
                     indent=2,

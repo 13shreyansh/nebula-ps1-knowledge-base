@@ -473,6 +473,12 @@ Confidence labels:
 - **Finding:** A partial public warm start harmed delay-minimizing A, while removing the same packing information made fixed-deadline B lose feasibility. Complete hints solved every independent dense regime tested.
 - **Relevance:** Record coverage explicitly. Clear incomplete hints for A, where neutral search can trade delay against placement; retain them for B/C, where packing can establish hard-date feasibility. Validate any scenario-specific policy on full score/feasibility/runtime distributions and preserve an unhinted portfolio path.
 - **Limitation:** This rule is selected from known fixtures and may not dominate on every hidden distribution. Later unhinted attempts and fail-closed verification remain necessary safeguards.
+
+### `R058` Local conflict counts do not identify a sufficient repair neighborhood
+
+- **Status:** Demonstrated negatively on public one-worker A.
+- **Finding:** Dependency closure, pre-seeded sound cuts, and activities blocking the least-conflicted alternative weeks all failed to remove a two-conflict residual. Some expansions increased final conflicts despite appearing locally favorable.
+- **Relevance:** Closure repair is globally coupled through transitive possession groups, frozen access timing, workfronts, and capacity. Do not select neighborhoods from pairwise conflict counts alone. Validate repair operators end to end, preserve failed outputs, and move to an independent fixture or different formulation before further tuning a solved public instance.
 - **Limitation:** The tight activity is spatially isolated, so the result does not cover ECLO decisions coupled to possession conflicts or C's global two-week line window.
 - **Confidence:** High for the tested trade-off; medium for coupled cases.
 

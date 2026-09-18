@@ -723,3 +723,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Regression: 51 tests pass. The independent dense, holdout, additive, and coupled cases keep complete hints and their proved results. One eight-worker public seed reconstructed A=`137.9`, B=`30.0`, C=`62.7` before the full comparison.
 - Unfiltered five-seed result: 15/15 public A/B/C runs matched their optima. A min/median/max wall time changed from 20.097/23.083/33.840 to 15.425/23.639/25.742 seconds; B from 11.160/14.035/23.961 to 9.902/13.977/23.039; C from 28.974/29.569/39.665 to 17.360/23.505/37.354.
 - Boundary: A's median improvement is negligible and one-worker A still fails. The gain is eight-worker tail reduction on known public data, not hidden-score progress or compute portability. Strict diagnostics remain non-objective and variable.
+
+### E072: Three targeted one-worker A repairs fail and are rejected
+
+- Timestamp: 2026-09-19 05:11:34 +08
+- Residual structure: the best 10-second local repair retained two week-19 conflicts, A074–A002 and A074–A065 at `PLAT:BET:S13:WB`. Expanding the original seven free activities to their ten-activity predecessor/successor closure did not change either conflict.
+- Seeded-cut experiment: adding the unsafe hint's already known bridge-safe cuts before the first solve reduced a 51-round repair from 8.108 to 6.335 seconds but retained both conflicts. With the production 500-round cap it timed out after 73 cut rounds, still with two conflicts. A full staged run failed. The code was reverted because lower overhead without a checked incumbent is not improvement.
+- Escape-week experiments: freeing A075, the sole distinct-group blocker in a simple week-30 probe, produced ten final conflicts. Freeing the three week-28 blockers produced four. Static pairwise blocker counts did not capture transitive grouping and closure interactions.
+- Diagnostic correction retained: `STAGED_FAILURES.json` now includes the exact local-repair free set and telemetry. This changes observability only.
+- Decision: stop tuning public one-worker A. The public submission is already officially optimal, and further seed-specific neighborhood changes create an overfitting risk. Resume on an independently generated irregular partial-hint fixture or compare a fundamentally different sound formulation.
