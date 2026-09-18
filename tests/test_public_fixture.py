@@ -388,6 +388,8 @@ class PublicFixtureTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             relabel_submission_scenario(self.instance, source, temp_dir, "C")
             evaluation = evaluate_submission(self.instance, temp_dir, scenario="C")
+            for name in SUBMISSION_FILES:
+                self.assertNotIn(b"\r\n", (Path(temp_dir) / name).read_bytes())
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(evaluation.eclo_nights_total, 0)
         self.assertEqual(evaluation.excess_access_nights_total, 0)
@@ -602,6 +604,8 @@ class PublicFixtureTests(unittest.TestCase):
             report = prune_submission(self.instance, source, output, "A")
             evaluation = evaluate_submission(self.instance, output, scenario="A")
             self.assertEqual(sorted(path.name for path in output.iterdir()), sorted(SUBMISSION_FILES))
+            for name in SUBMISSION_FILES:
+                self.assertNotIn(b"\r\n", (output / name).read_bytes())
         self.assertEqual(report.initial_access_rows, 192)
         self.assertEqual(report.final_access_rows, 192)
         self.assertEqual(report.removed_accesses, ())
@@ -625,6 +629,8 @@ class PublicFixtureTests(unittest.TestCase):
                 occupancy,
                 forbid_buffer_overlap=True,
             )
+            for name in SUBMISSION_FILES:
+                self.assertNotIn(b"\r\n", (output / name).read_bytes())
         self.assertTrue(report.strict_buffer_overlap_checked)
         self.assertEqual(report.removed_accesses, ())
         self.assertEqual(strict_conflicts, ())
@@ -648,6 +654,8 @@ class PublicFixtureTests(unittest.TestCase):
                 occupancy,
                 forbid_buffer_overlap=True,
             )
+            for name in SUBMISSION_FILES:
+                self.assertNotIn(b"\r\n", (Path(temp_dir) / name).read_bytes())
         self.assertEqual(telemetry.status, "FEASIBLE_SAFE_INCUMBENT")
         self.assertAlmostEqual(telemetry.objective_score, 32.2)
         self.assertEqual(evaluation.hard_violations, ())

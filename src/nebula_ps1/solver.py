@@ -380,7 +380,9 @@ def solve_scenario_a_relaxation(
 
         with (output_root / "SCHEDULE_ACCESS.csv").open("w", newline="", encoding="utf-8") as handle:
             writer = csv.DictWriter(
-                handle, fieldnames=("activity_id", "access_seq", "week", "eclo", "access_night")
+                handle,
+                fieldnames=("activity_id", "access_seq", "week", "eclo", "access_night"),
+                lineterminator="\n",
             )
             writer.writeheader()
             writer.writerows(access_output)
@@ -388,7 +390,9 @@ def solve_scenario_a_relaxation(
             "w", newline="", encoding="utf-8"
         ) as handle:
             writer = csv.DictWriter(
-                handle, fieldnames=("activity_id", "week", "location_id", "co_share_group")
+                handle,
+                fieldnames=("activity_id", "week", "location_id", "co_share_group"),
+                lineterminator="\n",
             )
             writer.writeheader()
             writer.writerows(occupancy_output)
@@ -418,6 +422,7 @@ def solve_scenario_a_relaxation(
                     "simulated_completion_date",
                     "overrun_days",
                 ),
+                lineterminator="\n",
             )
             writer.writeheader()
             writer.writerows(results_output)

@@ -26,7 +26,7 @@ def read_rows(root: Path, name: str) -> tuple[list[str], list[dict[str, str]]]:
 
 def write_rows(root: Path, name: str, fields: list[str], rows: list[dict[str, str]]) -> None:
     with (root / name).open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

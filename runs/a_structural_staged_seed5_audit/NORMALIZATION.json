@@ -1,0 +1,9 @@
+{
+  "change": "Fixture and submission CSV line endings normalized from CRLF to LF for repository storage",
+  "parsed_rows_changed": false,
+  "post_normalization_dataset_hash": "c9cc5779a332946c0c2323a18ca69e138ed04af577c1f2f56df3e2ad63ebebee",
+  "post_normalization_submission_hash": "dc61f3c7d84130fe2e9ee36172d113354ea8863f1d0c058f2bc968ba83e31245",
+  "pre_normalization_dataset_hash": "fb793fb413d2a5f65bf1c48da33c4d4ebb9a8d01d834f55a215311609daf3a46",
+  "pre_normalization_submission_hash": "25a8be858430d3536e5557a08e2592d070703041dbda8557ce12c21745d9ab51",
+  "score_changed": false
+}

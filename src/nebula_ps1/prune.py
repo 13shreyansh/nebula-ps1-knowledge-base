@@ -51,7 +51,7 @@ def _write_submission(
 ) -> None:
     output.mkdir(parents=True, exist_ok=True)
     with (output / "SCHEDULE_ACCESS.csv").open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(("activity_id", "access_seq", "week", "eclo", "access_night"))
         writer.writerows(
             (row.activity_id, row.access_seq, row.week, row.eclo, row.access_night)
@@ -60,7 +60,7 @@ def _write_submission(
     with (output / "SCHEDULE_OCCUPANCY.csv").open(
         "w", newline="", encoding="utf-8"
     ) as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(("activity_id", "week", "location_id", "co_share_group"))
         writer.writerows(
             (row.activity_id, row.week, row.location_id, row.co_share_group)
@@ -78,7 +78,7 @@ def _write_submission(
     for activity_id, activity in sorted(instance.activities.items()):
         activities_by_contract.setdefault(activity.contract_number, []).append(activity_id)
     with (output / "RESULTS.csv").open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(
             ("scenario", "contract_number", "simulated_completion_date", "overrun_days")
         )
