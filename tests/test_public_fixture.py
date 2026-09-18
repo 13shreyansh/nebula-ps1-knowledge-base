@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 21)
+        self.assertEqual(len(matrix["cases"]), 24)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -103,6 +103,14 @@ class PublicFixtureTests(unittest.TestCase):
                     data = ROOT / "fixtures" / "independent_dense_v1"
                     run_root = "independent_dense_v1_structural_matrix_w1"
                 submission = ROOT / "runs" / run_root / f"{row['scenario'].lower()}_seed_1"
+            elif row["case"].startswith("independent_tradeoff_holdout_"):
+                data = ROOT / "fixtures" / "independent_tradeoff_holdout_v1"
+                submission = (
+                    ROOT
+                    / "runs"
+                    / "independent_tradeoff_holdout_v1_blind_w1"
+                    / f"{row['scenario'].lower()}_seed_1"
+                )
             else:
                 self.assertTrue(row["case"].startswith("independent_"))
                 data = ROOT / "fixtures" / "independent_synthetic_v1"
@@ -162,6 +170,28 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(evaluation.hard_violations, ())
             self.assertEqual(evaluation.objective_score, 0.0)
             self.assertEqual(independent.objective_score, 0.0)
+
+    def test_tradeoff_holdout_recovers_nonzero_a_b_c_optima(self) -> None:
+        data = ROOT / "fixtures" / "independent_tradeoff_holdout_v1"
+        instance = load_instance(data)
+        tight = instance.activities["WTIGHT"]
+        self.assertEqual(tight.total_accesses, 3)
+        self.assertEqual(instance.last_week_completing_by(
+            instance.projects[tight.contract_number].planned_completion_date
+        ), 2)
+        expected = {"A": 7.0, "B": 10.0, "C": 7.0}
+        for scenario, score in expected.items():
+            submission = (
+                ROOT
+                / "runs"
+                / "independent_tradeoff_holdout_v1_blind_w1"
+                / f"{scenario.lower()}_seed_1"
+            )
+            evaluation = evaluate_submission(instance, submission, scenario)
+            independent = independently_score(data, submission)
+            self.assertEqual(evaluation.hard_violations, (), scenario)
+            self.assertEqual(evaluation.objective_score, score, scenario)
+            self.assertEqual(independent.objective_score, score, scenario)
 
     def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_holdout_v1"

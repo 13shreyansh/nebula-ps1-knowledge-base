@@ -587,3 +587,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Strongest next counterexample: a pre-generated dense suite whose optimum is nonzero because deadlines, ECLO windows, and capacity cannot all be satisfied. Compare production A/B/C, hint-on/off, and multiple budgets without altering generator or hint code between cases.
 - Confidence: very high in public results; high in the holdout failure and corrected production-path result; medium in dense transfer; low in nonzero-trade-off generalization.
 - Immediate next action: commit both blind and corrected evidence, then generate the nonzero-trade-off suite before any further solver changes.
+
+## 2026-09-19 04:20:51 +08
+
+- Interval: 5 minutes 15 seconds since the previous inspection; triggered early by completion of the pre-generated nonzero trade-off matrix.
+- Best independently validated public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. Public optima and portal attempts remain untouched.
+- What improved: a dense 107-activity input with an analytically nonzero tight job completed 15/15 blind production-path runs at A=`7.0`, B=`10.0`, and C=`7.0`. All scores match independent lower bounds and solver bounds; all standard and strict screens are clean; each scenario is byte-stable across five one-worker seeds.
+- Why this matters: B found two ECLO nights even though the standard-only structural hint could not fit the tight job into two eligible weeks. C chose the cheaper seven-point delay through the protected A fallback. This directly weakens the hypothesis that the new hint overconstrains the solver to its proposed standard schedule or a fixed ECLO-first policy.
+- Adversarial interpretation: the tight activity is on an otherwise unused corridor. Its objective trade-off is additive and does not interact with the dense possession bottlenecks. Fifteen successes could still hide failure when ECLO placement, global C line windows, closure conflicts, and excess capacity are coupled.
+- Integrity audit: the fixture and analytical A/B/C bounds were fixed before the blind run; no solver code or time budget changed afterward; every seed is retained; no oracle was passed; B's result differs from the A oracle and was generated independently; reference-validator status remains false.
+- Strongest next counterexample: place two tight activities on contested corridors and opposite lines such that C's two-week ECLO window, Live cross-line closure, and capacity trade-offs interact. Pre-compute a feasible oracle and lower bound before running. If exact coupling cannot be bounded reliably, preserve the case as a feasibility/runtime stress test rather than claiming optimality.
+- Confidence: very high in public results; high in nonzero additive transfer; medium in dense feasibility transfer; low-to-medium in coupled nonzero trade-offs.
+- Immediate next action: commit this untuned transfer result, then generate a coupled trade-off case without changing the solver.

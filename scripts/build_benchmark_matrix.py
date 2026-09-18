@@ -33,6 +33,9 @@ CASES = (
     ("independent_dense_holdout_A", "fixtures/independent_dense_holdout_v1", "runs/independent_dense_holdout_v1_production_matrix_w1/a_seed_1", "A", "runs/independent_dense_holdout_v1_production_matrix_w1/a_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_dense_holdout_B", "fixtures/independent_dense_holdout_v1", "runs/independent_dense_holdout_v1_production_matrix_w1/b_seed_1", "B", "runs/independent_dense_holdout_v1_production_matrix_w1/b_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_dense_holdout_C", "fixtures/independent_dense_holdout_v1", "runs/independent_dense_holdout_v1_production_matrix_w1/c_seed_1", "C", "runs/independent_dense_holdout_v1_production_matrix_w1/c_seed_1_audit/stages/scenario_c_verification_raw/TELEMETRY.json", None, None),
+    ("independent_tradeoff_holdout_A", "fixtures/independent_tradeoff_holdout_v1", "runs/independent_tradeoff_holdout_v1_blind_w1/a_seed_1", "A", "runs/independent_tradeoff_holdout_v1_blind_w1/a_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_tradeoff_holdout_B", "fixtures/independent_tradeoff_holdout_v1", "runs/independent_tradeoff_holdout_v1_blind_w1/b_seed_1", "B", "runs/independent_tradeoff_holdout_v1_blind_w1/b_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_tradeoff_holdout_C", "fixtures/independent_tradeoff_holdout_v1", "runs/independent_tradeoff_holdout_v1_blind_w1/c_seed_1", "C", "runs/independent_tradeoff_holdout_v1_blind_w1/c_seed_1_audit/stages/scenario_c_verification_raw/TELEMETRY.json", None, None),
 )
 
 

@@ -19,3 +19,4 @@ runs/independent_dense_v1_*/
 runs/prefix040_post_structural_hint_w1/
 runs/prefix040_c_nohint_ablation_s1/
 runs/independent_dense_holdout_v1_*/
+runs/independent_tradeoff_holdout_v1_*/

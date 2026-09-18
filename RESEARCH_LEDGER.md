@@ -430,6 +430,14 @@ Confidence labels:
 - **Limitation:** A-as-C is safe only when A and C share the same input hash and C accepts A's capacity/ECLO policy. The controller already checks its generated fallback; hidden scenario-specific inputs must not be silently cross-used.
 - **Confidence:** High.
 
+### `R051` Non-binding construction hints can coexist with exact ECLO and delay trade-offs
+
+- **Evidence:** On a dense holdout with a provable A=`7`, B=`10`, C=`7` extension, the standard-only structural hint could not schedule B's tight activity by its deadline. The exact model nevertheless found the required two ECLO rows in all five seeds, while guarded C retained the cheaper seven-point delay.
+- **Finding:** A partial feasibility hint need not encode every policy lever. Keeping ECLO, excess, and timing as free exact decisions allows CP-SAT to repair or ignore the hint. This is safer than a constructive algorithm that commits to one lever order.
+- **Relevance:** Continue treating hints as portfolio operators and keep the exact objective dominant. Add specialized ECLO hints only if coupled trade-off benchmarks show a measured need; do not assume “ECLO first.”
+- **Limitation:** The tight activity is spatially isolated, so the result does not cover ECLO decisions coupled to possession conflicts or C's global two-week line window.
+- **Confidence:** High for the tested trade-off; medium for coupled cases.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
