@@ -335,3 +335,21 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Verification: the protected strict schedule attains `26.1`; regressions pin the three workloads, start/planned weeks, activity costs, A075 PM type, disjoint work footprints, and A075-to-A036 blocked-location intersection.
 - Conclusion: C=`26.1` is optimal under the implemented published-rule interpretation without using the withdrawn direct-component proof. Reference-validator confirmation remains absent.
 - Additional search: a 30-activity neighborhood containing the 15 original conflict activities plus every one-step bridge candidate exhausted 300 seconds, reached 140,487 variables/400,285 constraints, and ended `UNKNOWN` with five conflicts and no safe incumbent. It adds no score evidence and is retained as a scalability failure.
+
+### E029: Separate fast heuristic construction from sound verification
+
+- Timestamp: 2026-09-19 01:35:00 +08
+- Design: `bridge_safe` remains the default sound separator. `direct_heuristic` restores the faster over-restrictive direct-component cut only for candidate generation; it suppresses all solver bounds and optimality flags and labels safe output `HEURISTIC_SAFE_INCUMBENT`.
+- Construction test: strict B, raw input, seed 3, eight workers, no hint. The direct heuristic produced checked B=`30.0` in 53.450 seconds over 65 solves/64 closure rounds.
+- Verification test: use that checked candidate as a protected bridge-safe incumbent and search only below `30.0`. The base model proved infeasible in 0.180 seconds with zero branches, so B's primary optimum is soundly certified without using heuristic cuts.
+- Result: a two-stage generate-then-verify pattern retains the practical speed of the heuristic while preventing its restricted feasible space from becoming false optimality evidence.
+
+### E030: Integrated staged workflow and multi-seed fallback
+
+- Timestamp: 2026-09-19 01:43:49 +08
+- Workflow: `solve-staged` runs bounded direct-heuristic attempts with consecutive seeds, full-checks and strict-prunes the first safe incumbent, invokes bridge-safe verification/improvement with that incumbent protected, and emits only the three submission CSVs. All stage telemetry stays in a separate audit directory.
+- Adversarial run: strict Scenario B from raw input, eight workers, seeds starting at 3, 90 seconds per heuristic attempt, and 30 seconds for verification. Seed 3 exhausted its budget with three strict conflicts and no safe objective. Seed 4 then found a strict-feasible `30.0` incumbent in 80.301 seconds.
+- Sound verification: the bridge-safe `<30.0` model was infeasible in 0.179 seconds with zero branches, proving the primary `30.0` bound under the implemented semantics without importing any heuristic bound.
+- Independent checks: the main evaluator and raw-CSV scorer both report `30.0`; the strict screen reports zero conflicts; the output contains exactly `RESULTS.csv`, `SCHEDULE_ACCESS.csv`, and `SCHEDULE_OCCUPANCY.csv`. Repository LF normalization changed the byte-level submission hash from runtime `0aeb92848367bcc700e1edaa858b57962ed21a6dff11312c406a7db6f1cd3705` to `80d3ba702661de023c7000db462778c051742f8e9a3e03566229c5cbc90b87c7` without changing parsed rows or score.
+- Interface defect found: `--heuristic-attempts` was initially forwarded to the ordinary flexible command and omitted from the staged call. The completed run still used the intended default of three. Routing is corrected and a non-default-value regression now covers it.
+- Decision: retain the existing protected public B answer key because the score is equal. Use the staged workflow for fresh-instance construction, while preserving every failed attempt and requiring sound verification before any optimality claim.

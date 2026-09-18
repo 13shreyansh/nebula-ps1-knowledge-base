@@ -21,6 +21,7 @@ from nebula_ps1.instance import load_instance
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from nebula_ps1.prune import prune_submission
 from nebula_ps1.solver import _activity_costs
+from nebula_ps1.staged import solve_staged_scenario
 from nebula_ps1.submission import relabel_submission_scenario
 from nebula_ps1.topology import (
     activity_footprint,
@@ -290,6 +291,30 @@ class PublicFixtureTests(unittest.TestCase):
                 cli_main()
         self.assertNotIn("audit_output_dir", solve.call_args.kwargs)
 
+    def test_flexible_cli_forwards_only_flexible_arguments(self) -> None:
+        telemetry = SimpleNamespace(
+            objective_score=0.0,
+            remaining_closure_conflicts=0,
+            as_json=lambda: "{}",
+        )
+        argv = [
+            "nebula-ps1",
+            "solve-flexible-relaxation",
+            "--data",
+            str(PACK / "01_data"),
+            "--output",
+            "unused",
+            "--scenario",
+            "B",
+        ]
+        with patch("sys.argv", argv), patch(
+            "nebula_ps1.cli.solve_flexible_supply_relaxation", return_value=telemetry
+        ) as solve:
+            with self.assertRaisesRegex(SystemExit, "0"):
+                cli_main()
+        self.assertNotIn("heuristic_attempts", solve.call_args.kwargs)
+        self.assertEqual(solve.call_args.kwargs["separator_mode"], "bridge_safe")
+
     def test_c_portfolio_cli_forwards_custom_audit_directory(self) -> None:
         argv = [
             "nebula-ps1",
@@ -308,6 +333,25 @@ class PublicFixtureTests(unittest.TestCase):
             cli_main()
         self.assertEqual(solve.call_args.kwargs["audit_output_dir"], "custom-audit")
         self.assertTrue(solve.call_args.kwargs["forbid_buffer_overlap"])
+
+    def test_staged_cli_forwards_heuristic_attempt_count(self) -> None:
+        argv = [
+            "nebula-ps1",
+            "solve-staged",
+            "--data",
+            str(PACK / "01_data"),
+            "--output",
+            "unused",
+            "--scenario",
+            "B",
+            "--heuristic-attempts",
+            "7",
+        ]
+        with patch("sys.argv", argv), patch(
+            "nebula_ps1.cli.solve_staged_scenario", return_value={}
+        ) as solve:
+            cli_main()
+        self.assertEqual(solve.call_args.kwargs["heuristic_attempts"], 7)
 
     def test_minimal_32_2_repair_passes_sample_consistent_closure_screen(self) -> None:
         candidate = ROOT / "runs" / "a_repair_late_a035_a038"
@@ -608,6 +652,20 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertAlmostEqual(telemetry.objective_score, 32.2)
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(strict_conflicts, ())
+        with tempfile.TemporaryDirectory() as temp_dir:
+            heuristic = solve_flexible_supply_relaxation(
+                self.instance,
+                temp_dir,
+                "A",
+                time_limit_seconds=0.0,
+                sample_hint_dir=source,
+                forbid_buffer_overlap=True,
+                separator_mode="direct_heuristic",
+            )
+        self.assertEqual(heuristic.status, "HEURISTIC_SAFE_INCUMBENT")
+        self.assertIsNone(heuristic.best_bound)
+        self.assertFalse(heuristic.primary_score_proven_optimal)
+        self.assertFalse(heuristic.tie_break_proven_optimal)
 
     def test_freeze_access_requires_an_explicit_hint(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -636,6 +694,24 @@ class PublicFixtureTests(unittest.TestCase):
                     sample_hint_dir=ROOT / "runs" / "c_relax_seed1",
                     freeze_access_hint=True,
                     freeze_access_except={"UNKNOWN_ACTIVITY"},
+                )
+
+    def test_separator_mode_rejects_unknown_policy(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with self.assertRaisesRegex(ValueError, "separator_mode"):
+                solve_flexible_supply_relaxation(
+                    self.instance,
+                    temp_dir,
+                    "A",
+                    time_limit_seconds=0.0,
+                    separator_mode="unsafe-unknown",
+                )
+            with self.assertRaisesRegex(ValueError, "heuristic_attempts"):
+                solve_staged_scenario(
+                    self.instance,
+                    Path(temp_dir) / "staged",
+                    "B",
+                    heuristic_attempts=0,
                 )
 
     def test_packaged_public_answer_keys_match_manifest(self) -> None:

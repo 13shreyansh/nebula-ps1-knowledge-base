@@ -1,0 +1,23 @@
+{
+  "best_bound": null,
+  "branches": 729376,
+  "closure_rounds": 104,
+  "conflicts": 0,
+  "formulation": "scenario_b_iterative_direct_heuristic_strict_buffer_closure_relaxation",
+  "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+  "maximum_round_time_seconds": 1.0,
+  "model_constraints": 51993,
+  "model_variables": 25949,
+  "objective_score": null,
+  "primary_score_proven_optimal": false,
+  "remaining_closure_conflicts": 3,
+  "round_time_limit_seconds": 1.0,
+  "seed": 3,
+  "solve_rounds": 105,
+  "status": "UNKNOWN",
+  "tie_break_proven_optimal": false,
+  "time_limit_seconds": 90.0,
+  "unknown_retries": 0,
+  "wall_time_seconds": 90.01390408400039,
+  "workers": 8
+}

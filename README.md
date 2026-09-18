@@ -354,6 +354,8 @@ The protected public answer keys are in `deliverables/public/A`, `B`, and `C`. E
 2. **Primary score:** optimise the exact scenario objective.
 3. **Tie-break:** after fixing the best primary score, minimise unnecessary churn, fragmented work, and arbitrary label use. Tie-breakers must not weaken the official score.
 
+The executable staged path uses the fast direct-component formulation only to generate a candidate. It suppresses that heuristic model's bounds, rejects every candidate that fails the full checker or requested strict screen, then passes the first safe incumbent to the sound bridge-safe formulation and searches strictly below it. Multiple deterministic seed attempts protect against heuristic failure. Only a strictly lower fully checked candidate can replace the incumbent; audit artifacts are stored outside the final three-CSV directory.
+
 ### Initial solution
 
 Construct a warm start using the following signals:

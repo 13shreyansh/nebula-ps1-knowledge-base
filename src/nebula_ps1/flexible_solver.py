@@ -29,6 +29,7 @@ def solve_flexible_supply_relaxation(
     forbid_buffer_overlap: bool = False,
     freeze_access_hint: bool = False,
     freeze_access_except: set[str] | None = None,
+    separator_mode: str = "bridge_safe",
 ) -> SolveTelemetry:
     """Solve a scenario with iterative cuts from the inferred closure screen.
 
@@ -41,6 +42,8 @@ def solve_flexible_supply_relaxation(
 
     if scenario not in {"A", "B", "C"}:
         raise ValueError("scenario must be A, B, or C")
+    if separator_mode not in {"bridge_safe", "direct_heuristic"}:
+        raise ValueError("separator_mode must be bridge_safe or direct_heuristic")
     if freeze_access_hint and sample_hint_dir is None:
         raise ValueError("freeze_access_hint requires sample_hint_dir")
     if freeze_access_except and not freeze_access_hint:
@@ -453,8 +456,13 @@ def solve_flexible_supply_relaxation(
                 for activity_id in sorted(involved)
             ]
 
+            join_targets = (
+                sorted(second)
+                if separator_mode == "direct_heuristic"
+                else sorted(instance.activities)
+            )
             for first_activity in first:
-                for other_activity in sorted(instance.activities):
+                for other_activity in join_targets:
                     if other_activity in first_set:
                         continue
                     if (other_activity, conflict.week) not in access:
@@ -499,6 +507,10 @@ def solve_flexible_supply_relaxation(
             status = "PRIMARY_OPTIMAL_SAFE_INCUMBENT"
         else:
             status = "FEASIBLE_SAFE_INCUMBENT"
+        if separator_mode == "direct_heuristic":
+            status = "HEURISTIC_SAFE_INCUMBENT"
+            safe_proven_optimal = False
+            safe_tie_break_proven = False
     else:
         status = solver.status_name(status_code)
 
@@ -586,7 +598,9 @@ def solve_flexible_supply_relaxation(
         objective = solver.value(primary_score) / 10.0
     else:
         objective = None
-    if safe_proven_optimal and safe_objective_tenths is not None:
+    if separator_mode == "direct_heuristic":
+        bound = None
+    elif safe_proven_optimal and safe_objective_tenths is not None:
         bound = safe_objective_tenths / 10.0
     elif has_solution:
         bound = math.floor(solver.best_objective_bound / tie_scale) / 10.0
@@ -595,7 +609,7 @@ def solve_flexible_supply_relaxation(
     proto = model.proto
     telemetry = SolveTelemetry(
         formulation=(
-            f"scenario_{scenario.lower()}_iterative_bridge_safe_"
+            f"scenario_{scenario.lower()}_iterative_{separator_mode}_"
             f"{'strict_buffer' if forbid_buffer_overlap else 'sample_consistent'}_closure_relaxation"
             f"{'_partially_frozen_access' if free_activities else '_frozen_access' if freeze_access_hint else ''}"
         ),
@@ -612,6 +626,11 @@ def solve_flexible_supply_relaxation(
         model_constraints=len(proto.constraints),
         limitation=(
             (
+                "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver "
+                "bounds and optimality statuses are suppressed. Every returned candidate still passes the "
+                "full implemented checker."
+                if separator_mode == "direct_heuristic"
+                else
                 "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which "
                 "contradicts four cases in the organizer's stated-feasible sample. This output is a hedge, "
                 "not validator confirmation."

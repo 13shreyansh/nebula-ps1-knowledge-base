@@ -10,6 +10,7 @@ from .instance import load_instance
 from .portfolio import solve_scenario_c_portfolio
 from .prune import prune_submission
 from .solver import solve_scenario_a_relaxation
+from .staged import solve_staged_scenario
 from .submission import relabel_submission_scenario
 
 
@@ -69,6 +70,12 @@ def main() -> None:
         "--freeze-except",
         help="comma-separated activities left free when --freeze-access-hint is used",
     )
+    flexible_parser.add_argument(
+        "--separator",
+        choices=("bridge_safe", "direct_heuristic"),
+        default="bridge_safe",
+        help="sound bridge-safe separation or faster over-restrictive candidate generation",
+    )
     portfolio_parser = subparsers.add_parser(
         "solve-c-portfolio",
         help="protect a checked A-as-C fallback before attempting a better C solve",
@@ -88,6 +95,21 @@ def main() -> None:
         action="store_true",
         help="preserve the published buffer-to-buffer hedge through all portfolio stages",
     )
+    staged_parser = subparsers.add_parser(
+        "solve-staged",
+        help="generate with the fast heuristic, then verify/improve with sound cuts",
+    )
+    staged_parser.add_argument("--data", required=True)
+    staged_parser.add_argument("--output", required=True)
+    staged_parser.add_argument("--audit-output")
+    staged_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
+    staged_parser.add_argument("--heuristic-time-limit", type=float, default=120.0)
+    staged_parser.add_argument("--verification-time-limit", type=float, default=120.0)
+    staged_parser.add_argument("--workers", type=int, default=8)
+    staged_parser.add_argument("--seed", type=int, default=1)
+    staged_parser.add_argument("--heuristic-attempts", type=int, default=3)
+    staged_parser.add_argument("--closure-rounds", type=int, default=500)
+    staged_parser.add_argument("--strict-buffer-overlap", action="store_true")
     relabel_parser = subparsers.add_parser(
         "relabel-scenario",
         help="reuse a schedule unchanged and recompute result rows for another scenario",
@@ -162,6 +184,7 @@ def main() -> None:
                 if args.freeze_except
                 else None
             ),
+            separator_mode=args.separator,
         )
         print(telemetry.as_json())
         if telemetry.objective_score is None:
@@ -180,6 +203,23 @@ def main() -> None:
             closure_round_limit=args.closure_rounds,
             a_round_time_limit_seconds=args.a_round_time_limit,
             c_round_time_limit_seconds=args.c_round_time_limit,
+            forbid_buffer_overlap=args.strict_buffer_overlap,
+        )
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return
+    if args.command == "solve-staged":
+        instance = load_instance(args.data)
+        report = solve_staged_scenario(
+            instance,
+            args.output,
+            args.scenario,
+            audit_output_dir=args.audit_output,
+            heuristic_time_limit_seconds=args.heuristic_time_limit,
+            verification_time_limit_seconds=args.verification_time_limit,
+            workers=args.workers,
+            seed=args.seed,
+            heuristic_attempts=args.heuristic_attempts,
+            closure_round_limit=args.closure_rounds,
             forbid_buffer_overlap=args.strict_buffer_overlap,
         )
         print(json.dumps(report, indent=2, sort_keys=True))

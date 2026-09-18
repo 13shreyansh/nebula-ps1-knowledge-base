@@ -1,0 +1,7 @@
+{
+  "change": "CSV line endings normalized from CRLF to LF for repository storage",
+  "parsed_rows_changed": false,
+  "post_normalization_submission_hash": "80d3ba702661de023c7000db462778c051742f8e9a3e03566229c5cbc90b87c7",
+  "pre_normalization_submission_hash": "0aeb92848367bcc700e1edaa858b57962ed21a6dff11312c406a7db6f1cd3705",
+  "score_changed": false
+}
