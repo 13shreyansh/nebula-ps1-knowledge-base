@@ -584,6 +584,14 @@ Confidence labels:
 - **Relevance:** Branch-dependent audit schemas can hide which optimizer ran, lose conditional-bound context, or create false missing-result alarms. Keep the complete nested report and expose stable top-level narrow/expanded activity and telemetry fields on both paths.
 - **Confidence:** High.
 
+### `R072` Portfolio order stabilizes a broader stochastic neighborhood
+
+- **Status:** Confirmed on five serial seeds from one checked irregular incumbent.
+- **Finding:** Narrow-first repair reached analytical C=`31.0` in 5/5 30-second runs. Each subsequent expanded ten-second repair retained C=`31.0`. All five finals were dual-scored and clean under both closure policies, with five distinct hashes.
+- **Relevance:** The expanded neighborhood failed twice when started directly from C=`63.0`, but behaved safely after the narrow tier supplied C=`31.0`. Portfolio order changes search reliability even when both tiers use protected hints.
+- **Limitation:** This is one instance, source incumbent, machine, worker count, and serial-load regime. Neither tier proved a bound; optimality comes from the independent analytical lower bound.
+- **Confidence:** High for this regime; medium for transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

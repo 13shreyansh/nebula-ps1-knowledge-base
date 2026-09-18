@@ -903,3 +903,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Full path: guarded A failed closed; direct C supplied a checked C=`63.0` incumbent. The 27-activity narrow repair reached C=`31.0` in 30.009 seconds. The 29-activity expanded repair, using seed 6 and ten seconds, retained C=`31.0` rather than displacing it.
 - Final evidence: both scorers report C=`31.0`; standard and strict closure screens are clean; hash `18b6eee516d8239407a52172ae7c5f66bbd0f53bd59a526284bdd22c4079711c`. Neither repair proved its conditional bound, so the independent analytical bound from E074 remains the optimality evidence.
 - Reporting failure and correction: the first audit script raised `KeyError` only after completion because the A-failure wrapper nested the generic C report. The wrapper now preserves that nested evidence and exposes stable top-level narrow/expanded repair fields. All 64 regressions pass.
+
+### E094: Five serial seeds reproduce the two-tier C=31 recovery
+
+- Timestamp: 2026-09-19 07:30:23 +08
+- Protocol: fixed checked C=`63.0` irregular incumbent, seeds 1–5, eight workers, narrow 30 seconds, expanded 10 seconds, serial execution to avoid CPU-contention confounding. Every raw, pruned, and selected artifact plus telemetry is retained.
+- Result: narrow scores `[31, 31, 31, 31, 31]`; expanded scores `[31, 31, 31, 31, 31]`; final scores identical. Standard and strict conflicts are zero for all outputs, and both scorers agree.
+- Diversity: all five final submission hashes differ. This rules out copied output as the explanation for score agreement, though it does not establish hidden-distribution generalization.
+- Proof boundary: every run ended `FEASIBLE_SAFE_INCUMBENT` without a bound. The C=`31.0` optimality claim continues to rely on the independent counting lower bound, not solver status.
+- Regression: the matrix is recomputed by a 65th test.

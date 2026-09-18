@@ -507,6 +507,29 @@ class PublicFixtureTests(unittest.TestCase):
             ["COMP", "DIRECT", "FOLLOW", "PEER"],
         )
 
+    def test_irregular_two_tier_repair_matrix_is_dual_scored_and_clean(self) -> None:
+        data = ROOT / "fixtures" / "independent_irregular_partial_v1"
+        matrix_root = ROOT / "runs" / "c_two_tier_irregular_repair_seed_matrix5"
+        matrix = json.loads((matrix_root / "REPAIR_MATRIX.json").read_text())
+        instance = load_instance(data)
+        self.assertEqual(len(matrix["records"]), 5)
+        self.assertEqual({row["seed"] for row in matrix["records"]}, {1, 2, 3, 4, 5})
+        hashes = set()
+        for row in matrix["records"]:
+            self.assertEqual(row["narrow"]["score"], 31.0)
+            self.assertEqual(row["expanded"]["score"], 31.0)
+            self.assertEqual(row["final"]["score"], 31.0)
+            self.assertEqual(row["final"]["standard_conflicts"], 0)
+            self.assertEqual(row["final"]["strict_conflicts"], 0)
+            final = matrix_root / f"seed_{row['seed']}" / "final"
+            evaluation = evaluate_submission(instance, final, "C")
+            independent = independently_score(data, final)
+            self.assertEqual(evaluation.hard_violations, ())
+            self.assertEqual(evaluation.objective_score, 31.0)
+            self.assertEqual(independent.objective_score, 31.0)
+            hashes.add(evaluation.submission_hash)
+        self.assertEqual(len(hashes), 5)
+
     def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_holdout_v1"
         instance = load_instance(data)
