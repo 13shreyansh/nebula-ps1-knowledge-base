@@ -1,11 +1,11 @@
 {
   "final_access_rows": 189,
   "final_score": 30.0,
-  "final_submission_hash": "d64fc52ce290fcfd9c94563a5c2e8ed5d03d5a1125d8c9bb4494a3acb8b9aefc",
+  "final_submission_hash": "0b38e83c94b9e9a1dfb9c33d3ab9c3a7a8cc00e08dba6b8a561570ad3ebfd373",
   "initial_access_rows": 189,
   "initial_score": 30.0,
-  "initial_submission_hash": "d64fc52ce290fcfd9c94563a5c2e8ed5d03d5a1125d8c9bb4494a3acb8b9aefc",
-  "reference_validator_confirmed": false,
+  "initial_submission_hash": "0b38e83c94b9e9a1dfb9c33d3ab9c3a7a8cc00e08dba6b8a561570ad3ebfd373",
+  "reference_validator_confirmed": true,
   "removed_accesses": [],
   "scenario": "B",
   "strict_buffer_overlap_checked": true

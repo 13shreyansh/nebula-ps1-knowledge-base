@@ -494,3 +494,47 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - C result: the generated A schedule was recomputed as a strict C=`32.2` fallback. Direct C search produced strict-feasible `26.1` in 21.775 seconds; bridge-safe verification preserved it for 15.018 seconds without proving a bound. Final hash `c2b4d2962e1578f833eb9930d00342e5a05a62adc018bf25b03d9310baadbccd`.
 - Release gates: main and independent scorers report `16.1` delay, two ECLO nights, zero excess, and objective `26.1`; strict conflicts and hard violations are zero; the final directory contains exactly the three submission CSVs.
 - Interpretation: the full current controller can reconstruct C=`26.1` without a C answer-key hint. Timed A behavior remains nondeterministic, and the integrated run does not replace or erase the controlled local-repair evidence.
+
+### E047: First official validator run falsifies closure semantics
+
+- Timestamp: 2026-09-19 02:47:43 +08
+- Candidate: protected public A ZIP, locally dual-scored at `32.2`, strict-screen clean, exact three files. ZIP hash `51f984fb6d2711c99494d7976bd7b4bb3728f75b0d22f15810bf48fb920289bf`.
+- Official result: **Infeasible**, five closure-zone violations; four of five A runs remain. The exact response is preserved in `OFFICIAL_VALIDATOR_LEDGER.md`.
+- Counterexample 1: A035 and A058 overlap three work locations in week 18 under different local groups. The internal checker joined them transitively through week-level components and incorrectly exempted the pair. The validator reports both directional closure violations.
+- Counterexample 2: Live interchange activities A074 and A075 block work two buffered sectors into the other line, including platforms. The internal cross-line closure covered only H01/H02 and omitted those remote buffer locations.
+- Decision: protected A/B/C outputs lose any feasibility claim until revalidated. Do not upload B or C yet. Replace component-level closure exemption with exact location/group exemption, expand Live cross-line buffers, reproduce all five official violations locally, repair A, and use the second A run only after local gates pass.
+
+### E048: Exact local reproduction of A-001 and correction of E047
+
+- Timestamp: 2026-09-19 02:52:41 +08
+- Falsification: compare direct-pair-only co-sharing with transitive possession components on every apparent conflict in uploaded A. For each pair, inspect the common locations, local group labels, closure intersections, and shortest same-location/group co-sharing path.
+- Result: direct-pair-only semantics produce 15 conflicts, including ten pairs that are connected through valid co-sharing bridges. A035/A058 have no such path. Restoring transitive components, adding occupied work locations to each component's closure, and propagating Live interchange closure plus the configured buffer onto the other line yields exactly the five official directional violations: A035→A058, A058→A035, A001→A074, A011→A074, and A023→A075, at the exact reported locations.
+- Correction: E047's claim that A035/A058 were transitively joined was factually wrong, and its proposed exact-location-only exemption is rejected. The defect was omission of the work footprint from `_blocked_locations`, plus incomplete cross-line Live buffer propagation.
+- Test consequence: legacy tests and incumbent-feasibility assertions fail under the corrected model. These are meaningful regressions exposing invalid artifacts, not evidence against the correction. The official five must become a permanent regression oracle before repair.
+- Decision: preserve component co-sharing, emit directional activity violations to match official granularity, update invalidated tests, and repair A under this checker. Do not consume A-002 until a fully checked candidate ZIP is ready.
+
+### E049: A-002 becomes the first official-feasible incumbent and falsifies the score formula
+
+- Timestamp: 2026-09-19 02:56:30 +08
+- Repair: freeze every access/ECLO/night decision except A001, A011, A023, A035, A058, A074, and A075; allow all group assignments to reconfigure; solve with bridge-safe strict separation. The restricted model found and proved a zero-conflict candidate in 0.727 seconds without changing its then-reported local penalty.
+- Local gates: 192 access rows, 928 occupancy rows, zero ECLO, zero excess, zero standard/strict closure conflicts, exact three files, byte-identical ZIP extraction, and two independent scorers agreeing under the then-current formula. ZIP hash `76bf26e19161337daf4f186d2a678aeb23bcb8613bc3bba42d00451d30325437`.
+- Official result: **Feasible**, all constraints passed, score `137.9`, 28 overrun days across three contracts, no ECLO or excess; three A attempts remain.
+- Falsified assumption: internal `32.2` scored each activity against its own completion. Official scoring uses the contract's final completion overrun for every activity in that contract, then applies each activity's nudge. C006 contributes `85.4`, C010 `45.5`, and C014 `7.0`, exactly `137.9`.
+- Correction: both local scorers and both solver formulations now use contract-completion cost. They reproduce official `137.9` on the uploaded bytes. All older A/C score claims and lower-bound arguments are superseded until recomputed.
+- Decision: protect A=`137.9` as the only official-feasible incumbent. Optimize the corrected contract objective, preserve this ZIP, and never replace the official portal state with an unvalidated candidate.
+
+### E050: Corrected A optimum is `137.9`
+
+- Timestamp: 2026-09-19 03:03:19 +08
+- Relaxation: the corrected no-closure model proves `130.9`, consisting of unavoidable C006=`85.4` and C010=`45.5` delay. A 180-second full bridge-safe search and two direct-heuristic searches found no checked improvement over official A=`137.9`.
+- Structural bound: A036 needs seven standard weekly accesses starting in week 22, so C006 cannot complete before week 28 and is at least 14 days late (`85.4`). A059 needs seven standard weekly accesses starting week 14, so C010 cannot complete before week 20 and is at least 7 days late (`45.5`). A075 must run by week 28 to keep C014 on time, but its Live-PM closure conflicts with A036, which necessarily occupies every week 22–28. Keeping A036 at its minimum delay forces A075 to week 29 (`7.0`); moving A036 later costs another `42.7`, so the cheaper unavoidable trade-off is `7.0`.
+- Conclusion: `85.4 + 45.5 + 7.0 = 137.9`. The official A incumbent reaches this lower bound and is optimal under the confirmed model.
+
+### E051: First official B and C runs are feasible and optimal
+
+- Timestamp: 2026-09-19 03:03:19 +08
+- B repair: free A023, A039, A074, and A075 while freezing other access decisions. Bridge-safe repair reached strict-feasible `30.0` in 0.960 seconds. Full verification proved `<30.0` infeasible. B-001 is officially feasible at `30.0`, with 0 overrun, 0 excess, and 6 ECLO; four runs remain.
+- C correction and repair: the old C artifact recomputes from `26.1` to `98.2` under contract-completion scoring and has five corrected closure violations. Freeing A001, A011, A023, A056, A059, A074, and A075 produced strict-feasible `62.7` in 1.157 seconds. Full verification proved `<62.7` infeasible.
+- C lower bound: A059 needs two ECLO nights to complete its seven units within weeks 14–19. A036 can use at most two ECLO nights in C's two-week line window and therefore needs six access weeks from week 22 through 27, forcing C006 seven days late (`42.7`). The four necessary ECLO nights cost `20.0`; excess location capacity cannot bypass one access per activity per week. Total lower bound is `62.7`, reached by the candidate.
+- Official C-001: feasible at `62.7`, with 7 overrun days across one contract, 0 excess, and 4 ECLO; four runs remain.
+- Current official public scores: A=`137.9`, B=`30.0`, C=`62.7`, combined penalty=`230.6`. All three portal results agree with the corrected local scorers.

@@ -42,7 +42,7 @@ def main() -> None:
     )
     flexible_parser = subparsers.add_parser(
         "solve-flexible-relaxation",
-        help="solve A, B, or C using the inferred closure separator",
+        help="solve A, B, or C using the differential-tested closure separator",
     )
     flexible_parser.add_argument("--data", required=True)
     flexible_parser.add_argument("--output", required=True)

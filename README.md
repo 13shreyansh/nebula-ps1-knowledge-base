@@ -1,7 +1,7 @@
 ---
 document_id: NH-PS1-KB
-version: 0.5.0
-last_verified: 2026-09-18
+version: 0.8.0
+last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
 official_spec: https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/blob/main/PS1/PS1_README.md
@@ -237,7 +237,7 @@ For a corridor containing `n` tunnel sectors, occupancy contains those `n` secto
 | `member[a,w,l,g]` | The activity belongs to local possession group `g` at occupied location `l`. Groups can differ by location. |
 | `used[w,l,g]` | Local group `g` exists and counts against location supply. |
 | `completion[a/c]` | Last scheduled week for an activity or contract. |
-| `overrun[a]` | Activity completion beyond its contract’s planned completion date. |
+| `overrun[c]` | Contract completion beyond its planned completion date; the validator charges that delay through every activity-priority nudge in the contract. |
 | `excess[l,w]` | Possession groups above nominal location capacity. |
 | `eclo_window[line]` | Scenario C’s two-week ECLO window position. |
 
@@ -272,7 +272,7 @@ Do not pre-enumerate every legal batch initially. On the public instance, week-f
 | ECLO | Forbidden in A; permitted in B; restricted to each line’s continuous two-week window in C. Cross-line Live ECLO must fit both windows. |
 | Results | Contract completion is the latest activity finish; overrun is measured against planned completion. |
 
-The closure and buffer row above is not implementation-complete until the official expander or validator is obtained. The README's literal “buffers never overlap” rule conflicts with four buffer-only overlaps in the unchanged organizer sample that the same README calls zero-violation. The solver therefore audits both the sample-consistent rule and the stricter published rule. Protected outputs must pass both, but only the reference validator can resolve the specification contradiction.
+Official run A-001 established two missing closure details: a possession closure includes its occupied work footprint, and a Live interchange closure plus its configured buffer propagates onto the other line. Co-sharing remains transitive through same-location/group bridges. The corrected checker reproduced all five A-001 violations exactly; A-002 and the first B/C runs then passed officially. Protected outputs also pass the stricter buffer-to-buffer screen.
 
 ### Scenario objectives
 
@@ -310,41 +310,33 @@ The supplied instance contains:
 
 The tightest raw tunnel demand is around Beta eastbound `H01–H02`, `H02–S15`, and `S15–S16`. Raw demand does not account for timing or co-sharing, so use it to seed search and diagnostics, not as a feasibility conclusion.
 
-The supplied Scenario A schedule is described by the organiser as a feasible regression fixture. It schedules 192 access rows with no ECLO and delays only Priority-3 contracts. Applying the published activity-level weighting gives a derived score of `48.3`; confirm this number with the reference validator before calling it validator-proven.
+The supplied Scenario A schedule is a feasible regression fixture with 192 accesses and no ECLO. Under the validator-confirmed contract-completion aggregation, its score is `137.9`.
 
-Resource-independent earliest-finish calculations give useful lower bounds under the inferred activity-level score formula:
+Resource-independent workload timing plus the confirmed closure interaction give exact public-instance lower bounds:
 
 | Scenario | Lower bound | Cause |
 |---|---:|---|
-| A | `25.2` | A036 is intrinsically 14 days late and A059 7 days late before shared-resource conflicts. |
-| B | `30` | At least four A036 and two A059 ECLO rows are needed to meet hard dates, before capacity costs. |
-| C | `25.2` | ECLO is more expensive than accepting those two Priority-3 delays in isolation. |
+| A | `137.9` | C006 contributes `85.4`, C010 `45.5`, and the unavoidable A036/A075 closure trade-off adds C014 `7.0`. |
+| B | `30.0` | Six ECLO nights are necessary to meet every hard date; the full model proves no lower score. |
+| C | `62.7` | Two ECLO nights each for A036/A059 cost `20.0`; A036 still forces seven days of C006 delay worth `42.7`. |
 
-These are regression bounds, not proofs of the global optimum. A feasible solution matching one would prove optimality only after all location, closure, allocation, and workfront rules pass validation.
+Each protected public answer matches its bound and has passed the official validator.
 
 ### Current executable evidence
 
 - The schema-driven footprint expander reproduces all 928 public activity-location-week occupancy keys without activity-specific rules.
-- The independent partial checker reproduces the organiser sample's derived Scenario A penalty of `48.3` and rejects omitted workload.
-- A closure-free CP-SAT relaxation proves its own optimistic `25.2` optimum but fails the inferred closure screen and is quarantined.
-- **Scenario A:** an unrestricted solve scores `32.2` and passes all implemented checks; every activity, week, access night, and local group was free to move. It matches the earlier conservative two-row repair. Under the inferred closure semantics, `32.2` is also a lower bound because A036 occupies the H01 eastbound boundary in weeks 22–28 while A075's Live PM interchange closure forces a seven-day delay. Two seeds independently reproduced the optimum.
-- **Scenario B:** the protected candidate scores `30.0`: six ECLO rows, zero excess access nights, zero delay, 189 access rows, and zero implemented violations. It matches the closure-free lower bound, so it is optimal under the inferred checker. A second seed reproduced the score and feasibility.
-- **Scenario C:** the protected candidate scores `26.1`: `16.1` delay plus two ECLO rows, zero excess access nights, 191 access rows, and zero implemented violations. It matches a data-derived lower bound under the published workload and implemented closure rules: A036 needs weeks 22–28 without ECLO, while Live PM A075 must use one of weeks 24–28 and blocks A036's opposite-bound location. Reducing A036 to six weeks requires two ECLO nights, giving `9.1 + 10`, while A059 contributes an unavoidable `7.0`; total `26.1`. This is not reference-validator confirmation.
-- All three protected candidates also satisfy a separate stricter screen that forbids buffer-to-buffer overlap. Strict A=`32.2`, B=`30.0`, and C=`26.1` are feasible at no public-instance score cost. Earlier matching bounds used an over-strong component cut and are not relied on as global proofs.
-- A second score implementation independently re-parses the raw input and submission CSVs without importing the solver, topology, or main evaluator. It reproduces A=`32.2`, B=`30.0`, and C=`26.1` exactly.
-- New solver telemetry records cumulative CP-SAT deterministic time across iterative closure rounds as well as wall time; older experiment artifacts remain wall-time-only.
-- The current guarded C controller reconstructs C=`26.1` from raw input without a C schedule hint: build a checked A fallback, run bounded heuristic C generation, then preserve the candidate through bridge-safe verification. A separate failed seed was recovered by deriving its 12 conflict activities from checker output and soundly repairing only that partially frozen neighborhood; local failure still falls through to broad fallback and never proves infeasibility.
-- The same three optima are constructed with no schedule hint: A in 100 seconds and B in 102 seconds with one-second solve rounds, and C in 85 seconds with three-second rounds. A deterministic one-worker portfolio also reproduces every score. Search preserves the best safe incumbent so an invalid relaxation cannot consume the whole budget or overwrite a valid output.
-- A bijectively renamed and row-shuffled input exposes direct-C search instability: two 180-second no-hint attempts fail to find a safe incumbent. A generic protected portfolio first solves A from that transformed input, verifies it as a C fallback, then improves C to `26.1`; a candidate replaces the fallback only after the checker accepts a strictly lower score.
-- A stronger random permutation of line, station, contract, and activity identifier order also preserves A=`32.2`, B=`30.0`, and C=`26.1` under the eight-worker pipeline. This reduces identifier/order-overfit risk but does not substitute for different-topology hidden-instance tests.
-- On a known-feasible structural fixture with 67 of 76 locations reduced to capacity 1 and contract/activity priorities permuted, the no-hint pipeline reaches A=`867.3`, B=`30.0`, and C=`29.1`, with both scorers agreeing and zero implemented violations. The guarded staged workflow independently reconstructed A=`867.3` from raw transformed input; its sound phase retained but did not prove that incumbent in 60 seconds. The C portfolio separates its exactly-three-CSV answer key from all audit artifacts.
-- A second fixture changes 16 workloads, 37 starts, and 10 predecessor links; A/B/C each reach the `0.0` floor. A full-check pruning gate removes redundant access/occupancy rows without assuming that deletion preserves possession connectivity; it reduced one equal-score B result from 211 to 176 accesses and is applied before C portfolio selection.
-- Interchange crossover is derived from station metadata rather than public station IDs; a renamed-interchange regression preserves the expected cross-line closure.
-- All three protected candidates are internally checked, not reference-validator confirmed. The organiser sample remains the only organiser-described feasible artifact.
+- **A-002:** officially feasible at `137.9`; 28 overrun days across three contracts, zero excess, zero ECLO. It reaches the structural lower bound.
+- **B-001:** officially feasible at `30.0`; zero overrun/excess and six ECLO nights. The full bridge-safe model proves `<30.0` infeasible.
+- **C-001:** officially feasible at `62.7`; seven overrun days in C006, zero excess, four ECLO nights. The full model and workload argument prove the same lower bound.
+- Combined public penalty is `230.6`. Lower is better; the portal does not publish a cross-scenario combined metric.
+- Both local scorers reproduce every official score exactly. The earlier activity-completion proxy was rejected after A-002 exposed the correct contract-completion aggregation.
+- The corrected closure checker reproduces the five A-001 violations exactly and accepts all three official incumbents under both standard and strict buffer screens.
+- All 39 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, and incumbent protection.
+- Generalisation remains the main risk: timed no-hint construction varies across seeds and hidden topology/scale are unknown. No official run is spent on an unvalidated candidate.
 
 The append-only evidence, hashes, parameters, failures, and limitations are in `EXPERIMENT_LEDGER.md`. Executable code is under `src/nebula_ps1`; regression tests are under `tests`.
 
-The protected public answer keys are in `deliverables/public/A`, `B`, and `C`. Each directory contains exactly the three required CSV files. `deliverables/public/MANIFEST.json` pins their scores and hashes and explicitly records that reference-validator confirmation is still absent.
+The protected public answer keys are in `deliverables/public/A`, `B`, and `C`. Each directory contains exactly the three required CSV files. `deliverables/public/MANIFEST.json` pins their official scores, run IDs, and hashes.
 
 <a id="improvement"></a>
 
@@ -466,7 +458,7 @@ Warm-starting is not minimal-change replanning. For a disruption, use a lexicogr
 | `P5: Replanning bonus` | Apply a disruption, identify impact, produce a lexicographically low-churn recovery, and validate it. |
 | `P6: Extensions` | Add natural-language analysis, negotiation briefs, fragility views, or richer simulation only if earlier gates are secure. |
 
-Current gate: P0 is partially complete. Parsing, footprint expansion, deterministic output loading, score calculation, mutation checks, and a sample-consistent closure screen exist. Reference-validator differential testing is still missing, so P0 is not closed.
+Current gate: P0–P3 are complete for the public instance. All scenarios are officially feasible and match proved lower bounds. Current engineering priority is hidden-instance construction reliability, runtime benchmarking, and the controller experience.
 
 ### Required product states
 
@@ -555,12 +547,12 @@ Any activity count, score, time saving, or improvement stated in the demo must c
 
 | ID | Priority | Question | Resolution |
 |---|---:|---|---|
-| `O1` | High | Where is the executable reference validator and `trackaccess expand` package? | Obtain them from the organiser portal or release and run them locally. |
+| `O1` | Resolved | Where is the reference validator? | The authenticated participant portal exposes five runs per scenario; exact results are preserved in `OFFICIAL_VALIDATOR_LEDGER.md`. No local executable was released. |
 | `O2` | High | What runtime and instance-size limits apply to hidden evaluation? | Find official limits; otherwise benchmark generated scale cases. |
-| `O3` | High | Does validator scoring exactly match the inferred activity-level overrun and ECLO/excess formulas? | Run controlled cases `V003`–`V006` from the research ledger. |
+| `O3` | Resolved | How is overrun aggregated? | Contract completion delay is charged through every activity-priority nudge in that contract. A-002, B-001, and C-001 exactly match the corrected scorers. |
 | `O5` | Medium | Which controller view is most useful in the short demo? | Decide after real solver conflict data is available. |
 | `O7` | Low | What is the final product name? | Decide after the core direction is stable. |
-| `O8` | Critical | What exact closure and co-sharing exemption logic produced the public occupancy grouping? | Do not freeze pairwise closure constraints until the expander/validator passes `V007`, `V008`, and the sample-specific buffered-overlap cases. |
+| `O8` | Resolved for public data | What closure model matches the validator? | Transitive possession components, footprint-inclusive closure, and topology-derived cross-line Live buffering reproduce A-001 exactly and pass A-002/B-001/C-001. |
 | `O9` | High | Is the declared horizon a validator-enforced hard bound, and what does `access_seq` enforce? | Run `V002` and `V009`. |
 | `O10` | High | Are all scenarios evaluated against one shared instance or scenario-specific input rows? | Confirm from the released validator/portal; condition cross-scenario warm starts on shared input hashes. |
 
@@ -630,3 +622,4 @@ When sources conflict:
 | `0.5.0` | 2026-09-18 | Added executable evidence, the quarantined `25.2` relaxation, the protected `32.2` Scenario A repair, and the remaining validator boundary. |
 | `0.6.0` | 2026-09-18 | Added exact B/C objectives, iterative inferred-closure separation, protected A=`32.2`, B=`30.0`, C=`26.1` incumbents, and cross-seed evidence. |
 | `0.7.0` | 2026-09-19 | Added strict buffer-overlap hedging, dual-policy release checks, validator-gated pruning, and exact three-file answer-key packaging. |
+| `0.8.0` | 2026-09-19 | Added official A/B/C validation, corrected contract-completion scoring and Live cross-line closure, official-score manifests, exact lower bounds, and 39 passing regressions. |

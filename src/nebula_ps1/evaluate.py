@@ -327,7 +327,7 @@ def evaluate_submission(
     violations.extend(conflict.describe() for conflict in closure_conflicts)
 
     contract_completion: dict[str, date] = {}
-    activity_overrun_days: dict[str, int] = {}
+    contract_overrun_days: dict[str, int] = {}
     for contract_number, project in instance.projects.items():
         contract_activities = [
             activity
@@ -342,11 +342,12 @@ def evaluate_submission(
         if len(completed) != len(contract_activities):
             continue
         contract_completion[contract_number] = max(completed)
+        contract_overrun_days[contract_number] = max(
+            0,
+            (contract_completion[contract_number] - project.planned_completion_date).days,
+        )
         for activity in contract_activities:
             completion = instance.completion_date(activity_completion_week[activity.activity_id])
-            activity_overrun_days[activity.activity_id] = max(
-                0, (completion - project.planned_completion_date).days
-            )
             if selected_scenario == "B" and completion > project.planned_completion_date:
                 violations.append(
                     f"{activity.activity_id}: Scenario B planned completion exceeded by "
@@ -378,15 +379,16 @@ def evaluate_submission(
     activity_nudge = {1: 0.3, 2: 0.2, 3: 0.0}
     priority_overrun: dict[int, int] = {1: 0, 2: 0, 3: 0}
     priority_weighted_score = 0.0
-    for activity_id, days in activity_overrun_days.items():
-        activity = instance.activities[activity_id]
-        project = instance.projects[activity.contract_number]
+    for contract_number, days in contract_overrun_days.items():
+        project = instance.projects[contract_number]
         priority_overrun[project.contract_priority] += days
-        priority_weighted_score += (
-            days
-            * contract_weight[project.contract_priority]
-            * (1.0 + activity_nudge[activity.activity_priority])
-        )
+        for activity in instance.activities.values():
+            if activity.contract_number == contract_number:
+                priority_weighted_score += (
+                    days
+                    * contract_weight[project.contract_priority]
+                    * (1.0 + activity_nudge[activity.activity_priority])
+                )
     eclo_total = len(eclo_rows)
     if selected_scenario == "A":
         objective = priority_weighted_score
@@ -398,7 +400,7 @@ def evaluate_submission(
         objective = float("nan")
 
     warnings.append(
-        "closure screen matches the public fixture but is inferred; reference validator confirmation is still required"
+        "closure screen reproduces official A-001 and accepts A-002/B-001/C-001; hidden-instance equivalence is not guaranteed"
     )
     checked_rules = (
         "schema",

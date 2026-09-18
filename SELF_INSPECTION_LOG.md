@@ -424,3 +424,52 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Strongest next falsification: create structurally perturbed fixtures where heuristic candidates fail with different conflict sets, then test whether generic local repair recovers safely or falls through without false infeasibility. Separately, pursue the official validator because internal robustness cannot resolve semantic uncertainty.
 - Confidence: high in the public integrated artifact and control-flow gates; medium in generic local repair; low-to-medium in hidden-instance construction reliability; zero in official validation.
 - Next action: document and checkpoint the integrated workflow, then prioritize official-validator access or a structurally different repair fixture over additional public-seed repetition.
+
+## 2026-09-19 02:47:43 +08
+
+- Interval: 3 minutes 26 seconds since the previous inspection; early because the first official validator result overturned the incumbent's feasibility status.
+- Best independently validated score: none. The official validator marks protected A=`32.2` infeasible with five closure violations. B=`30.0` and C=`26.1` remain internal scores only and are now suspect because they share the incorrect checker. Score change cannot be stated while no official-feasible run exists.
+- What failed: transitive week-level possession components over-exempted A035/A058 despite different groups at their overlapping locations. Live interchange closure under-expanded onto the other line and missed A074→A001/A011 and A075→A023 conflicts two sectors away.
+- What went well: exact ZIP packaging passed local byte comparison; the official portal was found before submission; only one A run was consumed; the complete five-violation response was captured; B and C were withheld instead of spending runs against a known-bad checker.
+- Cheating and measurement audit: the internal `32.2` was never official, and this run proves why that distinction mattered. The official response is now authoritative over sample-derived assumptions. Do not tune only the five rows; implement schema-derived closure behavior and verify organizer sample consequences explicitly.
+- Strongest corrective test: the revised checker must reproduce the five official violations exactly on the uploaded A artifact, retain all prior hard-rule tests, and derive the cross-line buffer from topology and buffer distance without public IDs. Only then generate a repaired A and spend run A-002.
+- Risks: official closure may include further platform-buffer behavior beyond these examples; the supplied sample may now fail many more official checks; solver cuts built for component conflicts may become invalid or incomplete; all analytical lower bounds involving closure need re-audit.
+- Confidence: high in the official failure and two identified semantic gaps; medium in the inferred full closure rule; zero in any official-feasible score.
+- Next action: implement directional activity-level closure screening with exact location/group exemption and topology-derived Live cross-line buffer platforms, then run the uploaded artifact as a regression oracle before repairing it.
+
+## 2026-09-19 02:52:41 +08
+
+- Interval: 4 minutes 58 seconds since the previous inspection; triggered by the user's status challenge and completion of the official-failure falsification.
+- Best independently validated score: none. Official run A-001 remains infeasible; four A runs remain. B and C have not been uploaded. Score change is not applicable.
+- What improved: the corrected checker now reproduces all five official violations exactly by week, intruding activity, blocking activity/component, and location set. The necessary changes are schema-derived: a possession closure includes its occupied work footprint, and a Live interchange closure plus its two-sector buffer propagates onto the other line.
+- What was wrong: the 02:47 inspection blamed transitive possession components. A graph diagnostic disproved that claim. The ten apparent extra conflicts under direct-pair-only co-sharing are precisely pairs connected through valid transitive co-sharing components. Restoring component semantics removes them and leaves the three conflicting component pairs that the official validator reports as five directional activity violations.
+- Evidence: the local screen returns A035→A058, A058→A035, A001→A074, A011→A074, and A023→A075 at exactly the official locations. No public IDs are hard-coded in closure construction. The existing suite now fails where it still asserts the superseded inferred semantics, which is expected and must be repaired rather than hidden.
+- Integrity risks: one official run is only a five-example oracle and cannot prove the full validator; exact agreement could still be accidental. Existing protected A/B/C artifacts are invalid under the corrected screen. Solver separators and tests may encode the old assumption. We must not upload a candidate merely because these five disappear.
+- Falsification result: direct local co-sharing produced 15 conflicts and is rejected by the organizer sample's transitive bridge pattern plus the official five. Component co-sharing with footprint-inclusive, cross-line Live closure produces exactly five. This is currently the strongest supported model.
+- Confidence: high that the old checker was incomplete; high that the revised checker explains A-001; medium that it fully matches hidden validator semantics; zero in any official-feasible score.
+- Next experiment: convert the official five into a permanent regression oracle, update only invalidated tests, repair A through the generic solver, run all independent checks and exact ZIP checks, and spend A-002 only if every local gate passes.
+
+## 2026-09-19 02:56:30 +08
+
+- Interval: 3 minutes 49 seconds since the previous inspection; triggered by the official A-002 result and score-formula falsification.
+- Best independently validated score: Scenario A `137.9`, feasible, 28 overrun days across three contracts, zero excess, zero ECLO. B and C remain unvalidated. This is the first official incumbent, so no comparable official score change exists.
+- What went well: the repaired closure model predicted feasibility correctly. A seven-activity restricted repair passed every local gate and the official validator. Only two of five A runs were consumed, leaving three.
+- What failed: both supposedly independent scorers shared the same conceptual error and reported `32.2`. They priced each activity's own completion instead of pricing every activity in a contract from that contract's final completion. Their agreement was correlated, not independent evidence.
+- Exact evidence: `137.9 = 85.4 + 45.5 + 7.0` for late contracts C006, C010, and C014. The amended primary and independent scorers now reproduce the portal result exactly on the uploaded bytes.
+- Integrity audit: the portal result, not the prior internal claim, is protected. Old A/B/C scores and analytical bounds are explicitly superseded. No B/C attempt has been spent under a known-wrong objective.
+- Remaining risks: the optimization code has just changed and needs regression; `137.9` may be far from the corrected optimum; the two local scorers still share input assumptions; the closure model has only one positive official confirmation; the portal keeps only the latest score.
+- Strongest next falsification: run the corrected solver from the official-feasible A hint while protecting the incumbent, then compare any candidate using the corrected scorer and full closure gates. Upload A-003 only for a strict local improvement. In parallel, repair B/C locally before their first official runs.
+- Confidence: high in A-002 feasibility and score; high in the corrected score interpretation for this dataset; medium in full validator equivalence; zero in any untested improvement.
+- Next action: add contract-score regression tests, repair the invalidated test suite, then search for a strictly lower A candidate without touching the official incumbent.
+
+## 2026-09-19 03:03:19 +08
+
+- Interval: 6 minutes 49 seconds since the previous inspection; triggered by official B-001/C-001 completion and public-score reconciliation.
+- Best independently validated scores: A=`137.9`, B=`30.0`, C=`62.7`; combined=`230.6`. All three are officially feasible. No prior all-scenario official baseline existed, so combined change is not comparable.
+- What improved: B's two corrected closure conflicts were repaired without changing `30.0`; C's five conflicts were repaired while the corrected objective improved from `98.2` to `62.7`. The portal exactly matches both local scorers for B and C. Full bridge-safe verification proves no lower B or C score under the corrected formulation.
+- What failed or was superseded: all earlier `32.2` A and `26.1` C score claims optimized the wrong activity-completion proxy. The old public artifacts and manifest are stale. The first 130.9 A local neighborhood repair was infeasible; broad search recovered only 137.9.
+- Adversarial optimality check: A has a structural `137.9` lower bound from A036/A059 workload timing plus the unavoidable A036/A075 closure trade-off. B has a solver proof at `30.0`. C has both a solver proof and a workload/ECLO lower bound at `62.7`. These proofs depend on the published one-access-per-activity-per-week and two-week ECLO-window semantics, now also consistent with official outputs.
+- Integrity audit: the official portal incumbents were never overwritten by unvalidated candidates. Exact ZIP hashes and run counts are recorded. A still has three runs; B/C each have four. Proposal submission fields remain untouched.
+- Remaining risks: repository tests and manifest still encode superseded scores; official optimality is inferred from model/proof rather than a portal benchmark label; hidden-instance construction quality and runtime remain unmeasured under the corrected objective; the solver's warning text still says closure is inferred despite positive official confirmation.
+- Confidence: very high in public feasibility and scores; high in public optimality; medium in hidden-instance robustness; low in current documentation consistency until stale artifacts are replaced.
+- Next action: promote the exact official-feasible CSVs into protected deliverables, regenerate hashes/manifest and tests, run the full suite, then benchmark fresh hidden-like fixtures under the corrected objective without consuming more official runs.

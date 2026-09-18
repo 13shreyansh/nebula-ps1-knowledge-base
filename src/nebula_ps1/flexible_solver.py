@@ -11,7 +11,7 @@ from ortools.sat.python import cp_model
 from .closure import screen_closures
 from .evaluate import AccessRow, OccupancyRow, evaluate_submission, load_submission
 from .instance import Instance
-from .solver import SolveTelemetry, _activity_costs, _add_sample_hints
+from .solver import SolveTelemetry, _add_sample_hints, _contract_costs
 from .topology import activity_footprint, affects_interchange_cross_line, split_sector_location
 
 
@@ -31,7 +31,7 @@ def solve_flexible_supply_relaxation(
     freeze_access_except: set[str] | None = None,
     separator_mode: str = "bridge_safe",
 ) -> SolveTelemetry:
-    """Solve a scenario with iterative cuts from the inferred closure screen.
+    """Solve a scenario with iterative cuts from the differential-tested closure screen.
 
     The model implements the published workload, dates, predecessor, ECLO,
     allocation, workfront, legal-mix, capacity, and score rules. Closure safety is
@@ -136,12 +136,6 @@ def solve_flexible_supply_relaxation(
         model.add_min_equality(start[activity_id], start_candidates)
         model.add_max_equality(completion[activity_id], completion_candidates)
 
-        costs = _activity_costs(instance, activity_id)
-        scaled_delay[activity_id] = model.new_int_var(
-            0, max(costs), f"delay10[{activity_id}]"
-        )
-        model.add_element(completion[activity_id] - 1, costs, scaled_delay[activity_id])
-
     for activity_id, activity in sorted(instance.activities.items()):
         if activity.predecessor_activity_id:
             model.add(start[activity_id] >= completion[activity.predecessor_activity_id] + 1)
@@ -152,6 +146,22 @@ def solve_flexible_supply_relaxation(
     for contract_number, activity_ids in sorted(activities_by_contract.items()):
         activity_ids.sort()
         project = instance.projects[contract_number]
+        contract_completion = model.new_int_var(
+            1, horizon, f"contract_completion[{contract_number}]"
+        )
+        model.add_max_equality(
+            contract_completion,
+            [completion[activity_id] for activity_id in activity_ids],
+        )
+        costs = _contract_costs(instance, contract_number)
+        scaled_delay[contract_number] = model.new_int_var(
+            0, max(costs), f"delay10[{contract_number}]"
+        )
+        model.add_element(
+            contract_completion - 1,
+            costs,
+            scaled_delay[contract_number],
+        )
         for week in range(1, horizon + 1):
             for access_night in range(1, project.number_of_maximum_access_per_week + 1):
                 variables = [
@@ -255,7 +265,10 @@ def solve_flexible_supply_relaxation(
     if scenario in {"B", "C"}:
         primary_terms.extend(50 * term for term in eclo.values())
     max_primary = (
-        sum(max(_activity_costs(instance, activity_id)) for activity_id in sorted(instance.activities))
+        sum(
+            max(_contract_costs(instance, contract_number))
+            for contract_number in sorted(instance.projects)
+        )
         + 70 * len(excess_terms)
         + 50 * len(eclo)
     )
@@ -647,11 +660,11 @@ def solve_flexible_supply_relaxation(
                 if separator_mode == "direct_heuristic"
                 else
                 "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which "
-                "contradicts four cases in the organizer's stated-feasible sample. This output is a hedge, "
-                "not validator confirmation."
+                "contradicts four cases in the organizer's stated-feasible sample. This is a conservative "
+                "hedge and may exclude validator-feasible schedules."
                 if forbid_buffer_overlap
-                else "Closure and buffer conflicts are separated using an inferred rule set that matches "
-                "the public fixture; reference-validator confirmation is still mandatory."
+                else "Closure and buffer conflicts use the rule set that reproduced official A-001 and "
+                "accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed."
             )
             + " The row-count tie-breaker cannot alter the official penalty objective."
         ),

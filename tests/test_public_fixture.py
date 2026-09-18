@@ -6,6 +6,7 @@ import hashlib
 import json
 import shutil
 import tempfile
+import zipfile
 from dataclasses import replace
 from datetime import date
 from pathlib import Path
@@ -20,7 +21,7 @@ from nebula_ps1.independent_score import independently_score
 from nebula_ps1.instance import load_instance
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from nebula_ps1.prune import prune_submission
-from nebula_ps1.solver import SolveTelemetry, _activity_costs
+from nebula_ps1.solver import SolveTelemetry, _contract_costs
 from nebula_ps1.staged import solve_staged_scenario
 from nebula_ps1.staged_c import solve_staged_c_portfolio
 from nebula_ps1.submission import relabel_submission_scenario
@@ -58,7 +59,7 @@ class PublicFixtureTests(unittest.TestCase):
             2,
         )
 
-    def test_c_26_1_lower_bound_critical_path_facts(self) -> None:
+    def test_a_137_9_lower_bound_critical_path_facts(self) -> None:
         a036 = self.instance.activities["A036"]
         a059 = self.instance.activities["A059"]
         a075 = self.instance.activities["A075"]
@@ -84,10 +85,9 @@ class PublicFixtureTests(unittest.TestCase):
             ),
             28,
         )
-        self.assertEqual(_activity_costs(self.instance, "A036")[27], 182)
-        self.assertEqual(_activity_costs(self.instance, "A036")[26], 91)
-        self.assertEqual(_activity_costs(self.instance, "A059")[19], 70)
-        self.assertEqual(_activity_costs(self.instance, "A075")[28], 70)
+        self.assertEqual(_contract_costs(self.instance, "C006")[27], 854)
+        self.assertEqual(_contract_costs(self.instance, "C010")[19], 455)
+        self.assertEqual(_contract_costs(self.instance, "C014")[28], 70)
         self.assertEqual(
             self.instance.projects[a075.contract_number].access_type,
             "PM",
@@ -100,6 +100,16 @@ class PublicFixtureTests(unittest.TestCase):
             set(activity_footprint(self.instance, a036))
             & _blocked_locations(self.instance, {"A075"})
         )
+
+    def test_official_a002_contract_score_is_reproduced(self) -> None:
+        candidate = ROOT / "runs" / "a_official_a001_local_repair_pruned"
+        evaluation = evaluate_submission(self.instance, candidate, scenario="A")
+        audit = independently_score(PACK / "01_data", candidate)
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.priority_overrun, {1: 0, 2: 0, 3: 28})
+        self.assertAlmostEqual(evaluation.objective_score, 137.9)
+        self.assertAlmostEqual(audit.objective_score, 137.9)
+        self.assertEqual(_contract_costs(self.instance, "C006")[29], 170.8 * 10)
 
     def test_generated_work_footprints_match_all_public_occupancy_keys(self) -> None:
         access, occupancy, _ = load_submission(PACK / "03_submission_sample")
@@ -168,8 +178,8 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(evaluation.occupancy_rows, 928)
         self.assertEqual(evaluation.eclo_nights_total, 0)
         self.assertEqual(evaluation.excess_access_nights_total, 0)
-        self.assertAlmostEqual(evaluation.priority_weighted_score, 48.3)
-        self.assertAlmostEqual(evaluation.objective_score, 48.3)
+        self.assertAlmostEqual(evaluation.priority_weighted_score, 137.9)
+        self.assertAlmostEqual(evaluation.objective_score, 137.9)
         self.assertIn("closure", evaluation.warnings[0])
 
     def test_public_sample_contains_buffer_only_overlap(self) -> None:
@@ -247,7 +257,81 @@ class PublicFixtureTests(unittest.TestCase):
             _blocked_locations(self.instance, {"A019"})
             & set(activity_footprint(self.instance, self.instance.activities["A003"]))
         )
-        self.assertEqual(direct_collision, {"SEC:BET:S16_S17:EB"})
+        self.assertEqual(
+            direct_collision,
+            {"PLAT:BET:S16:EB", "SEC:BET:S16_S17:EB"},
+        )
+
+    def test_official_a001_violation_oracle_is_reproduced_exactly(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with zipfile.ZipFile(ROOT / "deliverables" / "validator" / "A.zip") as archive:
+                archive.extractall(temp_dir)
+            access, occupancy, _ = load_submission(temp_dir)
+            conflicts = screen_closures(self.instance, access, occupancy)
+        observed = [
+            (
+                conflict.week,
+                conflict.first_activities,
+                conflict.second_activities,
+                conflict.locations,
+            )
+            for conflict in conflicts
+        ]
+        self.assertEqual(
+            observed,
+            [
+                (
+                    18,
+                    ("A035",),
+                    ("A058",),
+                    (
+                        "PLAT:ALP:S03:WB",
+                        "PLAT:ALP:S04:WB",
+                        "SEC:ALP:S03_S04:WB",
+                    ),
+                ),
+                (
+                    18,
+                    ("A058",),
+                    ("A035",),
+                    (
+                        "PLAT:ALP:S03:WB",
+                        "PLAT:ALP:S04:WB",
+                        "SEC:ALP:S03_S04:WB",
+                    ),
+                ),
+                (
+                    21,
+                    ("A001",),
+                    ("A074",),
+                    (
+                        "PLAT:BET:S15:EB",
+                        "PLAT:BET:S16:EB",
+                        "SEC:BET:S15_S16:EB",
+                    ),
+                ),
+                (
+                    21,
+                    ("A011",),
+                    ("A074",),
+                    (
+                        "PLAT:BET:S15:EB",
+                        "PLAT:BET:S16:EB",
+                        "SEC:BET:S15_S16:EB",
+                    ),
+                ),
+                (
+                    29,
+                    ("A023",),
+                    ("A075",),
+                    (
+                        "PLAT:ALP:S03:WB",
+                        "PLAT:ALP:S04:WB",
+                        "SEC:ALP:S03_S04:WB",
+                    ),
+                ),
+            ],
+        )
 
     def test_access_night_is_not_a_global_possession_identifier(self) -> None:
         access, occupancy, _ = load_submission(PACK / "03_submission_sample")
@@ -410,28 +494,22 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(kwargs["c_heuristic_attempts"], 7)
         self.assertTrue(kwargs["forbid_buffer_overlap"])
 
-    def test_minimal_32_2_repair_passes_sample_consistent_closure_screen(self) -> None:
-        candidate = ROOT / "runs" / "a_repair_late_a035_a038"
-        if not candidate.exists():
-            self.skipTest("candidate is generated by the solver experiment")
+    def test_official_a_incumbent_passes_corrected_closure_screen(self) -> None:
+        candidate = ROOT / "deliverables" / "public" / "A"
         evaluation = evaluate_submission(self.instance, candidate, scenario="A")
         self.assertEqual(evaluation.hard_violations, ())
-        self.assertAlmostEqual(evaluation.objective_score, 32.2)
+        self.assertAlmostEqual(evaluation.objective_score, 137.9)
 
-    def test_unrestricted_scenario_a_incumbent_is_optimal_under_inferred_model(self) -> None:
-        candidate = ROOT / "runs" / "a_anytime_nohint_seed1_w8_round3"
-        if not candidate.exists():
-            self.skipTest("candidate is generated by the solver experiment")
+    def test_official_scenario_a_incumbent_matches_portal_score(self) -> None:
+        candidate = ROOT / "deliverables" / "public" / "A"
         evaluation = evaluate_submission(self.instance, candidate, scenario="A")
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(evaluation.eclo_nights_total, 0)
         self.assertEqual(evaluation.excess_access_nights_total, 0)
-        self.assertAlmostEqual(evaluation.objective_score, 32.2)
+        self.assertAlmostEqual(evaluation.objective_score, 137.9)
 
     def test_scenario_b_incumbent_passes_all_implemented_rules(self) -> None:
-        candidate = ROOT / "runs" / "b_anytime_nohint_seed1_w8_round3"
-        if not candidate.exists():
-            self.skipTest("candidate is generated by the solver experiment")
+        candidate = ROOT / "deliverables" / "public" / "B"
         evaluation = evaluate_submission(self.instance, candidate, scenario="B")
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(evaluation.eclo_nights_total, 6)
@@ -439,9 +517,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertAlmostEqual(evaluation.objective_score, 30.0)
 
     def test_relabelled_a_incumbent_is_a_safe_scenario_c_fallback(self) -> None:
-        source = ROOT / "runs" / "a_repair_late_a035_a038"
-        if not source.exists():
-            self.skipTest("candidate is generated by the solver experiment")
+        source = ROOT / "deliverables" / "public" / "A"
         with tempfile.TemporaryDirectory() as temp_dir:
             relabel_submission_scenario(self.instance, source, temp_dir, "C")
             evaluation = evaluate_submission(self.instance, temp_dir, scenario="C")
@@ -450,23 +526,19 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(evaluation.eclo_nights_total, 0)
         self.assertEqual(evaluation.excess_access_nights_total, 0)
-        self.assertAlmostEqual(evaluation.objective_score, 32.2)
+        self.assertAlmostEqual(evaluation.objective_score, 137.9)
 
     def test_scenario_c_incumbent_passes_all_implemented_rules(self) -> None:
-        candidate = ROOT / "runs" / "c_anytime_nohint_seed1_w8_round3"
-        if not candidate.exists():
-            self.skipTest("candidate is generated by the solver experiment")
+        candidate = ROOT / "deliverables" / "public" / "C"
         evaluation = evaluate_submission(self.instance, candidate, scenario="C")
         self.assertEqual(evaluation.hard_violations, ())
-        self.assertEqual(evaluation.eclo_nights_total, 2)
+        self.assertEqual(evaluation.eclo_nights_total, 4)
         self.assertEqual(evaluation.excess_access_nights_total, 0)
-        self.assertAlmostEqual(evaluation.priority_weighted_score, 16.1)
-        self.assertAlmostEqual(evaluation.objective_score, 26.1)
+        self.assertAlmostEqual(evaluation.priority_weighted_score, 42.7)
+        self.assertAlmostEqual(evaluation.objective_score, 62.7)
 
     def test_scenario_c_rejects_discontinuous_eclo_window(self) -> None:
-        source = ROOT / "runs" / "c_anytime_nohint_seed1_w8_round3"
-        if not source.exists():
-            self.skipTest("candidate is generated by the solver experiment")
+        source = ROOT / "deliverables" / "public" / "C"
         with tempfile.TemporaryDirectory() as temp_dir:
             copied = Path(temp_dir)
             for name in ("SCHEDULE_ACCESS.csv", "SCHEDULE_OCCUPANCY.csv", "RESULTS.csv"):
@@ -495,15 +567,13 @@ class PublicFixtureTests(unittest.TestCase):
 
     def test_independent_raw_csv_scorer_matches_all_protected_incumbents(self) -> None:
         expected = {
-            "a_anytime_nohint_seed1_w8_round3": ("A", 32.2, 32.2, 0, 0),
-            "b_anytime_nohint_seed1_w8_round3": ("B", 30.0, 0.0, 0, 6),
-            "c_anytime_nohint_seed1_w8_round3": ("C", 26.1, 16.1, 0, 2),
+            "A": ("A", 137.9, 137.9, 0, 0),
+            "B": ("B", 30.0, 0.0, 0, 6),
+            "C": ("C", 62.7, 42.7, 0, 4),
         }
-        for run_name, components in expected.items():
-            with self.subTest(run=run_name):
-                candidate = ROOT / "runs" / run_name
-                if not candidate.exists():
-                    self.skipTest("candidate is generated by the solver experiment")
+        for scenario_name, components in expected.items():
+            with self.subTest(scenario=scenario_name):
+                candidate = ROOT / "deliverables" / "public" / scenario_name
                 audit = independently_score(PACK / "01_data", candidate)
                 scenario, objective, delay, excess, eclo = components
                 self.assertEqual(audit.scenario, scenario)
@@ -527,7 +597,7 @@ class PublicFixtureTests(unittest.TestCase):
                 writer.writerows(reversed(rows))
             evaluation = evaluate_submission(self.instance, copied, scenario="A")
             self.assertEqual(evaluation.hard_violations, ())
-            self.assertAlmostEqual(evaluation.objective_score, 48.3)
+            self.assertAlmostEqual(evaluation.objective_score, 137.9)
 
     def test_occupancy_order_and_group_labels_do_not_change_feasibility(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -550,7 +620,7 @@ class PublicFixtureTests(unittest.TestCase):
                 writer.writerows(reversed(rows))
             evaluation = evaluate_submission(self.instance, copied, scenario="A")
         self.assertEqual(evaluation.hard_violations, ())
-        self.assertAlmostEqual(evaluation.objective_score, 48.3)
+        self.assertAlmostEqual(evaluation.objective_score, 137.9)
 
     def test_missing_access_is_rejected_instead_of_scoring_well(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -627,10 +697,8 @@ class PublicFixtureTests(unittest.TestCase):
         )
 
     def test_c_portfolio_selection_requires_checked_strict_improvement(self) -> None:
-        a_run = ROOT / "runs" / "a_anytime_nohint_seed1_w8_round3"
-        c_run = ROOT / "runs" / "c_anytime_nohint_seed1_w8_round3"
-        if not a_run.exists() or not c_run.exists():
-            self.skipTest("portfolio fixtures are generated by solver experiments")
+        a_run = ROOT / "deliverables" / "public" / "A"
+        c_run = ROOT / "deliverables" / "public" / "C"
         with tempfile.TemporaryDirectory() as temp_dir:
             fallback_dir = Path(temp_dir) / "fallback"
             relabel_submission_scenario(self.instance, a_run, fallback_dir, "C")
@@ -653,9 +721,7 @@ class PublicFixtureTests(unittest.TestCase):
             )
 
     def test_pruner_preserves_minimal_public_a_incumbent(self) -> None:
-        source = ROOT / "runs" / "a_anytime_nohint_seed1_w8_round3"
-        if not source.exists():
-            self.skipTest("candidate is generated by the solver experiment")
+        source = ROOT / "deliverables" / "public" / "A"
         with tempfile.TemporaryDirectory() as temp_dir:
             output = Path(temp_dir) / "pruned"
             report = prune_submission(self.instance, source, output, "A")
@@ -666,7 +732,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report.initial_access_rows, 192)
         self.assertEqual(report.final_access_rows, 192)
         self.assertEqual(report.removed_accesses, ())
-        self.assertAlmostEqual(evaluation.objective_score, 32.2)
+        self.assertAlmostEqual(evaluation.objective_score, 137.9)
 
     def test_strict_pruner_preserves_dual_policy_answer_key(self) -> None:
         source = ROOT / "deliverables" / "public" / "A"
@@ -715,7 +781,7 @@ class PublicFixtureTests(unittest.TestCase):
                 self.assertNotIn(b"\r\n", (Path(temp_dir) / name).read_bytes())
         self.assertEqual(telemetry.status, "FEASIBLE_SAFE_INCUMBENT")
         self.assertIsNotNone(telemetry.deterministic_time_seconds)
-        self.assertAlmostEqual(telemetry.objective_score, 32.2)
+        self.assertAlmostEqual(telemetry.objective_score, 137.9)
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(strict_conflicts, ())
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -847,8 +913,8 @@ class PublicFixtureTests(unittest.TestCase):
             "heuristic_attempt_1_raw",
         )
         self.assertEqual(report["selected_stage"], "bridge_safe_fallback")
-        self.assertEqual(report["bridge_safe_fallback_selected_attempt"], 2)
-        self.assertAlmostEqual(report["selected_objective_score"], 32.2)
+        self.assertEqual(report["bridge_safe_fallback_selected_attempt"], 1)
+        self.assertAlmostEqual(report["selected_objective_score"], 137.9)
         self.assertIsNone(report["heuristic_telemetry"])
         self.assertEqual(
             report["bridge_safe_fallback_telemetry"]["status"],
@@ -959,7 +1025,7 @@ class PublicFixtureTests(unittest.TestCase):
         def fake_staged(instance, output_dir, scenario, **kwargs):
             self.assertEqual(scenario, "A")
             _copy_submission(ROOT / "deliverables" / "public" / "A", Path(output_dir))
-            return {"selected_objective_score": 32.2}
+            return {"selected_objective_score": 137.9}
 
         def fake_c_solve(instance, output_dir, scenario, **kwargs):
             self.assertEqual(scenario, "C")
@@ -967,7 +1033,7 @@ class PublicFixtureTests(unittest.TestCase):
             return SolveTelemetry(
                 formulation=kwargs["separator_mode"],
                 status="HEURISTIC_SAFE_INCUMBENT",
-                objective_score=26.1,
+                objective_score=62.7,
                 best_bound=None,
                 wall_time_seconds=0.0,
                 conflicts=0,
@@ -1003,14 +1069,14 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(solve.call_args_list[1].kwargs["separator_mode"], "bridge_safe")
         self.assertEqual(report["selected_stage"], "scenario_c_heuristic")
         self.assertEqual(report["scenario_c_heuristic_selected_attempt"], 1)
-        self.assertAlmostEqual(report["selected_objective_score"], 26.1)
+        self.assertAlmostEqual(report["selected_objective_score"], 62.7)
 
     def test_packaged_public_answer_keys_match_manifest(self) -> None:
         deliverables = ROOT / "deliverables" / "public"
         if not deliverables.exists():
             self.skipTest("public answer keys have not been packaged")
         manifest = json.loads((deliverables / "MANIFEST.json").read_text(encoding="utf-8"))
-        self.assertFalse(manifest["reference_validator_confirmed"])
+        self.assertTrue(manifest["reference_validator_confirmed"])
         for scenario, expected in manifest["scenarios"].items():
             with self.subTest(scenario=scenario):
                 answer_key = deliverables / scenario
@@ -1036,6 +1102,9 @@ class PublicFixtureTests(unittest.TestCase):
                 )
                 self.assertAlmostEqual(
                     evaluation.objective_score, expected["internally_checked_score"]
+                )
+                self.assertAlmostEqual(
+                    evaluation.objective_score, expected["official_score"]
                 )
                 self.assertAlmostEqual(audit.objective_score, evaluation.objective_score)
                 self.assertEqual(evaluation.submission_hash, expected["submission_hash"])

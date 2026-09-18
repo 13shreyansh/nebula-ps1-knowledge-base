@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import Iterable, Protocol
 
 from .instance import Instance
-from .topology import activity_footprint, interchange_cross_line_locations, split_sector_location
+from .topology import activity_footprint, split_sector_location
 
 
 class AccessLike(Protocol):
@@ -71,6 +71,67 @@ def _external_buffer_sectors(instance: Instance, activity_id: str) -> set[str]:
     }
 
 
+def _interchange_cross_line_closure(instance: Instance, activity_id: str) -> set[str]:
+    """Expand a Live interchange closure and its buffer onto the other line."""
+
+    activity = instance.activities[activity_id]
+    project = instance.projects[activity.contract_number]
+    if project.nature_of_activity != "Live":
+        return set()
+    distance = instance.buffers[project.nature_of_activity].up_to_buffer_sectors
+    worked_sector_ids = {
+        ":".join(location_id.split(":")[:3])
+        for location_id in activity_footprint(instance, activity)
+        if location_id.startswith("SEC:")
+    }
+    worked_bridges = [
+        sector
+        for sector_id, sector in instance.sectors.items()
+        if sector_id in worked_sector_ids
+        and instance.stations[(sector.line_code, sector.from_station_id)].is_interchange
+        and instance.stations[(sector.line_code, sector.to_station_id)].is_interchange
+    ]
+    affected: set[str] = set()
+    for bridge in worked_bridges:
+        endpoints = {bridge.from_station_id, bridge.to_station_id}
+        for cross_bridge in instance.sectors.values():
+            if cross_bridge.line_code == bridge.line_code:
+                continue
+            if {cross_bridge.from_station_id, cross_bridge.to_station_id} != endpoints:
+                continue
+            if not (
+                instance.stations[
+                    (cross_bridge.line_code, cross_bridge.from_station_id)
+                ].is_interchange
+                and instance.stations[
+                    (cross_bridge.line_code, cross_bridge.to_station_id)
+                ].is_interchange
+            ):
+                continue
+            corridor = sorted(
+                (
+                    sector
+                    for sector in instance.sectors.values()
+                    if sector.line_code == cross_bridge.line_code
+                    and cross_bridge.seq - distance <= sector.seq <= cross_bridge.seq + distance
+                ),
+                key=lambda sector: sector.seq,
+            )
+            for sector in corridor:
+                local_sector = sector.sector_id.split(":", 2)[2]
+                for bound in ("EB", "WB"):
+                    affected.add(
+                        f"SEC:{cross_bridge.line_code}:{local_sector}:{bound}"
+                    )
+                    affected.add(
+                        f"PLAT:{cross_bridge.line_code}:{sector.from_station_id}:{bound}"
+                    )
+                    affected.add(
+                        f"PLAT:{cross_bridge.line_code}:{sector.to_station_id}:{bound}"
+                    )
+    return affected
+
+
 def _blocked_locations(instance: Instance, component: set[str]) -> set[str]:
     blocked: set[str] = set()
     for activity_id in sorted(component):
@@ -78,6 +139,7 @@ def _blocked_locations(instance: Instance, component: set[str]) -> set[str]:
         project = instance.projects[activity.contract_number]
         footprint = set(activity_footprint(instance, activity))
         buffer_sectors = _external_buffer_sectors(instance, activity_id)
+        blocked.update(footprint)
         blocked.update(buffer_sectors)
         if project.nature_of_activity != "Live":
             continue
@@ -85,7 +147,7 @@ def _blocked_locations(instance: Instance, component: set[str]) -> set[str]:
         opposite_bound = _opposite(bound)
         blocked.update(_replace_bound(location_id, opposite_bound) for location_id in footprint)
         blocked.update(_replace_bound(location_id, opposite_bound) for location_id in buffer_sectors)
-        blocked.update(interchange_cross_line_locations(instance, activity))
+        blocked.update(_interchange_cross_line_closure(instance, activity_id))
     return blocked
 
 
@@ -114,21 +176,16 @@ def screen_closures(
     *,
     forbid_buffer_overlap: bool = False,
 ) -> tuple[ClosureConflict, ...]:
-    """Apply the narrow closure interpretation demonstrated by the public fixture.
-
-    Work/work overlap in distinct local possession groups is permitted. Co-sharing at
-    any common local group joins activities into one possession component. External
-    buffer sectors, Live opposite-bound mirroring, and Live interchange crossover may
-    not contain another component's work footprint. The public sample is the positive
-    regression oracle; the reference validator remains authoritative.
-    """
+    """Screen possession-component closures under the published co-sharing model."""
 
     activities_by_week: dict[int, set[str]] = defaultdict(set)
     for row in access_rows:
         activities_by_week[row.week].add(row.activity_id)
     shared_groups: dict[tuple[int, str, str], list[str]] = defaultdict(list)
     for row in occupancy_rows:
-        shared_groups[(row.week, row.location_id, row.co_share_group)].append(row.activity_id)
+        shared_groups[(row.week, row.location_id, row.co_share_group)].append(
+            row.activity_id
+        )
 
     conflicts: list[ClosureConflict] = []
     for week in sorted(activities_by_week):
@@ -165,7 +222,9 @@ def screen_closures(
             work = {
                 location_id
                 for activity_id in sorted(component)
-                for location_id in activity_footprint(instance, instance.activities[activity_id])
+                for location_id in activity_footprint(
+                    instance, instance.activities[activity_id]
+                )
             }
             component_data.append(
                 (
@@ -178,26 +237,51 @@ def screen_closures(
 
         for first_index, (
             first_component,
-            first_work,
+            _,
             first_blocked,
             first_buffer,
         ) in enumerate(component_data):
             for (
                 second_component,
-                second_work,
+                _,
                 second_blocked,
                 second_buffer,
             ) in component_data[first_index + 1 :]:
-                collision = (first_blocked & second_work) | (second_blocked & first_work)
-                if forbid_buffer_overlap:
-                    collision |= first_buffer & second_buffer
-                if collision:
-                    conflicts.append(
-                        ClosureConflict(
-                            week=week,
-                            first_activities=tuple(sorted(first_component)),
-                            second_activities=tuple(sorted(second_component)),
-                            locations=tuple(sorted(collision)),
+                for intruder in sorted(first_component):
+                    collision = set(
+                        activity_footprint(instance, instance.activities[intruder])
+                    ) & second_blocked
+                    if collision:
+                        conflicts.append(
+                            ClosureConflict(
+                                week=week,
+                                first_activities=(intruder,),
+                                second_activities=tuple(sorted(second_component)),
+                                locations=tuple(sorted(collision)),
+                            )
                         )
-                    )
+                for intruder in sorted(second_component):
+                    collision = set(
+                        activity_footprint(instance, instance.activities[intruder])
+                    ) & first_blocked
+                    if collision:
+                        conflicts.append(
+                            ClosureConflict(
+                                week=week,
+                                first_activities=(intruder,),
+                                second_activities=tuple(sorted(first_component)),
+                                locations=tuple(sorted(collision)),
+                            )
+                        )
+                if forbid_buffer_overlap:
+                    collision = first_buffer & second_buffer
+                    if collision:
+                        conflicts.append(
+                            ClosureConflict(
+                                week=week,
+                                first_activities=tuple(sorted(first_component)),
+                                second_activities=tuple(sorted(second_component)),
+                                locations=tuple(sorted(collision)),
+                            )
+                        )
     return tuple(conflicts)

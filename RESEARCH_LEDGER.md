@@ -366,13 +366,21 @@ Confidence labels:
 - **Limitation:** This settles the invalid equality constraint; it does not reveal any unlisted validator checks on night indices.
 - **Confidence:** High.
 
-### `R043` Scenario C has a direct 26.1 lower bound under implemented closures
+### `R043` Superseded: activity-completion scoring suggested a 26.1 C bound
 
 - **Evidence:** Public activity/project rows, week calendar, workload rule, ECLO yield/cost, activity-delay weights, and derived Live mirror/buffer footprint.
 - **Finding:** A036 has seven units, starts in week 22, and costs `18.2` if completed in week 28 or `9.1` in week 27. A059's seven units from week 14 make its week-20 `7.0` delay unavoidable without spending a more expensive pair of ECLOs. A075 is a one-night Live PM starting week 24 with an on-time limit of week 28; its mirrored closure blocks A036's BET `S14_H01:EB` location, and PM cannot co-share. With no ECLO, A036 occupies every week 22–28, so A075 must either be delayed to week 29, raising the total to at least `32.2`, or A036 must be compressed. Six A036 access rows need two ECLO bonuses, cost `10`, and can finish in week 27 at `9.1` delay. Adding A059's `7.0` gives `26.1`, achieved by the protected schedule.
-- **Relevance:** This proves C=`26.1` optimal under the implemented published-rule interpretation without relying on the withdrawn direct-component cuts. Keep official-validator confirmation separate.
-- **Limitation:** The proof inherits the Live closure expansion and one-access-per-activity-per-week interpretation. Both are directly published and regression-tested locally but not reference-validator confirmed.
-- **Confidence:** High under implemented semantics.
+- **Relevance:** Historical falsification record only. A-002 proved that the validator charges the contract's final overrun through every activity-priority nudge, so `26.1` is not the official C score.
+- **Limitation:** The scoring premise was wrong; do not use this bound or its activity-level costs for selection.
+- **Confidence:** Rejected by official differential evidence.
+
+### `R044` Official scoring, closure semantics, and public optima
+
+- **Evidence:** Official portal runs A-001, A-002, B-001, and C-001; exact uploaded ZIPs; corrected dual scorers; bridge-safe solver proofs; workload and closure lower bounds.
+- **Finding:** A possession closure contains its work footprint. Live interchange closure and its configured buffer propagate onto the other line. Same-location/group links form transitive possession components. Overrun is based on final contract completion and is charged once through every activity-priority nudge in that contract. The portal confirms A=`137.9`, B=`30.0`, and C=`62.7`.
+- **Relevance:** These are the protected public incumbents. A reaches its workload-plus-A036/A075 trade-off bound; B and C have bridge-safe `< incumbent` infeasibility proofs, and C also has a workload/ECLO bound.
+- **Limitation:** Four successful public validations do not establish hidden-instance construction speed or reliability. The portal does not label solutions globally optimal; optimality follows from our independently stated bounds.
+- **Confidence:** Very high for public feasibility and score; high for public optimality; medium for hidden-instance transfer.
 
 ## Current method candidates
 

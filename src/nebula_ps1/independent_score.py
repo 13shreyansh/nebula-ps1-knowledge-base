@@ -72,7 +72,7 @@ def independently_score(data_dir: str | Path, submission_dir: str | Path) -> Ind
 
     contract_weight = {1: 100.0, 2: 10.0, 3: 1.0}
     activity_nudge = {1: 0.3, 2: 0.2, 3: 0.0}
-    delay_score = 0.0
+    completion_by_activity: dict[str, date] = {}
     for activity_id, activity in activities.items():
         rows = by_activity.get(activity_id, [])
         if not rows:
@@ -85,15 +85,29 @@ def independently_score(data_dir: str | Path, submission_dir: str | Path) -> Ind
                 f"{supplied_half_units}/2 < {required_half_units}/2"
             )
         completion_week = max(int(row["week"]) for row in rows)
-        completion_date = horizon_start + timedelta(days=7 * completion_week - 1)
-        project = projects[activity["contract_number"]]
+        completion_by_activity[activity_id] = horizon_start + timedelta(
+            days=7 * completion_week - 1
+        )
+
+    delay_score = 0.0
+    for contract_number, project in projects.items():
+        contract_activities = [
+            (activity_id, activity)
+            for activity_id, activity in activities.items()
+            if activity["contract_number"] == contract_number
+        ]
+        completion_date = max(
+            completion_by_activity[activity_id]
+            for activity_id, _ in contract_activities
+        )
         planned = date.fromisoformat(project["planned_completion_date"])
         delay_days = max(0, (completion_date - planned).days)
-        delay_score += (
-            delay_days
-            * contract_weight[int(project["contract_priority"])]
-            * (1.0 + activity_nudge[int(activity["activity_priority"])])
-        )
+        for _, activity in contract_activities:
+            delay_score += (
+                delay_days
+                * contract_weight[int(project["contract_priority"])]
+                * (1.0 + activity_nudge[int(activity["activity_priority"])])
+            )
 
     groups: dict[tuple[str, int], set[str]] = defaultdict(set)
     for row in occupancy_rows:

@@ -58,6 +58,27 @@ def _activity_costs(instance: Instance, activity_id: str) -> list[int]:
     ]
 
 
+def _contract_costs(instance: Instance, contract_number: str) -> list[int]:
+    """Return official contract-completion costs in score tenths by week."""
+
+    project = instance.projects[contract_number]
+    weight_tenths = {
+        1: {1: 1300, 2: 1200, 3: 1000},
+        2: {1: 130, 2: 120, 3: 100},
+        3: {1: 13, 2: 12, 3: 10},
+    }
+    combined_weight = sum(
+        weight_tenths[project.contract_priority][activity.activity_priority]
+        for activity in instance.activities.values()
+        if activity.contract_number == contract_number
+    )
+    return [
+        max(0, (instance.completion_date(week) - project.planned_completion_date).days)
+        * combined_weight
+        for week in range(1, instance.horizon_weeks + 1)
+    ]
+
+
 def _add_sample_hints(
     model: cp_model.CpModel,
     instance: Instance,
@@ -219,10 +240,6 @@ def solve_scenario_a_relaxation(
         model.add_min_equality(start[activity_id], start_candidates)
         model.add_max_equality(completion[activity_id], completion_candidates)
 
-        costs = _activity_costs(instance, activity_id)
-        scaled_cost[activity_id] = model.new_int_var(0, max(costs), f"cost10[{activity_id}]")
-        model.add_element(completion[activity_id] - 1, costs, scaled_cost[activity_id])
-
     for activity_id, activity in sorted(instance.activities.items()):
         if activity.predecessor_activity_id:
             model.add(start[activity_id] >= completion[activity.predecessor_activity_id] + 1)
@@ -233,6 +250,22 @@ def solve_scenario_a_relaxation(
     for contract_number, activity_ids in sorted(activities_by_contract.items()):
         activity_ids.sort()
         project = instance.projects[contract_number]
+        contract_completion = model.new_int_var(
+            1, horizon, f"contract_completion[{contract_number}]"
+        )
+        model.add_max_equality(
+            contract_completion,
+            [completion[activity_id] for activity_id in activity_ids],
+        )
+        costs = _contract_costs(instance, contract_number)
+        scaled_cost[contract_number] = model.new_int_var(
+            0, max(costs), f"cost10[{contract_number}]"
+        )
+        model.add_element(
+            contract_completion - 1,
+            costs,
+            scaled_cost[contract_number],
+        )
         for week in range(1, horizon + 1):
             for access_night in range(1, project.number_of_maximum_access_per_week + 1):
                 variables = [
