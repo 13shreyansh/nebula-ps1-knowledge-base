@@ -1,0 +1,3 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+PRED,KPRE,PredecessorTradeoff,SEC:LNX:X2_N3:EB,SEC:LNX:X2_N3:EB,1,2031-01-06,,1
+SUCC,KLATE,PredecessorTradeoff,SEC:LNY:X2_S3:WB,SEC:LNY:S3_S4:WB,1,2031-01-06,PRED,3

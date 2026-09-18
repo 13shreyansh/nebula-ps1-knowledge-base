@@ -839,3 +839,10 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Correction: Scenario C now seeds repair with every activity in an overdue contract as well as direct ECLO/excess participants, then applies contract and footprint expansion. Scenario B remains unchanged because overrun is infeasible there.
 - Result: the resulting 18-activity neighborhood reduced `126.0` to proved C=`76.0` in 0.451 seconds. Both scorers and both closure policies accept hash `6e78596d5ac3b795887a5e6d162ec0fa864553dc636c8113612eae5695416302`.
 - Cross-regime checks: public C retained and proved `62.7` in 0.321 seconds; irregular seed 5 again recovered `31.0` in 30.007 seconds; coupled C retained and proved `920.0` in 0.070 seconds. Fifty-seven regressions pass.
+
+### E086: Cross-contract predecessor holdout is frozen before repair
+
+- Timestamp: 2026-09-19 06:57:15 +08
+- Fixture: `independent_predecessor_tradeoff_v1` contains an on-time predecessor and a priority successor in separate contracts and disjoint footprints. Dataset hash: `145752d013356aaf41be761d89c621a9fad136304b2a6284e3e5328b3e68b022`.
+- Oracle and incumbent: the checked optimum schedules `PRED`/`SUCC` in weeks 1/2 for C=`0.0`; the checked delayed incumbent schedules weeks 3/4 for C=`7.0`, with no ECLO or excess. Both scorers agree.
+- Protocol: commit the generator, input, oracle, delayed incumbent, and regression before invoking repair. The test asks whether delay seeding can move a delayed successor when its on-time cross-contract predecessor remains frozen.

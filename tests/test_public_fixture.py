@@ -321,6 +321,22 @@ class PublicFixtureTests(unittest.TestCase):
             ),
             (),
         )
+
+    def test_predecessor_tradeoff_oracle_and_delayed_incumbent(self) -> None:
+        data = ROOT / "fixtures" / "independent_predecessor_tradeoff_v1"
+        oracle = ROOT / "fixtures" / "independent_predecessor_tradeoff_v1_oracle"
+        delayed = (
+            ROOT / "fixtures" / "independent_predecessor_tradeoff_v1_delayed_incumbent"
+        )
+        instance = load_instance(data)
+        oracle_evaluation = evaluate_submission(instance, oracle, "C")
+        delayed_evaluation = evaluate_submission(instance, delayed, "C")
+        self.assertEqual(oracle_evaluation.hard_violations, ())
+        self.assertEqual(delayed_evaluation.hard_violations, ())
+        self.assertEqual(oracle_evaluation.objective_score, 0.0)
+        self.assertEqual(delayed_evaluation.objective_score, 7.0)
+        self.assertEqual(independently_score(data, oracle).objective_score, 0.0)
+        self.assertEqual(independently_score(data, delayed).objective_score, 7.0)
     def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_holdout_v1"
         instance = load_instance(data)

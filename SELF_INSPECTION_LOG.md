@@ -811,3 +811,13 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity audit: the delay-only `126.0` incumbent is preserved as a regression fixture; the prior empty set is asserted explicitly; the corrected `76.0` result is locally proved but not reference-validator-confirmed.
 - Confidence: very high in official incumbents; high in the objective-selector correction and tested safety; medium in broad-neighborhood runtime; low-to-medium in cross-contract predecessor and transitive dependency coverage.
 - Immediate next action: commit this objective-complete selector and evidence, then test whether frozen cross-contract predecessors can still create a misleading conditional optimum.
+
+## 2026-09-19 06:57:15 +08
+
+- Interval: 1 minute 54 seconds since the previous inspection; triggered early by freezing the next dependency falsification before solver exposure.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- New holdout: two public-independent activities on disjoint lines. `PRED` is on time in one contract; delayed `SUCC` belongs to another and depends on `PRED`. The oracle is checked at C=`0.0`; the delayed incumbent is checked at C=`7.0`, with neither ECLO nor excess.
+- Hypothesis under attack: delay seeding frees `SUCC`, but contract and footprint expansion cannot reach `PRED`. If frozen week-3 `PRED` forces `SUCC` to week 4, the repair can soundly prove `7.0` only inside the wrong neighborhood.
+- Integrity audit: dataset, oracle, incumbent, hashes, and regression are frozen before the first repair call. The authored two-row fixture tests one mechanism and is not hidden-distribution evidence.
+- Confidence: very high in official incumbents; high in fixture validity; no confidence yet in the repair outcome.
+- Immediate next action: commit the holdout, run the current delay-aware repair unchanged, and preserve the result before adding predecessor closure.
