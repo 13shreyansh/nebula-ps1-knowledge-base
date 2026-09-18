@@ -577,6 +577,13 @@ Confidence labels:
 - **Limitation:** Two tiers add runtime and still do not close every alternating dependency chain. The protected incumbent controls score risk, not runtime risk.
 - **Confidence:** High in current dominance evidence; medium in hidden-instance and runtime transfer.
 
+### `R071` Evidence schemas must remain stable across fallback branches
+
+- **Status:** Confirmed by an end-to-end production run.
+- **Finding:** When guarded A fails, the Scenario C wrapper returned valid output but nested repair telemetry under `direct_c_staged_report`; the normal path exposed analogous fields at the top level. A summary consumer expecting one shape failed after the solve completed.
+- **Relevance:** Branch-dependent audit schemas can hide which optimizer ran, lose conditional-bound context, or create false missing-result alarms. Keep the complete nested report and expose stable top-level narrow/expanded activity and telemetry fields on both paths.
+- **Confidence:** High.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

@@ -1877,6 +1877,10 @@ class PublicFixtureTests(unittest.TestCase):
         direct = {
             "selected_objective_score": 52.0,
             "selected_submission_hash": "checked-direct-c",
+            "bridge_safe_cost_repair_activities": ["NARROW"],
+            "bridge_safe_cost_repair_telemetry": {"objective_score": 52.0},
+            "bridge_safe_expanded_cost_repair_activities": ["NARROW", "EXPANDED"],
+            "bridge_safe_expanded_cost_repair_telemetry": {"objective_score": 52.0},
         }
         with tempfile.TemporaryDirectory() as temp_dir, patch(
             "nebula_ps1.staged_c.solve_staged_scenario",
@@ -1896,6 +1900,11 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report["selected_stage"], "scenario_c_direct_after_a_failure")
         self.assertEqual(report["selected_objective_score"], 52.0)
         self.assertEqual(report["selected_submission_hash"], "checked-direct-c")
+        self.assertEqual(report["scenario_c_cost_repair_activities"], ["NARROW"])
+        self.assertEqual(
+            report["scenario_c_expanded_cost_repair_activities"],
+            ["NARROW", "EXPANDED"],
+        )
 
     def test_staged_c_selects_checked_heuristic_then_soundly_verifies_it(self) -> None:
         def fake_staged(instance, output_dir, scenario, **kwargs):

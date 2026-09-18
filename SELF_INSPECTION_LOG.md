@@ -890,3 +890,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Corrective design: retain the 27-activity-style one-pass repair as tier one. Run the bounded post-footprint precedence and targeted-contract neighborhood as a second protected tier. Each tier has independent telemetry; neither can replace a better checked incumbent.
 - Confidence: very high in official incumbents; high in both counterexamples; high that a two-tier portfolio dominates either neighborhood alone on current evidence; medium in added runtime and hidden transfer.
 - Immediate next action: implement the two-tier repair portfolio in both staged C paths, add regression coverage for tier ordering and incumbent protection, then rerun the irregular and holdout cases.
+
+## 2026-09-19 07:24:40 +08
+
+- Interval: 8 minutes 4 seconds since the previous inspection.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- End-to-end result: on irregular seed 5, guarded A failed closed, direct C produced the score-63 incumbent, the 27-activity narrow tier recovered C=`31.0` in 30.009 seconds, and the 29-activity expanded tier preserved C=`31.0` in 10.007 seconds. Both scorers and both closure policies accept final hash `18b6eee516d8239407a52172ae7c5f66bbd0f53bd59a526284bdd22c4079711c`.
+- What worked: the portfolio preserved the narrow recovery that the broader-only design lost, while retaining the expanded falsification coverage. No unvalidated candidate displaced the checked incumbent.
+- New failure: the ad hoc result summarizer assumed the normal staged-C report schema and raised `KeyError` after the successful run because the A-failure path nests the generic C report under `direct_c_staged_report`. The artifact and report are valid, but branch-dependent telemetry paths can break automation and conceal evidence.
+- Paranoid interpretation: a solver can be correct while its evidence interface is brittle. If downstream tooling silently omits the nested report, we could misstate which repair ran or lose failure telemetry.
+- Corrective action: expose narrow and expanded repair fields at the top level on the A-failure wrapper while retaining the complete nested report. Add a regression for normalized keys; do not rerun or alter the validated score-31 artifact.
+- Confidence: very high in official incumbents; high in the end-to-end score and portfolio behavior; high in the reporting defect; medium in hidden runtime transfer.
+- Immediate next action: normalize the direct-C wrapper report, run all regressions, preserve the production audit, and commit.

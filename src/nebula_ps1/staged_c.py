@@ -108,6 +108,18 @@ def solve_staged_c_portfolio(
             "submission_files": list(SUBMISSION_FILES),
             "scenario_a_failure": str(error),
             "direct_c_staged_report": direct_report,
+            "scenario_c_cost_repair_activities": direct_report.get(
+                "bridge_safe_cost_repair_activities", []
+            ),
+            "scenario_c_cost_repair_telemetry": direct_report.get(
+                "bridge_safe_cost_repair_telemetry"
+            ),
+            "scenario_c_expanded_cost_repair_activities": direct_report.get(
+                "bridge_safe_expanded_cost_repair_activities", []
+            ),
+            "scenario_c_expanded_cost_repair_telemetry": direct_report.get(
+                "bridge_safe_expanded_cost_repair_telemetry"
+            ),
         }
         (audit_output / "STAGED_C.json").write_text(
             json.dumps(report, indent=2, sort_keys=True) + "\n",

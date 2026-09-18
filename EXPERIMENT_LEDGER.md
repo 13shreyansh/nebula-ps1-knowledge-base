@@ -896,3 +896,10 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Correction: both staged C paths now run the narrow repair first and a separate targeted expansion second. The expanded tier uses seed `seed+1`, at most ten seconds, independent telemetry, independent pruning, and strict-better promotion.
 - Regression evidence: public C=`62.7`, coupled C=`920.0`, and cross-module C=`76.0` remain dual-scored and clean under both closure policies. The 33-case matrix records the new zero-score holdout; 64 tests pass.
 - Integrity: all failed and successful outputs are retained. The expanded repair is not called globally optimal unless an external lower bound independently makes its score decisive.
+
+### E093: Production seed-5 controller validates the two-tier path
+
+- Timestamp: 2026-09-19 07:24:40 +08
+- Full path: guarded A failed closed; direct C supplied a checked C=`63.0` incumbent. The 27-activity narrow repair reached C=`31.0` in 30.009 seconds. The 29-activity expanded repair, using seed 6 and ten seconds, retained C=`31.0` rather than displacing it.
+- Final evidence: both scorers report C=`31.0`; standard and strict closure screens are clean; hash `18b6eee516d8239407a52172ae7c5f66bbd0f53bd59a526284bdd22c4079711c`. Neither repair proved its conditional bound, so the independent analytical bound from E074 remains the optimality evidence.
+- Reporting failure and correction: the first audit script raised `KeyError` only after completion because the A-failure wrapper nested the generic C report. The wrapper now preserves that nested evidence and exposes stable top-level narrow/expanded repair fields. All 64 regressions pass.
