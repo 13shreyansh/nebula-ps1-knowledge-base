@@ -289,6 +289,35 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(sum(row.eclo for row in b_access if row.activity_id in coupled), 4)
         self.assertEqual(sum(row.eclo for row in c_access if row.activity_id in coupled), 2)
 
+    def test_multimodule_tradeoff_oracle_reaches_counting_bound(self) -> None:
+        data = ROOT / "fixtures" / "independent_multimodule_tradeoff_v1"
+        oracle = ROOT / "fixtures" / "independent_multimodule_tradeoff_v1_oracle"
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, oracle, "C")
+        independent = independently_score(data, oracle)
+        access, occupancy, _ = load_submission(oracle)
+        selected = {
+            activity_id
+            for activity_id, activity in instance.activities.items()
+            if activity.contract_number == "KMM"
+        }
+        self.assertEqual(
+            selected,
+            {"R0103", "R0206", "R0303", "R0406", "R0503"},
+        )
+        self.assertEqual(sum(row.eclo for row in access if row.activity_id in selected), 4)
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 76.0)
+        self.assertEqual(independent.objective_score, 76.0)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
     def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_holdout_v1"
         instance = load_instance(data)

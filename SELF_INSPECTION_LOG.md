@@ -773,3 +773,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity audit: the failed seed-5 `63.0`, its unchanged ten-second repair, and seed-4 strict diagnostic are preserved. The analytical `31.0` bound is unchanged; model bounds from frozen neighborhoods are not promoted to global proofs.
 - Confidence: very high in official incumbents; high in five-seed eight-worker production-budget recovery on this fixture; high in seed-5 budget causality; medium in repair transfer across related regimes; low-to-medium in hidden-instance runtime reliability.
 - Immediate next action: preserve and regression-test the 30-second production budget explicitly, then create a precommitted structurally different repair fixture or run a scale stress test without altering the algorithm from observed failures.
+
+## 2026-09-19 06:46:50 +08
+
+- Interval: 6 minutes 20 seconds since the previous inspection; triggered early by freezing a new falsification fixture before solver exposure.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No official artifact or portal attempt changed.
+- New holdout: 72 activities on the independent eight-module topology, with one workfront coupling five three-unit C activities across five modules and both lines. Its checked C=`76.0` oracle matches a `56 + 20` counting bound and is standard/strict clean.
+- Why this can disprove the current method: footprint expansion follows spatial competitors, but improving an ECLO participant may require moving a standard-only activity in the same contract on a disjoint footprint because the shared workfront permits only one weekly access. The current repair may omit that dependency.
+- Fixture-construction audit: two pre-freeze drafts were invalid due planned-start/predecessor violations and closure conflicts. They were moved out of the workspace, never solver-tested, and support no claim. The corrected dataset hash, oracle, and regression are frozen before the first production run.
+- Leakage audit: the topology and base oracle are public-independent local fixtures, but the new scenario is authored and its optimum is known. It is a falsification test for a specific structural dependency, not unbiased evidence of hidden-distribution accuracy.
+- Regression state: 55 tests pass, including dual scoring and strict screening of the frozen oracle. No solver code or default changed while constructing the fixture.
+- Confidence: very high in official incumbents; high in the new oracle's feasibility and counting bound; high that the test targets a real omission mode; no confidence yet in solver performance because it has not been run.
+- Immediate next action: commit the holdout and then run the unchanged eight-worker production Scenario C controller once. Preserve the blind result before considering any repair expansion.

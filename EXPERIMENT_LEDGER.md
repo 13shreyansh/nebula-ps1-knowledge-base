@@ -807,3 +807,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Seed 5 falsification: the same compressed policy stopped at checked, strict-clean C=`63.0`, consisting of `35` delay and four excess groups (`28`). The ten-second repair returned the incumbent unchanged despite a lower conditional bound.
 - Budget test: the identical seed-5 neighborhood reached C=`31.0` in 30.044 seconds. A full controller replay with the existing 30-second production default independently reached C=`31.0`, hash `7c4f563e23a270edb643983c2326b124cee3de77bcd65de02a258f222013b1da`; both scorers agree and both closure screens are clean.
 - Conclusion: the footprint expansion transfers to the two fresh seeds, but the compressed ten-second repair is not a reliable production policy. No algorithm or default changed: the CLI already defaults to 30 seconds for this repair. Across irregular seeds 1–5, the corrected controller reaches `31.0` when the production repair budget is used; only seeds 1–3 informed the implementation.
+
+### E082: Cross-module workfront holdout is frozen before solver exposure
+
+- Timestamp: 2026-09-19 06:46:50 +08
+- Fixture: `independent_multimodule_tradeoff_v1` transforms the public-independent eight-module topology. One priority-3 C contract couples five three-unit activities across five modules and both lines with one workfront and one access per week. Dataset hash: `3220b2c715aaf57df46d10570ed0de9b6b79a1900e26d6df9c342e760ab9a293`.
+- Independent oracle: 72 activities, 134 access rows, four ECLO rows, no excess, no KMM delay, and total C=`76.0`. Both scorers agree and standard/strict closure screens are clean.
+- Bound: the eight untouched module bottlenecks contribute `56`. KMM has 15 workload units; zero delay by week 13 requires at most 13 rows, hence at least four ECLO half-unit gains costing `20`. With two or fewer ECLO rows it needs at least 14 rows and pays at least `35` delay plus ECLO cost. The oracle attains `56 + 20 = 76`.
+- Protocol: commit the generator, input, oracle, hash, and 55th regression before the first solver run. The purpose is to test contract/workfront coupling across spatially disjoint footprints without adapting the algorithm to the observed outcome.
