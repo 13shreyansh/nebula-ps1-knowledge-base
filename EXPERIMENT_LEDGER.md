@@ -373,3 +373,28 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Real falsification: generate a schema-valid fixture containing only A001/C001 while retaining the full network and parameters. Force the sole heuristic attempt to zero seconds, producing `UNKNOWN` with no objective, then give the bridge-safe fallback 10 seconds with one worker.
 - Result: fallback solved Scenario A to the `0.0` floor in one solve and 0.004 seconds; 175 variables, 455 constraints, 47 branches, two access rows, ten occupancy rows, zero strict conflicts. Main and independent scorers agree; hash `35dc55405c542e6bb803cfc62c3bcb0ce6b9a5b2423c25dddcf4bc997e062dbd`.
 - Boundary: this proves control flow and small-instance recovery, not public-scale fallback performance. Public-scale bridge-safe failures remain preserved.
+
+### E033: Sound-fallback scale boundary
+
+- Timestamp: 2026-09-19 01:58:13 +08
+- Method: generate prefix subinstances of 5, 10, 20, 40, and 50 requested activities, automatically including predecessor closure. Force the direct heuristic to zero seconds and run only strict bridge-safe construction with one worker. Budgets are 15 seconds through 20 activities, 30 seconds at 40, and 60 seconds at 50.
+- Successes: 5 activities solved at `0.0` in 0.024 seconds; 10 at `0.0` in 0.206 seconds; 20 at `0.0` in 0.305 seconds. The 40-activity model found a strict-feasible raw `819.7` incumbent in 30.003 seconds; full-gate pruning removed seven redundant late rows and improved it to `105.7`. Both scorers agree on every retained output and all strict screens are clean.
+- Failure boundary: the 50-activity model exhausted 60.017 seconds after 33 solves/33 closure rounds, 5,615,550 branches, and 127,854 constraints. Its `7569.8` candidate retained six strict conflicts, so no score or submission was accepted and the final directory remained empty.
+- Interpretation: sound fallback is effective on uncongested small/mid-scale instances but degrades sharply between these 40- and 50-activity prefixes. Prefix order is not a controlled hardness measure, so this is an observed boundary, not a universal size threshold.
+- New opportunity: pruning can be a major score operator, not only a row-count tie-break. A pruned fallback should be fed back as a protected incumbent to a separate sound improvement/proof phase rather than returned immediately.
+
+### E034: Prune then soundly verify the fallback incumbent
+
+- Timestamp: 2026-09-19 02:02:56 +08
+- Correction: fallback construction and verification now have distinct budgets. Every safe fallback is full-gate pruned, then passed as a protected incumbent to a fresh bridge-safe model that searches only below its score. A failed heuristic candidate may be supplied only as a non-protected CP-SAT hint; it cannot become the incumbent until fully checked.
+- Test: repeat the strict 40-activity prefix with one worker, 30 seconds of sound construction, and 10 seconds of separate sound verification. The direct heuristic was forced to 30 seconds but ended without a usable objective, so no repair hint was used in this run.
+- Result: sound construction found a checked `27.3` schedule; pruning removed seven redundant late rows and improved it to `18.2`. The verifier then proved `<18.2` infeasible in 0.034 seconds with zero branches. Main and independent scorers agree; zero strict conflicts; final hash `e4a542db2e9e4ff3569dd546060f3b1316c407e1b5b8cf28e49267f70477924f`.
+- Instability evidence: an earlier nominally identical 30-second one-worker fallback on the same fixture returned raw `819.7`, pruned to `105.7`. Wall-clock termination and iterative solve progress can therefore yield materially different incumbents even without multi-worker search. Preserve both runs; do not select a method from the better outcome alone.
+- Decision: keep prune→protected verification as the staged policy. Add cumulative deterministic-time telemetry before comparing repeated time-limited runs.
+
+### E035: Cumulative deterministic-time telemetry
+
+- Timestamp: 2026-09-19 02:03:54 +08
+- Correction: `SolveTelemetry` now records CP-SAT deterministic time. Iterative closure solving accumulates it across every solve round rather than exposing only the final response; the closure-free solver records its single response value.
+- Smoke test: forced-fallback A001 construction records 0.000332 deterministic seconds, followed by a zero-deterministic-time protected `<0.0` infeasibility proof. The output remains strict-feasible at `0.0` and all 33 regressions pass.
+- Boundary: historical telemetry has no deterministic-time field and remains valid wall-time evidence only. Do not infer or backfill missing values. Wall time still governs the live deadline; deterministic time is for fairer search-work comparisons.

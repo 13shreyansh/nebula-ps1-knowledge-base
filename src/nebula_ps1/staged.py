@@ -20,6 +20,7 @@ def solve_staged_scenario(
     *,
     audit_output_dir: str | Path | None = None,
     heuristic_time_limit_seconds: float = 120.0,
+    fallback_time_limit_seconds: float = 120.0,
     verification_time_limit_seconds: float = 120.0,
     workers: int = 8,
     seed: int = 1,
@@ -54,6 +55,9 @@ def solve_staged_scenario(
     verification_pruned = audit_output / "verification_pruned"
     attempt_telemetry: list[dict[str, object]] = []
     heuristic: SolveTelemetry | None = None
+    repair_hint: Path | None = None
+    repair_hint_attempt: int | None = None
+    repair_hint_rank: tuple[int, float] | None = None
     for attempt in range(heuristic_attempts):
         attempt_seed = seed + attempt
         attempt_output = audit_output / f"heuristic_attempt_{attempt + 1}_raw"
@@ -76,11 +80,20 @@ def solve_staged_scenario(
             heuristic = attempt_result
             heuristic_raw = attempt_output
             break
+        if attempt_result.objective_score is not None and all(
+            (attempt_output / name).exists() for name in SUBMISSION_FILES
+        ):
+            rank = (
+                attempt_result.remaining_closure_conflicts,
+                attempt_result.objective_score,
+            )
+            if repair_hint_rank is None or rank < repair_hint_rank:
+                repair_hint = attempt_output
+                repair_hint_attempt = attempt + 1
+                repair_hint_rank = rank
     fallback: SolveTelemetry | None = None
     heuristic_prune = None
     fallback_prune = None
-    verification: SolveTelemetry | None = None
-    verification_prune = None
     if heuristic is not None and heuristic_raw is not None:
         heuristic_prune = prune_submission(
             instance,
@@ -90,45 +103,19 @@ def solve_staged_scenario(
             report_path=audit_output / "HEURISTIC_PRUNE.json",
             forbid_buffer_overlap=forbid_buffer_overlap,
         )
-        incumbent = evaluate_submission(instance, heuristic_pruned, scenario)
-        verification = solve_flexible_supply_relaxation(
-            instance,
-            verification_raw,
-            scenario,
-            time_limit_seconds=verification_time_limit_seconds,
-            workers=workers,
-            seed=seed,
-            closure_round_limit=closure_round_limit,
-            sample_hint_dir=heuristic_pruned,
-            forbid_buffer_overlap=forbid_buffer_overlap,
-            separator_mode="bridge_safe",
-        )
-        verification_prune = prune_submission(
-            instance,
-            verification_raw,
-            verification_pruned,
-            scenario,
-            report_path=audit_output / "VERIFICATION_PRUNE.json",
-            forbid_buffer_overlap=forbid_buffer_overlap,
-        )
-        verified = evaluate_submission(instance, verification_pruned, scenario)
-
-        selected_stage = "heuristic_incumbent"
-        selected_dir = heuristic_pruned
-        selected: Evaluation = incumbent
-        if _candidate_is_better(verified, incumbent):
-            selected_stage = "bridge_safe_improvement"
-            selected_dir = verification_pruned
-            selected = verified
+        incumbent_stage = "heuristic_incumbent"
+        improvement_stage = "bridge_safe_improvement"
+        incumbent_dir = heuristic_pruned
     else:
         fallback = solve_flexible_supply_relaxation(
             instance,
             fallback_raw,
             scenario,
-            time_limit_seconds=verification_time_limit_seconds,
+            time_limit_seconds=fallback_time_limit_seconds,
             workers=workers,
             seed=seed,
             closure_round_limit=closure_round_limit,
+            sample_hint_dir=repair_hint,
             forbid_buffer_overlap=forbid_buffer_overlap,
             separator_mode="bridge_safe",
         )
@@ -137,6 +124,7 @@ def solve_staged_scenario(
                 json.dumps(
                     {
                         "heuristic_attempts": attempt_telemetry,
+                        "bridge_safe_fallback_hint_attempt": repair_hint_attempt,
                         "bridge_safe_fallback": asdict(fallback),
                     },
                     indent=2,
@@ -156,9 +144,40 @@ def solve_staged_scenario(
             report_path=audit_output / "FALLBACK_PRUNE.json",
             forbid_buffer_overlap=forbid_buffer_overlap,
         )
-        selected_stage = "bridge_safe_fallback"
-        selected_dir = fallback_pruned
-        selected = evaluate_submission(instance, fallback_pruned, scenario)
+        incumbent_stage = "bridge_safe_fallback"
+        improvement_stage = "bridge_safe_fallback_improvement"
+        incumbent_dir = fallback_pruned
+
+    incumbent = evaluate_submission(instance, incumbent_dir, scenario)
+    verification = solve_flexible_supply_relaxation(
+        instance,
+        verification_raw,
+        scenario,
+        time_limit_seconds=verification_time_limit_seconds,
+        workers=workers,
+        seed=seed,
+        closure_round_limit=closure_round_limit,
+        sample_hint_dir=incumbent_dir,
+        forbid_buffer_overlap=forbid_buffer_overlap,
+        separator_mode="bridge_safe",
+    )
+    verification_prune = prune_submission(
+        instance,
+        verification_raw,
+        verification_pruned,
+        scenario,
+        report_path=audit_output / "VERIFICATION_PRUNE.json",
+        forbid_buffer_overlap=forbid_buffer_overlap,
+    )
+    verified = evaluate_submission(instance, verification_pruned, scenario)
+
+    selected_stage = incumbent_stage
+    selected_dir = incumbent_dir
+    selected: Evaluation = incumbent
+    if _candidate_is_better(verified, incumbent):
+        selected_stage = improvement_stage
+        selected_dir = verification_pruned
+        selected = verified
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, scenario)
@@ -195,6 +214,7 @@ def solve_staged_scenario(
         "heuristic_attempts": attempt_telemetry,
         "heuristic_prune": asdict(heuristic_prune) if heuristic_prune is not None else None,
         "bridge_safe_fallback_telemetry": asdict(fallback) if fallback is not None else None,
+        "bridge_safe_fallback_hint_attempt": repair_hint_attempt,
         "bridge_safe_fallback_prune": asdict(fallback_prune) if fallback_prune is not None else None,
         "verification_telemetry": asdict(verification) if verification is not None else None,
         "verification_prune": asdict(verification_prune) if verification_prune is not None else None,

@@ -1,0 +1,141 @@
+{
+  "bridge_safe_fallback_hint_attempt": null,
+  "bridge_safe_fallback_prune": {
+    "final_access_rows": 159,
+    "final_score": 18.2,
+    "final_submission_hash": "e4a542db2e9e4ff3569dd546060f3b1316c407e1b5b8cf28e49267f70477924f",
+    "initial_access_rows": 166,
+    "initial_score": 27.3,
+    "initial_submission_hash": "e79e1fde9570c9532a81d316c48ba11d7ae53c7e0e1bf143ca41bad8b4905e81",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [
+      [
+        "A042",
+        27
+      ],
+      [
+        "A055",
+        26
+      ],
+      [
+        "A011",
+        25
+      ],
+      [
+        "A041",
+        24
+      ],
+      [
+        "A011",
+        23
+      ],
+      [
+        "A041",
+        23
+      ],
+      [
+        "A011",
+        20
+      ]
+    ],
+    "scenario": "A",
+    "strict_buffer_overlap_checked": true
+  },
+  "bridge_safe_fallback_telemetry": {
+    "best_bound": null,
+    "branches": 3377563,
+    "closure_rounds": 31,
+    "conflicts": 5792,
+    "formulation": "scenario_a_iterative_bridge_safe_strict_buffer_closure_relaxation",
+    "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This output is a hedge, not validator confirmation. The row-count tie-breaker cannot alter the official penalty objective.",
+    "maximum_round_time_seconds": 1.0,
+    "model_constraints": 77220,
+    "model_variables": 30649,
+    "objective_score": 27.3,
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 1.0,
+    "seed": 11,
+    "solve_rounds": 35,
+    "status": "FEASIBLE_SAFE_INCUMBENT",
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 30.0,
+    "unknown_retries": 1,
+    "wall_time_seconds": 30.014545875004842,
+    "workers": 1
+  },
+  "heuristic_attempts": [
+    {
+      "best_bound": null,
+      "branches": 3444998,
+      "closure_rounds": 33,
+      "conflicts": 7428,
+      "formulation": "scenario_a_iterative_direct_heuristic_strict_buffer_closure_relaxation",
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "maximum_round_time_seconds": 1.0,
+      "model_constraints": 32784,
+      "model_variables": 15842,
+      "objective_score": null,
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 5,
+      "round_time_limit_seconds": 1.0,
+      "seed": 11,
+      "solve_rounds": 34,
+      "status": "UNKNOWN",
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 30.0,
+      "unknown_retries": 0,
+      "wall_time_seconds": 30.000242792011704,
+      "workers": 1
+    }
+  ],
+  "heuristic_prune": null,
+  "heuristic_telemetry": null,
+  "reference_validator_confirmed": false,
+  "scenario": "A",
+  "selected_objective_score": 18.2,
+  "selected_stage": "bridge_safe_fallback",
+  "selected_submission_hash": "e4a542db2e9e4ff3569dd546060f3b1316c407e1b5b8cf28e49267f70477924f",
+  "selection_rule": "strictly lower fully checked objective; otherwise preserve incumbent",
+  "strict_buffer_overlap_checked": true,
+  "submission_files": [
+    "SCHEDULE_ACCESS.csv",
+    "SCHEDULE_OCCUPANCY.csv",
+    "RESULTS.csv"
+  ],
+  "verification_prune": {
+    "final_access_rows": 159,
+    "final_score": 18.2,
+    "final_submission_hash": "e4a542db2e9e4ff3569dd546060f3b1316c407e1b5b8cf28e49267f70477924f",
+    "initial_access_rows": 159,
+    "initial_score": 18.2,
+    "initial_submission_hash": "e4a542db2e9e4ff3569dd546060f3b1316c407e1b5b8cf28e49267f70477924f",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "A",
+    "strict_buffer_overlap_checked": true
+  },
+  "verification_telemetry": {
+    "best_bound": 18.2,
+    "branches": 0,
+    "closure_rounds": 0,
+    "conflicts": 0,
+    "formulation": "scenario_a_iterative_bridge_safe_strict_buffer_closure_relaxation",
+    "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This output is a hedge, not validator confirmation. The row-count tie-breaker cannot alter the official penalty objective.",
+    "maximum_round_time_seconds": 1.0,
+    "model_constraints": 31178,
+    "model_variables": 15352,
+    "objective_score": 18.2,
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 1.0,
+    "seed": 11,
+    "solve_rounds": 1,
+    "status": "PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.03357179199520033,
+    "workers": 1
+  }
+}

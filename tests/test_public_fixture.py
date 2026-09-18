@@ -346,12 +346,15 @@ class PublicFixtureTests(unittest.TestCase):
             "B",
             "--heuristic-attempts",
             "7",
+            "--fallback-time-limit",
+            "17",
         ]
         with patch("sys.argv", argv), patch(
             "nebula_ps1.cli.solve_staged_scenario", return_value={}
         ) as solve:
             cli_main()
         self.assertEqual(solve.call_args.kwargs["heuristic_attempts"], 7)
+        self.assertEqual(solve.call_args.kwargs["fallback_time_limit_seconds"], 17.0)
 
     def test_minimal_32_2_repair_passes_sample_consistent_closure_screen(self) -> None:
         candidate = ROOT / "runs" / "a_repair_late_a035_a038"
@@ -657,6 +660,7 @@ class PublicFixtureTests(unittest.TestCase):
             for name in SUBMISSION_FILES:
                 self.assertNotIn(b"\r\n", (Path(temp_dir) / name).read_bytes())
         self.assertEqual(telemetry.status, "FEASIBLE_SAFE_INCUMBENT")
+        self.assertIsNotNone(telemetry.deterministic_time_seconds)
         self.assertAlmostEqual(telemetry.objective_score, 32.2)
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(strict_conflicts, ())
@@ -746,11 +750,12 @@ class PublicFixtureTests(unittest.TestCase):
                 remaining_closure_conflicts=remaining_conflicts,
             )
 
-        failed = telemetry("direct_heuristic", "UNKNOWN", None, 1)
+        failed = telemetry("direct_heuristic", "FEASIBLE", 32.2, 1)
         fallback = telemetry("bridge_safe", "FEASIBLE_SAFE_INCUMBENT", 32.2, 0)
 
         def fake_solve(instance, output_dir, scenario, **kwargs):
             if kwargs["separator_mode"] == "direct_heuristic":
+                _copy_submission(ROOT / "deliverables" / "public" / "A", Path(output_dir))
                 return failed
             _copy_submission(ROOT / "deliverables" / "public" / "A", Path(output_dir))
             return fallback
@@ -767,14 +772,21 @@ class PublicFixtureTests(unittest.TestCase):
                 heuristic_attempts=1,
                 forbid_buffer_overlap=True,
             )
-        self.assertEqual(solve.call_count, 2)
+        self.assertEqual(solve.call_count, 3)
+        self.assertEqual(
+            Path(solve.call_args_list[1].kwargs["sample_hint_dir"]).name,
+            "heuristic_attempt_1_raw",
+        )
         self.assertEqual(report["selected_stage"], "bridge_safe_fallback")
         self.assertIsNone(report["heuristic_telemetry"])
         self.assertEqual(
             report["bridge_safe_fallback_telemetry"]["status"],
             "FEASIBLE_SAFE_INCUMBENT",
         )
-        self.assertIsNone(report["verification_telemetry"])
+        self.assertEqual(
+            report["verification_telemetry"]["status"],
+            "FEASIBLE_SAFE_INCUMBENT",
+        )
 
     def test_packaged_public_answer_keys_match_manifest(self) -> None:
         deliverables = ROOT / "deliverables" / "public"

@@ -105,10 +105,16 @@ def main() -> None:
     staged_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
     staged_parser.add_argument("--heuristic-time-limit", type=float, default=120.0)
     staged_parser.add_argument(
+        "--fallback-time-limit",
+        type=float,
+        default=120.0,
+        help="bridge-safe construction budget used only if every heuristic attempt fails",
+    )
+    staged_parser.add_argument(
         "--verification-time-limit",
         type=float,
         default=120.0,
-        help="bridge-safe verification budget, or construction fallback budget if all heuristics fail",
+        help="bridge-safe improvement and proof budget after a safe candidate is pruned",
     )
     staged_parser.add_argument("--workers", type=int, default=8)
     staged_parser.add_argument("--seed", type=int, default=1)
@@ -220,6 +226,7 @@ def main() -> None:
             args.scenario,
             audit_output_dir=args.audit_output,
             heuristic_time_limit_seconds=args.heuristic_time_limit,
+            fallback_time_limit_seconds=args.fallback_time_limit,
             verification_time_limit_seconds=args.verification_time_limit,
             workers=args.workers,
             seed=args.seed,

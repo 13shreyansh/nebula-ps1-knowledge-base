@@ -29,6 +29,7 @@ class SolveTelemetry:
     model_variables: int
     model_constraints: int
     limitation: str
+    deterministic_time_seconds: float | None = None
     closure_rounds: int = 0
     remaining_closure_conflicts: int = 0
     round_time_limit_seconds: float | None = None
@@ -440,6 +441,7 @@ def solve_scenario_a_relaxation(
         objective_score=objective,
         best_bound=bound,
         wall_time_seconds=elapsed,
+        deterministic_time_seconds=solver.response_proto.deterministic_time,
         conflicts=solver.num_conflicts,
         branches=solver.num_branches,
         seed=seed,

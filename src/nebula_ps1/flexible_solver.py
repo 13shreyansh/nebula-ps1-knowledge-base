@@ -368,6 +368,7 @@ def solve_flexible_supply_relaxation(
     solve_rounds = 0
     total_conflicts = 0
     total_branches = 0
+    total_deterministic_time = 0.0
     active_round_limit = effective_round_limit
     maximum_round_limit_used = 0.0
     unknown_retries = 0
@@ -402,6 +403,7 @@ def solve_flexible_supply_relaxation(
         maximum_round_limit_used = max(maximum_round_limit_used, solve_limit)
         solver.parameters.max_time_in_seconds = solve_limit
         status_code = solver.solve(model)
+        total_deterministic_time += solver.response_proto.deterministic_time
         solve_rounds += 1
         total_conflicts += solver.num_conflicts
         total_branches += solver.num_branches
@@ -622,6 +624,7 @@ def solve_flexible_supply_relaxation(
         objective_score=objective,
         best_bound=bound,
         wall_time_seconds=elapsed,
+        deterministic_time_seconds=total_deterministic_time,
         conflicts=total_conflicts,
         branches=total_branches,
         seed=seed,

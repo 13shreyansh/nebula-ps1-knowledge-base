@@ -278,3 +278,27 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Remaining risks: structural testing still derives capacity from a known public-topology oracle; it changes constraints but not network size or graph shape. Eight-worker nondeterminism and direct-heuristic runtime remain material. Shared closure semantics still lack official confirmation.
 - Confidence: high in the structural candidate's implemented feasibility, score arithmetic, strict screen, and normalized serialization; medium in staged construction across tested regimes; low in arbitrary topology/scale generalization; low-to-medium in official closure agreement; zero in official validation.
 - Next action: preserve the fixture and run evidence, then attack exact reproducibility across fresh generation and consider a genuinely different topology fixture with an explicit feasibility oracle.
+
+## 2026-09-19 01:58:13 +08
+
+- Interval: 7 minutes 6 seconds since the previous inspection; early because the staged fallback's empirical scale boundary became visible.
+- Best independently validated score: no official/reference-validator result. Public internal scores remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero. Synthetic prefix results are non-comparable.
+- What improved: staged construction now has a sound last-resort path after complete heuristic failure. A real zero-heuristic test recovered an optimal one-activity schedule. One-worker scaling tests also returned strict-feasible, dual-scored outputs for 5, 10, 20, and 40 activities.
+- What failed: a 50-activity prefix exhausted 60 seconds with six strict conflicts and no accepted incumbent. The workflow correctly left the final submission directory empty and preserved `STAGED_FAILURES.json`; no infeasibility claim or score was made.
+- Unexpected positive and risk: the 40-activity raw safe incumbent scored `819.7`, while full-gate removal of seven redundant late rows reduced it to `105.7`. This proves pruning is a material improvement operator. Returning immediately afterward wastes the opportunity to feed the much stronger incumbent back into sound search.
+- Cheating and measurement audit: prefixes retain the full topology but remove demand, so their easy `0.0` scores must not be read as public or hidden-instance gains. Prefix order may cherry-pick difficulty. The 50-activity failure is retained alongside successes. Strict feasibility and both score implementations gate every reported result.
+- Strongest counterexample: full-scale bridge-safe construction remains unreliable, and even 50 of 54 activities can fail despite smaller successes. This rejects any claim that the new fallback makes heuristic construction unnecessary.
+- Confidence: high in fallback control flow and accepted prefix artifacts; medium in the observed scale curve; low in arbitrary hidden-instance fallback success; zero in official validation.
+- Next action: after a sound fallback is pruned, run a separate bridge-safe improvement/proof phase with the pruned candidate protected. Keep construction and verification budgets distinct, then test whether the 40-activity `105.7` incumbent improves or proves within a fixed budget.
+
+## 2026-09-19 02:02:56 +08
+
+- Interval: 4 minutes 43 seconds since the previous inspection; early because the prescribed corrective experiment completed with contradictory runtime evidence.
+- Best independently validated score: no official/reference-validator result. Public internal optima remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero. The 40-activity synthetic optimum under implemented semantics is now `18.2`.
+- Successful correction: fallback construction, full-gate pruning, and sound improvement/proof are distinct stages. In the new run, sound construction found `27.3`, pruning reduced it to `18.2`, and a fresh bridge-safe `<18.2` model proved infeasible in 0.034 seconds. Both scorers and the strict screen agree.
+- Contradictory evidence: a prior same-fixture, same-seed, one-worker, 30-second fallback returned `819.7`, pruned to `105.7`. The later run returned `27.3`, pruned to `18.2`. One-worker does not make wall-clock-cutoff results reproducible when iterative solves complete different numbers of rounds near the deadline.
+- Integrity response: retain both runs and do not present the better run as a general algorithmic gain. The algorithmic gain is only the guarded prune→verification sequence and its proof on the retained candidate. The public scores did not change.
+- Heuristic-repair status: code now forwards the best well-formed failed heuristic output as a non-protected fallback hint, ranked first by remaining conflicts and then objective. The integration run produced no usable heuristic objective, so this feature is regression-tested but not yet empirically credited.
+- What could still be wrong: wall-time telemetry alone hides deterministic search work; reported branch/conflict sums do not normalize across repeated solves; prefix instances change demand distribution and are not representative hidden samples; bridge-safe proof inherits our closure semantics.
+- Confidence: high in the final 18.2 synthetic artifact and its implemented proof; medium in staged policy correctness; low in wall-time reproducibility and full-scale fallback performance; zero in official validation.
+- Next action: add cumulative CP-SAT deterministic-time telemetry to every solve path, then repeat a bounded comparison before drawing runtime conclusions.

@@ -1,0 +1,23 @@
+{
+  "best_bound": 0.0,
+  "branches": 32276,
+  "closure_rounds": 2,
+  "conflicts": 12,
+  "formulation": "scenario_a_iterative_bridge_safe_strict_buffer_closure_relaxation",
+  "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This output is a hedge, not validator confirmation. The row-count tie-breaker cannot alter the official penalty objective.",
+  "maximum_round_time_seconds": 1.0,
+  "model_constraints": 16998,
+  "model_variables": 7533,
+  "objective_score": 0.0,
+  "primary_score_proven_optimal": true,
+  "remaining_closure_conflicts": 0,
+  "round_time_limit_seconds": 1.0,
+  "seed": 11,
+  "solve_rounds": 3,
+  "status": "OPTIMAL",
+  "tie_break_proven_optimal": true,
+  "time_limit_seconds": 15.0,
+  "unknown_retries": 0,
+  "wall_time_seconds": 0.30461695800477173,
+  "workers": 1
+}
