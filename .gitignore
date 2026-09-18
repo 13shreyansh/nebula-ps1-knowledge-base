@@ -1,0 +1,6 @@
+.DS_Store
+.playwright-cli/
+*.m4a
+*.wav
+*.mp3
+*.tmp
