@@ -341,6 +341,8 @@ These are regression bounds, not proofs of the global optimum. A feasible soluti
 
 The append-only evidence, hashes, parameters, failures, and limitations are in `EXPERIMENT_LEDGER.md`. Executable code is under `src/nebula_ps1`; regression tests are under `tests`.
 
+The protected public answer keys are in `deliverables/public/A`, `B`, and `C`. Each directory contains exactly the three required CSV files. `deliverables/public/MANIFEST.json` pins their scores and hashes and explicitly records that reference-validator confirmation is still absent.
+
 <a id="improvement"></a>
 
 ## 9. Score improvement loop

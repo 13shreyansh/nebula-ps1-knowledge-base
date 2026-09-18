@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import unittest
 import csv
+import hashlib
+import json
 import shutil
 import tempfile
 from dataclasses import replace
@@ -360,6 +362,30 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report.final_access_rows, 192)
         self.assertEqual(report.removed_accesses, ())
         self.assertAlmostEqual(evaluation.objective_score, 32.2)
+
+    def test_packaged_public_answer_keys_match_manifest(self) -> None:
+        deliverables = ROOT / "deliverables" / "public"
+        if not deliverables.exists():
+            self.skipTest("public answer keys have not been packaged")
+        manifest = json.loads((deliverables / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertFalse(manifest["reference_validator_confirmed"])
+        for scenario, expected in manifest["scenarios"].items():
+            with self.subTest(scenario=scenario):
+                answer_key = deliverables / scenario
+                self.assertEqual(
+                    sorted(path.name for path in answer_key.iterdir()), sorted(SUBMISSION_FILES)
+                )
+                for name, expected_hash in expected["files"].items():
+                    actual_hash = hashlib.sha256((answer_key / name).read_bytes()).hexdigest()
+                    self.assertEqual(actual_hash, expected_hash)
+                evaluation = evaluate_submission(self.instance, answer_key, scenario=scenario)
+                audit = independently_score(PACK / "01_data", answer_key)
+                self.assertEqual(evaluation.hard_violations, ())
+                self.assertAlmostEqual(
+                    evaluation.objective_score, expected["internally_checked_score"]
+                )
+                self.assertAlmostEqual(audit.objective_score, evaluation.objective_score)
+                self.assertEqual(evaluation.submission_hash, expected["submission_hash"])
 
 
 if __name__ == "__main__":

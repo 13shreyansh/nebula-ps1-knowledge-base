@@ -1,0 +1,33 @@
+{
+  "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+  "reference_validator_confirmed": false,
+  "scenarios": {
+    "A": {
+      "internally_checked_score": 32.2,
+      "submission_hash": "46bd59a2235eeb57f30ea89b1ca80b36a77f615b78e79f55f6a698626d25f69c",
+      "files": {
+        "RESULTS.csv": "1393156668c30ca54546960090e27e32a18ef083f5edc1aeb5e85c4cf12c2052",
+        "SCHEDULE_ACCESS.csv": "6efc94ae58176fc2df422224e57543415447464345fd90d856dfaac923a030dd",
+        "SCHEDULE_OCCUPANCY.csv": "2eafe1a479a7e12e25f000b583a05084ca37a92d9d617c2dae841417150c07e5"
+      }
+    },
+    "B": {
+      "internally_checked_score": 30.0,
+      "submission_hash": "9e5ec2a550be74f4efe1486297ef973c54d92259e47f202db9633d996ce54072",
+      "files": {
+        "RESULTS.csv": "78b7c2a6b31465eab455e33709fb14eb64d6d0e6030ef710e9158fb81c3a6cd7",
+        "SCHEDULE_ACCESS.csv": "e2ea1ed41a35a38193946c2d8455f474953addf2691d20b1a33107f3e33620ee",
+        "SCHEDULE_OCCUPANCY.csv": "7d370e028bf7a0aafe869ee0926b617f1ed069f0e61ebc1c21553c7cd04d1cc8"
+      }
+    },
+    "C": {
+      "internally_checked_score": 26.1,
+      "submission_hash": "93afe29fc91e24df8ba39830bcda5414be38e79986c9967b40462ac5917fb7a8",
+      "files": {
+        "RESULTS.csv": "1ff3cf1f3acb01d370d8e294394291e8f202affa8c28b347a3a553d7a267a917",
+        "SCHEDULE_ACCESS.csv": "39077f03999157675ac71d32c500f7f63792053cf62953cc7d05b453461bfb71",
+        "SCHEDULE_OCCUPANCY.csv": "38e4c9dbed7cf6089b43ddaadc3faf70993cb6ddccf46a27033f6d57e030f128"
+      }
+    }
+  }
+}

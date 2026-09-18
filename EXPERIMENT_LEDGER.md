@@ -259,3 +259,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: the B demand output pruned `211 → 176` rows, retained objective `0.0`, retained zero implemented violations, and both scorers agree. Final hash `963c637f30393ac8a5523ce4a6172ea9a7db27d79c7eb979ec084067c1624e36`.
 - Portfolio integration: both the C fallback and candidate are pruned before comparison; raw stages and prune reports remain in the audit directory. An integrated demand-fixture rerun retained 176-row C=`0.0`, exact-three-CSV output, and hash `0f9d89ef22ed478a7e38562c4f0864caba1a75c6bbd898f436cdf9645b65e431`.
 - Decision: describe solver `OPTIMAL` as primary-score optimal unless the subordinate objective is separately completed. Use checked pruning before packaging every answer key.
+
+### E021: Public answer-key release gate
+
+- Timestamp: 2026-09-19 00:43:00 +08
+- Method: pass each protected public incumbent through the full-gate pruner into a dedicated scenario directory, require exactly the three official CSV filenames, run the main checker and independent raw-CSV scorer, and pin both aggregate and per-file SHA-256 hashes in a manifest.
+- A: `32.2`, 192 access rows, 928 occupancy rows, submission hash `46bd59a2235eeb57f30ea89b1ca80b36a77f615b78e79f55f6a698626d25f69c`.
+- B: `30.0`, 189 access rows, 917 occupancy rows, submission hash `9e5ec2a550be74f4efe1486297ef973c54d92259e47f202db9633d996ce54072`.
+- C: `26.1`, 191 access rows, 925 occupancy rows, submission hash `93afe29fc91e24df8ba39830bcda5414be38e79986c9967b40462ac5917fb7a8`.
+- Result: pruning removes nothing from any public incumbent; each directory contains exactly `SCHEDULE_ACCESS.csv`, `SCHEDULE_OCCUPANCY.csv`, and `RESULTS.csv`; both scorers agree; all implemented checks pass; 19 release regressions pass.
+- Limitation: `MANIFEST.json` explicitly records `reference_validator_confirmed=false`.
+- Decision: use `deliverables/public/{A,B,C}` as the protected public answer keys. Do not package telemetry, stages, manifests, or audit reports inside the scenario directories.
