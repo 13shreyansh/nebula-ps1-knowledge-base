@@ -42,6 +42,7 @@ CASES = (
     ("independent_irregular_partial_B", "fixtures/independent_irregular_partial_v1", "runs/independent_irregular_partial_v1_corrected_production_w8/b_seed_1", "B", "runs/independent_irregular_partial_v1_corrected_production_w8/b_seed_1_audit/bridge_safe_cost_repair_raw/TELEMETRY.json", None, None),
     ("independent_irregular_partial_C", "fixtures/independent_irregular_partial_v1", "runs/independent_irregular_partial_v1_guarded_independent_c120_costrepair_w8", "C", "runs/independent_irregular_partial_v1_guarded_independent_c120_costrepair_w8_audit/stages/scenario_c_direct_after_a_failure_audit/bridge_safe_cost_repair_raw/TELEMETRY.json", None, None),
     ("independent_multimodule_tradeoff_C", "fixtures/independent_multimodule_tradeoff_v1", "runs/postb651753_multimodule_c_seed1_w8", "C", "runs/postb651753_multimodule_c_seed1_w8_audit/stages/scenario_c_verification_raw/TELEMETRY.json", None, None),
+    ("independent_predecessor_tradeoff_C", "fixtures/independent_predecessor_tradeoff_v1", "runs/postprecedenceexpand_delayed7_repair30", "C", "runs/postprecedenceexpand_delayed7_repair30_raw/TELEMETRY.json", None, None),
 )
 
 

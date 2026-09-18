@@ -218,6 +218,7 @@ def solve_staged_c_portfolio(
             selected_dir,
             expand_footprints=True,
             expand_contracts=True,
+            expand_precedence=True,
             include_delays=True,
         )
         if cost_repair_activities:

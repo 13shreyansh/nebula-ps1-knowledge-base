@@ -542,6 +542,14 @@ Confidence labels:
 - **Limitation:** Delayed-contract expansion can make the neighborhood broad when many projects are late. The protected incumbent and time cap preserve correctness, not runtime.
 - **Confidence:** High for the omission and correction; medium for scale transfer.
 
+### `R067` Frozen precedence neighbors can create false local proofs
+
+- **Status:** Confirmed on a precommitted two-contract fixture.
+- **Finding:** Freeing a delayed successor while freezing its on-time predecessor proved score `7.0` optimal inside the neighborhood, although moving both gives `0.0`. Transitive predecessor/successor closure recovered and proved zero.
+- **Relevance:** Dependency-aware repair must follow precedence in both directions: predecessors may need to move earlier, while successors may need to move when a contributor shifts later. Bounds remain conditional whenever linked activities are frozen.
+- **Limitation:** A long precedence chain can widen repair substantially. Current tested public and synthetic neighborhoods did not grow, but hidden graphs may differ.
+- **Confidence:** High for the mechanism and correction; medium for scale transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

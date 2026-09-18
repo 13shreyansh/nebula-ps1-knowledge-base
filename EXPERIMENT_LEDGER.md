@@ -846,3 +846,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Fixture: `independent_predecessor_tradeoff_v1` contains an on-time predecessor and a priority successor in separate contracts and disjoint footprints. Dataset hash: `145752d013356aaf41be761d89c621a9fad136304b2a6284e3e5328b3e68b022`.
 - Oracle and incumbent: the checked optimum schedules `PRED`/`SUCC` in weeks 1/2 for C=`0.0`; the checked delayed incumbent schedules weeks 3/4 for C=`7.0`, with no ECLO or excess. Both scorers agree.
 - Protocol: commit the generator, input, oracle, delayed incumbent, and regression before invoking repair. The test asks whether delay seeding can move a delayed successor when its on-time cross-contract predecessor remains frozen.
+
+### E087: Precedence closure removes another conditional-optimum trap
+
+- Timestamp: 2026-09-19 06:58:42 +08
+- Falsification: delay-aware contract/footprint repair freed only `SUCC` and proved C=`7.0` with `PRED` frozen in week 3, although the committed weeks-1/2 oracle scores `0.0`.
+- Correction: Scenario C now includes the transitive undirected predecessor/successor component of objective and contract contributors before footprint expansion. Scenario B remains unchanged.
+- Result: the corrected two-activity neighborhood proved C=`0.0` in 0.006 seconds. Both scorers and both closure policies accept hash `578a90f3f1424d7098acc1fa670f537cb2ec97d6496edf6115fd879ffbc3f48c`.
+- Scope check: precedence closure added no activities to the existing public (43), irregular (27), coupled (23), or multimodule delay (18) neighborhoods. Fifty-nine regressions pass.

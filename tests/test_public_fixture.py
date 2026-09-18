@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 30)
+        self.assertEqual(len(matrix["cases"]), 31)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -133,6 +133,9 @@ class PublicFixtureTests(unittest.TestCase):
             elif row["case"] == "independent_multimodule_tradeoff_C":
                 data = ROOT / "fixtures" / "independent_multimodule_tradeoff_v1"
                 submission = ROOT / "runs" / "postb651753_multimodule_c_seed1_w8"
+            elif row["case"] == "independent_predecessor_tradeoff_C":
+                data = ROOT / "fixtures" / "independent_predecessor_tradeoff_v1"
+                submission = ROOT / "runs" / "postprecedenceexpand_delayed7_repair30"
             else:
                 self.assertTrue(row["case"].startswith("independent_"))
                 data = ROOT / "fixtures" / "independent_synthetic_v1"
@@ -866,6 +869,7 @@ class PublicFixtureTests(unittest.TestCase):
                 ROOT / "deliverables" / "public" / "C",
                 expand_footprints=True,
                 expand_contracts=True,
+                expand_precedence=True,
                 include_delays=True,
             )
         )
@@ -881,6 +885,7 @@ class PublicFixtureTests(unittest.TestCase):
             ROOT / "fixtures" / "independent_multimodule_tradeoff_v1_delayed_incumbent",
             expand_footprints=True,
             expand_contracts=True,
+            expand_precedence=True,
             include_delays=True,
         )
         kmm = {
@@ -911,6 +916,7 @@ class PublicFixtureTests(unittest.TestCase):
             source,
             expand_footprints=True,
             expand_contracts=True,
+            expand_precedence=True,
             include_delays=True,
         )
         kmm = {
@@ -919,6 +925,30 @@ class PublicFixtureTests(unittest.TestCase):
             if activity.contract_number == "KMM"
         }
         self.assertTrue(kmm <= set(contributors))
+
+    def test_scenario_c_cost_repair_expands_precedence_component(self) -> None:
+        data = ROOT / "fixtures" / "independent_predecessor_tradeoff_v1"
+        instance = load_instance(data)
+        source = (
+            ROOT / "fixtures" / "independent_predecessor_tradeoff_v1_delayed_incumbent"
+        )
+        without_predecessor = _scenario_b_cost_contributing_activities(
+            instance,
+            source,
+            expand_footprints=True,
+            expand_contracts=True,
+            include_delays=True,
+        )
+        with_predecessor = _scenario_b_cost_contributing_activities(
+            instance,
+            source,
+            expand_footprints=True,
+            expand_contracts=True,
+            expand_precedence=True,
+            include_delays=True,
+        )
+        self.assertEqual(without_predecessor, ["SUCC"])
+        self.assertEqual(with_predecessor, ["PRED", "SUCC"])
 
     def test_relabelled_a_incumbent_is_a_safe_scenario_c_fallback(self) -> None:
         source = ROOT / "deliverables" / "public" / "A"
@@ -1428,6 +1458,7 @@ class PublicFixtureTests(unittest.TestCase):
             ROOT / "deliverables" / "public" / "C",
             expand_footprints=True,
             expand_contracts=True,
+            expand_precedence=True,
             include_delays=True,
         )
 

@@ -821,3 +821,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity audit: dataset, oracle, incumbent, hashes, and regression are frozen before the first repair call. The authored two-row fixture tests one mechanism and is not hidden-distribution evidence.
 - Confidence: very high in official incumbents; high in fixture validity; no confidence yet in the repair outcome.
 - Immediate next action: commit the holdout, run the current delay-aware repair unchanged, and preserve the result before adding predecessor closure.
+
+## 2026-09-19 06:58:42 +08
+
+- Interval: 1 minute 27 seconds since the previous inspection; triggered early by a successful precommitted falsification and correction.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- Falsification: delay-aware repair freed only `SUCC`, froze on-time `PRED` in week 3, and proved C=`7.0` inside that subproblem although the checked global oracle scores zero.
+- Accepted correction: Scenario C now takes the transitive undirected predecessor/successor component after objective and contract seeding. The corrected repair proved C=`0.0` in 0.006 seconds; both scorers and both closure screens accept it.
+- Scale check: precedence closure added no activities to the current public, irregular, coupled, or multimodule repair neighborhoods. This lowers immediate regression risk but does not bound hidden chain size.
+- Adversarial interpretation: three consecutive failures came from neighborhood definition, not CP-SAT correctness. Conditional optimality is only useful when every objective contributor and binding dependency is movable. Contract, precedence, and footprint coverage remain deliberately finite rather than an uncontrolled fixed point.
+- Integrity audit: the old score-7 conditional proof, the score-0 oracle, and corrected score-0 repair are distinct preserved artifacts. Fifty-nine regressions pass; no internal result changed an official artifact.
+- Confidence: very high in official incumbents; high in the predecessor correction; high in current cross-regime set stability; medium in hidden runtime; low-to-medium in dependencies introduced by footprint competitors after the precedence pass.
+- Immediate next action: commit the precedence correction and evidence. Then stress the ordering boundary: a footprint competitor whose own contract or predecessor must move, which the current one-pass expansion may still miss.

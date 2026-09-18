@@ -479,6 +479,22 @@
       "standard_feasible": true,
       "strict_conflicts": 0,
       "submission_hash": "ac27d3e191fc88a5d398e2c3dd0fa0eb187a05a967cb13ceb3781488409e1fd5"
+    },
+    {
+      "case": "independent_predecessor_tradeoff_C",
+      "dataset_hash": "145752d013356aaf41be761d89c621a9fad136304b2a6284e3e5328b3e68b022",
+      "delay_score": 0.0,
+      "eclo_nights": 0,
+      "excess_nights": 0,
+      "proof_bound": 0.0,
+      "proof_matches_score": true,
+      "proof_status": "OPTIMAL",
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 0.0,
+      "standard_feasible": true,
+      "strict_conflicts": 0,
+      "submission_hash": "578a90f3f1424d7098acc1fa670f537cb2ec97d6496edf6115fd879ffbc3f48c"
     }
   ],
   "integrity_rule": "main and independent scores must agree; hard violations abort generation",

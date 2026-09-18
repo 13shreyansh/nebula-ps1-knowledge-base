@@ -19,6 +19,7 @@ def _scenario_b_cost_contributing_activities(
     *,
     expand_footprints: bool = False,
     expand_contracts: bool = False,
+    expand_precedence: bool = False,
     include_delays: bool = False,
 ) -> list[str]:
     """Return direct cost participants and selected scheduling dependencies."""
@@ -55,6 +56,21 @@ def _scenario_b_cost_contributing_activities(
             for activity_id, activity in instance.activities.items()
             if activity.contract_number in affected_contracts
         )
+    if expand_precedence and contributors:
+        precedence_neighbors: dict[str, set[str]] = {
+            activity_id: set() for activity_id in instance.activities
+        }
+        for activity_id, activity in instance.activities.items():
+            predecessor = activity.predecessor_activity_id
+            if predecessor:
+                precedence_neighbors[activity_id].add(predecessor)
+                precedence_neighbors[predecessor].add(activity_id)
+        pending = list(contributors)
+        while pending:
+            activity_id = pending.pop()
+            for neighbor in precedence_neighbors[activity_id] - contributors:
+                contributors.add(neighbor)
+                pending.append(neighbor)
     if expand_footprints and contributors:
         affected_locations = {
             row.location_id for row in occupancy if row.activity_id in contributors
@@ -361,6 +377,7 @@ def solve_staged_scenario(
             selected_dir,
             expand_footprints=scenario == "C",
             expand_contracts=scenario == "C",
+            expand_precedence=scenario == "C",
             include_delays=scenario == "C",
         )
         if cost_repair_activities:
