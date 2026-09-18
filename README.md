@@ -1,13 +1,13 @@
 ---
 document_id: NH-PS1-KB
-version: 0.2.0
+version: 0.3.0
 last_verified: 2026-09-18
-official_spec: current-problem-statement/PS1/PS1_README.md
+official_spec: https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/blob/main/PS1/PS1_README.md
 ---
 
 # Nebula Hack PS1: Team Knowledge Base
 
-This document records the team’s verified clarifications, interpretations, and decisions for Problem Statement 1. It complements the [official PS1 specification](current-problem-statement/PS1/PS1_README.md); it does not repeat its rules, schemas, formulas, or deliverables.
+This document records the team’s verified clarifications, interpretations, and decisions for Problem Statement 1. It complements the [official PS1 specification](https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/blob/main/PS1/PS1_README.md); it does not repeat its rules, schemas, formulas, or deliverables.
 
 If the two conflict, the current official specification and reference validator govern. Record the conflict before changing implementation.
 
@@ -24,6 +24,8 @@ If the two conflict, the current official specification and reference validator 
 | Meaning of “same data” | [`DATA`](#data) |
 | Optimisation, AI, and human roles | [`SYSTEM`](#system) |
 | Product direction | [`PRODUCT`](#product) |
+| Algorithm and constraint model | [`ALGORITHM`](#algorithm) |
+| Score improvement loop | [`IMPROVEMENT`](#improvement) |
 | Build order | [`BUILD`](#build) |
 | Judging and evidence | [`JUDGING`](#judging) |
 | Demo narrative | [`DEMO`](#demo) |
@@ -197,9 +199,175 @@ A credible implementation should show:
 
 If used, “digital twin” means a what-if planning layer over real solver state: network and timeline views, possession overlays, conflicts, capacity, and disruption comparison. Do not imply physical simulation or BIM integration unless implemented.
 
+<a id="algorithm"></a>
+
+## 8. Algorithm and constraint model
+
+### Solver choice
+
+Use **OR-Tools CP-SAT** as the primary optimiser.
+
+The problem is discrete and dominated by assignment, precedence, packing, conditional compatibility, and cardinality constraints. CP-SAT supports these directly, produces feasible incumbents under a time limit, accepts warm starts, and supports large-neighbourhood search. A neural model cannot guarantee feasibility. A conventional MILP is possible but would require more big-M and symmetry handling.
+
+### Precomputed structures
+
+Before solving, derive:
+
+- Week indices for every date.
+- Ordered sectors and platforms for every activity corridor.
+- Each access occurrence’s physical work footprint.
+- Buffer and mirrored closure footprints by nature of work.
+- Pairwise co-sharing and closure compatibility.
+- Predecessor graph, cycle check, earliest feasible week, and critical-chain slack.
+- Location-week capacity and contract/type weekly limits.
+
+For a corridor containing `n` tunnel sectors, occupancy contains those `n` sectors plus `n+1` platforms. This expansion reproduces the public sample’s 928 occupancy rows exactly.
+
+### Decision variables
+
+| Variable | Meaning |
+|---|---|
+| `week[v]` | Week assigned to access occurrence `v`. |
+| `eclo[v]` | Whether that occurrence uses ECLO. |
+| `night[v]` | Contract-local `access_night` index. |
+| `group[v,l]` | Possession group used by occurrence `v` at occupied location `l`. Groups may differ by location, as in the sample output. |
+| `completion[a/c]` | Last scheduled week for an activity or contract. |
+| `overrun[a]` | Activity completion beyond its contract’s planned completion date. |
+| `excess[l,w]` | Possession groups above nominal location capacity. |
+| `eclo_window[line]` | Scenario C’s two-week ECLO window position. |
+
+Use half-units for workload: a standard access contributes `2`; ECLO contributes `3`; demand is `2 × total_accesses`. Enforce exact coverage unless the validator demonstrates that beneficial oversupply is intended.
+
+### Hard-constraint encoding
+
+| Area | Encoding requirement |
+|---|---|
+| Workload | Schedule every activity to its full access demand. |
+| Sequence | Access occurrences for one activity use distinct, increasing weeks and consecutive `access_seq` values. |
+| Start and horizon | No occurrence precedes the planned start week or exceeds the declared horizon. |
+| Predecessor | The successor’s first week is strictly later than the predecessor’s final week. |
+| Occupancy | Every scheduled occurrence occupies all tunnel and platform locations in its corridor. |
+| Closures | Apply same-bound buffers, Live opposite-bound mirroring, and Live cross-line interchange effects. |
+| Possession mix | Each occupied location/week/group is exactly one PM, one PC with at most three C, or at most four C. |
+| Co-sharing | Closure exemption applies only within the same location, week, and group. |
+| Capacity | Count occupied groups per location/week, then apply the scenario’s hard or soft capacity policy. |
+| Weekly allocation | Distinct local night indices stay within the contract/type weekly allowance. |
+| Workfront | Activities sharing a contract/type/night stay within the workfront count. |
+| ECLO | Forbidden in A; permitted in B; restricted to each line’s continuous two-week window in C. Cross-line Live ECLO must fit both windows. |
+| Results | Contract completion is the latest activity finish; overrun is measured against planned completion. |
+
+### Scenario objectives
+
+Optimise the validator’s exact penalty, after achieving feasibility:
+
+| Scenario | Hard policy | Primary objective |
+|---|---|---|
+| A | Nominal capacity; no ECLO | Priority-weighted activity overrun |
+| B | No planned-completion overrun | `7 × excess access-nights + 5 × ECLO nights` |
+| C | At most one excess group per location/week; two-week ECLO windows | A’s overrun term plus B’s excess and ECLO terms |
+
+The prose ordering of ECLO versus excess access can disagree with the arithmetic because ECLO yields only half an additional work unit per access. The optimiser must compare complete counterfactual schedules using the formula, not encode a fixed “ECLO first” heuristic. Confirm the validator’s implementation before freezing this logic.
+
+### Symmetry control and scale
+
+Possession groups and local nights are interchangeable labels. Break symmetry by using the lowest available label first and ordering equivalent groups. Restrict each occurrence to eligible weeks, relevant locations, and feasible group ranges. This is necessary for hidden-instance scale.
+
+### Public-instance benchmark
+
+The supplied instance contains:
+
+| Measure | Value |
+|---|---:|
+| Horizon | 30 weeks |
+| Contracts | 14 |
+| Activities | 54 |
+| Access workload | 192 standard-night units |
+| Locations | 76 |
+| Predecessor links | 6 |
+
+The tightest raw tunnel demand is around Beta eastbound `H01–H02`, `H02–S15`, and `S15–S16`. Raw demand does not account for timing or co-sharing, so use it to seed search and diagnostics, not as a feasibility conclusion.
+
+The supplied Scenario A schedule is a feasible regression fixture. It schedules 192 access rows with no ECLO and delays only Priority-3 contracts. Applying the published activity-level weighting gives a derived score of `48.3`; confirm this number with the reference validator before using it as the benchmark.
+
+<a id="improvement"></a>
+
+## 9. Score improvement loop
+
+### Solve in stages
+
+1. **Feasibility:** ignore soft score and find any complete valid schedule.
+2. **Primary score:** optimise the exact scenario objective.
+3. **Tie-break:** after fixing the best primary score, minimise unnecessary churn, fragmented work, and arbitrary label use. Tie-breakers must not weaken the official score.
+
+### Initial solution
+
+Construct a warm start using the following signals:
+
+- Earliest feasible week and predecessor criticality.
+- Contract priority and activity priority.
+- Deadline slack.
+- Buffer size and Live/PM restrictiveness.
+- Corridor scarcity and hotspot demand.
+- PC anchors that can host compatible C work.
+- Access demand and workfront limits.
+
+Use the public sample schedule as a regression fixture, not as a template for hidden rows.
+
+### Improvement operators
+
+Run multiple time-bounded CP-SAT searches with different seeds. Keep the best validated incumbent. Use targeted large-neighbourhood search around:
+
+- Late or high-penalty activities.
+- Congested location-weeks.
+- Predecessor chains.
+- Poor PC/C packing.
+- Weeks using excess capacity.
+- ECLO selections and Scenario C window placement.
+
+Destroy only the affected assignments, retain the rest as hints, and repair with the exact model.
+
+### Validator-guided self-improvement
+
+For every candidate:
+
+1. Run the internal checker.
+2. Generate all three output files deterministically.
+3. Run the reference validator.
+4. Reject any hard violation.
+5. Compare score components with the internal calculation.
+6. Convert every mismatch into a regression test.
+7. Store the best feasible result by dataset hash, scenario, code commit, seed, time limit, score, and validator version.
+
+Prioritise the largest validated penalty contributor when choosing the next neighbourhood. Never modify rules to fit one public result.
+
+### Training decision
+
+Do not train a scheduling model initially. We have one public instance, no representative labelled corpus, and hard constraints that require guarantees.
+
+Self-improvement should first mean:
+
+- Better feasible warm starts.
+- CP-SAT parameter and seed search.
+- Validator-driven regression repair.
+- Large-neighbourhood search.
+- Synthetic instances for robustness and performance testing.
+
+A learned heuristic may be considered only after the exact solver and checker are stable and a diverse synthetic corpus exists. Its permissible role is to predict branching order, promising weeks, or neighbourhoods. Every learned proposal must still pass the exact model and validator.
+
+### Verification suite
+
+- One minimal passing and failing case for each hard rule.
+- Boundary tests for dates, capacities, workfronts, legal mixes, and ECLO windows.
+- Cross-contract predecessor and cycle tests.
+- Exact corridor-expansion comparison with the supplied occupancy file.
+- Property tests over generated valid instances.
+- Differential tests between the internal checker and reference validator.
+- Determinism tests for output generation.
+- Performance tests at increasing synthetic sizes.
+
 <a id="build"></a>
 
-## 8. Build order
+## 10. Build order
 
 | Gate | Required outcome |
 |---|---|
@@ -226,7 +394,7 @@ For a significant decision, show:
 
 <a id="judging"></a>
 
-## 9. Judging and evidence
+## 11. Judging and evidence
 
 The official judging dimensions are **Problem Fit**, **Technical Execution**, and **Ease of Use**.
 
@@ -242,7 +410,7 @@ Do not claim that the solver is feasible, hidden-instance-ready, faster, or oper
 
 <a id="demo"></a>
 
-## 10. Demo narrative
+## 12. Demo narrative
 
 ### Core
 
@@ -266,7 +434,7 @@ Any activity count, score, time saving, or improvement stated in the demo must c
 
 <a id="decisions"></a>
 
-## 11. Decision register
+## 13. Decision register
 
 | ID | Date | Decision |
 |---|---|---|
@@ -279,28 +447,33 @@ Any activity count, score, time saving, or improvement stated in the demo must c
 | `D7` | 2026-09-18 | Treat digital twin as a truthful what-if and conflict-planning layer, not a required 3D replica. |
 | `D8` | 2026-09-18 | Do not describe a generated schedule as feasible until the reference validator passes. |
 | `D9` | 2026-09-18 | Keep the repository private during active development unless the team deliberately changes visibility. |
+| `D10` | 2026-09-18 | Use OR-Tools CP-SAT as the primary scheduling optimiser. |
+| `D11` | 2026-09-18 | Optimise the validator’s exact objective; use prose guidance only as a search hint. |
+| `D12` | 2026-09-18 | Use staged feasibility, score optimisation, and tie-breaking rather than one blended objective. |
+| `D13` | 2026-09-18 | Use validator-guided regression, multi-start search, and large-neighbourhood search for self-improvement. |
+| `D14` | 2026-09-18 | Do not train a scheduling model until the exact solver, checker, and diverse benchmark corpus exist. |
 
 <a id="open"></a>
 
-## 12. Open questions
+## 14. Open questions
 
 | ID | Priority | Question | Resolution |
 |---|---:|---|---|
-| `O1` | High | Where is the executable reference validator and how is it invoked? | Recheck the current organiser repository or portal and run it locally. |
+| `O1` | High | Where is the executable reference validator and `trackaccess expand` package? | Obtain them from the organiser portal or release and run them locally. |
 | `O2` | High | What runtime and instance-size limits apply to hidden evaluation? | Find official limits; otherwise benchmark generated scale cases. |
-| `O3` | Medium | Which formal optimisation method should be the baseline? | Compare the smallest credible approaches on public and generated tests. |
+| `O3` | High | Does validator scoring exactly match the published activity-level overrun and ECLO/excess formulas? | Differential-test controlled submissions when the validator is available. |
 | `O4` | Medium | How should “minimal churn” be measured? | Define the metric before building replanning. |
 | `O5` | Medium | Which controller view is most useful in the short demo? | Decide after real solver conflict data is available. |
-| `O6` | Medium | Should repository visibility remain private? | Team decision before collaboration or submission. |
 | `O7` | Low | What is the final product name? | Decide after the core direction is stable. |
+| `O8` | High | Does our possession grouping and buffer model match the official expander at every boundary? | Reproduce the supplied occupancy file, then differential-test the released expander. |
 
 <a id="sources"></a>
 
-## 13. Sources and transcription quality
+## 15. Sources and transcription quality
 
 | ID | Source | Use | Limitation |
 |---|---|---|---|
-| `E1` | Current files under `current-problem-statement/PS1/` | Official technical specification snapshot | Recheck for upstream updates. |
+| `E1` | [Official PS1 repository](https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/tree/main/PS1), locally verified against commit `966c976` | Technical specification and public fixture | Recheck for upstream updates. |
 | `E2` | `AUDIO-2026-09-18-19-50-30.m4a`, approximately 10m31s | Organiser intent and clarification | Room audio and overlapping speech reduce verbatim accuracy. |
 | `E3` | User-supplied Wispr Flow transcript | Improved recovery of the full conversation | Speaker numbers are inconsistent; several domain terms are mistranscribed. |
 | `E4` | Independent local transcription passes | Cross-check of Q&A meaning | One failed middle-section pass was discarded and reprocessed. |
@@ -325,7 +498,7 @@ Corrections that affect interpretation:
 
 <a id="maintenance"></a>
 
-## 14. Maintenance protocol
+## 16. Maintenance protocol
 
 Add information only when it changes understanding, implementation, evidence, or a likely future ambiguity.
 
@@ -354,3 +527,4 @@ When sources conflict:
 |---|---|---|
 | `0.1.0` | 2026-09-18 | Initial comprehensive draft. |
 | `0.2.0` | 2026-09-18 | Removed low-value branches and repetition; retained only actionable knowledge and likely ambiguity guards. |
+| `0.3.0` | 2026-09-18 | Added the CP-SAT model, constraint encoding, validator-guided improvement loop, benchmark facts, and training decision. |
