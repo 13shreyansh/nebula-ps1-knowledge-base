@@ -29,6 +29,8 @@ class SolveTelemetry:
     model_variables: int
     model_constraints: int
     limitation: str
+    closure_rounds: int = 0
+    remaining_closure_conflicts: int = 0
 
     def as_json(self) -> str:
         return json.dumps(asdict(self), indent=2, sort_keys=True)

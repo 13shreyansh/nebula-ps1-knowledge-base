@@ -3,8 +3,10 @@ from __future__ import annotations
 import argparse
 
 from .evaluate import evaluate_submission
+from .flexible_solver import solve_flexible_supply_relaxation
 from .instance import load_instance
 from .solver import solve_scenario_a_relaxation
+from .submission import relabel_submission_scenario
 
 
 def main() -> None:
@@ -32,6 +34,26 @@ def main() -> None:
         action="store_true",
         help="preserve each free activity's on-time sample accesses and move only late rows",
     )
+    flexible_parser = subparsers.add_parser(
+        "solve-flexible-relaxation",
+        help="solve A, B, or C using the inferred closure separator",
+    )
+    flexible_parser.add_argument("--data", required=True)
+    flexible_parser.add_argument("--output", required=True)
+    flexible_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
+    flexible_parser.add_argument("--time-limit", type=float, default=120.0)
+    flexible_parser.add_argument("--workers", type=int, default=8)
+    flexible_parser.add_argument("--seed", type=int, default=1)
+    flexible_parser.add_argument("--closure-rounds", type=int, default=50)
+    flexible_parser.add_argument("--sample-hint")
+    relabel_parser = subparsers.add_parser(
+        "relabel-scenario",
+        help="reuse a schedule unchanged and recompute result rows for another scenario",
+    )
+    relabel_parser.add_argument("--data", required=True)
+    relabel_parser.add_argument("--source", required=True)
+    relabel_parser.add_argument("--output", required=True)
+    relabel_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
     args = parser.parse_args()
 
     if args.command == "inspect":
@@ -56,7 +78,28 @@ def main() -> None:
             repair_late_only=args.repair_late_only,
         )
         print(telemetry.as_json())
-        raise SystemExit(0 if telemetry.objective_score is not None else 3)
+        if telemetry.objective_score is None:
+            raise SystemExit(3)
+        raise SystemExit(0 if telemetry.remaining_closure_conflicts == 0 else 4)
+    if args.command == "solve-flexible-relaxation":
+        instance = load_instance(args.data)
+        telemetry = solve_flexible_supply_relaxation(
+            instance,
+            args.output,
+            args.scenario,
+            time_limit_seconds=args.time_limit,
+            workers=args.workers,
+            seed=args.seed,
+            closure_round_limit=args.closure_rounds,
+            sample_hint_dir=args.sample_hint,
+        )
+        print(telemetry.as_json())
+        if telemetry.objective_score is None:
+            raise SystemExit(3)
+        raise SystemExit(0 if telemetry.remaining_closure_conflicts == 0 else 4)
+    if args.command == "relabel-scenario":
+        instance = load_instance(args.data)
+        relabel_submission_scenario(instance, args.source, args.output, args.scenario)
 
 
 if __name__ == "__main__":

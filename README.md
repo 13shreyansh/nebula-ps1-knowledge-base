@@ -327,9 +327,10 @@ These are regression bounds, not proofs of the global optimum. A feasible soluti
 - The schema-driven footprint expander reproduces all 928 public activity-location-week occupancy keys without activity-specific rules.
 - The independent partial checker reproduces the organiser sample's derived Scenario A penalty of `48.3` and rejects omitted workload.
 - A closure-free CP-SAT relaxation proves its own optimistic `25.2` optimum but fails the inferred closure screen and is quarantined.
-- The protected Scenario A candidate changes only two late sample rows: A035 week 27 to week 11 and A038 week 27 to week 26. It scores `32.2` and passes all implemented checks, including the sample-consistent closure screen.
-- `32.2` is the current internally supported lower bound because A036 occupies the H01 eastbound boundary in every week 22-28, while A075 is a Live PM at the interchange and cannot be scheduled by its week-28 target under the inferred closure semantics.
-- Neither `32.2` nor the closure interpretation is reference-validator confirmed. The organiser sample remains the only organiser-described feasible artifact.
+- **Scenario A:** an unrestricted solve scores `32.2` and passes all implemented checks; every activity, week, access night, and local group was free to move. It matches the earlier conservative two-row repair. Under the inferred closure semantics, `32.2` is also a lower bound because A036 occupies the H01 eastbound boundary in weeks 22–28 while A075's Live PM interchange closure forces a seven-day delay. Two seeds independently reproduced the optimum.
+- **Scenario B:** the protected candidate scores `30.0`: six ECLO rows, zero excess access nights, zero delay, 189 access rows, and zero implemented violations. It matches the closure-free lower bound, so it is optimal under the inferred checker. A second seed reproduced the score and feasibility.
+- **Scenario C:** the protected candidate scores `26.1`: `16.1` delay plus two ECLO rows, zero excess access nights, 191 access rows, and zero implemented violations. Two independent seeds reached the same score decomposition and row counts with different schedules. The `25.2` closure-free lower bound is infeasible under the accumulated inferred-closure cuts; `26.1` is optimal under that model.
+- All three protected candidates are internally checked, not reference-validator confirmed. The organiser sample remains the only organiser-described feasible artifact.
 
 The append-only evidence, hashes, parameters, failures, and limitations are in `EXPERIMENT_LEDGER.md`. Executable code is under `src/nebula_ps1`; regression tests are under `tests`.
 
@@ -613,3 +614,4 @@ When sources conflict:
 | `0.3.0` | 2026-09-18 | Added the CP-SAT model, constraint encoding, validator-guided improvement loop, benchmark facts, and training decision. |
 | `0.4.0` | 2026-09-18 | Reconciled the research ledger into the formulation, lower bounds, adaptive-search plan, benchmark protocol, validator risks, and revised build order. |
 | `0.5.0` | 2026-09-18 | Added executable evidence, the quarantined `25.2` relaxation, the protected `32.2` Scenario A repair, and the remaining validator boundary. |
+| `0.6.0` | 2026-09-18 | Added exact B/C objectives, iterative inferred-closure separation, protected A=`32.2`, B=`30.0`, C=`26.1` incumbents, and cross-seed evidence. |

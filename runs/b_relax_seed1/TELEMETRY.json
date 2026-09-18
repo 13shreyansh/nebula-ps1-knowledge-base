@@ -1,0 +1,15 @@
+{
+  "best_bound": 30.0,
+  "branches": 6694,
+  "conflicts": 0,
+  "formulation": "scenario_b_relaxation_without_closure_buffers",
+  "limitation": "Closure and buffer conflicts are omitted. Output is an optimistic candidate only and must not be called feasible or submitted without the reference validator. The row-count tie-breaker cannot alter the official penalty objective.",
+  "model_constraints": 42656,
+  "model_variables": 23034,
+  "objective_score": 30.0,
+  "seed": 1,
+  "status": "OPTIMAL",
+  "time_limit_seconds": 120.0,
+  "wall_time_seconds": 0.8214301249972777,
+  "workers": 8
+}
