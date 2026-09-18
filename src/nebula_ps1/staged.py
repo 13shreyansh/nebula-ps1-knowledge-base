@@ -20,6 +20,7 @@ def solve_staged_scenario(
     *,
     audit_output_dir: str | Path | None = None,
     heuristic_time_limit_seconds: float = 120.0,
+    local_repair_time_limit_seconds: float = 30.0,
     fallback_time_limit_seconds: float = 120.0,
     verification_time_limit_seconds: float = 120.0,
     workers: int = 8,
@@ -93,6 +94,9 @@ def solve_staged_scenario(
                 repair_hint_attempt = attempt + 1
                 repair_hint_rank = rank
     fallback: SolveTelemetry | None = None
+    local_repair: SolveTelemetry | None = None
+    local_repair_prune = None
+    local_repair_activities: list[str] = []
     heuristic_prune = None
     fallback_prune = None
     fallback_attempt_telemetry: list[dict[str, object]] = []
@@ -112,7 +116,61 @@ def solve_staged_scenario(
     else:
         best_fallback_evaluation: Evaluation | None = None
         best_fallback_dir: Path | None = None
-        for fallback_attempt in range(fallback_attempts):
+        if repair_hint is not None:
+            hint_access, hint_occupancy, _ = load_submission(repair_hint)
+            hint_conflicts = screen_closures(
+                instance,
+                hint_access,
+                hint_occupancy,
+                forbid_buffer_overlap=forbid_buffer_overlap,
+            )
+            local_repair_activities = sorted(
+                {
+                    activity_id
+                    for conflict in hint_conflicts
+                    for activity_id in (
+                        *conflict.first_activities,
+                        *conflict.second_activities,
+                    )
+                }
+            )
+            if local_repair_activities:
+                local_raw = audit_output / "bridge_safe_local_repair_raw"
+                local_pruned = audit_output / "bridge_safe_local_repair_pruned"
+                local_repair = solve_flexible_supply_relaxation(
+                    instance,
+                    local_raw,
+                    scenario,
+                    time_limit_seconds=local_repair_time_limit_seconds,
+                    workers=workers,
+                    seed=seed,
+                    closure_round_limit=closure_round_limit,
+                    sample_hint_dir=repair_hint,
+                    forbid_buffer_overlap=forbid_buffer_overlap,
+                    freeze_access_hint=True,
+                    freeze_access_except=set(local_repair_activities),
+                    separator_mode="bridge_safe",
+                )
+                if (
+                    local_repair.objective_score is not None
+                    and local_repair.remaining_closure_conflicts == 0
+                ):
+                    local_repair_prune = prune_submission(
+                        instance,
+                        local_raw,
+                        local_pruned,
+                        scenario,
+                        report_path=audit_output / "LOCAL_REPAIR_PRUNE.json",
+                        forbid_buffer_overlap=forbid_buffer_overlap,
+                    )
+                    fallback = local_repair
+                    fallback_prune = local_repair_prune
+                    best_fallback_evaluation = evaluate_submission(
+                        instance, local_pruned, scenario
+                    )
+                    best_fallback_dir = local_pruned
+
+        for fallback_attempt in range(fallback_attempts if fallback is None else 0):
             attempt_number = fallback_attempt + 1
             attempt_seed = seed + fallback_attempt
             attempt_hint = repair_hint if fallback_attempt == 0 else None
@@ -177,8 +235,12 @@ def solve_staged_scenario(
             raise RuntimeError(
                 "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent"
             )
-        incumbent_stage = "bridge_safe_fallback"
-        improvement_stage = "bridge_safe_fallback_improvement"
+        incumbent_stage = (
+            "bridge_safe_local_repair"
+            if local_repair_prune is not None
+            else "bridge_safe_fallback"
+        )
+        improvement_stage = f"{incumbent_stage}_improvement"
         incumbent_dir = best_fallback_dir
 
     incumbent = evaluate_submission(instance, incumbent_dir, scenario)
@@ -247,6 +309,13 @@ def solve_staged_scenario(
         "heuristic_attempts": attempt_telemetry,
         "heuristic_prune": asdict(heuristic_prune) if heuristic_prune is not None else None,
         "bridge_safe_fallback_telemetry": asdict(fallback) if fallback is not None else None,
+        "bridge_safe_local_repair_activities": local_repair_activities,
+        "bridge_safe_local_repair_telemetry": (
+            asdict(local_repair) if local_repair is not None else None
+        ),
+        "bridge_safe_local_repair_prune": (
+            asdict(local_repair_prune) if local_repair_prune is not None else None
+        ),
         "bridge_safe_repair_hint_source_attempt": repair_hint_attempt,
         "bridge_safe_fallback_attempts": fallback_attempt_telemetry,
         "bridge_safe_fallback_selected_attempt": selected_fallback_attempt,

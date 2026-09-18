@@ -387,3 +387,40 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Risks: retaining stale solver rows could be mistaken for safe output unless telemetry conflicts and staged gates remain strict; the repair hint may worsen search; wall-time nondeterminism can confound before/after comparison; official validation remains unavailable.
 - Confidence: high in failure handling and diagnosis of discarded intermediate state; medium that hint preservation improves recovery; low in public-scale fallback reliability; zero in official validation.
 - Next action: implement the last-complete-candidate retention invariant, add regression coverage where possible, and rerun the same seed-2 configuration without changing budgets.
+
+## 2026-09-19 02:38:07 +08
+
+- Interval: 3 minutes 56 seconds since the previous inspection; early because the controlled rerun completed.
+- Best independently validated score: no official/reference-validator result. Protected public internal optima remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero. The retained `32.2` and repair `25.2` are unsafe internal objectives, not results.
+- What improved: terminal `UNKNOWN` no longer erases the latest complete candidate. The rerun preserved a `32.2` schedule with five conflicts and correctly routed it only as a repair hint. Tests remain 36/36.
+- What failed: broad sound repair did not converge; it ended at apparent `25.2` with seven conflicts. A lower objective accompanied by more violations is not progress and cannot be selected.
+- Adversarial interpretation: hint retention may steer search toward attractive but infeasible basins. The before/after run is also wall-clock nondeterministic, so the changed conflict count cannot be causally attributed to the hint alone.
+- Integrity audit: unsafe files stay in the audit directory; telemetry says `UNKNOWN` and records five/seven conflicts; no final submission exists; the incumbent remains unchanged.
+- Strongest next falsification: freeze every unaffected access decision from the retained heuristic and free only the 12 activities participating in its five strict conflicts. If this cannot repair A within a bounded run, local repair is not a reliable fallback for this failure mode.
+- Risks: the initial conflict set may omit bridge activities needed for a legal transitive possession merge; freezing access nights outside the set may overconstrain repair; the strict buffer hedge may reject schedules accepted by the organizer; official validation remains unavailable.
+- Confidence: high in retention behavior and failure reporting; medium in conflict-neighborhood repair feasibility; low in broad full-instance construction reliability; zero in official validation.
+- Next action: run the 12-activity partially frozen bridge-safe repair, full-check any output, and expand the neighborhood only from structural evidence rather than runtime desperation.
+
+## 2026-09-19 02:40:09 +08
+
+- Interval: 2 minutes 2 seconds since the previous inspection; early because the targeted repair and downstream C reconstruction completed.
+- Best independently validated score: no official/reference-validator result. Public internal scores remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero. A new no-public-C-hint construction independently reproduces C=`26.1` from the failed seed-2 trajectory.
+- What improved: the 12-activity repair converted an unsafe A=`32.2` candidate with five conflicts into strict-feasible A=`32.2` in 1.639 seconds. That generated A fallback then yielded strict C=`26.1` in 11.370 seconds. Both scorers, strict checks, pruning, exact-file checks, and a 30-second sound preservation phase pass.
+- What did not improve: the official score remains unknown; the protected score did not decrease; the sound C phase did not prove a bound. The repair's A proof is neighborhood-restricted, and the public analytical C proof may not transfer to hidden data.
+- Adversarial check: this is not sample memorization through a C answer hint; the C stage saw only an A schedule generated from the failed seed-2 search and local repair. It is still public-input tuning because the freed set is derived from observed public conflicts.
+- Strongest risk: freeing only current conflict participants can exclude a necessary bridge activity and falsely make a repair look impossible. The controller must treat local failure as inconclusive and fall back to broader attempts, never as infeasibility.
+- Integrity audit: the unsafe A candidate remained audit-only; the repaired A and C candidates were independently scored; equal C output does not replace the protected deliverable; fast-model bounds remain suppressed; failed broad repairs remain preserved.
+- Confidence: high in this public recovery chain and final C artifact; medium in automatic conflict-set repair across similar inputs; low in arbitrary topology generalization; zero in official validation.
+- Next action: integrate local conflict repair generically from checker output, preserve its restricted-search label, fall through to broad fallback on failure, and run regression plus a small real fixture before another full public workflow.
+
+## 2026-09-19 02:44:17 +08
+
+- Interval: 4 minutes 8 seconds since the previous inspection; early because the integrated public workflow completed.
+- Best independently validated score: no official/reference-validator result. Public internal scores remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero. The current integrated controller independently reconstructed C=`26.1` without a C answer-key hint.
+- What improved: generic conflict-neighborhood repair is integrated with strict gates and broad-fallback continuation; 37 regressions pass. A complete staged A-to-C run emitted strict, dual-scored, exact-file C=`26.1` and sound verification preserved it.
+- What remains unverified: the integrated repeat's A heuristic succeeded directly, so it did not exercise the new repair branch. The repair branch's real evidence is E045's recovery from the preserved E044 failure plus a mocked routing regression. A forced real integrated repair run would require replay support or intentionally shortening the heuristic, which may create a different conflict state.
+- Adversarial concern: repeated public tuning can overfit conflict patterns even without hard-coded IDs. The algorithm derives conflicts generically, but its performance evidence is still concentrated on one topology and synthetic subsets derived from it.
+- Integrity audit: no public C schedule seeded construction; the equal-score generated C did not replace the protected deliverable; fast bounds remain suppressed; sound verification did not produce a proof; scorer-display code briefly used a wrong field name but the independent score and corrected evaluation agree.
+- Strongest next falsification: create structurally perturbed fixtures where heuristic candidates fail with different conflict sets, then test whether generic local repair recovers safely or falls through without false infeasibility. Separately, pursue the official validator because internal robustness cannot resolve semantic uncertainty.
+- Confidence: high in the public integrated artifact and control-flow gates; medium in generic local repair; low-to-medium in hidden-instance construction reliability; zero in official validation.
+- Next action: document and checkpoint the integrated workflow, then prioritize official-validator access or a structurally different repair fixture over additional public-seed repetition.

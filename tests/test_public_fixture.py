@@ -349,6 +349,8 @@ class PublicFixtureTests(unittest.TestCase):
             "7",
             "--fallback-time-limit",
             "17",
+            "--local-repair-time-limit",
+            "16",
             "--fallback-attempts",
             "4",
         ]
@@ -357,6 +359,7 @@ class PublicFixtureTests(unittest.TestCase):
         ) as solve:
             cli_main()
         self.assertEqual(solve.call_args.kwargs["heuristic_attempts"], 7)
+        self.assertEqual(solve.call_args.kwargs["local_repair_time_limit_seconds"], 16.0)
         self.assertEqual(solve.call_args.kwargs["fallback_time_limit_seconds"], 17.0)
         self.assertEqual(solve.call_args.kwargs["fallback_attempts"], 4)
 
@@ -374,6 +377,8 @@ class PublicFixtureTests(unittest.TestCase):
             "11",
             "--a-fallback-time-limit",
             "12",
+            "--a-local-repair-time-limit",
+            "10",
             "--a-verification-time-limit",
             "13",
             "--c-heuristic-time-limit",
@@ -396,6 +401,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(kwargs["audit_output_dir"], "custom-c-audit")
         self.assertEqual(kwargs["a_heuristic_time_limit_seconds"], 11.0)
         self.assertEqual(kwargs["a_fallback_time_limit_seconds"], 12.0)
+        self.assertEqual(kwargs["a_local_repair_time_limit_seconds"], 10.0)
         self.assertEqual(kwargs["a_verification_time_limit_seconds"], 13.0)
         self.assertEqual(kwargs["c_heuristic_time_limit_seconds"], 14.0)
         self.assertEqual(kwargs["c_verification_time_limit_seconds"], 15.0)
@@ -853,6 +859,67 @@ class PublicFixtureTests(unittest.TestCase):
             "FEASIBLE_SAFE_INCUMBENT",
         )
 
+    def test_staged_solver_repairs_only_detected_conflict_activities_first(self) -> None:
+        unsafe_access, unsafe_occupancy, _ = load_submission(PACK / "03_submission_sample")
+        strict_conflicts = screen_closures(
+            self.instance,
+            unsafe_access,
+            unsafe_occupancy,
+            forbid_buffer_overlap=True,
+        )
+        expected_free = sorted(
+            {
+                activity_id
+                for conflict in strict_conflicts
+                for activity_id in (*conflict.first_activities, *conflict.second_activities)
+            }
+        )
+
+        def telemetry(formulation, objective, conflicts):
+            return SolveTelemetry(
+                formulation=formulation,
+                status="FEASIBLE_SAFE_INCUMBENT" if not conflicts else "UNKNOWN",
+                objective_score=objective,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=1,
+                workers=1,
+                time_limit_seconds=1.0,
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=conflicts,
+            )
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            if kwargs["separator_mode"] == "direct_heuristic":
+                _copy_submission(PACK / "03_submission_sample", Path(output_dir))
+                return telemetry("direct_heuristic", 48.3, len(strict_conflicts))
+            _copy_submission(ROOT / "deliverables" / "public" / "A", Path(output_dir))
+            return telemetry("bridge_safe", 32.2, 0)
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ) as solve:
+            report = solve_staged_scenario(
+                self.instance,
+                Path(temp_dir) / "submission",
+                "A",
+                audit_output_dir=Path(temp_dir) / "audit",
+                heuristic_attempts=1,
+                fallback_attempts=1,
+                forbid_buffer_overlap=True,
+            )
+        self.assertEqual(solve.call_count, 3)
+        local_call = solve.call_args_list[1]
+        self.assertTrue(local_call.kwargs["freeze_access_hint"])
+        self.assertEqual(sorted(local_call.kwargs["freeze_access_except"]), expected_free)
+        self.assertEqual(report["selected_stage"], "bridge_safe_local_repair")
+        self.assertEqual(report["bridge_safe_local_repair_activities"], expected_free)
+        self.assertEqual(report["bridge_safe_fallback_attempts"], [])
+
     def test_staged_c_preserves_checked_a_derived_fallback(self) -> None:
         tiny_instance = load_instance(ROOT / "fixtures" / "single_a001")
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -863,6 +930,7 @@ class PublicFixtureTests(unittest.TestCase):
                 output,
                 audit_output_dir=audit,
                 a_heuristic_time_limit_seconds=0.0,
+                a_local_repair_time_limit_seconds=0.0,
                 a_fallback_time_limit_seconds=1.0,
                 a_verification_time_limit_seconds=0.0,
                 c_heuristic_time_limit_seconds=0.0,

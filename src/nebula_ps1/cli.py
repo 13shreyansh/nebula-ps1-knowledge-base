@@ -105,6 +105,7 @@ def main() -> None:
     staged_parser.add_argument("--audit-output")
     staged_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
     staged_parser.add_argument("--heuristic-time-limit", type=float, default=120.0)
+    staged_parser.add_argument("--local-repair-time-limit", type=float, default=30.0)
     staged_parser.add_argument(
         "--fallback-time-limit",
         type=float,
@@ -131,6 +132,7 @@ def main() -> None:
     staged_c_parser.add_argument("--output", required=True)
     staged_c_parser.add_argument("--audit-output")
     staged_c_parser.add_argument("--a-heuristic-time-limit", type=float, default=120.0)
+    staged_c_parser.add_argument("--a-local-repair-time-limit", type=float, default=30.0)
     staged_c_parser.add_argument("--a-fallback-time-limit", type=float, default=120.0)
     staged_c_parser.add_argument("--a-verification-time-limit", type=float, default=120.0)
     staged_c_parser.add_argument("--c-heuristic-time-limit", type=float, default=120.0)
@@ -247,6 +249,7 @@ def main() -> None:
             args.scenario,
             audit_output_dir=args.audit_output,
             heuristic_time_limit_seconds=args.heuristic_time_limit,
+            local_repair_time_limit_seconds=args.local_repair_time_limit,
             fallback_time_limit_seconds=args.fallback_time_limit,
             verification_time_limit_seconds=args.verification_time_limit,
             workers=args.workers,
@@ -265,6 +268,7 @@ def main() -> None:
             args.output,
             audit_output_dir=args.audit_output,
             a_heuristic_time_limit_seconds=args.a_heuristic_time_limit,
+            a_local_repair_time_limit_seconds=args.a_local_repair_time_limit,
             a_fallback_time_limit_seconds=args.a_fallback_time_limit,
             a_verification_time_limit_seconds=args.a_verification_time_limit,
             c_heuristic_time_limit_seconds=args.c_heuristic_time_limit,

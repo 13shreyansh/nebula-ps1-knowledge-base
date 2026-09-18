@@ -467,3 +467,30 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Failure: the A heuristic ended `UNKNOWN` with two unresolved strict conflicts after 120.010 wall / 524.597 deterministic seconds and 143 solves. The sound fallback ended `UNKNOWN` with nine conflicts after 60.036 wall / 178.373 deterministic seconds. No checked A incumbent existed, so C stages did not run and the final directory remained empty.
 - New implementation defect: the heuristic had generated a complete unsafe schedule before its final solve returned `UNKNOWN`, but the solver discarded those last rows and reported no objective. The staged controller therefore had no repair hint. Preserving the latest complete unsafe candidate for hinting can improve recovery without making it eligible for selection.
 - Decision: do not retry a favorable A seed yet. First preserve last complete candidates across a terminal `UNKNOWN`, keep their conflicts explicit, and allow the sound fallback to use them only as non-protected hints.
+
+### E044: Retained unsafe A candidate and failed broad repair
+
+- Timestamp: 2026-09-19 02:38:07 +08
+- Controlled change: repeat E043 with the same seed, workers, strict policy, and 120/60-second A budgets. The only code change preserves the latest complete candidate when a later solve ends `UNKNOWN`; staged selection still requires zero closure conflicts.
+- Retained heuristic state: objective `32.2` with five strict conflicts after 120.010 wall / 528.163 deterministic seconds. The rows and explicit unsafe telemetry were preserved in the audit tree and supplied only as a repair hint.
+- Repair result: the sound fallback ended `UNKNOWN` after 60.044 wall / 167.682 deterministic seconds with objective `25.2` and seven conflicts. No final output was emitted. Hint retention improved observability and changed the search state, but did not recover feasibility within the fixed budget.
+- Conflict structure: the retained heuristic's five conflicts involve 12 activities: A003, A007, A008, A017, A020, A023, A036, A040, A042, A055, A057, and A074. A targeted bridge-safe repair can freeze all unaffected access decisions and free only this conflict neighborhood.
+- Decision: retain last-candidate serialization because it is useful, correctly labelled evidence. Do not claim repair improvement. Test the 12-activity neighborhood before spending another full broad-search budget.
+
+### E045: Conflict-neighborhood recovery and C reconstruction
+
+- Timestamp: 2026-09-19 02:40:09 +08
+- A repair: freeze every access, ECLO, and local-night decision outside the 12 activities in E044's five conflicts; solve those activities with bridge-safe strict separation. The model reached strict-feasible A=`32.2` with a matching restricted bound in 1.639 seconds, 12 solves, and 11 closure rounds. Main and independent scorers agree; exact-three-file pruned hash `bd3eaff12b51cc7522191af30d2c1e1c13e34f6efbbf712b634b3e809748365e`.
+- C construction: recompute the repaired A schedule as a checked C=`32.2` fallback, then run the direct heuristic with only that generated fallback as a hint. It produced strict-feasible C=`26.1` in 11.370 wall / 44.345 deterministic seconds over 13 solves and 12 closure rounds.
+- C gates: strict pruning retained 191 access rows and 925 occupancy rows. Both scorers report `16.1` delay, two ECLO nights, zero excess, and objective `26.1`; hash `f00c728ccf6abbd3610f6b7d0d276629b9c50a1b766f47f5488c2b4ebc0b261b`. Thirty seconds of bridge-safe verification preserved the exact same bytes and zero conflicts but did not prove a global bound.
+- Evidence boundary: the A solver proof is restricted to a partially frozen neighborhood. C optimality continues to rely on the independent analytical public-instance argument, not the direct heuristic or incomplete sound verifier. The result reconstructs the incumbent without using the protected C schedule.
+- Decision: add conflict-neighborhood repair as the first fallback after an unsafe heuristic. Keep broad hinted and unhinted sound construction only when local repair fails.
+
+### E046: Integrated guarded C reconstruction after local-repair implementation
+
+- Timestamp: 2026-09-19 02:44:17 +08
+- Implementation: staged construction now derives local repair activities from the checker, freezes unaffected access/ECLO/night decisions, runs bridge-safe repair first, and falls through to broad fallback on failure. No activity identifiers are hard-coded. Thirty-seven regressions pass, including strict conflict-set derivation and fallback routing.
+- Public run: same strict public input and seed 2, with 120 seconds for A heuristic, 30 for local repair, 60 for broad A fallback, five for A verification, 60 for C heuristic, and 15 for C verification. In this repeat A happened to solve directly at `32.2` in 111.547 seconds, so automatic repair was not exercised in this run; E045 remains the real repair-path evidence.
+- C result: the generated A schedule was recomputed as a strict C=`32.2` fallback. Direct C search produced strict-feasible `26.1` in 21.775 seconds; bridge-safe verification preserved it for 15.018 seconds without proving a bound. Final hash `c2b4d2962e1578f833eb9930d00342e5a05a62adc018bf25b03d9310baadbccd`.
+- Release gates: main and independent scorers report `16.1` delay, two ECLO nights, zero excess, and objective `26.1`; strict conflicts and hard violations are zero; the final directory contains exactly the three submission CSVs.
+- Interpretation: the full current controller can reconstruct C=`26.1` without a C answer-key hint. Timed A behavior remains nondeterministic, and the integrated run does not replace or erase the controlled local-repair evidence.
