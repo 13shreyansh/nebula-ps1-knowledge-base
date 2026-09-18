@@ -1216,6 +1216,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(telemetry.status, "FEASIBLE_SAFE_INCUMBENT")
         self.assertIsNotNone(telemetry.deterministic_time_seconds)
         self.assertAlmostEqual(telemetry.objective_score, 137.9)
+        self.assertEqual(telemetry.primary_bound_scope, "full_instance")
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(strict_conflicts, ())
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -1232,6 +1233,33 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertIsNone(heuristic.best_bound)
         self.assertFalse(heuristic.primary_score_proven_optimal)
         self.assertFalse(heuristic.tie_break_proven_optimal)
+
+    def test_frozen_access_telemetry_declares_conditional_bound_scope(self) -> None:
+        source = ROOT / "deliverables" / "public" / "C"
+        with tempfile.TemporaryDirectory() as temp_dir:
+            partial = solve_flexible_supply_relaxation(
+                self.instance,
+                temp_dir,
+                "C",
+                time_limit_seconds=0.0,
+                sample_hint_dir=source,
+                freeze_access_hint=True,
+                freeze_access_except={"A001"},
+            )
+        self.assertEqual(partial.primary_bound_scope, "frozen_access_neighborhood")
+        self.assertIn("only to the frozen-access neighborhood", partial.limitation)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            fixed = solve_flexible_supply_relaxation(
+                self.instance,
+                temp_dir,
+                "C",
+                time_limit_seconds=0.0,
+                sample_hint_dir=source,
+                freeze_access_hint=True,
+            )
+        self.assertEqual(fixed.primary_bound_scope, "fixed_access_schedule")
+        self.assertIn("only to the fixed access schedule", fixed.limitation)
 
     def test_freeze_access_requires_an_explicit_hint(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

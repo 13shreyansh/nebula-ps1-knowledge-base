@@ -854,3 +854,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Correction: Scenario C now includes the transitive undirected predecessor/successor component of objective and contract contributors before footprint expansion. Scenario B remains unchanged.
 - Result: the corrected two-activity neighborhood proved C=`0.0` in 0.006 seconds. Both scorers and both closure policies accept hash `578a90f3f1424d7098acc1fa670f537cb2ec97d6496edf6115fd879ffbc3f48c`.
 - Scope check: precedence closure added no activities to the existing public (43), irregular (27), coupled (23), or multimodule delay (18) neighborhoods. Fifty-nine regressions pass.
+
+### E088: Conditional proof scope is explicit; blind fixed-point expansion is withheld
+
+- Timestamp: 2026-09-19 07:03:28 +08
+- Adversarial check: a fixed-point contract/precedence/footprint closure would widen public `43→54`, irregular `27→53`, coupled `23→49`, and leave cross-module delay at `18`. Three of four cases converge only after dependencies introduced by later expansion stages are revisited.
+- Decision: do not replace the bounded production neighborhood with unconditional fixed-point closure without a targeted failure and matched runtime evidence. The protected incumbent and full checker remain the safety boundary.
+- Reporting correction: solver telemetry now emits `primary_bound_scope` as `full_instance`, `frozen_access_neighborhood`, or `fixed_access_schedule`; frozen formulations also explain the scope in `limitation`. This prevents a local proof from being reported as global evidence.
+- Verification: the new scope regression and all existing tests pass: 60 total. Official scores and artifacts are unchanged.

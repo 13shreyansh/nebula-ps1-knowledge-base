@@ -1032,6 +1032,17 @@ def solve_flexible_supply_relaxation(
                 "accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed."
             )
             + " The row-count tie-breaker cannot alter the official penalty objective."
+            + (
+                " The reported bound and optimality status apply only to the frozen-access "
+                "neighborhood."
+                if free_activities
+                else (
+                    " The reported bound and optimality status apply only to the fixed "
+                    "access schedule."
+                )
+                if freeze_access_hint
+                else ""
+            )
         ),
         closure_rounds=closure_rounds,
         remaining_closure_conflicts=len(final_conflicts),
@@ -1041,6 +1052,13 @@ def solve_flexible_supply_relaxation(
         unknown_retries=unknown_retries,
         primary_score_proven_optimal=safe_proven_optimal,
         tie_break_proven_optimal=safe_tie_break_proven,
+        primary_bound_scope=(
+            "frozen_access_neighborhood"
+            if free_activities
+            else "fixed_access_schedule"
+            if freeze_access_hint
+            else "full_instance"
+        ),
         max_deterministic_time_per_solve=max_deterministic_time_per_solve,
         interleave_search=interleave_search,
         structural_hints_used=structural_hints_used,

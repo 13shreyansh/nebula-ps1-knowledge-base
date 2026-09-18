@@ -550,6 +550,14 @@ Confidence labels:
 - **Limitation:** A long precedence chain can widen repair substantially. Current tested public and synthetic neighborhoods did not grow, but hidden graphs may differ.
 - **Confidence:** High for the mechanism and correction; medium for scale transfer.
 
+### `R068` Recursive dependency closure is safer but can double repair size
+
+- **Status:** Measured on four retained regimes; not adopted as the default.
+- **Finding:** Repeating contract, precedence, and footprint expansion to a fixed point grew the public C neighborhood from `43/54` to `54/54`, irregular from `27/106` to `53/106`, coupled from `23/102` to `49/102`, and cross-module delay from `18/72` to `18/72`. Convergence took two or three rounds.
+- **Relevance:** A one-pass neighborhood can miss dependencies introduced by its final footprint expansion, while unconditional recursion can erase the runtime advantage of local repair. Use a measured escalation tier rather than silently claiming the one-pass conditional bound is global.
+- **Integrity control:** Frozen-access telemetry now records `primary_bound_scope` and states the conditional scope in plain language. A proven neighborhood optimum is evidence about that neighborhood only.
+- **Confidence:** High in the measured set growth; medium in the recommended two-tier policy; low in hidden-instance runtime transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

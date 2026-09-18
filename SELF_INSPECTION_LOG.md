@@ -833,3 +833,16 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity audit: the old score-7 conditional proof, the score-0 oracle, and corrected score-0 repair are distinct preserved artifacts. Fifty-nine regressions pass; no internal result changed an official artifact.
 - Confidence: very high in official incumbents; high in the predecessor correction; high in current cross-regime set stability; medium in hidden runtime; low-to-medium in dependencies introduced by footprint competitors after the precedence pass.
 - Immediate next action: commit the precedence correction and evidence. Then stress the ordering boundary: a footprint competitor whose own contract or predecessor must move, which the current one-pass expansion may still miss.
+
+## 2026-09-19 07:03:28 +08
+
+- Interval: 4 minutes 46 seconds since the previous inspection; triggered early after measuring the neighborhood-ordering risk and correcting proof reporting.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- What is working: protected incumbents, dual scoring, full feasibility screens, precommitted counterexamples, and 60 regressions prevent an attractive local result from silently replacing official evidence.
+- What could still be wrong: the one-pass Scenario C repair adds footprint competitors after contract and precedence closure. A dependency belonging only to a newly added competitor can remain frozen, so a mathematically valid repair bound can still be globally irrelevant.
+- Falsification result: recursive closure reaches all 54 public activities and roughly doubles the irregular and coupled neighborhoods (`27→53`, `23→49`). This confirms the ordering gap but also falsifies the assumption that unconditional recursion is a cheap correction.
+- Integrity correction: every flexible solve now records `primary_bound_scope`. Frozen-neighborhood and fixed-schedule runs also state in plain language that their bounds and optimality statuses are conditional. One targeted test plus the full 60-test suite pass.
+- Adversarial decision: preserve the current bounded repair and official incumbents. Do not promote fixed-point closure from these measurements alone; design a fresh footprint-to-dependency holdout, then compare one-pass and escalated repair under the same budget.
+- Failures and uncertainty: no official score improvement; no reference-validator call; fixed-point runtime at hidden scale is unknown; the current telemetry change improves truthfulness but not search quality.
+- Confidence: very high in official incumbents and the reporting correction; high in the measured growth; medium in the bounded-neighborhood runtime choice; low-to-medium in unseen dependency ordering.
+- Immediate next action: freeze a minimal footprint-introduced dependency holdout before solver exposure and use it to decide whether a targeted second expansion tier is justified.

@@ -38,6 +38,7 @@ class SolveTelemetry:
     unknown_retries: int = 0
     primary_score_proven_optimal: bool = False
     tie_break_proven_optimal: bool = False
+    primary_bound_scope: str = "full_instance"
     max_deterministic_time_per_solve: float | None = None
     interleave_search: bool = False
     structural_hints_used: bool = False
