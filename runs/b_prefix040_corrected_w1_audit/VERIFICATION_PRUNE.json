@@ -1,0 +1,57 @@
+{
+  "final_access_rows": 157,
+  "final_score": 34.0,
+  "final_submission_hash": "2c2c11cbe1d095f4601a2c7ca4429fe83977e9a4eba41e350cb5aa1c1f445f5e",
+  "initial_access_rows": 168,
+  "initial_score": 34.0,
+  "initial_submission_hash": "d8e3d4c0fa9efccc64ae285fee6cddecac840be330bfb49892d8ab61ea6f0b02",
+  "reference_validator_confirmed": false,
+  "removed_accesses": [
+    [
+      "A025",
+      26
+    ],
+    [
+      "A038",
+      25
+    ],
+    [
+      "A041",
+      25
+    ],
+    [
+      "A043",
+      25
+    ],
+    [
+      "A057",
+      25
+    ],
+    [
+      "A017",
+      24
+    ],
+    [
+      "A043",
+      23
+    ],
+    [
+      "A041",
+      20
+    ],
+    [
+      "A043",
+      19
+    ],
+    [
+      "A041",
+      18
+    ],
+    [
+      "A002",
+      12
+    ]
+  ],
+  "scenario": "B",
+  "strict_buffer_overlap_checked": false
+}

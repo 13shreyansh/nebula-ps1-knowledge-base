@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.0
+version: 0.8.1
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -331,7 +331,7 @@ Each protected public answer matches its bound and has passed the official valid
 - Combined public penalty is `230.6`. Lower is better; the portal does not publish a cross-scenario combined metric.
 - Both local scorers reproduce every official score exactly. The earlier activity-completion proxy was rejected after A-002 exposed the correct contract-completion aggregation.
 - The corrected closure checker reproduces the five A-001 violations exactly and accepts all three official incumbents under both standard and strict buffer screens.
-- All 39 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, and incumbent protection.
+- All 42 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, incumbent protection, full heuristic-portfolio execution, and guarded Scenario B cost-contributor repair.
 - On the altered-capacity/priority fixture, no-hint standard construction reaches A=`4599.7` with a 0.87% bound gap, and proves B=`30.0` and C=`59.9`. The stricter buffer-to-buffer hedge fails to construct B after 240 seconds while the validator-confirmed standard rule solves it in 18.7 seconds; strict overlap is therefore audit-only on unseen inputs.
 - Generalisation remains the main risk: timed no-hint construction varies across seeds and hidden topology/scale are unknown. No official run is spent on an unvalidated candidate.
 
@@ -349,7 +349,7 @@ The protected public answer keys are in `deliverables/public/A`, `B`, and `C`. E
 2. **Primary score:** optimise the exact scenario objective.
 3. **Tie-break:** after fixing the best primary score, minimise unnecessary churn, fragmented work, and arbitrary label use. Tie-breakers must not weaken the official score.
 
-The executable staged path uses the fast direct-component formulation only to generate a candidate. It suppresses that heuristic model's bounds and rejects candidates that fail the full checker or requested strict screen. When a complete candidate remains unsafe, the controller derives its conflict activities, freezes unaffected access decisions, and tries a bounded bridge-safe local repair. Local failure is inconclusive and falls through to repair-hinted and unhinted broad construction. Every safe candidate is pruned and fully checked before protected bridge-safe improvement. Only a strictly lower checked result can replace the incumbent; audit artifacts stay outside the final three-CSV directory.
+The executable staged path uses the fast direct-component formulation only to generate candidates. It runs every requested heuristic attempt, suppresses those models' bounds, and rejects candidates that fail the full checker or requested strict screen. When complete candidates remain unsafe, the controller ranks them by conflict count and score, derives the best candidate's conflict activities, freezes unaffected access decisions, and tries a bounded bridge-safe local repair. Local failure is inconclusive and falls through to repair-hinted and unhinted broad construction. Every safe candidate is pruned and fully checked before protected bridge-safe improvement. Scenario B then gets a bounded repair over activities that directly contribute ECLO or excess-capacity cost; unrelated access decisions remain frozen, and failure is inconclusive. Only a strictly lower checked result can replace the incumbent; audit artifacts stay outside the final three-CSV directory.
 
 ### Initial solution
 
@@ -624,3 +624,4 @@ When sources conflict:
 | `0.6.0` | 2026-09-18 | Added exact B/C objectives, iterative inferred-closure separation, protected A=`32.2`, B=`30.0`, C=`26.1` incumbents, and cross-seed evidence. |
 | `0.7.0` | 2026-09-19 | Added strict buffer-overlap hedging, dual-policy release checks, validator-gated pruning, and exact three-file answer-key packaging. |
 | `0.8.0` | 2026-09-19 | Added official A/B/C validation, corrected contract-completion scoring and Live cross-line closure, official-score manifests, exact lower bounds, and 39 passing regressions. |
+| `0.8.1` | 2026-09-19 | Added full heuristic portfolios, a guarded Scenario B cost-contributor repair, prefix-40 A/B/C proofs, wall-time instability evidence, and 42 passing regressions. |

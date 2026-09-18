@@ -13,6 +13,26 @@ from .prune import prune_submission
 from .solver import SolveTelemetry
 
 
+def _scenario_b_cost_contributing_activities(
+    instance: Instance, submission_dir: str | Path
+) -> list[str]:
+    """Return activities that directly participate in B's ECLO or excess costs."""
+
+    access, occupancy, _ = load_submission(submission_dir)
+    contributors = {row.activity_id for row in access if row.eclo == 1}
+    groups_by_location_week: dict[tuple[int, str], set[str]] = {}
+    activities_by_location_week: dict[tuple[int, str], set[str]] = {}
+    for row in occupancy:
+        key = (row.week, row.location_id)
+        groups_by_location_week.setdefault(key, set()).add(row.co_share_group)
+        activities_by_location_week.setdefault(key, set()).add(row.activity_id)
+    for key, groups in groups_by_location_week.items():
+        location_id = key[1]
+        if len(groups) > instance.locations[location_id].supply_capacity:
+            contributors.update(activities_by_location_week[key])
+    return sorted(contributors)
+
+
 def solve_staged_scenario(
     instance: Instance,
     output_dir: str | Path,
@@ -23,6 +43,7 @@ def solve_staged_scenario(
     local_repair_time_limit_seconds: float = 30.0,
     fallback_time_limit_seconds: float = 120.0,
     verification_time_limit_seconds: float = 120.0,
+    verification_round_time_limit_seconds: float | None = None,
     workers: int = 8,
     seed: int = 1,
     heuristic_attempts: int = 3,
@@ -52,11 +73,13 @@ def solve_staged_scenario(
     audit_output.mkdir(parents=True, exist_ok=True)
 
     heuristic_raw: Path | None = None
-    heuristic_pruned = audit_output / "heuristic_pruned"
+    heuristic_pruned: Path | None = None
     verification_raw = audit_output / "verification_raw"
     verification_pruned = audit_output / "verification_pruned"
     attempt_telemetry: list[dict[str, object]] = []
     heuristic: SolveTelemetry | None = None
+    selected_heuristic_attempt: int | None = None
+    safe_heuristic_candidates: list[tuple[int, SolveTelemetry, Path]] = []
     repair_hint: Path | None = None
     repair_hint_attempt: int | None = None
     repair_hint_rank: tuple[int, float] | None = None
@@ -79,9 +102,8 @@ def solve_staged_scenario(
             attempt_result.objective_score is not None
             and attempt_result.remaining_closure_conflicts == 0
         ):
-            heuristic = attempt_result
-            heuristic_raw = attempt_output
-            break
+            safe_heuristic_candidates.append((attempt + 1, attempt_result, attempt_output))
+            continue
         if attempt_result.objective_score is not None and all(
             (attempt_output / name).exists() for name in SUBMISSION_FILES
         ):
@@ -93,23 +115,37 @@ def solve_staged_scenario(
                 repair_hint = attempt_output
                 repair_hint_attempt = attempt + 1
                 repair_hint_rank = rank
+    heuristic_prune = None
+    best_heuristic_evaluation: Evaluation | None = None
+    for attempt_number, attempt_result, attempt_output in safe_heuristic_candidates:
+        attempt_pruned = audit_output / f"heuristic_attempt_{attempt_number}_pruned"
+        attempt_prune = prune_submission(
+            instance,
+            attempt_output,
+            attempt_pruned,
+            scenario,
+            report_path=audit_output / f"HEURISTIC_ATTEMPT_{attempt_number}_PRUNE.json",
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+        attempt_evaluation = evaluate_submission(instance, attempt_pruned, scenario)
+        if best_heuristic_evaluation is None or _candidate_is_better(
+            attempt_evaluation, best_heuristic_evaluation
+        ):
+            heuristic = attempt_result
+            heuristic_raw = attempt_output
+            heuristic_pruned = attempt_pruned
+            heuristic_prune = attempt_prune
+            selected_heuristic_attempt = attempt_number
+            best_heuristic_evaluation = attempt_evaluation
+
     fallback: SolveTelemetry | None = None
     local_repair: SolveTelemetry | None = None
     local_repair_prune = None
     local_repair_activities: list[str] = []
-    heuristic_prune = None
     fallback_prune = None
     fallback_attempt_telemetry: list[dict[str, object]] = []
     selected_fallback_attempt: int | None = None
-    if heuristic is not None and heuristic_raw is not None:
-        heuristic_prune = prune_submission(
-            instance,
-            heuristic_raw,
-            heuristic_pruned,
-            scenario,
-            report_path=audit_output / "HEURISTIC_PRUNE.json",
-            forbid_buffer_overlap=forbid_buffer_overlap,
-        )
+    if heuristic is not None and heuristic_raw is not None and heuristic_pruned is not None:
         incumbent_stage = "heuristic_incumbent"
         improvement_stage = "bridge_safe_improvement"
         incumbent_dir = heuristic_pruned
@@ -253,6 +289,11 @@ def solve_staged_scenario(
         seed=seed,
         closure_round_limit=closure_round_limit,
         sample_hint_dir=incumbent_dir,
+        round_time_limit_seconds=(
+            verification_round_time_limit_seconds
+            if verification_round_time_limit_seconds is not None
+            else (5.0 if scenario == "B" else None)
+        ),
         forbid_buffer_overlap=forbid_buffer_overlap,
         separator_mode="bridge_safe",
     )
@@ -273,6 +314,51 @@ def solve_staged_scenario(
         selected_stage = improvement_stage
         selected_dir = verification_pruned
         selected = verified
+
+    cost_repair: SolveTelemetry | None = None
+    cost_repair_prune = None
+    cost_repair_activities: list[str] = []
+    if scenario == "B" and local_repair_time_limit_seconds > 0:
+        cost_repair_activities = _scenario_b_cost_contributing_activities(
+            instance, selected_dir
+        )
+        if cost_repair_activities:
+            cost_repair_raw = audit_output / "bridge_safe_cost_repair_raw"
+            cost_repair_pruned = audit_output / "bridge_safe_cost_repair_pruned"
+            cost_repair = solve_flexible_supply_relaxation(
+                instance,
+                cost_repair_raw,
+                scenario,
+                time_limit_seconds=local_repair_time_limit_seconds,
+                workers=workers,
+                seed=seed,
+                closure_round_limit=closure_round_limit,
+                sample_hint_dir=selected_dir,
+                round_time_limit_seconds=5.0,
+                forbid_buffer_overlap=forbid_buffer_overlap,
+                freeze_access_hint=True,
+                freeze_access_except=set(cost_repair_activities),
+                separator_mode="bridge_safe",
+            )
+            if (
+                cost_repair.objective_score is not None
+                and cost_repair.remaining_closure_conflicts == 0
+            ):
+                cost_repair_prune = prune_submission(
+                    instance,
+                    cost_repair_raw,
+                    cost_repair_pruned,
+                    scenario,
+                    report_path=audit_output / "COST_REPAIR_PRUNE.json",
+                    forbid_buffer_overlap=forbid_buffer_overlap,
+                )
+                cost_repaired = evaluate_submission(
+                    instance, cost_repair_pruned, scenario
+                )
+                if _candidate_is_better(cost_repaired, selected):
+                    selected_stage = "bridge_safe_cost_repair"
+                    selected_dir = cost_repair_pruned
+                    selected = cost_repaired
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, scenario)
@@ -307,6 +393,7 @@ def solve_staged_scenario(
         "selection_rule": "strictly lower fully checked objective; otherwise preserve incumbent",
         "heuristic_telemetry": asdict(heuristic) if heuristic is not None else None,
         "heuristic_attempts": attempt_telemetry,
+        "heuristic_selected_attempt": selected_heuristic_attempt,
         "heuristic_prune": asdict(heuristic_prune) if heuristic_prune is not None else None,
         "bridge_safe_fallback_telemetry": asdict(fallback) if fallback is not None else None,
         "bridge_safe_local_repair_activities": local_repair_activities,
@@ -321,7 +408,19 @@ def solve_staged_scenario(
         "bridge_safe_fallback_selected_attempt": selected_fallback_attempt,
         "bridge_safe_fallback_prune": asdict(fallback_prune) if fallback_prune is not None else None,
         "verification_telemetry": asdict(verification) if verification is not None else None,
+        "verification_round_time_limit_seconds": (
+            verification_round_time_limit_seconds
+            if verification_round_time_limit_seconds is not None
+            else (5.0 if scenario == "B" else None)
+        ),
         "verification_prune": asdict(verification_prune) if verification_prune is not None else None,
+        "bridge_safe_cost_repair_activities": cost_repair_activities,
+        "bridge_safe_cost_repair_telemetry": (
+            asdict(cost_repair) if cost_repair is not None else None
+        ),
+        "bridge_safe_cost_repair_prune": (
+            asdict(cost_repair_prune) if cost_repair_prune is not None else None
+        ),
     }
     (audit_output / "STAGED.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",

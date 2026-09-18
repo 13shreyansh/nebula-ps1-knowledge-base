@@ -486,3 +486,28 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Strongest next falsification: rerun a differently transformed fixture and one deterministic single-worker case under the standard rule, measure feasibility/time/score gap, and update the default release policy so strict buffer overlap is audit-only.
 - Confidence: very high in public outputs; high in corrected public optimality; medium in hidden construction; low in strict-hedge utility.
 - Next action: codify standard-vs-strict policy in tests/docs, commit the benchmark evidence, then run a second structurally different fixture under the corrected objective.
+
+## 2026-09-19 03:22:12 +08
+
+- Interval: 8 minutes 56 seconds since the previous inspection; early because a proposed controller fix was directly falsified.
+- Best independently validated score: official public A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; no change. Prefix-40 internal optima currently proven are A=`85.4`, B=`20.0`, and C=`52.7`, but these are structural-test results, not portal scores.
+- What improved: deterministic one-worker A and C construction reached checked candidates with matching bridge-safe bounds. A separate B continuation reached checked `20.0`, independently rescored it, and proved the `20.0` bound.
+- What failed: the complete B staged rerun did not reproduce its earlier `34.0` incumbent under the same nominal seed and worker count. It returned `186.0`, and a 15-second verifier with the proposed five-second round cap could not improve it. Therefore the proposed cap change alone is not an adequate controller fix.
+- Evidence: the successful B proof used a checked `34.0` hint and finished in 4.476 seconds. From the `186.0` hint, 60 seconds reached only `179.0`. From no hint, 60 seconds found objective `20.0` but still had six closure conflicts, so it was rejected. All safe and unsafe artifacts remain separately labelled.
+- Adversarial interpretation: wall-time-bounded iterative CP-SAT runs can diverge even with one worker and a fixed seed because solve termination and accumulated cuts depend on timing. Apparent repeatability from seed control was overstated. Candidate quality materially affects closure convergence, so a fragile first heuristic can poison the protected improvement phase.
+- Cheating and integrity audit: no unsafe `20.0` candidate was promoted; no internal fixture score was presented as official; no validator run was consumed; the official incumbent remains protected; the failed cap-only hypothesis is retained.
+- Strongest counterexample: the same staged recipe ranged from checked `34.0` to checked `186.0`. This is a 152-point variation on one fixture and defeats any claim of deterministic hidden-input reliability.
+- Confidence: high in the A/C fixture proofs and the checked B=`20.0` optimum; high that the present B controller is performance-unstable; low that a round-cap tweak alone generalizes; unchanged high confidence in the official public results.
+- Next experiment: make the staged heuristic evaluate multiple safe attempts instead of stopping at the first one, retain the best checked/pruned incumbent, and compare that portfolio fairly against the recorded single-attempt outcomes. Preserve wall-time variance as a limitation unless deterministic-time budgets replace wall-time stopping.
+
+## 2026-09-19 03:28:37 +08
+
+- Interval: 6 minutes 25 seconds since the previous inspection; early because the proposed portfolio and targeted-repair controller completed its falsification run.
+- Best independently validated public score remains A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. Prefix-40 B is now independently checked and solver-proven at `20.0` in the integrated controller.
+- What improved: all requested heuristic attempts now execute; 41 regressions pass. A generic B cost-contributor repair derives its free set from ECLO and excess-cost participation, and a diagnostic run converted a checked `30.0` candidate to the proven `20.0` optimum in under half a second. The complete controller also finished at `20.0` with both scorers agreeing.
+- What failed or remains unstable: all three 30-second direct heuristics were unsafe. Conflict-neighborhood repair recovered only `37.0`. In this rerun verification reached `20.0`, whereas the previous nominally identical phase stalled at `30.0`; fixed seed and one worker still do not make wall-time-bounded search reproducible.
+- Integrity audit: unsafe heuristic objectives (`232.0`, `231.0`, `86.0`) were not promoted. The final `20.0` has zero hard violations, four ECLO, zero excess, zero delay, a matching `20.0` bound, and independent raw-CSV score agreement. No portal runs were consumed and no public incumbent changed.
+- Strongest counterexample: a future verifier may again stall at `30.0`; therefore the cost-repair branch must be tested from a deliberately preserved suboptimal safe incumbent, not credited merely because this particular end-to-end verifier solved first.
+- Unknown unknown: freezing all non-cost-contributing access can prevent improvements requiring a zero-cost bridge activity to move. Failure of targeted repair is inconclusive and must preserve the broader incumbent/search path.
+- Confidence: high in the prefix-40 optimum and final artifact; medium that portfolio plus cost repair improves hidden B reliability; low in deterministic runtime behavior; very high in the official public results.
+- Next experiment: add a forced controller test where verification preserves a suboptimal safe B incumbent and only generic cost repair can improve it. Then benchmark the revised controller on the earlier structural fixture and a differently transformed capacity/topology fixture before generalizing.

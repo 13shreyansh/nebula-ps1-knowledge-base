@@ -118,6 +118,11 @@ def main() -> None:
         default=120.0,
         help="bridge-safe improvement and proof budget after a safe candidate is pruned",
     )
+    staged_parser.add_argument(
+        "--verification-round-time-limit",
+        type=float,
+        help="per-solve verification cap; defaults to 5s for B and the solver default otherwise",
+    )
     staged_parser.add_argument("--workers", type=int, default=8)
     staged_parser.add_argument("--seed", type=int, default=1)
     staged_parser.add_argument("--heuristic-attempts", type=int, default=3)
@@ -252,6 +257,7 @@ def main() -> None:
             local_repair_time_limit_seconds=args.local_repair_time_limit,
             fallback_time_limit_seconds=args.fallback_time_limit,
             verification_time_limit_seconds=args.verification_time_limit,
+            verification_round_time_limit_seconds=args.verification_round_time_limit,
             workers=args.workers,
             seed=args.seed,
             heuristic_attempts=args.heuristic_attempts,

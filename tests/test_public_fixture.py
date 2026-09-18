@@ -22,7 +22,10 @@ from nebula_ps1.instance import load_instance
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from nebula_ps1.prune import prune_submission
 from nebula_ps1.solver import SolveTelemetry, _contract_costs
-from nebula_ps1.staged import solve_staged_scenario
+from nebula_ps1.staged import (
+    _scenario_b_cost_contributing_activities,
+    solve_staged_scenario,
+)
 from nebula_ps1.staged_c import solve_staged_c_portfolio
 from nebula_ps1.submission import relabel_submission_scenario
 from nebula_ps1.topology import (
@@ -437,6 +440,8 @@ class PublicFixtureTests(unittest.TestCase):
             "16",
             "--fallback-attempts",
             "4",
+            "--verification-round-time-limit",
+            "6",
         ]
         with patch("sys.argv", argv), patch(
             "nebula_ps1.cli.solve_staged_scenario", return_value={}
@@ -446,6 +451,9 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(solve.call_args.kwargs["local_repair_time_limit_seconds"], 16.0)
         self.assertEqual(solve.call_args.kwargs["fallback_time_limit_seconds"], 17.0)
         self.assertEqual(solve.call_args.kwargs["fallback_attempts"], 4)
+        self.assertEqual(
+            solve.call_args.kwargs["verification_round_time_limit_seconds"], 6.0
+        )
 
     def test_staged_c_cli_forwards_all_stage_budgets(self) -> None:
         argv = [
@@ -515,6 +523,12 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(evaluation.eclo_nights_total, 6)
         self.assertEqual(evaluation.excess_access_nights_total, 0)
         self.assertAlmostEqual(evaluation.objective_score, 30.0)
+
+    def test_scenario_b_cost_repair_targets_only_actual_cost_participants(self) -> None:
+        contributors = _scenario_b_cost_contributing_activities(
+            self.instance, ROOT / "deliverables" / "public" / "B"
+        )
+        self.assertEqual(contributors, ["A036", "A059"])
 
     def test_relabelled_a_incumbent_is_a_safe_scenario_c_fallback(self) -> None:
         source = ROOT / "deliverables" / "public" / "A"
@@ -923,6 +937,88 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(
             report["verification_telemetry"]["status"],
             "FEASIBLE_SAFE_INCUMBENT",
+        )
+
+    def test_staged_solver_evaluates_all_heuristic_attempts_and_selects_best(self) -> None:
+        prefix_instance = load_instance(ROOT / "fixtures" / "prefix_040")
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            self.assertEqual(scenario, "B")
+            use_best = kwargs["separator_mode"] != "direct_heuristic" or kwargs["seed"] == 2
+            source = (
+                ROOT / "fixtures" / "prefix_040_submissions" / ("b_20" if use_best else "b_30")
+            )
+            _copy_submission(source, Path(output_dir))
+            objective = 20.0 if use_best else 30.0
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=objective,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=1,
+                time_limit_seconds=1.0,
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ) as solve:
+            report = solve_staged_scenario(
+                prefix_instance,
+                Path(temp_dir) / "submission",
+                "B",
+                audit_output_dir=Path(temp_dir) / "audit",
+                heuristic_attempts=3,
+            )
+        self.assertEqual(solve.call_count, 5)
+        self.assertEqual(report["heuristic_selected_attempt"], 2)
+        self.assertEqual(len(report["heuristic_attempts"]), 3)
+
+    def test_staged_b_runs_guarded_cost_repair_on_derived_contributors(self) -> None:
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            self.assertEqual(scenario, "B")
+            _copy_submission(ROOT / "deliverables" / "public" / "B", Path(output_dir))
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=30.0,
+                best_bound=30.0,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=1,
+                time_limit_seconds=1.0,
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ) as solve:
+            report = solve_staged_scenario(
+                self.instance,
+                Path(temp_dir) / "submission",
+                "B",
+                audit_output_dir=Path(temp_dir) / "audit",
+                heuristic_attempts=1,
+                local_repair_time_limit_seconds=1.0,
+            )
+        self.assertEqual(solve.call_count, 3)
+        cost_call = solve.call_args_list[2]
+        self.assertTrue(cost_call.kwargs["freeze_access_hint"])
+        self.assertEqual(cost_call.kwargs["freeze_access_except"], {"A036", "A059"})
+        self.assertEqual(
+            report["bridge_safe_cost_repair_activities"], ["A036", "A059"]
         )
 
     def test_staged_solver_repairs_only_detected_conflict_activities_first(self) -> None:

@@ -1,0 +1,313 @@
+{
+  "bridge_safe_fallback_attempts": [],
+  "bridge_safe_fallback_prune": {
+    "final_access_rows": 156,
+    "final_score": 37.0,
+    "final_submission_hash": "bb4242585a392654b89a1b8c0f56e5a8b71251a8f343f12092335db52b5ad633",
+    "initial_access_rows": 169,
+    "initial_score": 37.0,
+    "initial_submission_hash": "b34503360a5f10accf1857e150ae32a584e2cbd6f14a4c5fa71b5e1718570b71",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [
+      [
+        "A043",
+        26
+      ],
+      [
+        "A050",
+        25
+      ],
+      [
+        "A056",
+        24
+      ],
+      [
+        "A001",
+        23
+      ],
+      [
+        "A002",
+        23
+      ],
+      [
+        "A021",
+        23
+      ],
+      [
+        "A035",
+        23
+      ],
+      [
+        "A035",
+        22
+      ],
+      [
+        "A050",
+        22
+      ],
+      [
+        "A021",
+        21
+      ],
+      [
+        "A043",
+        21
+      ],
+      [
+        "A006",
+        20
+      ],
+      [
+        "A002",
+        18
+      ]
+    ],
+    "scenario": "B",
+    "strict_buffer_overlap_checked": false
+  },
+  "bridge_safe_fallback_selected_attempt": null,
+  "bridge_safe_fallback_telemetry": {
+    "best_bound": 37.0,
+    "branches": 75266,
+    "closure_rounds": 2,
+    "conflicts": 355,
+    "deterministic_time_seconds": 0.14301919343180203,
+    "formulation": "scenario_b_iterative_bridge_safe_sample_consistent_closure_relaxation_partially_frozen_access",
+    "limitation": "Closure and buffer conflicts use the rule set that reproduced official A-001 and accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed. The row-count tie-breaker cannot alter the official penalty objective.",
+    "maximum_round_time_seconds": 1.0,
+    "model_constraints": 36511,
+    "model_variables": 16918,
+    "objective_score": 37.0,
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 1.0,
+    "seed": 1,
+    "solve_rounds": 3,
+    "status": "OPTIMAL",
+    "tie_break_proven_optimal": true,
+    "time_limit_seconds": 30.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.40205345800495706,
+    "workers": 1
+  },
+  "bridge_safe_local_repair_activities": [
+    "A040",
+    "A041"
+  ],
+  "bridge_safe_local_repair_prune": {
+    "final_access_rows": 156,
+    "final_score": 37.0,
+    "final_submission_hash": "bb4242585a392654b89a1b8c0f56e5a8b71251a8f343f12092335db52b5ad633",
+    "initial_access_rows": 169,
+    "initial_score": 37.0,
+    "initial_submission_hash": "b34503360a5f10accf1857e150ae32a584e2cbd6f14a4c5fa71b5e1718570b71",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [
+      [
+        "A043",
+        26
+      ],
+      [
+        "A050",
+        25
+      ],
+      [
+        "A056",
+        24
+      ],
+      [
+        "A001",
+        23
+      ],
+      [
+        "A002",
+        23
+      ],
+      [
+        "A021",
+        23
+      ],
+      [
+        "A035",
+        23
+      ],
+      [
+        "A035",
+        22
+      ],
+      [
+        "A050",
+        22
+      ],
+      [
+        "A021",
+        21
+      ],
+      [
+        "A043",
+        21
+      ],
+      [
+        "A006",
+        20
+      ],
+      [
+        "A002",
+        18
+      ]
+    ],
+    "scenario": "B",
+    "strict_buffer_overlap_checked": false
+  },
+  "bridge_safe_local_repair_telemetry": {
+    "best_bound": 37.0,
+    "branches": 75266,
+    "closure_rounds": 2,
+    "conflicts": 355,
+    "deterministic_time_seconds": 0.14301919343180203,
+    "formulation": "scenario_b_iterative_bridge_safe_sample_consistent_closure_relaxation_partially_frozen_access",
+    "limitation": "Closure and buffer conflicts use the rule set that reproduced official A-001 and accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed. The row-count tie-breaker cannot alter the official penalty objective.",
+    "maximum_round_time_seconds": 1.0,
+    "model_constraints": 36511,
+    "model_variables": 16918,
+    "objective_score": 37.0,
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 1.0,
+    "seed": 1,
+    "solve_rounds": 3,
+    "status": "OPTIMAL",
+    "tie_break_proven_optimal": true,
+    "time_limit_seconds": 30.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.40205345800495706,
+    "workers": 1
+  },
+  "bridge_safe_repair_hint_source_attempt": 3,
+  "heuristic_attempts": [
+    {
+      "best_bound": null,
+      "branches": 3662927,
+      "closure_rounds": 18,
+      "conflicts": 15763,
+      "deterministic_time_seconds": 24.082792464322875,
+      "formulation": "scenario_b_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "maximum_round_time_seconds": 2.0,
+      "model_constraints": 49598,
+      "model_variables": 22100,
+      "objective_score": 235.0,
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 14,
+      "round_time_limit_seconds": 1.0,
+      "seed": 1,
+      "solve_rounds": 19,
+      "status": "FEASIBLE",
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 30.0,
+      "unknown_retries": 1,
+      "wall_time_seconds": 30.011185791008756,
+      "workers": 1
+    },
+    {
+      "best_bound": null,
+      "branches": 3930150,
+      "closure_rounds": 16,
+      "conflicts": 14238,
+      "deterministic_time_seconds": 20.364200380278554,
+      "formulation": "scenario_b_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "maximum_round_time_seconds": 2.0,
+      "model_constraints": 39775,
+      "model_variables": 18872,
+      "objective_score": 231.0,
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 7,
+      "round_time_limit_seconds": 1.0,
+      "seed": 2,
+      "solve_rounds": 18,
+      "status": "UNKNOWN",
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 30.0,
+      "unknown_retries": 1,
+      "wall_time_seconds": 30.000595332996454,
+      "workers": 1
+    },
+    {
+      "best_bound": null,
+      "branches": 3705389,
+      "closure_rounds": 18,
+      "conflicts": 16269,
+      "deterministic_time_seconds": 20.318642260499328,
+      "formulation": "scenario_b_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "maximum_round_time_seconds": 2.0,
+      "model_constraints": 40664,
+      "model_variables": 19160,
+      "objective_score": 100.0,
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 2,
+      "round_time_limit_seconds": 1.0,
+      "seed": 3,
+      "solve_rounds": 19,
+      "status": "FEASIBLE",
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 30.0,
+      "unknown_retries": 1,
+      "wall_time_seconds": 30.00930345900997,
+      "workers": 1
+    }
+  ],
+  "heuristic_prune": null,
+  "heuristic_selected_attempt": null,
+  "heuristic_telemetry": null,
+  "reference_validator_confirmed": false,
+  "scenario": "B",
+  "selected_objective_score": 30.0,
+  "selected_stage": "bridge_safe_local_repair_improvement",
+  "selected_submission_hash": "09f0d58c70c6061f33232aaad259b51fd9078a1454898de85746c954445e0a36",
+  "selection_rule": "strictly lower fully checked objective; otherwise preserve incumbent",
+  "strict_buffer_overlap_checked": false,
+  "submission_files": [
+    "SCHEDULE_ACCESS.csv",
+    "SCHEDULE_OCCUPANCY.csv",
+    "RESULTS.csv"
+  ],
+  "verification_prune": {
+    "final_access_rows": 156,
+    "final_score": 30.0,
+    "final_submission_hash": "09f0d58c70c6061f33232aaad259b51fd9078a1454898de85746c954445e0a36",
+    "initial_access_rows": 156,
+    "initial_score": 30.0,
+    "initial_submission_hash": "09f0d58c70c6061f33232aaad259b51fd9078a1454898de85746c954445e0a36",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "B",
+    "strict_buffer_overlap_checked": false
+  },
+  "verification_round_time_limit_seconds": 5.0,
+  "verification_telemetry": {
+    "best_bound": 20.0,
+    "branches": 965545,
+    "closure_rounds": 9,
+    "conflicts": 3293,
+    "deterministic_time_seconds": 64.59553763686152,
+    "formulation": "scenario_b_iterative_bridge_safe_sample_consistent_closure_relaxation",
+    "limitation": "Closure and buffer conflicts use the rule set that reproduced official A-001 and accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed. The row-count tie-breaker cannot alter the official penalty objective.",
+    "maximum_round_time_seconds": 5.0,
+    "model_constraints": 55367,
+    "model_variables": 24106,
+    "objective_score": 30.0,
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 5.0,
+    "seed": 1,
+    "solve_rounds": 10,
+    "status": "FEASIBLE_SAFE_INCUMBENT",
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 30.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 30.014020792004885,
+    "workers": 1
+  }
+}

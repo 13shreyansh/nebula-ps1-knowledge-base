@@ -548,3 +548,23 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Scenario C standard workflow: reconstructed A=`4599.7` from raw input, then reached checked C=`59.9` in 1.834 seconds. Bridge-safe verification proved `<59.9` infeasible in 0.367 seconds.
 - Conclusion: corrected scoring does not break raw-input construction, but the strict buffer-to-buffer hedge can destroy reliability on altered inputs and is contradicted by the organizer sample. Keep it as an audit signal, not the default hidden-instance policy. Validator-confirmed standard closure remains the selection gate.
 - Integrity: no failed strict candidate was promoted; no public official incumbent changed; all negative telemetry is preserved.
+
+### E053: Prefix-40 deterministic benchmark exposes B-controller instability
+
+- Timestamp: 2026-09-19 03:22:12 +08
+- Input: `fixtures/prefix_040`; one worker, seed 1, validator-confirmed standard closure, and no public answer-key hint.
+- Scenario A: staged construction returned checked `85.4` with 159 access rows in 10.112 seconds. Bridge-safe verification matched the `85.4` bound in 0.037 seconds.
+- Scenario C: the guarded A-to-C workflow returned checked `52.7`; bridge-safe verification matched the `52.7` bound in 0.074 seconds.
+- Scenario B first staged run: a 90-second heuristic pruned to `67.0`; 15-second bridge-safe verification improved it to checked `34.0` with a `20.0` bound. A separate bridge-safe run using that checked hint reached and proved `20.0` in 4.476 seconds. The main and independent scorers agree, pruning removes nothing, and the final hash is `53c128c2cb13d02243be5fa7c1d6b0af65f39abc3882675e08adf7a457235346`.
+- Falsification rerun: after increasing B's verification per-solve cap from one to five seconds, the same nominal one-worker seed-1 staged command produced a much worse heuristic (`256.0`, pruned to `186.0`) and did not improve it in 15 seconds. A 60-second bridge-safe continuation from that hint reached only checked `179.0`; a no-hint run found objective `20.0` but retained six closure conflicts and was rejected.
+- Conclusion: fixed seed plus one worker is not enough to make wall-time-bounded iterative search output-reproducible. The `20.0` candidate is valid and proved optimal for this fixture, but the staged B controller is not robustly able to recover it. A longer round cap alone is not a sufficient fix; safe incumbent portfolios and/or deterministic-budget search require testing.
+- Integrity: the `34.0`, `186.0`, and `179.0` candidates remain recorded; the unsafe no-hint `20.0` is not counted as a result; the official public B=`30.0` is unchanged.
+
+### E054: B portfolio and cost-contributor repair recover the prefix-40 optimum
+
+- Timestamp: 2026-09-19 03:28:37 +08
+- Controller changes: heuristic portfolios now execute every requested seed and retain the lowest safe candidate instead of stopping at the first safe result. After protected verification, Scenario B can freeze unrelated access decisions and re-optimize only activities that use ECLO or participate in an over-capacity location-week. Every candidate still passes the same full checker and strict-improvement gate.
+- Targeted falsification: the recorded checked `30.0` candidate had six ECLO nights, while the proven `20.0` optimum had four. Generic repair of all ECLO-cost activities (`A007` and `A036`, derived from the candidate) reached and proved `20.0` in 0.491 seconds. Repairing only A007 also reached `20.0`, but that narrower run is diagnostic evidence, not the implemented policy.
+- End-to-end result: three 30-second one-worker heuristic attempts all ended unsafe; generic conflict-neighborhood repair recovered checked `37.0`; 30-second bridge-safe verification reached and proved `20.0`; the cost-contributor stage preserved the optimum. Independent rescoring reports zero delay, zero excess, four ECLO nights, and objective `20.0`; hash `899e6761db4dbe30584b81f06edf0001900729226eaced83148e70d06d51b766`.
+- Tests: 42 regressions pass, including full heuristic-attempt selection, B cost-contributor derivation, and invocation of the guarded repair with only the derived contributor set left free.
+- Remaining limitation: the verifier had previously stalled at `30.0` under nominally identical seed/worker settings, so this successful rerun does not establish wall-time reproducibility. The new stages improve recovery opportunities but do not eliminate time-sensitive CP-SAT variance.
