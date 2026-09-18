@@ -674,3 +674,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Budget sensitivity: after correction, the one-seed pilot reached A=`1820.0`, B=`48.0`, C=`920.0`. B's lower bound was already `20.0`, but one second of local repair left four excess groups. At ten seconds, five seeds per scenario reached A=`1820.0`, B=`20.0`, C=`920.0`; all 15 results are dual-scored, strict-clean, and match solver bounds.
 - Runtime and stability: A took 1.471–1.480 seconds and C 4.150–4.185. B took 6.068–20.025 and selected local repair in four seeds and cost repair in one. All B scores are optimal, but all five hashes differ; score stability must not be reported as byte determinism.
 - Integrity boundary: the blind failure and one-second B=`48.0` pilot remain preserved. The ten-second repair budget is reported as part of the method and is below the 30-second production default. The fixture is locally authored from the same dense family, so the result establishes a specific coupled capability, not hidden-distribution generalization.
+
+### E066: Corrected hint preserves prior regimes and reconstructs every public optimum
+
+- Timestamp: 2026-09-19 04:34:09 +08
+- Prior-regime regression: rerunning five one-worker seeds per scenario under the original two-second policy preserved 15/15 dense-holdout results at `0.0` and 15/15 additive-trade-off results at A=`7.0`, B=`10.0`, C=`7.0`. Scores, feasibility, strict screens, and within-scenario hashes remained stable.
+- Public reconstruction policy: one eight-worker seed, 30-second heuristic, 10-second local repair, 30-second fallback, 10-second verification, one attempt per stage, and guarded production C.
+- Result: current code produced locally hard-feasible A=`137.9` in 28.295 seconds, B=`30.0` in 11.160, and C=`62.7` in 29.569. Both local scorers agree. These schedules have new hashes and are not official-validator-confirmed, so the protected official artifacts were not replaced.
+- Strict audit: the reconstructed A/B/C schedules have 7/6/4 strict buffer-overlap conflicts while passing the confirmed standard rule. Strict mode remains diagnostic; treating it as a hard requirement would reject score-optimal public schedules without organizer evidence.
+- Limitation: one public seed is not a runtime distribution. A and C finished near the heuristic budget, and eight-worker success does not establish one-worker or hidden-hardware reliability.

@@ -442,6 +442,12 @@ Confidence labels:
 - **Finding:** On the coupled ECLO-window fixture, the corrected construction exposed the exact B lower bound `20.0`, but one second of repair returned `48.0`. Ten seconds reached `20.0` in all five seeds, with wall time varying from 6.068 to 20.025 seconds and five different optimal hashes.
 - **Relevance:** Record stage budgets with every score. A bound-incumbent gap should trigger continued protected repair when budget remains; never report the bound as achieved until a dual-scored feasible incumbent matches it. Compare policies by complete score/runtime distributions, not one seed or one output hash.
 - **Limitation:** This evidence comes from one locally authored family. An adaptive continuation rule still needs fixed-budget cross-regime testing so it does not starve hard feasibility construction or exploit case-specific stopping behavior.
+
+### `R053` Equal score and local feasibility do not transfer official artifact status
+
+- **Status:** Confirmed by public reconstruction; release policy fixed.
+- **Finding:** The current controller reconstructed A=`137.9`, B=`30.0`, C=`62.7` with new hashes and both local scorers agreeing. The new schedules were not submitted to the reference validator, and their strict diagnostic conflicts differ from the protected official artifacts.
+- **Relevance:** Keep official validation attached to an exact artifact hash, not a score or algorithm version. Never replace an officially accepted incumbent with an equal-scoring local reconstruction. Treat unconfirmed strict-buffer semantics as an audit dimension, not a hard constraint.
 - **Limitation:** The tight activity is spatially isolated, so the result does not cover ECLO decisions coupled to possession conflicts or C's global two-week line window.
 - **Confidence:** High for the tested trade-off; medium for coupled cases.
 

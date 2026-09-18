@@ -612,3 +612,14 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Strongest remaining counterexample: generate several coupled variants before any further tuning, vary line/window placement and contract weights, and run the same fixed production budget. A single co-developed case can still reward an overly specific EDF construction.
 - Confidence: very high in public results; high in the coupled case's analytical bounds and final outputs; medium in transfer of the corrected hint; medium-low in B runtime robustness.
 - Immediate next action: add the coupled case to the executable benchmark and regression suite, preserve representative failure telemetry, then run a cross-regime regression before any new optimization.
+
+## 2026-09-19 04:34:09 +08
+
+- Interval: 4 minutes 40 seconds since the previous inspection; triggered early by completion of the cross-regime and public reconstruction checks.
+- Best independently validated and official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. The current code independently reconstructed the same three scores, but those new hashes are not official-validator-confirmed and did not replace the protected ZIPs.
+- Regression result: the corrected hint preserved all 30 earlier dense-holdout and additive-trade-off runs at their proved optima. The public reconstruction also succeeded 3/3 with both local scorers agreeing: A in 28.295 seconds, B in 11.160, C in 29.569.
+- Adversarial finding: the reconstructed schedules have 7/6/4 strict buffer-overlap conflicts despite zero standard-rule violations. This does not invalidate them under the confirmed rule, but it proves that strict-clean synthetic results cannot be generalized to public schedules and that strict mode must stay diagnostic.
+- Integrity audit: different hashes with equal scores are not reported as the official artifacts. No portal attempt was consumed, no internal score was upgraded to official evidence, and the protected answer keys remain unchanged.
+- Unknown risk: one successful eight-worker public seed does not establish runtime reliability. A and C nearly consumed the 30-second heuristic budget, and hidden hardware, worker count, or density may shift success into slower repair stages.
+- Confidence: very high in protected public scores; high that current code can reconstruct them under this policy; low-to-medium in cross-hardware runtime portability; unchanged uncertainty about strict buffer semantics outside official evidence.
+- Immediate next action: preserve the reconstruction policy and telemetry, then test fixed-budget runtime variance across additional public seeds without spending validator attempts.

@@ -329,6 +329,7 @@ Each protected public answer matches its bound and has passed the official valid
 - **B-001:** officially feasible at `30.0`; zero overrun/excess and six ECLO nights. The full bridge-safe model proves `<30.0` infeasible.
 - **C-001:** officially feasible at `62.7`; seven overrun days in C006, zero excess, four ECLO nights. The full model and workload argument prove the same lower bound.
 - Combined public penalty is `230.6`. Lower is better; the portal does not publish a cross-scenario combined metric.
+- The current controller also reconstructs all three optimum scores from scratch under one fixed eight-worker policy. Those schedules have different hashes and only local validation, so the official ZIPs remain the release artifacts.
 - Both local scorers reproduce every official score exactly. The earlier activity-completion proxy was rejected after A-002 exposed the correct contract-completion aggregation.
 - The corrected closure checker reproduces the five A-001 violations exactly and accepts all three official incumbents under both standard and strict buffer screens.
 - All 49 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, incumbent protection, full heuristic-portfolio execution, guarded Scenario B cost-contributor repair, independently constructed synthetic oracles, dense no-hint construction, guarded dense C fallback, additive and coupled nonzero A/B/C trade-offs, and recomputation of the benchmark matrix.
