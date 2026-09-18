@@ -10,7 +10,8 @@ from pathlib import Path
 from nebula_ps1.evaluate import evaluate_submission, load_submission
 from nebula_ps1.independent_score import independently_score
 from nebula_ps1.instance import load_instance
-from nebula_ps1.portfolio import _candidate_is_better
+from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
+from nebula_ps1.prune import prune_submission
 from nebula_ps1.submission import relabel_submission_scenario
 from nebula_ps1.topology import (
     activity_footprint,
@@ -223,6 +224,29 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(evaluation.hard_violations, ())
             self.assertAlmostEqual(evaluation.objective_score, 48.3)
 
+    def test_occupancy_order_and_group_labels_do_not_change_feasibility(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            copied = Path(temp_dir)
+            for name in ("SCHEDULE_ACCESS.csv", "SCHEDULE_OCCUPANCY.csv", "RESULTS.csv"):
+                shutil.copy(PACK / "03_submission_sample" / name, copied / name)
+            path = copied / "SCHEDULE_OCCUPANCY.csv"
+            with path.open(newline="", encoding="utf-8") as handle:
+                rows = list(csv.DictReader(handle))
+                fieldnames = list(rows[0])
+            label_map: dict[tuple[str, str, str], str] = {}
+            for row in rows:
+                key = (row["week"], row["location_id"], row["co_share_group"])
+                if key not in label_map:
+                    label_map[key] = f"renamed_group_{len(label_map) + 1}"
+                row["co_share_group"] = label_map[key]
+            with path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(reversed(rows))
+            evaluation = evaluate_submission(self.instance, copied, scenario="A")
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertAlmostEqual(evaluation.objective_score, 48.3)
+
     def test_missing_access_is_rejected_instead_of_scoring_well(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             copied = Path(temp_dir)
@@ -263,6 +287,40 @@ class PublicFixtureTests(unittest.TestCase):
                 evaluation.hard_violations,
             )
 
+    def test_unknown_activity_is_rejected_without_crashing_closure_screen(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            copied = Path(temp_dir)
+            for name in ("SCHEDULE_ACCESS.csv", "SCHEDULE_OCCUPANCY.csv", "RESULTS.csv"):
+                shutil.copy(PACK / "03_submission_sample" / name, copied / name)
+            access_path = copied / "SCHEDULE_ACCESS.csv"
+            with access_path.open(newline="", encoding="utf-8") as handle:
+                access_rows = list(csv.DictReader(handle))
+                access_fields = list(access_rows[0])
+            original_id = access_rows[0]["activity_id"]
+            for row in access_rows:
+                if row["activity_id"] == original_id:
+                    row["activity_id"] = "UNKNOWN_ACTIVITY"
+            with access_path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=access_fields)
+                writer.writeheader()
+                writer.writerows(access_rows)
+            occupancy_path = copied / "SCHEDULE_OCCUPANCY.csv"
+            with occupancy_path.open(newline="", encoding="utf-8") as handle:
+                occupancy_rows = list(csv.DictReader(handle))
+                occupancy_fields = list(occupancy_rows[0])
+            for row in occupancy_rows:
+                if row["activity_id"] == original_id:
+                    row["activity_id"] = "UNKNOWN_ACTIVITY"
+            with occupancy_path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=occupancy_fields)
+                writer.writeheader()
+                writer.writerows(occupancy_rows)
+            evaluation = evaluate_submission(self.instance, copied, scenario="A")
+        self.assertFalse(evaluation.internally_feasible)
+        self.assertTrue(
+            any("unknown activity" in violation for violation in evaluation.hard_violations)
+        )
+
     def test_c_portfolio_selection_requires_checked_strict_improvement(self) -> None:
         a_run = ROOT / "runs" / "a_anytime_nohint_seed1_w8_round3"
         c_run = ROOT / "runs" / "c_anytime_nohint_seed1_w8_round3"
@@ -280,6 +338,28 @@ class PublicFixtureTests(unittest.TestCase):
             candidate, objective_score=0.0, hard_violations=("synthetic violation",)
         )
         self.assertFalse(_candidate_is_better(invalid_low_score, fallback))
+
+    def test_submission_copy_contains_exactly_three_csv_files(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir) / "answer_key"
+            _copy_submission(PACK / "03_submission_sample", output)
+            self.assertEqual(
+                sorted(path.name for path in output.iterdir()), sorted(SUBMISSION_FILES)
+            )
+
+    def test_pruner_preserves_minimal_public_a_incumbent(self) -> None:
+        source = ROOT / "runs" / "a_anytime_nohint_seed1_w8_round3"
+        if not source.exists():
+            self.skipTest("candidate is generated by the solver experiment")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir) / "pruned"
+            report = prune_submission(self.instance, source, output, "A")
+            evaluation = evaluate_submission(self.instance, output, scenario="A")
+            self.assertEqual(sorted(path.name for path in output.iterdir()), sorted(SUBMISSION_FILES))
+        self.assertEqual(report.initial_access_rows, 192)
+        self.assertEqual(report.final_access_rows, 192)
+        self.assertEqual(report.removed_accesses, ())
+        self.assertAlmostEqual(evaluation.objective_score, 32.2)
 
 
 if __name__ == "__main__":

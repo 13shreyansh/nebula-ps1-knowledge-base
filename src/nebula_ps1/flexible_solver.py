@@ -329,6 +329,7 @@ def solve_flexible_supply_relaxation(
     safe_occupancy_rows: list[OccupancyRow] | None = None
     safe_objective_tenths: int | None = None
     safe_proven_optimal = False
+    safe_tie_break_proven = False
     closure_rounds = 0
     solve_rounds = 0
     total_conflicts = 0
@@ -373,6 +374,7 @@ def solve_flexible_supply_relaxation(
                 safe_objective_tenths = current_objective_tenths
             if status_code == cp_model.OPTIMAL:
                 safe_proven_optimal = True
+                safe_tie_break_proven = True
                 break
             model.add(primary_score <= current_objective_tenths - 1)
             continue
@@ -429,7 +431,12 @@ def solve_flexible_supply_relaxation(
         final_access_rows = safe_access_rows
         final_occupancy_rows = safe_occupancy_rows or []
         final_conflicts = ()
-        status = "OPTIMAL" if safe_proven_optimal else "FEASIBLE_SAFE_INCUMBENT"
+        if safe_tie_break_proven:
+            status = "OPTIMAL"
+        elif safe_proven_optimal:
+            status = "PRIMARY_OPTIMAL_SAFE_INCUMBENT"
+        else:
+            status = "FEASIBLE_SAFE_INCUMBENT"
     else:
         status = solver.status_name(status_code)
 
@@ -548,6 +555,8 @@ def solve_flexible_supply_relaxation(
         solve_rounds=solve_rounds,
         maximum_round_time_seconds=maximum_round_limit_used,
         unknown_retries=unknown_retries,
+        primary_score_proven_optimal=safe_proven_optimal,
+        tie_break_proven_optimal=safe_tie_break_proven,
     )
     (output_root / "TELEMETRY.json").write_text(telemetry.as_json() + "\n", encoding="utf-8")
     return telemetry

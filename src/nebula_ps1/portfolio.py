@@ -8,6 +8,7 @@ from pathlib import Path
 from .evaluate import Evaluation, evaluate_submission
 from .flexible_solver import solve_flexible_supply_relaxation
 from .instance import Instance
+from .prune import prune_submission
 from .submission import relabel_submission_scenario
 
 
@@ -31,6 +32,7 @@ def solve_scenario_c_portfolio(
     instance: Instance,
     output_dir: str | Path,
     *,
+    audit_output_dir: str | Path | None = None,
     a_time_limit_seconds: float = 120.0,
     c_time_limit_seconds: float = 120.0,
     workers: int = 8,
@@ -48,13 +50,23 @@ def solve_scenario_c_portfolio(
     """
 
     output = Path(output_dir)
+    audit_output = (
+        Path(audit_output_dir)
+        if audit_output_dir is not None
+        else output.with_name(f"{output.name}_audit")
+    )
     if output.exists() and any(output.iterdir()):
         raise ValueError(f"portfolio output directory must be empty: {output}")
+    if audit_output.exists() and any(audit_output.iterdir()):
+        raise ValueError(f"portfolio audit directory must be empty: {audit_output}")
     output.mkdir(parents=True, exist_ok=True)
-    stages = output / "stages"
+    audit_output.mkdir(parents=True, exist_ok=True)
+    stages = audit_output / "stages"
     a_stage = stages / "scenario_a"
-    fallback_stage = stages / "scenario_c_fallback"
-    candidate_stage = stages / "scenario_c_candidate"
+    fallback_raw_stage = stages / "scenario_c_fallback_raw"
+    fallback_stage = stages / "scenario_c_fallback_pruned"
+    candidate_raw_stage = stages / "scenario_c_candidate_raw"
+    candidate_stage = stages / "scenario_c_candidate_pruned"
 
     a_telemetry = solve_flexible_supply_relaxation(
         instance,
@@ -69,7 +81,14 @@ def solve_scenario_c_portfolio(
     if a_telemetry.objective_score is None or a_telemetry.remaining_closure_conflicts:
         raise RuntimeError("Scenario A stage did not produce a closure-safe fallback")
 
-    relabel_submission_scenario(instance, a_stage, fallback_stage, "C")
+    relabel_submission_scenario(instance, a_stage, fallback_raw_stage, "C")
+    fallback_prune = prune_submission(
+        instance,
+        fallback_raw_stage,
+        fallback_stage,
+        "C",
+        report_path=audit_output / "FALLBACK_PRUNE.json",
+    )
     fallback = evaluate_submission(instance, fallback_stage, "C")
     if not fallback.internally_feasible:
         raise RuntimeError(
@@ -79,7 +98,7 @@ def solve_scenario_c_portfolio(
 
     c_telemetry = solve_flexible_supply_relaxation(
         instance,
-        candidate_stage,
+        candidate_raw_stage,
         "C",
         time_limit_seconds=c_time_limit_seconds,
         workers=workers,
@@ -89,7 +108,16 @@ def solve_scenario_c_portfolio(
         round_time_limit_seconds=c_round_time_limit_seconds,
     )
     candidate: Evaluation | None = None
-    if all((candidate_stage / name).is_file() for name in SUBMISSION_FILES):
+    candidate_prune: dict[str, object] | None = None
+    if all((candidate_raw_stage / name).is_file() for name in SUBMISSION_FILES):
+        prune_report = prune_submission(
+            instance,
+            candidate_raw_stage,
+            candidate_stage,
+            "C",
+            report_path=audit_output / "CANDIDATE_PRUNE.json",
+        )
+        candidate_prune = asdict(prune_report)
         candidate = evaluate_submission(instance, candidate_stage, "C")
 
     selected_name = "scenario_c_fallback"
@@ -112,9 +140,11 @@ def solve_scenario_c_portfolio(
         "selected_objective_score": final.objective_score,
         "selected_submission_hash": final.submission_hash,
         "reference_validator_confirmed": False,
+        "submission_files": list(SUBMISSION_FILES),
         "scenario_a_telemetry": asdict(a_telemetry),
         "scenario_c_telemetry": asdict(c_telemetry),
         "fallback_objective_score": fallback.objective_score,
+        "fallback_prune": asdict(fallback_prune),
         "candidate_objective_score": (
             candidate.objective_score if candidate is not None else None
         ),
@@ -124,8 +154,11 @@ def solve_scenario_c_portfolio(
         "candidate_hard_violations": (
             list(candidate.hard_violations) if candidate is not None else ["no candidate output"]
         ),
+        "candidate_prune": candidate_prune,
     }
-    (output / "PORTFOLIO.json").write_text(
+    (audit_output / "PORTFOLIO.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
+    if sorted(path.name for path in output.iterdir()) != sorted(SUBMISSION_FILES):
+        raise RuntimeError("portfolio submission directory contains files beyond the three CSVs")
     return report

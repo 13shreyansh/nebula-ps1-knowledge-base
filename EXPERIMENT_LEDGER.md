@@ -206,3 +206,56 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Alternative failure: forbidding every singleton closure-conflicting activity pair up front made A infeasible in 0.571 seconds. This is too conservative because legal possession-component merging is necessary; the option was removed from production code.
 - Integrity result: every failed portfolio exited nonzero, produced no selected final submission, and left the eight-worker incumbents unchanged.
 - Decision: retain adaptive `UNKNOWN` handling because it fixes premature abandonment, but do not claim deterministic transformed-instance robustness. Do not use the over-conservative formulation. Prioritise official semantic evidence and the working checked eight-worker portfolio over additional blind runtime spending.
+
+### E016: Random identifier-permutation metamorphic test
+
+- Timestamp: 2026-09-19 00:18:02 +08
+- Hypothesis: the protected scores and construction path do not depend on the lexical ordering of public line, station, contract, or activity identifiers.
+- Method: randomly permute each identifier namespace, derive every foreign key and location ID through the bijection, shuffle every CSV table, and run the unchanged solver without any original submission. This changes model variable/constraint order while preserving scheduling semantics.
+- Dataset hash: `faff596536fa26f8747056e7a3dfe27e352471a5f1c9dc7c2a72185ec068e794`
+- Scenario C portfolio: transformed A reached `32.2` in 118.813 seconds; hinted C reached `26.1` in 35.196 seconds; the candidate replaced the checked fallback. Final hash `3a0a52adf449939a0e08f23bb86cecba723c4548519829e1b63f37c6cdfcb1d8`.
+- Scenario B: no-hint search reached `30.0` in 109.001 seconds, with six ECLO rows, zero delay/excess, and hash `c3f24b727d20727775ab31655a8299e9623675888e2dcd766322aeb92bc4ef55`.
+- Verification: the primary checker reports zero implemented violations; the independent raw-CSV scorer exactly reproduces both objectives and components.
+- Interpretation: the eight-worker pipeline survives a stronger metamorphic test than row shuffling or order-preserving renaming. It does not prove performance on different topology, demand, capacity, or scale distributions.
+- Decision: keep random identifier permutation as a regression fixture generator and proceed to structural, not merely nominal, perturbations.
+
+### E017: Invalid-identifier checker hardening
+
+- Timestamp: 2026-09-19 00:18:02 +08
+- Falsification: evaluating an original-ID submission against a renamed instance correctly accumulated unknown-activity violations, but then the closure screen dereferenced an unknown ID and crashed.
+- Correction: pass only known activities, known locations, and access-backed occupancy rows into the closure screen after recording schema/domain violations.
+- Verification: a dedicated mutation regression now rejects an unknown activity without crashing; all 15 tests pass.
+- Decision: retain the filter as defensive validation. Malformed or foreign output must fail as evidence, not terminate the checker before producing diagnostics.
+
+### E018: Capacity-pressure and priority-landscape structural fixture
+
+- Timestamp: 2026-09-19 00:28:35 +08
+- Hypothesis: success extends beyond isomorphic identifier changes to a materially different capacity and objective landscape.
+- Method: derive a known-feasible fixture by reducing each location's capacity to the maximum distinct groups used there by the protected A oracle (minimum 1), then independently permute contract and activity priorities. This leaves topology/workload intact but changes 67 of 76 locations to capacity 1 and moves delay costs across activities. The oracle schedule remains feasible by construction.
+- Dataset hash: `40c206b401c78941a3fc4914d5acaa2dd97733a9bf29eefd6270db01ef71ae14`
+- Oracle check: the unchanged protected A schedule has zero implemented violations and now scores `949.2`, proving the altered instance is feasible before testing the solver.
+- Scenario A no hint: `OPTIMAL` at `867.3` after 177 solves/176 closure rounds in 140.817 seconds. Both scorers agree; 192 access rows, 928 occupancy rows, zero ECLO/excess, and zero implemented violations.
+- Scenario C clean portfolio: rebuilt A=`867.3` in 95.178 seconds, protected it as fallback, then reached `OPTIMAL` C=`29.1` in 12.396 seconds. C comprises `9.1` delay plus four ECLO rows, zero excess; 190 access rows and 920 occupancy rows. Final hash `5445e6b97f254c9c110b7078b9f49b4f69245d7cdc772daffc5117011e90ffe2`.
+- Scenario B no hint: `OPTIMAL` at `30.0` after 125 solves/124 closure rounds in 108.999 seconds, with six ECLO rows, zero delay/excess, and hash `ad9b55d483907a4b6eaef105f11eaa1313f0df2543926a15a91d8ae0f82d7a9a`.
+- Packaging verification: the selected C submission directory contains exactly `SCHEDULE_ACCESS.csv`, `SCHEDULE_OCCUPANCY.csv`, and `RESULTS.csv`; `PORTFOLIO.json` and all stage outputs are in the sibling audit directory.
+- Interpretation: the eight-worker pipeline handles a substantially tighter supply pattern and a different priority objective without an external schedule. This is stronger hidden-instance evidence, but still shares the original topology, workloads, dates, and predecessor graph.
+- Decision: retain the structural fixture generator and clean-output portfolio. Next change workload/date/predecessor structure or scale while maintaining an explicit feasible oracle.
+
+### E019: Demand and precedence mutation
+
+- Timestamp: 2026-09-19 00:38:42 +08
+- Method: starting from the oracle-feasible pressure fixture, reduce 16 activity workloads by one, advance 37 planned starts by up to two weeks, and add 10 acyclic predecessor edges only where the oracle has a strictly earlier predecessor completion. The unchanged A oracle remains feasible and scores `113.4`.
+- Dataset hash: `ab6f4710d65312ef3ffa9246a8372b15b5656457d065e8d3a56b7123a1e95043`
+- A no hint: `OPTIMAL` at the `0.0` floor in 84.294 seconds; 176 access rows, 854 occupancy rows, zero implemented violations, and both scorers agree.
+- B no hint: primary-score `OPTIMAL` at `0.0` in 82.899 seconds with zero ECLO/excess/delay and zero implemented violations, but the first safe incumbent contained 211 access rows.
+- C clean portfolio: reconstructed A=`0.0`; C also reached `0.0`; strict-improvement selection correctly retained the equal-score checked fallback. The independently checked final output has 176 access rows and exactly three CSV files.
+- Interpretation: the eight-worker pipeline survives material workload, release-date, and predecessor-graph changes. The zero floors make these feasibility/generalisation tests, not difficult objective benchmarks.
+
+### E020: Full-gate redundant-row pruning
+
+- Timestamp: 2026-09-19 00:38:42 +08
+- Defect: the safe-incumbent loop proves the primary score by searching strictly below it, so it can preserve the first safe primary optimum without completing the subordinate row-count objective. The B demand output had 211 rows for 176 required standard accesses.
+- Correction: a postprocessor tentatively removes one access and all matching occupancy, resequences the activity, recomputes contract results, and accepts the deletion only when the full checker preserves hard feasibility and does not worsen the official score. It repeats to a fixed point. This gate is necessary because deleting a bridge activity can split a co-sharing component and create a closure conflict.
+- Result: the B demand output pruned `211 → 176` rows, retained objective `0.0`, retained zero implemented violations, and both scorers agree. Final hash `963c637f30393ac8a5523ce4a6172ea9a7db27d79c7eb979ec084067c1624e36`.
+- Portfolio integration: both the C fallback and candidate are pruned before comparison; raw stages and prune reports remain in the audit directory. An integrated demand-fixture rerun retained 176-row C=`0.0`, exact-three-CSV output, and hash `0f9d89ef22ed478a7e38562c4f0864caba1a75c6bbd898f436cdf9645b65e431`.
+- Decision: describe solver `OPTIMAL` as primary-score optimal unless the subordinate objective is separately completed. Use checked pruning before packaging every answer key.

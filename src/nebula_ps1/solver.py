@@ -35,6 +35,8 @@ class SolveTelemetry:
     solve_rounds: int = 1
     maximum_round_time_seconds: float | None = None
     unknown_retries: int = 0
+    primary_score_proven_optimal: bool = False
+    tie_break_proven_optimal: bool = False
 
     def as_json(self) -> str:
         return json.dumps(asdict(self), indent=2, sort_keys=True)

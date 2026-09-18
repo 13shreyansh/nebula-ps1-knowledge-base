@@ -8,6 +8,7 @@ from .flexible_solver import solve_flexible_supply_relaxation
 from .independent_score import independently_score
 from .instance import load_instance
 from .portfolio import solve_scenario_c_portfolio
+from .prune import prune_submission
 from .solver import solve_scenario_a_relaxation
 from .submission import relabel_submission_scenario
 
@@ -60,6 +61,7 @@ def main() -> None:
     )
     portfolio_parser.add_argument("--data", required=True)
     portfolio_parser.add_argument("--output", required=True)
+    portfolio_parser.add_argument("--audit-output")
     portfolio_parser.add_argument("--a-time-limit", type=float, default=120.0)
     portfolio_parser.add_argument("--c-time-limit", type=float, default=120.0)
     portfolio_parser.add_argument("--workers", type=int, default=8)
@@ -81,6 +83,15 @@ def main() -> None:
     )
     audit_parser.add_argument("--data", required=True)
     audit_parser.add_argument("--submission", required=True)
+    prune_parser = subparsers.add_parser(
+        "prune-submission",
+        help="remove redundant access rows only through the full feasibility/score gate",
+    )
+    prune_parser.add_argument("--data", required=True)
+    prune_parser.add_argument("--source", required=True)
+    prune_parser.add_argument("--output", required=True)
+    prune_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
+    prune_parser.add_argument("--report")
     args = parser.parse_args()
 
     if args.command == "inspect":
@@ -93,6 +104,7 @@ def main() -> None:
         telemetry = solve_scenario_a_relaxation(
             instance,
             args.output,
+            audit_output_dir=args.audit_output,
             time_limit_seconds=args.time_limit,
             workers=args.workers,
             seed=args.seed,
@@ -146,6 +158,17 @@ def main() -> None:
         return
     if args.command == "audit-score":
         print(independently_score(args.data, args.submission).as_json())
+        return
+    if args.command == "prune-submission":
+        instance = load_instance(args.data)
+        report = prune_submission(
+            instance,
+            args.source,
+            args.output,
+            args.scenario,
+            report_path=args.report,
+        )
+        print(report.as_json())
 
 
 if __name__ == "__main__":

@@ -315,7 +315,15 @@ def evaluate_submission(
             if weeks and max(weeks) - min(weeks) > 1:
                 violations.append(f"Scenario C {line}: ECLO weeks do not fit a two-week window")
 
-    closure_conflicts = screen_closures(instance, access, occupancy)
+    closure_access = [row for row in access if row.activity_id in instance.activities]
+    closure_occupancy = [
+        row
+        for row in occupancy
+        if row.activity_id in instance.activities
+        and row.location_id in instance.locations
+        and (row.activity_id, row.week) in access_keys
+    ]
+    closure_conflicts = screen_closures(instance, closure_access, closure_occupancy)
     violations.extend(conflict.describe() for conflict in closure_conflicts)
 
     contract_completion: dict[str, date] = {}

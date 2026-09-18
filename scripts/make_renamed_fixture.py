@@ -36,6 +36,11 @@ def main() -> None:
     parser.add_argument("--source", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--seed", type=int, default=20260918)
+    parser.add_argument(
+        "--permute-identifiers",
+        action="store_true",
+        help="randomly permute identifier labels instead of preserving lexical order",
+    )
     args = parser.parse_args()
     source = Path(args.source)
     output = Path(args.output)
@@ -48,19 +53,34 @@ def main() -> None:
     project_rows = tables["07_PROJECT_DETAILS.csv"][1]
     activity_rows = tables["08_ACTIVITY_DETAILS.csv"][1]
 
-    line_map = {
-        row["line_code"]: f"L{index:02d}" for index, row in enumerate(line_rows, 1)
-    }
+    def identifier_map(keys: list[str], labels: list[str], namespace: str) -> dict[str, str]:
+        ordered_keys = sorted(keys)
+        if args.permute_identifiers:
+            random.Random(f"{args.seed}:{namespace}:identifiers").shuffle(labels)
+        return dict(zip(ordered_keys, labels, strict=True))
+
+    line_codes = sorted({row["line_code"] for row in line_rows})
+    line_map = identifier_map(
+        line_codes, [f"L{index:02d}" for index in range(1, len(line_codes) + 1)], "line"
+    )
     station_ids = sorted({row["station_id"] for row in station_rows})
-    station_map = {station_id: f"N{index:03d}" for index, station_id in enumerate(station_ids, 1)}
-    contract_map = {
-        row["contract_number"]: f"K{index:03d}"
-        for index, row in enumerate(project_rows, 501)
-    }
-    activity_map = {
-        row["activity_id"]: f"Z{index:03d}"
-        for index, row in enumerate(activity_rows, 501)
-    }
+    station_map = identifier_map(
+        station_ids,
+        [f"N{index:03d}" for index in range(1, len(station_ids) + 1)],
+        "station",
+    )
+    contract_ids = sorted(row["contract_number"] for row in project_rows)
+    contract_map = identifier_map(
+        contract_ids,
+        [f"K{index:03d}" for index in range(501, 501 + len(contract_ids))],
+        "contract",
+    )
+    activity_ids = sorted(row["activity_id"] for row in activity_rows)
+    activity_map = identifier_map(
+        activity_ids,
+        [f"Z{index:03d}" for index in range(501, 501 + len(activity_ids))],
+        "activity",
+    )
     sector_map: dict[str, str] = {}
     for row in sector_rows:
         sector_map[row["sector_id"]] = (
