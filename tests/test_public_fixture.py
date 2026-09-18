@@ -530,6 +530,48 @@ class PublicFixtureTests(unittest.TestCase):
             hashes.add(evaluation.submission_hash)
         self.assertEqual(len(hashes), 5)
 
+    def test_post_contract_precedence_holdout_is_frozen_before_repair(self) -> None:
+        data = ROOT / "fixtures" / "independent_post_contract_precedence_v1"
+        oracle = ROOT / "fixtures" / "independent_post_contract_precedence_v1_oracle"
+        incumbent = ROOT / "fixtures/independent_post_contract_precedence_v1_incumbent"
+        instance = load_instance(data)
+        self.assertEqual(
+            instance.dataset_hash,
+            "ab66356785225b6b5ff03d5d9495c125ae8bc88c5067cfc774a039f3bc697996",
+        )
+        oracle_evaluation = evaluate_submission(instance, oracle, "C")
+        incumbent_evaluation = evaluate_submission(instance, incumbent, "C")
+        self.assertEqual(oracle_evaluation.hard_violations, ())
+        self.assertEqual(incumbent_evaluation.hard_violations, ())
+        self.assertEqual(oracle_evaluation.objective_score, 0.0)
+        self.assertEqual(incumbent_evaluation.objective_score, 10.0)
+        self.assertEqual(independently_score(data, oracle).objective_score, 0.0)
+        self.assertEqual(independently_score(data, incumbent).objective_score, 10.0)
+        access, occupancy, _ = load_submission(incumbent)
+        self.assertEqual(screen_closures(instance, access, occupancy), ())
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertEqual(
+            _scenario_b_cost_contributing_activities(
+                instance,
+                incumbent,
+                expand_footprints=True,
+                expand_contracts=True,
+                expand_precedence=True,
+                revisit_precedence_after_footprints=True,
+                revisit_contracts_after_precedence=True,
+                include_delays=True,
+            ),
+            ["COMP", "DIRECT", "FOLLOW", "PEER"],
+        )
+
     def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_holdout_v1"
         instance = load_instance(data)

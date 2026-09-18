@@ -912,3 +912,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Diversity: all five final submission hashes differ. This rules out copied output as the explanation for score agreement, though it does not establish hidden-distribution generalization.
 - Proof boundary: every run ended `FEASIBLE_SAFE_INCUMBENT` without a bound. The C=`31.0` optimality claim continues to rely on the independent counting lower bound, not solver status.
 - Regression: the matrix is recomputed by a 65th test.
+
+### E095: Post-contract precedence holdout is frozen before repair
+
+- Timestamp: 2026-09-19 07:32:12 +08
+- Fixture: `independent_post_contract_precedence_v1` adds cross-contract `PREPEER` as the predecessor of final contract peer `PEER`. The incumbent fixes `PREPEER`/`PEER` in weeks 5/6; the zero-score oracle moves them to weeks 3/4 so `COMP`/`FOLLOW` can use weeks 5/6 and `DIRECT` can avoid ECLO.
+- Checked artifacts: incumbent C=`10.0`, oracle C=`0.0`, both dual-scored and clean under standard and strict closures. Dataset hash: `ab66356785225b6b5ff03d5d9495c125ae8bc88c5067cfc774a039f3bc697996`.
+- Pre-exposure hypothesis: the expanded selector returns `COMP`, `DIRECT`, `FOLLOW`, and `PEER` but omits `PREPEER`, because the last operation adds contract peers after precedence expansion. The expanded tier should therefore remain conditionally stuck at C=`10.0`.
+- Scope check before change: one final precedence pass adds zero activities to the public, irregular, coupled, and cross-module retained neighborhoods. Generator, artifacts, hash, and selector assertion are committed before the first repair run.

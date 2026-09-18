@@ -902,3 +902,14 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Corrective action: expose narrow and expanded repair fields at the top level on the A-failure wrapper while retaining the complete nested report. Add a regression for normalized keys; do not rerun or alter the validated score-31 artifact.
 - Confidence: very high in official incumbents; high in the end-to-end score and portfolio behavior; high in the reporting defect; medium in hidden runtime transfer.
 - Immediate next action: normalize the direct-C wrapper report, run all regressions, preserve the production audit, and commit.
+
+## 2026-09-19 07:32:12 +08
+
+- Interval: 7 minutes 32 seconds since the previous inspection; triggered early after the five-seed matrix and next dependency holdout were frozen.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- Reliability evidence: seeds 1–5 all recovered C=`31.0` in the narrow 30-second tier and retained it in the expanded ten-second tier. All outputs are dual-scored and standard/strict clean; five distinct hashes show schedule diversity. None has a solver proof, so the analytical lower bound remains essential.
+- New falsification target: the final contract peer can itself have a frozen cross-contract predecessor. The precommitted five-activity holdout has a checked C=`10.0` incumbent, checked C=`0.0` oracle, and current expanded selector that omits only `PREPEER`.
+- Anti-overfitting check: the proposed final precedence pass adds zero activities on all four retained public/independent regimes. That lowers immediate runtime risk but does not prove hidden safety or justify further recursive closure.
+- Integrity controls: the new fixture and exact omission are committed before solver exposure. The authored chain tests a general alternating dependency boundary, not a public identifier or score-specific rule.
+- Confidence: very high in official incumbents; high in five-seed same-regime reliability and fixture validity; no confidence yet in the new repair outcome; medium in hidden transfer.
+- Immediate next action: commit the holdout, run the unchanged expanded repair, preserve its result, then test one final targeted precedence pass without introducing fixed-point recursion.
