@@ -11,6 +11,7 @@ from nebula_ps1.evaluate import evaluate_submission, load_submission
 from nebula_ps1.independent_score import independently_score
 from nebula_ps1.instance import load_instance
 from nebula_ps1.staged import solve_staged_scenario
+from nebula_ps1.staged_c import solve_staged_c_portfolio
 
 
 def _write_summary(path: Path, payload: dict[str, object]) -> None:
@@ -37,6 +38,11 @@ def main() -> None:
     parser.add_argument("--heuristic-attempts", type=int, default=1)
     parser.add_argument("--fallback-attempts", type=int, default=1)
     parser.add_argument("--closure-rounds", type=int, default=500)
+    parser.add_argument(
+        "--production-c",
+        action="store_true",
+        help="route C through the guarded A-as-C production controller",
+    )
     args = parser.parse_args()
 
     output = Path(args.output)
@@ -59,6 +65,7 @@ def main() -> None:
             "fallback_attempts": args.fallback_attempts,
             "closure_round_limit": args.closure_rounds,
             "forbid_buffer_overlap": False,
+            "production_c": args.production_c,
         },
         "requested_scenarios": args.scenarios,
         "requested_seeds": args.seeds,
@@ -81,22 +88,42 @@ def main() -> None:
             records.append(record)
             _write_summary(summary_path, summary)
             try:
-                report = solve_staged_scenario(
-                    instance,
-                    submission,
-                    scenario,
-                    audit_output_dir=audit,
-                    heuristic_time_limit_seconds=args.heuristic_time_limit,
-                    local_repair_time_limit_seconds=args.local_repair_time_limit,
-                    fallback_time_limit_seconds=args.fallback_time_limit,
-                    verification_time_limit_seconds=args.verification_time_limit,
-                    workers=args.workers,
-                    seed=seed,
-                    heuristic_attempts=args.heuristic_attempts,
-                    fallback_attempts=args.fallback_attempts,
-                    closure_round_limit=args.closure_rounds,
-                    forbid_buffer_overlap=False,
-                )
+                if scenario == "C" and args.production_c:
+                    report = solve_staged_c_portfolio(
+                        instance,
+                        submission,
+                        audit_output_dir=audit,
+                        a_heuristic_time_limit_seconds=args.heuristic_time_limit,
+                        a_local_repair_time_limit_seconds=args.local_repair_time_limit,
+                        a_fallback_time_limit_seconds=args.fallback_time_limit,
+                        a_verification_time_limit_seconds=args.verification_time_limit,
+                        c_heuristic_time_limit_seconds=args.heuristic_time_limit,
+                        c_verification_time_limit_seconds=args.verification_time_limit,
+                        workers=args.workers,
+                        seed=seed,
+                        a_heuristic_attempts=args.heuristic_attempts,
+                        a_fallback_attempts=args.fallback_attempts,
+                        c_heuristic_attempts=args.heuristic_attempts,
+                        closure_round_limit=args.closure_rounds,
+                        forbid_buffer_overlap=False,
+                    )
+                else:
+                    report = solve_staged_scenario(
+                        instance,
+                        submission,
+                        scenario,
+                        audit_output_dir=audit,
+                        heuristic_time_limit_seconds=args.heuristic_time_limit,
+                        local_repair_time_limit_seconds=args.local_repair_time_limit,
+                        fallback_time_limit_seconds=args.fallback_time_limit,
+                        verification_time_limit_seconds=args.verification_time_limit,
+                        workers=args.workers,
+                        seed=seed,
+                        heuristic_attempts=args.heuristic_attempts,
+                        fallback_attempts=args.fallback_attempts,
+                        closure_round_limit=args.closure_rounds,
+                        forbid_buffer_overlap=False,
+                    )
                 evaluation = evaluate_submission(instance, submission, scenario)
                 independent = independently_score(args.data, submission)
                 access, occupancy, _ = load_submission(submission)

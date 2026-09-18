@@ -96,6 +96,7 @@ def solve_staged_scenario(
             closure_round_limit=closure_round_limit,
             forbid_buffer_overlap=forbid_buffer_overlap,
             separator_mode="direct_heuristic",
+            use_structural_hints=attempt == 0,
         )
         attempt_telemetry.append(asdict(attempt_result))
         if (

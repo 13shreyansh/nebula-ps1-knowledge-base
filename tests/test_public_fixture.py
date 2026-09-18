@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 15)
+        self.assertEqual(len(matrix["cases"]), 21)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -95,6 +95,14 @@ class PublicFixtureTests(unittest.TestCase):
                     / "independent_scaled_m20_seed_matrix5_w1"
                     / f"{row['scenario'].lower()}_seed_1"
                 )
+            elif row["case"].startswith("independent_dense_"):
+                if row["case"].startswith("independent_dense_holdout_"):
+                    data = ROOT / "fixtures" / "independent_dense_holdout_v1"
+                    run_root = "independent_dense_holdout_v1_production_matrix_w1"
+                else:
+                    data = ROOT / "fixtures" / "independent_dense_v1"
+                    run_root = "independent_dense_v1_structural_matrix_w1"
+                submission = ROOT / "runs" / run_root / f"{row['scenario'].lower()}_seed_1"
             else:
                 self.assertTrue(row["case"].startswith("independent_"))
                 data = ROOT / "fixtures" / "independent_synthetic_v1"
@@ -126,6 +134,67 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(evaluation.hard_violations, ())
         self.assertAlmostEqual(evaluation.objective_score, 140.0)
         self.assertAlmostEqual(independent.objective_score, 140.0)
+
+    def test_dense_independent_b_constructs_zero_without_oracle_hint(self) -> None:
+        data = ROOT / "fixtures" / "independent_dense_v1"
+        instance = load_instance(data)
+        self.assertEqual(len(instance.activities), 84)
+        self.assertTrue(all(not activity_id.startswith("A") for activity_id in instance.activities))
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            report = solve_staged_scenario(
+                instance,
+                root / "submission",
+                "B",
+                audit_output_dir=root / "audit",
+                heuristic_time_limit_seconds=2.0,
+                local_repair_time_limit_seconds=1.0,
+                fallback_time_limit_seconds=3.0,
+                verification_time_limit_seconds=2.0,
+                workers=1,
+                seed=1,
+                heuristic_attempts=1,
+                fallback_attempts=1,
+            )
+            evaluation = evaluate_submission(instance, root / "submission", "B")
+            independent = independently_score(data, root / "submission")
+            self.assertEqual(report["selected_stage"], "heuristic_incumbent")
+            self.assertEqual(evaluation.hard_violations, ())
+            self.assertEqual(evaluation.objective_score, 0.0)
+            self.assertEqual(independent.objective_score, 0.0)
+
+    def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
+        data = ROOT / "fixtures" / "independent_dense_holdout_v1"
+        instance = load_instance(data)
+        oracle = ROOT / "fixtures" / "independent_dense_holdout_v1_oracle"
+        oracle_evaluation = evaluate_submission(instance, oracle, "A")
+        self.assertEqual(len(instance.activities), 106)
+        self.assertEqual(oracle_evaluation.hard_violations, ())
+        self.assertEqual(oracle_evaluation.objective_score, 0.0)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            report = solve_staged_c_portfolio(
+                instance,
+                root / "submission",
+                audit_output_dir=root / "audit",
+                a_heuristic_time_limit_seconds=2.0,
+                a_local_repair_time_limit_seconds=1.0,
+                a_fallback_time_limit_seconds=3.0,
+                a_verification_time_limit_seconds=2.0,
+                c_heuristic_time_limit_seconds=2.0,
+                c_verification_time_limit_seconds=2.0,
+                workers=1,
+                seed=1,
+                a_heuristic_attempts=1,
+                a_fallback_attempts=1,
+                c_heuristic_attempts=1,
+            )
+            evaluation = evaluate_submission(instance, root / "submission", "C")
+            independent = independently_score(data, root / "submission")
+            self.assertEqual(report["selected_stage"], "scenario_c_fallback")
+            self.assertEqual(evaluation.hard_violations, ())
+            self.assertEqual(evaluation.objective_score, 0.0)
+            self.assertEqual(independent.objective_score, 0.0)
 
     def test_hard_deadline_uses_last_completed_week_not_containing_week(self) -> None:
         midweek_deadline = date(2027, 1, 13)
@@ -1069,6 +1138,9 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(solve.call_count, 5)
         self.assertEqual(report["heuristic_selected_attempt"], 2)
         self.assertEqual(len(report["heuristic_attempts"]), 3)
+        self.assertTrue(solve.call_args_list[0].kwargs["use_structural_hints"])
+        self.assertFalse(solve.call_args_list[1].kwargs["use_structural_hints"])
+        self.assertFalse(solve.call_args_list[2].kwargs["use_structural_hints"])
 
     def test_staged_b_runs_guarded_cost_repair_on_derived_contributors(self) -> None:
         def fake_solve(instance, output_dir, scenario, **kwargs):

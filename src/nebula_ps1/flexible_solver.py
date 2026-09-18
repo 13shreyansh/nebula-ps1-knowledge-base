@@ -32,6 +32,7 @@ def solve_flexible_supply_relaxation(
     separator_mode: str = "bridge_safe",
     max_deterministic_time_per_solve: float | None = None,
     interleave_search: bool = False,
+    use_structural_hints: bool = True,
 ) -> SolveTelemetry:
     """Solve a scenario with iterative cuts from the differential-tested closure screen.
 
@@ -150,6 +151,43 @@ def solve_flexible_supply_relaxation(
     activities_by_contract: dict[str, list[str]] = defaultdict(list)
     for activity_id, activity in sorted(instance.activities.items()):
         activities_by_contract[activity.contract_number].append(activity_id)
+
+    # Contracts containing one otherwise interchangeable activity can be
+    # relabelled by start week without changing any feasible schedule or score.
+    # This removes large permutation symmetries in dense, repeated work books.
+    predecessors = {
+        activity.predecessor_activity_id
+        for activity in instance.activities.values()
+        if activity.predecessor_activity_id
+    }
+    interchangeable: dict[tuple[object, ...], list[str]] = defaultdict(list)
+    for activity_id, activity in sorted(instance.activities.items()):
+        project = instance.projects[activity.contract_number]
+        if (
+            len(activities_by_contract[activity.contract_number]) != 1
+            or activity.predecessor_activity_id
+            or activity_id in predecessors
+        ):
+            continue
+        signature = (
+            activity.activity_type,
+            footprints[activity_id],
+            activity.total_accesses,
+            activity.planned_start_date,
+            activity.activity_priority,
+            project.nature_of_activity,
+            project.contract_priority,
+            project.contract_completion_date,
+            project.planned_completion_date,
+            project.number_of_workfronts,
+            project.access_type,
+            project.number_of_maximum_access_per_week,
+        )
+        interchangeable[signature].append(activity_id)
+    for activity_ids in interchangeable.values():
+        for first, second in zip(activity_ids, activity_ids[1:]):
+            model.add(start[first] <= start[second])
+
     for contract_number, activity_ids in sorted(activities_by_contract.items()):
         activity_ids.sort()
         project = instance.projects[contract_number]
@@ -200,19 +238,30 @@ def solve_flexible_supply_relaxation(
             for location_id in footprints[activity_id]:
                 candidates_by_location_week[(location_id, week)].append(activity_id)
 
+    def group_limit(location_id: str, week: int) -> int:
+        candidates = len(candidates_by_location_week[(location_id, week)])
+        supply = instance.locations[location_id].supply_capacity
+        if scenario == "B":
+            if separator_mode == "direct_heuristic":
+                # B permits arbitrary paid excess, but exposing one symmetric
+                # group label per candidate can dominate candidate generation.
+                # Start near nominal supply; the bridge-safe fallback remains
+                # unrestricted, so this cannot certify infeasibility or remove
+                # a protected incumbent.
+                return min(candidates, supply + 1)
+            return candidates
+        if scenario == "C":
+            return min(candidates, supply + 1)
+        return min(candidates, supply)
+
     member: dict[tuple[str, int, str, int], cp_model.IntVar] = {}
     used: dict[tuple[str, int, int], cp_model.IntVar] = {}
     excess_terms: list[cp_model.IntVar] = []
     for (location_id, week), activity_ids in sorted(candidates_by_location_week.items()):
         activity_ids.sort()
         supply = instance.locations[location_id].supply_capacity
-        if scenario == "B":
-            group_limit = len(activity_ids)
-        elif scenario == "C":
-            group_limit = min(len(activity_ids), supply + 1)
-        else:
-            group_limit = min(len(activity_ids), supply)
-        for group in range(group_limit):
+        local_group_limit = group_limit(location_id, week)
+        for group in range(local_group_limit):
             used[(location_id, week, group)] = model.new_bool_var(
                 f"used[{location_id},{week},{group}]"
             )
@@ -220,7 +269,7 @@ def solve_flexible_supply_relaxation(
                 excess_terms.append(used[(location_id, week, group)])
         for activity_id in activity_ids:
             group_vars = []
-            for group in range(group_limit):
+            for group in range(local_group_limit):
                 variable = model.new_bool_var(
                     f"member[{activity_id},{week},{location_id},{group}]"
                 )
@@ -228,7 +277,7 @@ def solve_flexible_supply_relaxation(
                 group_vars.append(variable)
             model.add(sum(group_vars) == access[(activity_id, week)])
 
-        for group in range(group_limit):
+        for group in range(local_group_limit):
             variables = [
                 member[(activity_id, week, location_id, group)]
                 for activity_id in activity_ids
@@ -262,8 +311,293 @@ def solve_flexible_supply_relaxation(
             model.add(pc_sum <= 1)
             model.add(c_sum <= 4 - pc_sum)
             model.add(pc_sum + c_sum <= 4 * (1 - pm_sum))
-        for group in range(group_limit - 1):
+        for group in range(local_group_limit - 1):
             model.add(used[(location_id, week, group + 1)] <= used[(location_id, week, group)])
+
+    structural_hints_used = (
+        use_structural_hints
+        and sample_hint_dir is None
+        and separator_mode == "direct_heuristic"
+    )
+    if structural_hints_used:
+        # Supply a deterministic, feasibility-oriented packing hint for
+        # interchangeable C/PC work on identical footprints. It is never a
+        # constraint: CP-SAT may discard any part that clashes with closures,
+        # predecessors, or a better objective. The bridge-safe phase still
+        # checks every returned row independently.
+        successor_ids = {
+            activity.predecessor_activity_id
+            for activity in instance.activities.values()
+            if activity.predecessor_activity_id
+        }
+        by_footprint: dict[tuple[str, ...], list[str]] = defaultdict(list)
+        for activity_id, activity in sorted(instance.activities.items()):
+            project = instance.projects[activity.contract_number]
+            if (
+                project.access_type not in {"C", "PC"}
+                or len(activities_by_contract[activity.contract_number]) != 1
+                or activity.predecessor_activity_id
+                or activity_id in successor_ids
+            ):
+                continue
+            by_footprint[footprints[activity_id]].append(activity_id)
+
+        hinted_weeks: dict[str, list[int]] = {}
+        provisional_access: list[AccessRow] = []
+        provisional_occupancy: list[OccupancyRow] = []
+        occupied_groups: dict[tuple[int, str], set[int]] = defaultdict(set)
+
+        for footprint, activity_ids in sorted(by_footprint.items()):
+            pc_ids = [
+                activity_id
+                for activity_id in activity_ids
+                if instance.projects[
+                    instance.activities[activity_id].contract_number
+                ].access_type
+                == "PC"
+            ]
+            c_ids = [
+                activity_id
+                for activity_id in activity_ids
+                if instance.projects[
+                    instance.activities[activity_id].contract_number
+                ].access_type
+                == "C"
+            ]
+            batches: list[list[str]] = []
+            max_occurrences = max(
+                (instance.activities[activity_id].total_accesses for activity_id in activity_ids),
+                default=0,
+            )
+            for occurrence in range(max_occurrences):
+                pc_round = [
+                    activity_id
+                    for activity_id in pc_ids
+                    if instance.activities[activity_id].total_accesses > occurrence
+                ]
+                c_round = [
+                    activity_id
+                    for activity_id in c_ids
+                    if instance.activities[activity_id].total_accesses > occurrence
+                ]
+                c_index = 0
+                for pc_id in pc_round:
+                    batch = [pc_id, *c_round[c_index : c_index + 3]]
+                    c_index += min(3, len(c_round) - c_index)
+                    batches.append(batch)
+                while c_index < len(c_round):
+                    batches.append(c_round[c_index : c_index + 4])
+                    c_index += 4
+
+            preferred: dict[str, list[tuple[int, int]]] = defaultdict(list)
+            batches_by_week: dict[int, int] = defaultdict(int)
+            packing_failed = False
+            preferred_supply = min(
+                instance.locations[location_id].supply_capacity
+                for location_id in footprint
+            )
+            for batch in batches:
+                selected_week = next(
+                    (
+                        week
+                        for week in range(1, horizon + 1)
+                        if batches_by_week[week] < preferred_supply
+                        and all(week in eligible[activity_id] for activity_id in batch)
+                        and all(
+                            week not in {value[0] for value in preferred[activity_id]}
+                            for activity_id in batch
+                        )
+                    ),
+                    None,
+                )
+                if selected_week is None:
+                    packing_failed = True
+                    break
+                slot = batches_by_week[selected_week]
+                batches_by_week[selected_week] += 1
+                for activity_id in batch:
+                    preferred[activity_id].append((selected_week, slot))
+            if packing_failed:
+                continue
+
+            for activity_id in activity_ids:
+                selected = dict(preferred[activity_id])
+                hinted_weeks[activity_id] = sorted(selected)
+                for sequence, (week, slot) in enumerate(sorted(selected.items()), start=1):
+                    provisional_access.append(
+                        AccessRow(activity_id, sequence, week, 0, 1)
+                    )
+                    for location_id in footprint:
+                        provisional_occupancy.append(
+                            OccupancyRow(
+                                activity_id,
+                                week,
+                                location_id,
+                                f"g{slot + 1}",
+                            )
+                        )
+                        occupied_groups[(week, location_id)].add(slot)
+                project = instance.projects[instance.activities[activity_id].contract_number]
+                for week in eligible[activity_id]:
+                    is_selected = int(week in selected)
+                    model.add_hint(access[(activity_id, week)], is_selected)
+                    model.add_hint(eclo[(activity_id, week)], 0)
+                    for access_night in range(
+                        1, project.number_of_maximum_access_per_week + 1
+                    ):
+                        model.add_hint(
+                            night[(activity_id, week, access_night)],
+                            int(is_selected and access_night == 1),
+                        )
+                    for location_id in footprint:
+                        for group in range(group_limit(location_id, week)):
+                            model.add_hint(
+                                member[(activity_id, week, location_id, group)],
+                                int(is_selected and group == selected.get(week)),
+                            )
+
+        successors_by_activity: dict[str, list[str]] = defaultdict(list)
+        for successor_id, successor in instance.activities.items():
+            if successor.predecessor_activity_id:
+                successors_by_activity[successor.predecessor_activity_id].append(
+                    successor_id
+                )
+        contract_week_activity_count: dict[tuple[str, int], int] = defaultdict(int)
+        for row in provisional_access:
+            contract = instance.activities[row.activity_id].contract_number
+            contract_week_activity_count[(contract, row.week)] += 1
+        pending = {
+            activity_id
+            for activity_id, activity in instance.activities.items()
+            if activity_id not in hinted_weeks
+        }
+        while pending:
+            ready = sorted(
+                activity_id
+                for activity_id in pending
+                if all(
+                    successor_id in hinted_weeks
+                    for successor_id in successors_by_activity[activity_id]
+                )
+            )
+            if not ready:
+                break
+            activity_id = ready[0]
+            activity = instance.activities[activity_id]
+            project = instance.projects[activity.contract_number]
+            latest = min(
+                max(eligible[activity_id]),
+                max(
+                    min(eligible[activity_id]),
+                    instance.last_week_completing_by(
+                        project.planned_completion_date
+                    ),
+                ),
+            )
+            if successors_by_activity[activity_id]:
+                latest = min(
+                    latest,
+                    min(
+                        min(hinted_weeks[successor_id]) - 1
+                        for successor_id in successors_by_activity[activity_id]
+                    ),
+                )
+            selected_weeks: list[int] = []
+            selected_slots: dict[tuple[int, str], int] = {}
+            activity_access: list[AccessRow] = []
+            activity_occupancy: list[OccupancyRow] = []
+            for sequence in range(1, activity.total_accesses + 1):
+                chosen: tuple[int, dict[str, int], list[OccupancyRow]] | None = None
+                for week in reversed(list(eligible[activity_id])):
+                    if week > latest or week in selected_weeks:
+                        continue
+                    if (
+                        contract_week_activity_count[
+                            (activity.contract_number, week)
+                        ]
+                        >= project.number_of_workfronts
+                    ):
+                        continue
+                    slot_by_location: dict[str, int] = {}
+                    for location_id in footprints[activity_id]:
+                        supply = instance.locations[location_id].supply_capacity
+                        slot = next(
+                            (
+                                group
+                                for group in range(supply)
+                                if group
+                                not in occupied_groups[(week, location_id)]
+                            ),
+                            None,
+                        )
+                        if slot is None:
+                            break
+                        slot_by_location[location_id] = slot
+                    if len(slot_by_location) != len(footprints[activity_id]):
+                        continue
+                    candidate_access = AccessRow(activity_id, sequence, week, 0, 1)
+                    candidate_occupancy = [
+                        OccupancyRow(
+                            activity_id,
+                            week,
+                            location_id,
+                            f"g{slot + 1}",
+                        )
+                        for location_id, slot in sorted(slot_by_location.items())
+                    ]
+                    if screen_closures(
+                        instance,
+                        [*provisional_access, *activity_access, candidate_access],
+                        [
+                            *provisional_occupancy,
+                            *activity_occupancy,
+                            *candidate_occupancy,
+                        ],
+                        forbid_buffer_overlap=forbid_buffer_overlap,
+                    ):
+                        continue
+                    chosen = (week, slot_by_location, candidate_occupancy)
+                    break
+                if chosen is None:
+                    break
+                week, slot_by_location, candidate_occupancy = chosen
+                selected_weeks.append(week)
+                activity_access.append(
+                    AccessRow(activity_id, sequence, week, 0, 1)
+                )
+                activity_occupancy.extend(candidate_occupancy)
+                for location_id, slot in slot_by_location.items():
+                    selected_slots[(week, location_id)] = slot
+            if len(selected_weeks) != activity.total_accesses:
+                pending.remove(activity_id)
+                continue
+
+            hinted_weeks[activity_id] = sorted(selected_weeks)
+            provisional_access.extend(activity_access)
+            provisional_occupancy.extend(activity_occupancy)
+            for row in activity_access:
+                contract_week_activity_count[(activity.contract_number, row.week)] += 1
+            for (week, location_id), slot in selected_slots.items():
+                occupied_groups[(week, location_id)].add(slot)
+            for week in eligible[activity_id]:
+                is_selected = int(week in selected_weeks)
+                model.add_hint(access[(activity_id, week)], is_selected)
+                model.add_hint(eclo[(activity_id, week)], 0)
+                for access_night in range(
+                    1, project.number_of_maximum_access_per_week + 1
+                ):
+                    model.add_hint(
+                        night[(activity_id, week, access_night)],
+                        int(is_selected and access_night == 1),
+                    )
+                for location_id in footprints[activity_id]:
+                    selected_slot = selected_slots.get((week, location_id))
+                    for group in range(group_limit(location_id, week)):
+                        model.add_hint(
+                            member[(activity_id, week, location_id, group)],
+                            int(is_selected and group == selected_slot),
+                        )
+            pending.remove(activity_id)
 
     primary_terms: list[cp_model.LinearExpr] = []
     if scenario in {"A", "C"}:
@@ -315,15 +649,6 @@ def solve_flexible_supply_relaxation(
     max_rows = len(access)
     tie_scale = max_rows + 1
     model.minimize(primary_score * tie_scale + sum(access.values()))
-
-    def group_limit(location_id: str, week: int) -> int:
-        candidates = len(candidates_by_location_week[(location_id, week)])
-        if scenario == "B":
-            return candidates
-        supply = instance.locations[location_id].supply_capacity
-        if scenario == "C":
-            return min(candidates, supply + 1)
-        return min(candidates, supply)
 
     def extract_rows(
         solver: cp_model.CpSolver,
@@ -691,6 +1016,7 @@ def solve_flexible_supply_relaxation(
         tie_break_proven_optimal=safe_tie_break_proven,
         max_deterministic_time_per_solve=max_deterministic_time_per_solve,
         interleave_search=interleave_search,
+        structural_hints_used=structural_hints_used,
     )
     (output_root / "TELEMETRY.json").write_text(telemetry.as_json() + "\n", encoding="utf-8")
     return telemetry

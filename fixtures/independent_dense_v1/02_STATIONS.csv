@@ -1,0 +1,13 @@
+station_id,line_code,seq,is_interchange
+IX1,LDX,1,1
+IX2,LDX,2,1
+NX3,LDX,3,0
+NX4,LDX,4,0
+NX5,LDX,5,0
+NX6,LDX,6,0
+IX1,LDY,1,1
+IX2,LDY,2,1
+SY3,LDY,3,0
+SY4,LDY,4,0
+SY5,LDY,5,0
+SY6,LDY,6,0

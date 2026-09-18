@@ -1,0 +1,35 @@
+{
+  "data": "fixtures/independent_dense_v1",
+  "dataset_hash": "dbd77d40ece7bcecf730ec7bdc68239485d230ee523a571928e623fcc5f1c823",
+  "failures": 1,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "B"
+  ],
+  "requested_seeds": [
+    1
+  ],
+  "runs": [
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "B",
+      "seed": 1,
+      "status": "FAILURE",
+      "wall_seconds": 6.236387750002905
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 0.0,
+  "successes": 0
+}

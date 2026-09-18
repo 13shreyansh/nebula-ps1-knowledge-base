@@ -27,6 +27,12 @@ CASES = (
     ("independent_scaled_m20_A", "fixtures/independent_scaled_m20", "runs/independent_scaled_m20_seed_matrix5_w1/a_seed_1", "A", "runs/independent_scaled_m20_seed_matrix5_w1/a_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_scaled_m20_B", "fixtures/independent_scaled_m20", "runs/independent_scaled_m20_seed_matrix5_w1/b_seed_1", "B", "runs/independent_scaled_m20_seed_matrix5_w1/b_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_scaled_m20_C", "fixtures/independent_scaled_m20", "runs/independent_scaled_m20_seed_matrix5_w1/c_seed_1", "C", "runs/independent_scaled_m20_seed_matrix5_w1/c_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_dense_A", "fixtures/independent_dense_v1", "runs/independent_dense_v1_structural_matrix_w1/a_seed_1", "A", "runs/independent_dense_v1_structural_matrix_w1/a_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_dense_B", "fixtures/independent_dense_v1", "runs/independent_dense_v1_structural_matrix_w1/b_seed_1", "B", "runs/independent_dense_v1_structural_matrix_w1/b_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_dense_C", "fixtures/independent_dense_v1", "runs/independent_dense_v1_structural_matrix_w1/c_seed_1", "C", "runs/independent_dense_v1_structural_matrix_w1/c_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_dense_holdout_A", "fixtures/independent_dense_holdout_v1", "runs/independent_dense_holdout_v1_production_matrix_w1/a_seed_1", "A", "runs/independent_dense_holdout_v1_production_matrix_w1/a_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_dense_holdout_B", "fixtures/independent_dense_holdout_v1", "runs/independent_dense_holdout_v1_production_matrix_w1/b_seed_1", "B", "runs/independent_dense_holdout_v1_production_matrix_w1/b_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_dense_holdout_C", "fixtures/independent_dense_holdout_v1", "runs/independent_dense_holdout_v1_production_matrix_w1/c_seed_1", "C", "runs/independent_dense_holdout_v1_production_matrix_w1/c_seed_1_audit/stages/scenario_c_verification_raw/TELEMETRY.json", None, None),
 )
 
 

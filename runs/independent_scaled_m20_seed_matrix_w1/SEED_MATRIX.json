@@ -1,0 +1,62 @@
+{
+  "data": "/Users/shreyansh/Documents/ChatGPT/Nebula Hack/fixtures/independent_scaled_m20",
+  "dataset_hash": "3abfdf7654084890d556ad8bb456183cff215d83767dc35a342604342d25cb44",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "A",
+    "B",
+    "C"
+  ],
+  "requested_seeds": [
+    1
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 140.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "650d82c2c5e249861e3f4448aeee1eca0e0ec37a42f8a74d6f624e5ea0f3bffc",
+      "wall_seconds": 2.07616224999947
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 200.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "9a60b9c3325d4ade4242a4e921b1b8c5150c37b78a09e02c4389f6f5dcff30b7",
+      "wall_seconds": 1.5822942500089994
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 140.0,
+      "seed": 1,
+      "selected_stage": "bridge_safe_improvement",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "02bcb72744a6088678d5c42bb8bd268573a361c64108a294daab702ee4c8a206",
+      "wall_seconds": 5.466629208007362
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 3
+}

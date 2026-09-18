@@ -40,6 +40,7 @@ class SolveTelemetry:
     tie_break_proven_optimal: bool = False
     max_deterministic_time_per_solve: float | None = None
     interleave_search: bool = False
+    structural_hints_used: bool = False
 
     def as_json(self) -> str:
         return json.dumps(asdict(self), indent=2, sort_keys=True)

@@ -414,6 +414,22 @@ Confidence labels:
 - **Limitation:** The 180-activity result is not a hidden-runtime guarantee. It is an authored, decomposable fixture and has no reference-validator confirmation.
 - **Confidence:** High for this fixture; medium for the prioritization inference.
 
+### `R049` A feasibility-oriented structural hint can remove combinatorial symmetry without weakening validation
+
+- **Evidence:** The dense independent fixture failed 15/15 fixed-budget runs. A non-binding hint that forms legal same-footprint C/PC batches and closure-screens backward singleton-chain placement changed the same policy to 15/15 proved zero-score results. A group-label cap and start-order symmetry alone both failed.
+- **Finding:** Dense PS1 construction benefits from separating a domain-specific feasible pattern proposal from exact optimization. The proposal should encode published generic structure, not IDs or answer rows; CP-SAT may ignore it, and every output must still pass the independent checker and bridge-safe phase.
+- **Relevance:** Use the structural hint as one portfolio operator, not the model. Preserve unhinted attempts and failed telemetry. Expand the operator only after held-out dense generators show benefit.
+- **Limitation:** The first decisive success is on a co-developed generator with identical footprints and deadlines. This is vulnerable to structural overfitting even though it is not sample memorization.
+- **Confidence:** High in the measured before/after; medium in transfer.
+
+### `R050` Benchmark the deployed controller, while retaining component failures separately
+
+- **Evidence:** On the dense holdout, direct Scenario C construction failed every seed, while the designed A-as-C guarded controller reached the proved zero lower bound in every seed. The distinction was hidden until the seed harness exposed an explicit `production_c` policy field.
+- **Finding:** A component benchmark and a deployment benchmark answer different questions. Direct C failure reveals search weakness; production C success establishes current end-to-end fallback reliability. Neither result should replace the other.
+- **Relevance:** Encode controller choice in every benchmark contract. Preserve direct-construction failures, but measure submission readiness through the same staged path the live system will call.
+- **Limitation:** A-as-C is safe only when A and C share the same input hash and C accepts A's capacity/ECLO policy. The controller already checks its generated fallback; hidden scenario-specific inputs must not be silently cross-used.
+- **Confidence:** High.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

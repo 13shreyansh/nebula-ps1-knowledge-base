@@ -83,6 +83,11 @@ def main() -> None:
         action="store_true",
         help="experiment with OR-Tools deterministic interleaved parallel search",
     )
+    flexible_parser.add_argument(
+        "--no-structural-hints",
+        action="store_true",
+        help="disable deterministic C/PC packing hints for an ablation run",
+    )
     portfolio_parser = subparsers.add_parser(
         "solve-c-portfolio",
         help="protect a checked A-as-C fallback before attempting a better C solve",
@@ -232,6 +237,7 @@ def main() -> None:
             separator_mode=args.separator,
             max_deterministic_time_per_solve=args.max_deterministic_time_per_solve,
             interleave_search=args.interleave_search,
+            use_structural_hints=not args.no_structural_hints,
         )
         print(telemetry.as_json())
         if telemetry.objective_score is None:

@@ -107,6 +107,7 @@ def solve_staged_c_portfolio(
             sample_hint_dir=fallback_pruned,
             forbid_buffer_overlap=forbid_buffer_overlap,
             separator_mode="direct_heuristic",
+            use_structural_hints=attempt == 0,
         )
         attempt_record: dict[str, object] = {
             "attempt": attempt_number,

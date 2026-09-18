@@ -1,0 +1,45 @@
+location_id,location_kind,line_code,bound,supply_capacity
+SEC:LHX:HX1_HX2:EB,tunnel sector,LHX,EB,1
+SEC:LHX:HX1_HX2:WB,tunnel sector,LHX,WB,1
+SEC:LHX:HX2_HN3:EB,tunnel sector,LHX,EB,1
+SEC:LHX:HX2_HN3:WB,tunnel sector,LHX,WB,1
+SEC:LHX:HN3_HN4:EB,tunnel sector,LHX,EB,1
+SEC:LHX:HN3_HN4:WB,tunnel sector,LHX,WB,1
+SEC:LHX:HN4_HN5:EB,tunnel sector,LHX,EB,1
+SEC:LHX:HN4_HN5:WB,tunnel sector,LHX,WB,1
+SEC:LHX:HN5_HN6:EB,tunnel sector,LHX,EB,1
+SEC:LHX:HN5_HN6:WB,tunnel sector,LHX,WB,1
+SEC:LHY:HX1_HX2:EB,tunnel sector,LHY,EB,1
+SEC:LHY:HX1_HX2:WB,tunnel sector,LHY,WB,1
+SEC:LHY:HX2_HS3:EB,tunnel sector,LHY,EB,1
+SEC:LHY:HX2_HS3:WB,tunnel sector,LHY,WB,1
+SEC:LHY:HS3_HS4:EB,tunnel sector,LHY,EB,1
+SEC:LHY:HS3_HS4:WB,tunnel sector,LHY,WB,1
+SEC:LHY:HS4_HS5:EB,tunnel sector,LHY,EB,1
+SEC:LHY:HS4_HS5:WB,tunnel sector,LHY,WB,1
+SEC:LHY:HS5_HS6:EB,tunnel sector,LHY,EB,1
+SEC:LHY:HS5_HS6:WB,tunnel sector,LHY,WB,1
+PLAT:LHX:HX1:EB,platform,LHX,EB,1
+PLAT:LHX:HX1:WB,platform,LHX,WB,1
+PLAT:LHX:HX2:EB,platform,LHX,EB,1
+PLAT:LHX:HX2:WB,platform,LHX,WB,1
+PLAT:LHX:HN3:EB,platform,LHX,EB,1
+PLAT:LHX:HN3:WB,platform,LHX,WB,1
+PLAT:LHX:HN4:EB,platform,LHX,EB,1
+PLAT:LHX:HN4:WB,platform,LHX,WB,1
+PLAT:LHX:HN5:EB,platform,LHX,EB,1
+PLAT:LHX:HN5:WB,platform,LHX,WB,1
+PLAT:LHX:HN6:EB,platform,LHX,EB,1
+PLAT:LHX:HN6:WB,platform,LHX,WB,1
+PLAT:LHY:HX1:EB,platform,LHY,EB,1
+PLAT:LHY:HX1:WB,platform,LHY,WB,1
+PLAT:LHY:HX2:EB,platform,LHY,EB,1
+PLAT:LHY:HX2:WB,platform,LHY,WB,1
+PLAT:LHY:HS3:EB,platform,LHY,EB,1
+PLAT:LHY:HS3:WB,platform,LHY,WB,1
+PLAT:LHY:HS4:EB,platform,LHY,EB,1
+PLAT:LHY:HS4:WB,platform,LHY,WB,1
+PLAT:LHY:HS5:EB,platform,LHY,EB,1
+PLAT:LHY:HS5:WB,platform,LHY,WB,1
+PLAT:LHY:HS6:EB,platform,LHY,EB,1
+PLAT:LHY:HS6:WB,platform,LHY,WB,1

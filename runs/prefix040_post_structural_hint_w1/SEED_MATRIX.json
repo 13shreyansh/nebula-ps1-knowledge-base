@@ -1,0 +1,59 @@
+{
+  "data": "fixtures/prefix_040",
+  "dataset_hash": "022e322188b8cdad29a937527c06327582c784b7080ee78f4fbabe73af254b30",
+  "failures": 1,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 10.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 5.0,
+    "local_repair_time_limit_seconds": 2.0,
+    "verification_time_limit_seconds": 5.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "A",
+    "B",
+    "C"
+  ],
+  "requested_seeds": [
+    1
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 85.4,
+      "seed": 1,
+      "selected_stage": "bridge_safe_local_repair",
+      "status": "SUCCESS",
+      "strict_conflicts": 4,
+      "submission_hash": "3718ebf0769f94b2a5cf6d5d1446d10a4166a0dc03aac5be79b1a0a2a725d04f",
+      "wall_seconds": 5.715402874993742
+    },
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "B",
+      "seed": 1,
+      "status": "FAILURE",
+      "wall_seconds": 17.3099910000019
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 9775.0,
+      "seed": 1,
+      "selected_stage": "bridge_safe_local_repair",
+      "status": "SUCCESS",
+      "strict_conflicts": 4,
+      "submission_hash": "7c2bc86c9f14c40165e6adeccafb443fd460796fa4c4b17d87014a14ac839d57",
+      "wall_seconds": 11.8158037920075
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 0.6666666666666666,
+  "successes": 2
+}
