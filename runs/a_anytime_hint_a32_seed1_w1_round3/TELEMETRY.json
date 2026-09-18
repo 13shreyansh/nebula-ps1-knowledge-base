@@ -1,0 +1,19 @@
+{
+  "best_bound": 32.2,
+  "branches": 8461074,
+  "closure_rounds": 39,
+  "conflicts": 316835,
+  "formulation": "scenario_a_iterative_inferred_closure_relaxation",
+  "limitation": "Closure and buffer conflicts are separated using an inferred rule set that matches the public fixture; reference-validator confirmation is still mandatory. The row-count tie-breaker cannot alter the official penalty objective.",
+  "model_constraints": 37269,
+  "model_variables": 19212,
+  "objective_score": 32.2,
+  "remaining_closure_conflicts": 0,
+  "round_time_limit_seconds": 3.0,
+  "seed": 1,
+  "solve_rounds": 41,
+  "status": "OPTIMAL",
+  "time_limit_seconds": 300.0,
+  "wall_time_seconds": 120.32925754100143,
+  "workers": 1
+}

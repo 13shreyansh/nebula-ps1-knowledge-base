@@ -31,6 +31,8 @@ class SolveTelemetry:
     limitation: str
     closure_rounds: int = 0
     remaining_closure_conflicts: int = 0
+    round_time_limit_seconds: float | None = None
+    solve_rounds: int = 1
 
     def as_json(self) -> str:
         return json.dumps(asdict(self), indent=2, sort_keys=True)

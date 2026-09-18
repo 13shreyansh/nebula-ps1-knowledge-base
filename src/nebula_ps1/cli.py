@@ -47,6 +47,7 @@ def main() -> None:
     flexible_parser.add_argument("--seed", type=int, default=1)
     flexible_parser.add_argument("--closure-rounds", type=int, default=50)
     flexible_parser.add_argument("--sample-hint")
+    flexible_parser.add_argument("--round-time-limit", type=float, default=3.0)
     relabel_parser = subparsers.add_parser(
         "relabel-scenario",
         help="reuse a schedule unchanged and recompute result rows for another scenario",
@@ -99,6 +100,7 @@ def main() -> None:
             seed=args.seed,
             closure_round_limit=args.closure_rounds,
             sample_hint_dir=args.sample_hint,
+            round_time_limit_seconds=args.round_time_limit,
         )
         print(telemetry.as_json())
         if telemetry.objective_score is None:

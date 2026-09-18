@@ -25,6 +25,7 @@ def solve_flexible_supply_relaxation(
     seed: int = 1,
     closure_round_limit: int = 50,
     sample_hint_dir: str | Path | None = None,
+    round_time_limit_seconds: float = 3.0,
 ) -> SolveTelemetry:
     """Solve a scenario with iterative cuts from the inferred closure screen.
 
@@ -37,6 +38,8 @@ def solve_flexible_supply_relaxation(
 
     if scenario not in {"A", "B", "C"}:
         raise ValueError("scenario must be A, B, or C")
+    if round_time_limit_seconds <= 0:
+        raise ValueError("round_time_limit_seconds must be positive")
 
     model = cp_model.CpModel()
     horizon = instance.horizon_weeks
@@ -315,21 +318,44 @@ def solve_flexible_supply_relaxation(
     final_access_rows: list[AccessRow] = []
     final_occupancy_rows: list[OccupancyRow] = []
     final_conflicts = ()
+    safe_access_rows: list[AccessRow] | None = None
+    safe_occupancy_rows: list[OccupancyRow] | None = None
+    safe_objective_tenths: int | None = None
+    safe_proven_optimal = False
     closure_rounds = 0
+    solve_rounds = 0
+    total_conflicts = 0
+    total_branches = 0
     cut_signatures: set[tuple[int, tuple[str, ...], tuple[str, ...]]] = set()
 
     while closure_rounds <= closure_round_limit:
         remaining = deadline - time.monotonic()
         if remaining <= 0:
             break
-        solver.parameters.max_time_in_seconds = remaining
+        solver.parameters.max_time_in_seconds = min(remaining, round_time_limit_seconds)
         status_code = solver.solve(model)
+        solve_rounds += 1
+        total_conflicts += solver.num_conflicts
+        total_branches += solver.num_branches
         has_solution = status_code in (cp_model.OPTIMAL, cp_model.FEASIBLE)
         if not has_solution:
+            if safe_objective_tenths is not None and status_code == cp_model.INFEASIBLE:
+                safe_proven_optimal = True
             break
         final_access_rows, final_occupancy_rows = extract_rows(solver)
         final_conflicts = screen_closures(instance, final_access_rows, final_occupancy_rows)
-        if not final_conflicts or closure_rounds == closure_round_limit:
+        current_objective_tenths = solver.value(primary_score)
+        if not final_conflicts:
+            if safe_objective_tenths is None or current_objective_tenths < safe_objective_tenths:
+                safe_access_rows = final_access_rows
+                safe_occupancy_rows = final_occupancy_rows
+                safe_objective_tenths = current_objective_tenths
+            if status_code == cp_model.OPTIMAL:
+                safe_proven_optimal = True
+                break
+            model.add(primary_score <= current_objective_tenths - 1)
+            continue
+        if closure_rounds == closure_round_limit:
             break
 
         cuts_added = 0
@@ -378,11 +404,18 @@ def solve_flexible_supply_relaxation(
         closure_rounds += 1
 
     elapsed = time.monotonic() - started
-    status = solver.status_name(status_code)
+    if safe_access_rows is not None:
+        final_access_rows = safe_access_rows
+        final_occupancy_rows = safe_occupancy_rows or []
+        final_conflicts = ()
+        status = "OPTIMAL" if safe_proven_optimal else "FEASIBLE_SAFE_INCUMBENT"
+    else:
+        status = solver.status_name(status_code)
 
     output_root = Path(output_dir)
     output_root.mkdir(parents=True, exist_ok=True)
-    if has_solution:
+    output_available = safe_access_rows is not None or has_solution
+    if output_available:
         access_output: list[dict[str, object]] = []
         occupancy_output: list[dict[str, object]] = []
         for row in final_access_rows:
@@ -422,11 +455,17 @@ def solve_flexible_supply_relaxation(
             writer.writeheader()
             writer.writerows(occupancy_output)
 
+        completion_by_activity = {
+            activity_id: max(
+                row.week for row in final_access_rows if row.activity_id == activity_id
+            )
+            for activity_id in instance.activities
+        }
         results_output: list[dict[str, object]] = []
         for contract_number in sorted(instance.projects):
             project = instance.projects[contract_number]
             contract_week = max(
-                solver.value(completion[activity_id])
+                completion_by_activity[activity_id]
                 for activity_id in activities_by_contract[contract_number]
             )
             completion_date = instance.completion_date(contract_week)
@@ -451,8 +490,18 @@ def solve_flexible_supply_relaxation(
             writer.writeheader()
             writer.writerows(results_output)
 
-    objective = solver.value(primary_score) / 10.0 if has_solution else None
-    bound = math.floor(solver.best_objective_bound / tie_scale) / 10.0 if has_solution else None
+    if safe_objective_tenths is not None:
+        objective = safe_objective_tenths / 10.0
+    elif has_solution:
+        objective = solver.value(primary_score) / 10.0
+    else:
+        objective = None
+    if safe_proven_optimal and safe_objective_tenths is not None:
+        bound = safe_objective_tenths / 10.0
+    elif has_solution:
+        bound = math.floor(solver.best_objective_bound / tie_scale) / 10.0
+    else:
+        bound = None
     proto = model.proto
     telemetry = SolveTelemetry(
         formulation=f"scenario_{scenario.lower()}_iterative_inferred_closure_relaxation",
@@ -460,8 +509,8 @@ def solve_flexible_supply_relaxation(
         objective_score=objective,
         best_bound=bound,
         wall_time_seconds=elapsed,
-        conflicts=solver.num_conflicts,
-        branches=solver.num_branches,
+        conflicts=total_conflicts,
+        branches=total_branches,
         seed=seed,
         workers=workers,
         time_limit_seconds=time_limit_seconds,
@@ -474,6 +523,8 @@ def solve_flexible_supply_relaxation(
         ),
         closure_rounds=closure_rounds,
         remaining_closure_conflicts=len(final_conflicts),
+        round_time_limit_seconds=round_time_limit_seconds,
+        solve_rounds=solve_rounds,
     )
     (output_root / "TELEMETRY.json").write_text(telemetry.as_json() + "\n", encoding="utf-8")
     return telemetry

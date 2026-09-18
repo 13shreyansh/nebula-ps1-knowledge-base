@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import Iterable, Protocol
 
 from .instance import Instance
-from .topology import activity_footprint, split_sector_location
+from .topology import activity_footprint, interchange_cross_line_locations, split_sector_location
 
 
 class AccessLike(Protocol):
@@ -85,14 +85,7 @@ def _blocked_locations(instance: Instance, component: set[str]) -> set[str]:
         opposite_bound = _opposite(bound)
         blocked.update(_replace_bound(location_id, opposite_bound) for location_id in footprint)
         blocked.update(_replace_bound(location_id, opposite_bound) for location_id in buffer_sectors)
-        if any(":H01_H02:" in location_id for location_id in footprint):
-            for other_line in instance.lines:
-                if other_line == line:
-                    continue
-                for affected_bound in ("EB", "WB"):
-                    blocked.add(f"SEC:{other_line}:H01_H02:{affected_bound}")
-                    blocked.add(f"PLAT:{other_line}:H01:{affected_bound}")
-                    blocked.add(f"PLAT:{other_line}:H02:{affected_bound}")
+        blocked.update(interchange_cross_line_locations(instance, activity))
     return blocked
 
 
@@ -164,4 +157,3 @@ def screen_closures(
                         )
                     )
     return tuple(conflicts)
-

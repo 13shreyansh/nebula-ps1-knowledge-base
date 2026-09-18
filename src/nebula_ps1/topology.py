@@ -52,5 +52,46 @@ def affects_interchange_cross_line(instance: Instance, activity: Activity) -> bo
     project = instance.projects[activity.contract_number]
     if project.nature_of_activity != "Live":
         return False
-    return any(":H01_H02:" in location_id for location_id in activity_footprint(instance, activity))
+    return bool(interchange_cross_line_locations(instance, activity))
 
+
+def interchange_cross_line_locations(instance: Instance, activity: Activity) -> tuple[str, ...]:
+    """Derive Live interchange crossover locations from station metadata.
+
+    A crossover bridge is a worked sector whose two endpoint stations are marked
+    as interchanges. Matching endpoint pairs on other lines, in both bounds, plus
+    their platforms are affected. No public station or sector identifier is baked
+    into this derivation.
+    """
+
+    footprint_sector_ids = {
+        ":".join(location_id.split(":")[:3])
+        for location_id in activity_footprint(instance, activity)
+        if location_id.startswith("SEC:")
+    }
+    worked_bridges = [
+        sector
+        for sector_id, sector in instance.sectors.items()
+        if sector_id in footprint_sector_ids
+        and instance.stations[(sector.line_code, sector.from_station_id)].is_interchange
+        and instance.stations[(sector.line_code, sector.to_station_id)].is_interchange
+    ]
+    affected: set[str] = set()
+    for bridge in worked_bridges:
+        endpoints = {bridge.from_station_id, bridge.to_station_id}
+        for other in instance.sectors.values():
+            if other.line_code == bridge.line_code:
+                continue
+            if {other.from_station_id, other.to_station_id} != endpoints:
+                continue
+            if not (
+                instance.stations[(other.line_code, other.from_station_id)].is_interchange
+                and instance.stations[(other.line_code, other.to_station_id)].is_interchange
+            ):
+                continue
+            local_sector = other.sector_id.split(":", 2)[2]
+            for bound in ("EB", "WB"):
+                affected.add(f"SEC:{other.line_code}:{local_sector}:{bound}")
+                affected.add(f"PLAT:{other.line_code}:{other.from_station_id}:{bound}")
+                affected.add(f"PLAT:{other.line_code}:{other.to_station_id}:{bound}")
+    return tuple(sorted(affected))
