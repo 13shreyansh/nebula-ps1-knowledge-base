@@ -350,6 +350,14 @@ Confidence labels:
 - **Limitation:** A topology or buffer-expansion error could produce the apparent overlap. Only the official expander or validator can resolve that remaining possibility.
 - **Confidence:** High that the derived sample contradiction is reproducible; Medium that the derivation matches the organizer's intended expander.
 
+### `R041` Possession closure exemption must propagate through local group links
+
+- **Evidence:** Public week-13 occupancy and derived closure footprints.
+- **Finding:** A003 and A060 share group `b1` at `PLAT:BET:S15:EB`; A060 and A019 share group `b2` at `PLAT:BET:S16:EB`; A003 and A019 never directly share a local group. A pairwise-only exemption nevertheless reports A003/A019 colliding at `SEC:BET:S16_S17:EB`, while the organizer calls the complete sample feasible. The shared activity therefore links the local groups into one transitive possession component for closure exemption.
+- **Relevance:** Build possession components as the connected components of same-location/week/group membership, then apply closure interactions between components. Do not require one global group label across a corridor and do not limit exemption to directly co-grouped pairs.
+- **Limitation:** This validates the component construction needed to reproduce the sample under our topology expansion; it does not independently validate the expansion or hidden validator.
+- **Confidence:** High.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

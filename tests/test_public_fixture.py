@@ -12,7 +12,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from nebula_ps1.cli import main as cli_main
-from nebula_ps1.closure import _external_buffer_sectors, screen_closures
+from nebula_ps1.closure import _blocked_locations, _external_buffer_sectors, screen_closures
 from nebula_ps1.evaluate import evaluate_submission, load_submission
 from nebula_ps1.independent_score import independently_score
 from nebula_ps1.instance import load_instance
@@ -152,6 +152,43 @@ class PublicFixtureTests(unittest.TestCase):
                 for conflict in strict_conflicts
             )
         )
+
+    def test_public_sample_requires_transitive_possession_components(self) -> None:
+        _, occupancy, _ = load_submission(PACK / "03_submission_sample")
+        groups: dict[tuple[str, str], set[str]] = {}
+        for row in occupancy:
+            if row.week == 13:
+                groups.setdefault((row.location_id, row.co_share_group), set()).add(
+                    row.activity_id
+                )
+        self.assertTrue(
+            {"A003", "A060"} <= groups[("PLAT:BET:S15:EB", "b1")]
+        )
+        self.assertTrue(
+            {"A019", "A060"} <= groups[("PLAT:BET:S16:EB", "b2")]
+        )
+
+        shared_pairs = {
+            tuple(sorted((first.activity_id, second.activity_id)))
+            for first in occupancy
+            for second in occupancy
+            if first.week == second.week == 13
+            and first.location_id == second.location_id
+            and first.co_share_group == second.co_share_group
+            and first.activity_id != second.activity_id
+        }
+        self.assertIn(("A003", "A060"), shared_pairs)
+        self.assertIn(("A019", "A060"), shared_pairs)
+        self.assertNotIn(("A003", "A019"), shared_pairs)
+
+        direct_collision = (
+            _blocked_locations(self.instance, {"A003"})
+            & set(activity_footprint(self.instance, self.instance.activities["A019"]))
+        ) | (
+            _blocked_locations(self.instance, {"A019"})
+            & set(activity_footprint(self.instance, self.instance.activities["A003"]))
+        )
+        self.assertEqual(direct_collision, {"SEC:BET:S16_S17:EB"})
 
     def test_solve_a_cli_does_not_reference_an_undefined_audit_argument(self) -> None:
         telemetry = SimpleNamespace(
