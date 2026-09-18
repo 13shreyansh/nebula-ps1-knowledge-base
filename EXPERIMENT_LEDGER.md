@@ -407,3 +407,28 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Correction: after heuristic failure, staged solving now runs a checked sound portfolio. Attempt 1 may use the best failed heuristic output, ranked by fewest remaining conflicts then score; attempt 2 is unhinted with a different seed. Each safe candidate is independently pruned and only the best checked objective is protected for verification.
 - Short portfolio test: on the 40-activity fixture, a 0.5-second heuristic yielded no usable objective. Ten-second sound attempt 1 produced raw `819.7`, pruned `105.7`; attempt 2 reached `18.2` internally but retained one strict conflict and was rejected. The selected `105.7` passes both scorers and the strict screen; five-second verification retained it with lower bound `18.2`.
 - Integrity consequence: an invalid lower-score candidate never outranks a safe incumbent. Portfolio diversity improves opportunity but does not justify selecting the best invalid objective or reporting its bound as achieved.
+
+### E037: Previously successful public B seed is not repeatable
+
+- Timestamp: 2026-09-19 02:10:51 +08
+- Falsification: rerun the current staged public Scenario B path with strict buffers, eight workers, seed 4, one 90-second heuristic attempt, one one-second fallback, and five-second verification budget. Seed 4 had previously found checked `30.0` in 80.301 seconds.
+- Result: the repeated heuristic consumed 90.016 wall seconds / 323.651 deterministic seconds, ended `UNKNOWN` with five strict conflicts, and produced no objective. The one-second sound fallback also produced no objective and retained six conflicts. The workflow failed closed and emitted no submission files.
+- Interpretation: a seed label is not a reproducible search trajectory under eight-worker wall-clock search. Prior success remains valid artifact evidence, but cannot be treated as a reliability guarantee. Deterministic work was substantial, so extending the same seed slightly is not a principled correction.
+- Decision: preserve the protected B=`30.0` answer key and the repeated failure. Fresh-instance construction must use a true multi-seed/worker portfolio and report feasibility rate, not advertise a single lucky seed.
+
+### E038: Current staged public B recovery with sound proof
+
+- Timestamp: 2026-09-19 02:12:35 +08
+- Declared portfolio: strict public Scenario B, eight workers, seeds starting at 3, up to three 120-second heuristic attempts, two 30-second sound fallbacks only if needed, and five seconds of protected sound verification.
+- Result: the first attempt, seed 3, produced checked `30.0` in 68.117 wall seconds / 247.174 deterministic seconds over 82 solves and 81 closure rounds. Pruning removed nothing. Bridge-safe verification proved `<30.0` infeasible in 0.167 wall / 0.505 deterministic seconds with zero branches.
+- Independent gate: main and raw-CSV scorers agree on six ECLO rows, zero delay/excess, and objective `30.0`; strict conflicts are zero; output has exactly three LF CSVs. Hash `424696c48d07fff54d8ed9a516fcf07db91f87718faefc50775f46815ee71dd1`.
+- Selection: retain the existing public B deliverable because it has the same score and already pinned manifest. This run is fresh-construction evidence, not a score improvement.
+- Reliability boundary: together with E037, one current public B run succeeded and one failed under different fixed seeds and nearby budgets. This is insufficient for a calibrated feasibility rate and does not make seed 3 deterministic.
+
+### E039: Exact seed-3 public B repeat
+
+- Timestamp: 2026-09-19 02:14:38 +08
+- Method: repeat E038 with the same current code, public input, strict policy, seed 3, eight workers, 120-second heuristic cap, and five-second verifier. Limit to one heuristic attempt so no later seed can mask repeatability.
+- Result: checked `30.0` again, in 82.114 wall / 296.162 deterministic seconds versus E038's 68.117 / 247.174. Sound verification again proved `<30.0` infeasible in 0.167 wall / 0.505 deterministic seconds. Both scorers and the strict screen agree.
+- Variation: the repeat's hash `f169774b61fb20db19b810d8753e86bf9bd735b3a224970e177c5138d7fc3f27` differs from E038's hash despite equal objective, components, and row counts. Parallel timed search is not schedule-reproducible under a fixed seed.
+- Evidence boundary: seed 3 is 2/2 successful in these current-code 120-second runs; seed 4 is 0/1 at 90 seconds. This sample is too small and budgets differ, so it is descriptive rather than a calibrated success probability.

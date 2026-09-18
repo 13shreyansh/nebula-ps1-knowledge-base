@@ -314,3 +314,26 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity audit: no unsafe `18.2` candidate was promoted; the repaired schedule was checked before pruning; the lower bound `18.2` is not called an achieved score in the failed attempt; public outputs were untouched.
 - Confidence: high in portfolio selection safety and deterministic-time capture; medium in the value of hint diversification; low in full-scale fallback reliability; zero in official validation.
 - Next action: preserve the portfolio evidence, then use deterministic-time-normalized runs to decide budget allocation. Do not increase default attempts solely because one extra seed once succeeded.
+
+## 2026-09-19 02:10:51 +08
+
+- Interval: 3 minutes 47 seconds since the previous inspection; early because a current-code public regression contradicted earlier seed evidence.
+- Best independently validated score: no official/reference-validator result. Protected public internal optima remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero and no deliverable was replaced.
+- Falsification: strict public B seed 4 previously generated checked `30.0` in 80.301 seconds. Repeating it with the current solver and a 90-second budget ended `UNKNOWN`, with no objective and five strict conflicts after 323.651 deterministic seconds. A one-second sound fallback also failed.
+- What this disproves: a previously successful random seed is not a reliable recipe under eight-worker wall-clock CP-SAT. Fixed seeds do not imply deterministic trajectories when parallel search and timed iterative separation are involved.
+- What did not regress: the protected B=`30.0` artifact remains dual-scored and strict-feasible; the controller failed closed, preserved telemetry, and left the final directory empty. No invalid candidate or failure status displaced the incumbent.
+- Potential mistake in current strategy: selecting seed budgets from isolated successes is cherry-picking. A multi-attempt controller improves feasibility probability but can consume several minutes and still lacks a calibrated success rate.
+- Confidence: high in protected B artifact integrity and this failed rerun; medium in multi-seed recovery probability; low in per-seed repeatability; zero in official validation.
+- Next action: run the current staged B multi-seed portfolio under one declared budget and record every attempt. If it succeeds, report feasibility rate and total cost, not merely the winning seed; if it fails, do not extend indefinitely without changing the method.
+
+## 2026-09-19 02:14:38 +08
+
+- Interval: 3 minutes 47 seconds since the previous inspection; early because the exact repeatability experiment completed.
+- Best independently validated score: no official/reference-validator result. Protected public internal optima remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero.
+- Current public B evidence: seed 3 succeeded twice at strict-feasible, independently rescored `30.0`, taking 68.117/82.114 wall seconds and 247.174/296.162 deterministic seconds. Both sound verification phases proved the lower bound in about 0.167 wall seconds. Seed 4 failed once at a 90-second cap.
+- What is going well: the current direct→prune→sound-proof path works end to end, outputs stable LF files, refuses failures, and proves B's objective without importing heuristic bounds. Thirty-three regressions pass.
+- What remains unstable: identical seed-3 runs produced different valid hashes, closure-round counts, work, and runtimes. Eight-worker fixed seeds do not provide schedule determinism. Two successes are not a reliable tail estimate.
+- Cherry-picking audit: both seed-3 successes and the seed-4 failure are preserved. The protected deliverable was not replaced by either equal-score schedule. Reported rate is descriptive and explicitly notes unequal seed-4 budget.
+- Strongest remaining runtime test: repeat under an equal 120-second budget across several seeds or use deterministic-work caps. However, B's score is already proven and additional runs do not improve the public result, so runtime sampling should not displace work on unresolved full-instance A/C construction or official validation.
+- Confidence: high in public B score/feasibility under implemented semantics; medium in recovering B within a two-minute eight-worker attempt; low in schedule/time reproducibility; zero in official validation.
+- Next action: commit the current success/failure corpus, then move away from B score chasing. Prioritise an unresolved assumption or full-instance A/C fresh-construction weakness.
