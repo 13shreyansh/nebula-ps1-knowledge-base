@@ -609,6 +609,14 @@ Confidence labels:
 - **Limitation:** Failure on one irregular regime does not show that fixed-point repair can never help. It shows that logical closure alone is insufficient evidence for spending the runtime budget.
 - **Confidence:** High in counts and outcomes; medium in hidden transfer.
 
+### `R075` Final repair quality survives complete identifier permutation
+
+- **Status:** Confirmed on one public-independent irregular regime.
+- **Finding:** Bijectively permuting line, station, contract, activity, sector, and location identifiers and shuffling every input table changed the seed-5 construction result from the original run to C=`147.0`, but the same 27-activity narrow repair recovered C=`31.0`; the 29-activity expanded tier retained it.
+- **Evidence:** Both scorers agree on C=`31.0` with zero delay, two ECLO nights, three excess access-nights, no hard violations, and clean standard and strict closure screens. No translated incumbent or oracle was supplied.
+- **Interpretation:** CP-SAT search order is label-sensitive under wall-time limits, while the protected controller recovered the same semantic optimum. This is evidence against identifier memorization in the final method, not proof of distribution-wide invariance.
+- **Confidence:** High in the metamorphic result; medium in generalization beyond this fixture and seed.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

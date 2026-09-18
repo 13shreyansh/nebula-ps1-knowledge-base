@@ -532,6 +532,50 @@ class PublicFixtureTests(unittest.TestCase):
             hashes.add(evaluation.submission_hash)
         self.assertEqual(len(hashes), 5)
 
+    def test_renamed_irregular_production_run_preserves_score_not_proof(self) -> None:
+        data = ROOT / "fixtures" / "independent_irregular_partial_v1_renamed"
+        submission = ROOT / "runs" / "c_irregular_renamed_seed5_production"
+        report_path = (
+            ROOT / "runs" / "c_irregular_renamed_seed5_production_audit" / "STAGED.json"
+        )
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, submission, "C")
+        independent = independently_score(data, submission)
+        access, occupancy, _ = load_submission(submission)
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(
+            instance.dataset_hash,
+            "baaf099eeb469ec74074bb11e116861fe569c6594caad619fee24a03bf3d5233",
+        )
+        self.assertEqual(set(instance.lines), {"L01", "L02"})
+        self.assertTrue(all(activity_id.startswith("Z") for activity_id in instance.activities))
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 31.0)
+        self.assertEqual(independent.objective_score, 31.0)
+        self.assertEqual(evaluation.priority_weighted_score, 0.0)
+        self.assertEqual(evaluation.eclo_nights_total, 2)
+        self.assertEqual(evaluation.excess_access_nights_total, 3)
+        self.assertEqual(screen_closures(instance, access, occupancy), ())
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertEqual(report["selected_stage"], "bridge_safe_cost_repair")
+        self.assertEqual(len(report["bridge_safe_cost_repair_activities"]), 27)
+        self.assertEqual(len(report["bridge_safe_expanded_cost_repair_activities"]), 29)
+        self.assertIsNone(report["bridge_safe_cost_repair_telemetry"]["best_bound"])
+        self.assertFalse(
+            report["bridge_safe_cost_repair_telemetry"][
+                "primary_score_proven_optimal"
+            ]
+        )
+
     def test_post_contract_precedence_holdout_is_frozen_before_repair(self) -> None:
         data = ROOT / "fixtures" / "independent_post_contract_precedence_v1"
         oracle = ROOT / "fixtures" / "independent_post_contract_precedence_v1_oracle"

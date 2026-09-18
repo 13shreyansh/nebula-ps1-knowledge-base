@@ -944,3 +944,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - From C=`31.0`: a ten-second, eight-worker fixed-point repair with seed 7 returned the identical dual-scored, standard-clean, strict-clean C=`31.0` schedule and hash `18b6eee516d8239407a52172ae7c5f66bbd0f53bd59a526284bdd22c4079711c`.
 - From C=`63.0`: the matched fixed-point repair returned a worse but checked C=`84.0` candidate, hash `d8416452de4c7f43c01a4d07a4322b056e04fa95effa09b26a90a340b3a481c0`, with bound `12.8`. Protected selection would retain C=`63.0`.
 - Decision: preserve the outputs as negative evidence and do not integrate fixed-point recursion. The experiment measures search power, not whether the larger neighborhood contains the optimum.
+
+### E099: Renamed and shuffled irregular input still reaches C=31
+
+- Timestamp: 2026-09-19 07:46:34 +08
+- Protocol: bijectively permute all semantic identifiers, shuffle every input CSV, retain numeric and relational semantics, and run direct staged Scenario C with seed 5, eight workers, 120-second construction, 10-second verification, 30-second narrow repair, and 10-second expanded repair. No known schedule is translated into the new namespace.
+- Result: construction and verification reached C=`147.0`; the 27-activity narrow repair reached C=`31.0`; the 29-activity expanded repair retained it. The final hash is `337dade9fbc52bee64af93ebc5ea2e61d269fcd9d7c94d2f932723f49d85ab0a`.
+- Independent checks: main and raw-CSV scorers agree; delay=`0.0`, ECLO nights=`2`, excess access-nights=`3`; hard, standard-closure, and strict-closure conflicts are all zero.
+- Boundary: the worse initial construction confirms wall-time search sensitivity to model ordering. Recovery of the same final score supports controller-level identifier invariance on this regime only. The repair has no solver bound, so the favorable run is deliberately excluded from the proof-only benchmark matrix.
