@@ -1,0 +1,413 @@
+# Nebula PS1 Research Ledger
+
+| Field | Value |
+|---|---|
+| Status | Reconciled on 2026-09-18; new research stopped at user request |
+| Started | 2026-09-18 |
+| Scope | Railway possession scheduling, optimisation, validation, failure modes, robustness, and competition execution |
+| Canonical decisions | `README.md` |
+
+This is the evidence-preserving research record. It intentionally retains competing methods, limitations, failures, and unresolved interpretations. Reconciled decisions are in `README.md`; no evidence entry was deleted during reconciliation.
+
+## Recording protocol
+
+Each entry records the source, direct finding, relevance to PS1, limitations, and confidence. Numerical results are never transferred between unlike problem instances as expected PS1 performance. Search failures and negative results are retained when they affect what should be tried next.
+
+Confidence labels:
+
+- **High:** direct statement or result in a primary paper, official source, code, or reproducible experiment.
+- **Medium:** supported inference from primary evidence, or a result whose full experimental conditions have not yet been inspected.
+- **Low:** promising lead requiring verification.
+
+## Search log
+
+| Pass | Date | Focus | Coverage |
+|---|---|---|---|
+| `P001` | 2026-09-18 | Field taxonomy and established solution families | Possession scheduling, grouping, CP, MILP, decomposition, LNS, uncertainty |
+| `P002` | 2026-09-18 | Real deployments and computational failure modes | Hong Kong MTR, Dutch railways, South African case, Viennese tram network |
+| `P003` | 2026-09-18 | Online self-improvement and exact score trade-offs | ALNS, multi-armed bandits, CP-SAT status semantics, PS1 objective arithmetic |
+| `P004` | 2026-09-18 | Current 2025–2026 railway methods | Urban-rail network ALNS, negotiation models, robust rescheduling, monitoring-informed maintenance |
+
+## Evidence entries
+
+### `R001` The problem belongs to fixed-timetable, variable-possession scheduling
+
+- **Source:** Sedghi et al., [A taxonomy of railway track maintenance planning and scheduling](https://doi.org/10.1016/j.ress.2021.107827), 2021.
+- **Finding:** The literature distinguishes three interactions: fixed timetable with variable possessions, fixed possessions with variable timetable, and joint optimisation. PS1 supplies the access opportunities and asks us to allocate work, so it is closest to the first category.
+- **Relevance:** Methods that jointly redesign passenger timetables solve a larger problem than PS1 and should not be copied unless a future bonus introduces train service decisions.
+- **Limitation:** PS1 has bespoke C, PC, PM, buffer, ECLO, and scoring rules absent from the taxonomy.
+- **Confidence:** High.
+
+### `R002` Constraint programming has a direct real-world possession-assignment precedent
+
+- **Source:** Cheung et al., [Railway track possession assignment using constraint satisfaction](https://doi.org/10.1016/S0952-1976(99)00025-1), 1999.
+- **Finding:** Hong Kong MTR used a constraint-based system with a rule base of conflict rules and constraint relaxation to assign track possessions to engineering work. The paper reports that the resulting system entered daily use.
+- **Relevance:** This is unusually close to PS1 and supports the choice of CP-SAT. It also suggests separating rule representation, hard conflicts, and controlled relaxation instead of burying all logic in a heuristic.
+- **Limitation:** The implementation used CHIP and a historical MTR rule set. It does not establish that the same search strategy is optimal for PS1.
+- **Confidence:** High.
+
+### `R003` Grouping compatible maintenance is a primary optimisation lever
+
+- **Sources:** Budai and Dekker, [A Dynamic Approach for Planning Preventive Railway Maintenance Activities](https://doi.org/10.2495/CR040331), 2004; Sedghi et al. 2021 review.
+- **Finding:** The cited numerical study reported a 33% reduction in possession time and cost from combining routine work with projects or other routine work. Later studies reviewed by Sedghi et al. also report savings from grouping activities or adjacent segments.
+- **Relevance:** PS1 explicitly rewards legal C sharing and PC plus C packing. Search should treat group construction as a central combinatorial decision, not a formatting step after assigning weeks.
+- **Limitation:** The 33% is instance-specific and must not be presented as an expected PS1 improvement.
+- **Confidence:** High for the qualitative result; Medium for transferring the magnitude.
+
+### `R004` Spatial and temporal aggregation can make integrated models tractable
+
+- **Source:** Lidén and Joborn, [An optimization model for integrated planning of railway traffic and network maintenance](https://doi.org/10.1016/j.trc.2016.11.016), 2017.
+- **Finding:** Their MIP uses spatial and temporal aggregation and limited train scheduling windows. Multi-day to weekly instances were reported solvable to optimality within one hour.
+- **Relevance:** PS1 already works at weekly granularity. Further restriction of each occurrence to an eligibility window, corridor footprint, and feasible group range should materially reduce search.
+- **Limitation:** Their model and objective differ from PS1, and the reported scale does not predict our runtime.
+- **Confidence:** High.
+
+### `R005` Exact monolithic models can fail at realistic scale
+
+- **Source:** Fuchs et al., [Scheduling of maintenance work of a large-scale tramway network](https://doi.org/10.1016/j.ejor.2018.04.027), 2019.
+- **Finding:** A comprehensive MIP was useful for limited horizons, but its limitations appeared on large real-life networks and long horizons. A specialised large-neighbourhood-search method was introduced for those cases.
+- **Relevance:** We should retain one exact feasibility model while adding repair neighbourhoods rather than assuming a single long CP-SAT run will dominate every hidden instance.
+- **Limitation:** The paper studies strategic multi-decade maintenance, not PS1's 30-week sample.
+- **Confidence:** High.
+
+### `R006` Microscopic MILP can be practical when scope is tightly bounded
+
+- **Source:** Cillie and Bekker, [Development of a maintenance possession scheduler for a railway](https://doi.org/10.7166/34-2-2750), 2023.
+- **Finding:** A microscopic 24-hour South African possession scheduler reportedly found optimal solutions in under nine minutes for its application case.
+- **Relevance:** Exact optimisation is operationally plausible, but only when the model's scope and dimensions are controlled. We need scaling tests rather than arguments based solely on NP-hardness or a small public instance.
+- **Limitation:** One corridor and 24 hours are substantially different from multi-line weekly PS1 scheduling.
+- **Confidence:** High.
+
+### `R007` Decomposition is useful, but cut quality changes over the run
+
+- **Source:** Zomer et al., [The Maintenance Scheduling and Location Choice Problem for Railway Rolling Stock](https://arxiv.org/abs/2103.00454), 2021.
+- **Finding:** Logic-based Benders decomposition separated assignment from capacity feasibility. Min-cut cuts were faster and helped early progress; a binary-search heuristic produced better later convergence. Some large tests did not reach optimality within two hours, and remaining candidate schedules could still contain capacity violations.
+- **Relevance:** If PS1's group and closure variables make one model too large, decompose week assignment from possession packing. Always validate the combined incumbent because a good master score can conceal an infeasible packing subproblem. A portfolio can change strategy as search matures.
+- **Limitation:** The paper concerns rolling-stock maintenance locations and teams rather than track possession groups.
+- **Confidence:** High.
+
+### `R008` Dynamic restriction of candidate paths or time windows can beat an unrestricted solver
+
+- **Source:** Zhang et al., [A heuristic approach to integrate train timetabling, platforming, and railway network maintenance scheduling decisions](https://doi.org/10.1016/j.trb.2022.02.002), 2022.
+- **Finding:** The authors repeatedly solved a binary program while dynamically modifying candidate train time windows. Their approach found near-optimal solutions and outperformed a direct commercial-solver approach on the tested networks. Integrated decisions improved results by as much as 30% in those experiments.
+- **Relevance:** Use restricted candidate-week sets, then expand them around bottlenecks or incumbent conflicts. This is safer than instantiating every possible week/group combination from the beginning.
+- **Limitation:** The numerical improvement concerns an integrated train problem and is not transferable to PS1.
+- **Confidence:** High.
+
+### `R009` Feasibility must feed back from detailed packing to high-level planning
+
+- **Source:** Su et al., [Integrated condition-based track maintenance planning and crew scheduling of railway networks](https://doi.org/10.1016/j.trc.2018.11.003), 2019.
+- **Finding:** A high-level maintenance plan is checked by a detailed crew-scheduling level. When detailed scheduling is infeasible because resources or possession time are insufficient, feedback changes the high-level decision and resolves it again.
+- **Relevance:** A PS1 decomposition must never accept a week assignment until location, group, buffer, Live-work, weekly allocation, and workfront feasibility are confirmed. Infeasible subsets should generate cuts or neighbourhood repairs.
+- **Limitation:** The feedback rule in the paper changes maintenance thresholds, which PS1 does not permit.
+- **Confidence:** High.
+
+### `R010` Realistic objectives and model boundaries matter as much as solver choice
+
+- **Source:** Sedghi et al., 2021 taxonomy and research agenda.
+- **Finding:** Oversimplified cost functions can produce inadequate maintenance decisions. The literature also underrepresents resource dependencies, contractor workload, materials, procurement, safety, and interactions among track components.
+- **Relevance:** For the competition, the official validator objective must be the primary score. Operational qualities outside that objective belong in tie-breakers, explanations, or bonuses and must not silently distort the official score.
+- **Limitation:** PS1 intentionally abstracts many operational resources, so adding them as hard constraints would contradict the input contract.
+- **Confidence:** High.
+
+### `R011` Uncertainty belongs in a separate replanning layer
+
+- **Sources:** Zhan et al., [Handling uncertainty in train timetable rescheduling](https://doi.org/10.1016/j.tre.2024.103429), 2024; Wang et al., [A data-driven optimization approach for integrated train scheduling and maintenance planning](https://doi.org/10.1016/j.cor.2025.106958), 2025.
+- **Finding:** Recent work treats disruption and uncertain duration through robust, stochastic, or distributionally robust formulations. These approaches require uncertainty sets, distributions, or scenario data rather than a single deterministic instance.
+- **Relevance:** The core PS1 solver should remain deterministic and validator-exact. Replanning can later use scenario sampling or robust buffers, but only with explicit assumptions and a separate objective such as feasibility preservation and minimal churn.
+- **Limitation:** The current PS1 data does not provide probability distributions or duration uncertainty.
+- **Confidence:** Medium pending full-paper inspection of the latest DRO study.
+
+### `R012` A good score is not evidence of feasibility
+
+- **Evidence:** Zomer et al. report attractive master-level progress while detailed capacity violations can remain; the PS1 organiser separately identifies the validator as the final checker.
+- **Finding:** Objective optimisation and complete constraint validation are distinct processes.
+- **Relevance:** Maintain an independent checker, run the reference validator on every retained incumbent, and compare score components. Never rank an invalid candidate above a feasible one.
+- **Limitation:** The exact PS1 validator has not yet been obtained.
+- **Confidence:** High.
+
+### `R013` Feasible possession groups can be modelled as columns rather than arbitrary labels
+
+- **Source:** Yang et al., [Scheduling a single parallel-batching machine with non-identical job sizes and incompatible job families](https://arxiv.org/abs/2102.02002), 2021.
+- **Finding:** For compatible-job batching, a set-partitioning formulation in which each column represents one feasible batch outperformed the studied assignment and time-indexed alternatives. Column generation and branch-and-price extended the method to larger instances.
+- **Relevance:** At a PS1 location and week, each legal PM, PC+C, or C-only possession group is a feasible batch. Pre-enumerating legal groups can remove group-label symmetry and make capacity equal to the number of selected columns. If enumeration becomes large, generate promising groups on demand.
+- **Limitation:** A PS1 access spans multiple locations and may belong to different groups at each location. Cross-location consistency and closure rules still couple the local set-partitioning problems.
+- **Confidence:** High for the formulation pattern; Medium until benchmarked against direct CP-SAT labels.
+
+### `R014` Batch membership must be synchronised explicitly
+
+- **Source:** Huertas and Van Hentenryck, [Parallel Batch Scheduling With Incompatible Job Families Via Constraint Programming](https://arxiv.org/abs/2410.11981), 2024.
+- **Finding:** Existing CP batching models could create interrupted batches because job and batch timing were not synchronised strongly enough. The paper introduces redundant synchronisation to prevent those invalid schedules and improve search.
+- **Relevance:** In PS1, a possession group is not valid merely because its pairwise composition is legal. Membership must be tied to the exact location and week, and every selected activity must contribute to the same group count and closure exemption there. Redundant equalities and checker assertions may improve both correctness and propagation.
+- **Limitation:** The source models continuous processing intervals, while PS1 uses discrete weekly access and location-specific groups.
+- **Confidence:** High.
+
+### `R015` Competition-winning rail replanning used priority ordering plus LNS, not an end-to-end learned policy
+
+- **Source:** Chen et al., [Scalable Rail Planning and Replanning with Soft Deadlines](https://arxiv.org/abs/2306.06455), 2023.
+- **Finding:** The winning Flatland 3 system combined a new priority order for initial planning with large-neighbourhood search for quality improvement and partially replanned only trains affected by malfunction.
+- **Relevance:** For PS1, build a strong deterministic priority order, then reopen a targeted neighbourhood. For the disruption bonus, preserve unaffected assignments and repair the impacted activities and dependency closure.
+- **Limitation:** Flatland is multi-agent train routing, not possession grouping, so only the search architecture transfers.
+- **Confidence:** High.
+
+### `R016` LNS works best when destroy and repair operators encode problem structure
+
+- **Sources:** Shaw et al., [Improved Local Search for CP Toolkits](https://doi.org/10.1023/A:1021241117280), 2002; recent railway applications including [operational-level centralised maintenance scheduling](https://doi.org/10.1016/j.cie.2026.111838), 2026.
+- **Finding:** CP can search a neighbourhood formed by fixing most of an incumbent. Recent railway ALNS work continues to outperform generic ALNS or direct commercial-solver runs by using domain-specific destroy and repair operators, sometimes with adaptive operator selection.
+- **Relevance:** Candidate PS1 destroy operators should target a predecessor chain, a congested corridor-week, one contract, one line/ECLO window, or one poorly packed PC/C group. Random removal should be only a diversity operator.
+- **Limitation:** The 2026 railway paper includes crew routing and depot selection and has not yet been inspected in full. Q-learning operator selection is not justified until simpler score-based adaptation is benchmarked.
+- **Confidence:** High for structure-aware LNS; Low for Q-learning as a PS1 improvement.
+
+### `R017` Full feasible-group enumeration is possible on the public instance but concentrated at hotspots
+
+- **Evidence:** Local enumeration over the official public CSVs, using every activity's tunnel-plus-platform footprint and the published PM, PC+C, and C-only legal mixes.
+- **Finding:** Sixty-seven locations are touched. Ignoring week eligibility, there are 5,906 distinct legal activity groups. One platform, `PLAT:BET:S15:EB`, contributes 1,470 groups because 13 C activities and one PC activity touch it. Repeating every static group across all 30 weeks would create an upper bound of 177,180 group-week candidates before date filtering.
+- **Relevance:** Full column enumeration is feasible enough to prototype, but most columns arise from a few hotspots. A hybrid should enumerate sparse locations and generate, restrict, or lazily activate groups at hotspots.
+- **Limitation:** These are activity-level combinations, not occurrence-specific assignments. They ignore eligible weeks, predecessors, closures, and contract weekly limits, so they measure formulation size rather than feasible schedules.
+- **Confidence:** High for the public instance.
+
+### `R018` CP-SAT already uses a multi-worker portfolio and LNS, while hints are not guarantees
+
+- **Sources:** Perron et al., [The CP-SAT-LP Solver](https://doi.org/10.4230/LIPIcs.CP.2023.3), 2023; current [OR-Tools CP-SAT model protocol](https://github.com/google/or-tools/blob/stable/ortools/sat/cp_model.proto) and [solver parameters](https://github.com/google/or-tools/blob/stable/ortools/sat/sat_parameters.proto).
+- **Finding:** Multi-threaded CP-SAT is a portfolio of different subsolvers and includes LNS workers. A solution hint may help but is not guaranteed to accelerate search, be used, or produce a nearby final solution. The solver exposes objective bounds, gap information, solution pools, LNS controls, and assumption-based infeasibility cores.
+- **Relevance:** Benchmark worker counts and hints instead of assuming they help. Store both incumbent score and best bound. For infeasibility explanations, group optional requirements under assumption literals and request a sufficient core.
+- **Limitation:** A returned assumption core is sufficient, not guaranteed irreducible or minimal. Multi-threaded runs can be nondeterministic.
+- **Confidence:** High.
+
+### `R019` Minimal-change replanning requires an explicit objective
+
+- **Evidence:** OR-Tools states that a solution hint does not guarantee a solution close to the hint; the Flatland 3 winner explicitly replanned affected agents through an LNS neighbourhood.
+- **Finding:** Warm-starting the disrupted model from the baseline is not a minimal-churn guarantee.
+- **Relevance:** Replanning should lexicographically minimise: baseline feasibility and official score degradation first, then the number of moved access occurrences, then total week displacement, then changes to ECLO/access-night decisions. Arbitrary `co_share_group` strings must not be compared; semantic group membership or selected possession columns should be compared instead.
+- **Limitation:** The exact churn hierarchy remains a product decision and must not override the official scenario score unless the bonus is presented as a separate recovery mode.
+- **Confidence:** High for the need for an explicit metric; Medium for the proposed hierarchy.
+
+### `R020` Online bandit selection is a practical self-improvement mechanism without a training corpus
+
+- **Source:** Cai, Kadioglu, and Dilkina, [Balans: Multi-Armed Bandits-based Adaptive Large Neighborhood Search for Mixed-Integer Programming](https://arxiv.org/abs/2412.14382), 2024.
+- **Finding:** Balans chooses among destroy and repair neighbourhoods online for the current instance. It requires neither labelled examples nor offline training, and the authors report gains over the default MIP solver, a fixed best neighbourhood, and an earlier MIP-LNS method on their benchmark suite.
+- **Relevance:** PS1 can improve during each solve by learning which neighbourhoods work on that scenario and instance. This is a stronger near-term fit than training a neural model before we have a diverse corpus.
+- **Limitation:** The paper benchmarks generic MIPs, not PS1 or CP-SAT. Its performance claims must be reproduced on our instances.
+- **Confidence:** High for the method and reported experiments; Medium for PS1 transfer.
+
+### `R021` Adaptive operator rewards must include time and feasibility, not only raw score gain
+
+- **Sources:** Ropke and Pisinger, [An Adaptive Large Neighborhood Search Heuristic for the Pickup and Delivery Problem with Time Windows](https://doi.org/10.1016/j.trb.2005.05.001), 2006; Cai et al. 2024.
+- **Finding:** ALNS maintains competing operators and updates their selection probabilities from observed performance. Newer bandit variants frame this as online exploration versus exploitation.
+- **Relevance:** Record every PS1 neighbourhood attempt with operator, variables released, time limit, feasibility, starting score, ending score, best bound, and improvement. A candidate reward is feasible objective improvement per deterministic time budget, with separate credit for repairing an infeasible incumbent. Normalise within each scenario because A, B, and C have different score scales.
+- **Limitation:** The reward definition above is a PS1 design proposal, not a result established by either paper. Wall-clock reward is noisy when parallel CP-SAT is nondeterministic.
+- **Confidence:** High for adaptive selection; Medium for the proposed instrumentation and reward.
+
+### `R022` The README's qualitative lever ordering is not a safe optimisation rule
+
+- **Evidence:** Current official `PS1_README.md` objective formulas and the definitions of `excess_access_nights_total` and `eclo_nights_total`.
+- **Finding:** Scenario C charges delay per day with contract and activity weighting, excess at 7 per excess location-week access-night, and ECLO at 5 per ECLO activity access. The prose compares examples with different quantities, then suggests a fixed order of actions. Actual marginal cost depends on how many activities, locations, and weeks each action changes. For example, one week of Priority-3 delay costs 7 or 9.1 for one affected activity under the stated weights, while an added possession can create excess at several occupied locations and an ECLO decision can change the required count of access rows.
+- **Relevance:** Never encode “delay P3, then ECLO, then excess” as a hard search policy. Generate alternatives and evaluate the complete stated objective exactly. Use the prose ordering only as a branching hint when the computed marginal costs agree.
+- **Limitation:** The executable validator is still unavailable, so activity-level lateness aggregation and ECLO counting need controlled confirmation.
+- **Confidence:** High that fixed ordering is mathematically unsafe; Medium on exact validator aggregation.
+
+### `R023` Activity lateness, not only the submitted contract result, appears to drive the weighted score
+
+- **Evidence:** `PS1_README.md` describes `RESULTS.csv` at contract level, defines `priority_overrun` from contract overrun-days, but says `priority_weighted_score` is summed per overrunning activity and uses each activity's priority nudge.
+- **Finding:** A contract can contain activities with different priorities and completion weeks, while `RESULTS.csv` exposes only one completion and overrun per contract. The prose says the weighted score is summed per overrunning activity. Applying that rule to the sample schedule produces 48.3: late activities A035, A036, A038, A059, and A075 contribute 9.1, 18.2, 7, 7, and 7 respectively. This resolves the most likely intended local calculation: derive each activity's finish from `SCHEDULE_ACCESS.csv`, compare it with its contract planned date, and apply that activity's priority nudge.
+- **Relevance:** Model and locally report activity-level lateness even though `RESULTS.csv` is contract-level. Still construct a two-activity controlled validator test to confirm that the result file is cross-checked rather than used as the score's only source.
+- **Limitation:** The 48.3 is a reproducible derivation from the sample files and prose, not executable-validator output.
+- **Confidence:** Medium until validator-confirmed.
+
+### `R024` Resource-independent lower bounds expose unavoidable score before any packing conflict
+
+- **Evidence:** Reproducible local earliest-start calculation using planned starts, one access per activity per week, workload, FS+0 predecessors, and the 2027-01-04 horizon start.
+- **Finding:** In Scenario A, even with unlimited location and workfront capacity, A036 cannot finish before 2027-07-18, 14 days after C006's planned date, and A059 cannot finish before 2027-05-23, 7 days after C010's planned date. Under the activity-weighted interpretation, this gives an objective lower bound of 25.2 before resource conflicts. The sample score is 48.3, so 23.1 comes from other late activity occurrences. In Scenario B, hard dates require at least four ECLO accesses for A036 and two for A059, for a resource-independent lower bound of six ECLO rows and score 30. In Scenario C, the two-ECLO-per-activity cap can reduce A036 to seven days late, but 10 ECLO penalty plus 9.1 delay exceeds its no-ECLO cost of 18.2; the same comparison for A059 is 10 versus 7. Thus the same 25.2 remains the isolated objective lower bound.
+- **Relevance:** These are immediate regression checks and search targets. If a local bound exceeds a returned incumbent, the local implementation is wrong. The gap from 25.2 or 30 separates intrinsic date pressure from avoidable conflicts.
+- **Limitation:** These bounds deliberately ignore locations, closures, possession mixes, line-wide ECLO-window coupling, weekly allocation, and workfronts. They cannot prove the global optimum unless matched by a fully feasible schedule.
+- **Confidence:** High for the calculation under the published rules; Medium for weighted-score semantics until validator-confirmed.
+
+### `R025` Metamorphic tests can validate the checker even when the true optimum is unknown
+
+- **Source:** Alzahrani, Spichkova, and Harland, [Application of property-based testing tools for metamorphic testing](https://arxiv.org/abs/2211.12003), 2022.
+- **Finding:** Metamorphic testing addresses the oracle problem by checking relations between transformed inputs and outputs instead of requiring the exact answer to every generated case. Property-based tools can generate and verify those transformations automatically.
+- **Relevance:** Build two test layers. Boundary fixtures should exercise PM alone, PC+3C, illegal PC+4C, 4C, illegal 5C, buffer exemption only within the same group, Live mirroring, strict-later-week predecessors, weekly access-night counts, workfronts, C's +1 excess limit, and two-week ECLO windows. Metamorphic tests should verify that row reordering, consistent ID renaming, and bijective `co_share_group` renaming do not alter feasibility or score; increased supply cannot invalidate a schedule; and tightening a deadline cannot improve the optimum. Any violation exposes a checker, serializer, or model bug without needing a known optimum.
+- **Limitation:** The PS1 relations are proposed from the published rules. Only the official validator can resolve undocumented behaviour, and monotonicity tests apply to the optimum or a fixed schedule, not necessarily to a time-limited heuristic's returned score.
+- **Confidence:** High for the testing method; Medium until each relation is validator-confirmed.
+
+### `R026` Clique and aggregate constraints can replace large sets of pairwise conflicts
+
+- **Source:** Grimm et al., [A decomposition approach for integrated locomotive scheduling and driver assignment in rail freight transport](https://doi.org/10.1016/j.ejtl.2024.100145), 2024.
+- **Finding:** The authors construct conflict graphs and replace many pairwise conflict inequalities with clique-cover inequalities. Their formulation uses fewer constraints and a tighter feasible-region description.
+- **Relevance:** Precompute PS1 conflict cliques for activities that cannot occupy the same possession or access-night, then compare clique constraints with pairwise implications. At one location-week, a useful aggregate lower bound on possession count is `PM + PC + ceil(max(0, C - 3*PC)/4)` before buffer conflicts; selected columns are an exact strengthening when activity identities matter.
+- **Limitation:** The aggregate expression assumes every C can join every PC or C batch at that location and therefore is only a lower bound. Buffers, multi-location footprints, contract access nights, and cross-line rules can require more possessions.
+- **Confidence:** High for clique tightening; High for the stated local counting lower bound.
+
+### `R027` A learned optimiser is justified only after representative-instance evaluation
+
+- **Sources:** Chen et al., [Learning to Optimize: A Primer and A Benchmark](https://www.jmlr.org/papers/v23/21-0308.html), 2022; Balcan et al., [Learning to Branch](https://proceedings.mlr.press/v80/balcan18a.html), 2018.
+- **Finding:** Learning can improve repeated optimisation over an instance distribution, including branching decisions, but learned optimisers commonly fail outside the training distribution. The benefit depends on having representative samples from the target distribution.
+- **Relevance:** Do not train an end-to-end schedule generator on one public instance. If hidden-instance-style generation becomes available, first log exact-solver trajectories and operator outcomes. Evaluate on held-out seeds plus held-out topology, scale, priority mix, supply pressure, and predecessor density. Keep every learned choice inside an exact feasibility-and-score shell. Until that gate is passed, online bandit selection over hand-designed operators is the safer self-improvement layer.
+- **Limitation:** The JMLR benchmark focuses mainly on continuous optimisation, and learning-to-branch targets MIP tree search. They establish the distribution requirement, not expected PS1 gains.
+- **Confidence:** High.
+
+### `R028` Possession membership is location-specific, not one global group per activity occurrence
+
+- **Evidence:** Reproducible comparison of the public `SCHEDULE_OCCUPANCY.csv` rows.
+- **Finding:** The sample contains 129 location-week groups with multiple activities and 100 activity pairs that share at least one such group. Many pairs share at one common location but use different groups at another common location in the same week. For example, A001 and A011 in week 23 share four of their five common locations but not `PLAT:BET:S15:EB`.
+- **Relevance:** A model with one possession-group variable per activity-week is wrong. Membership must be indexed by activity, week, and occupied location, or represented by a selected local batch column at each location-week. Closure exemption must be tested at the exact location/group granularity used by the validator.
+- **Limitation:** The sample proves location-specific labels, but not every undocumented closure-exemption edge case.
+- **Confidence:** High.
+
+### `R029` Week-indexed access booleans avoid pre-guessing the number of ECLO rows
+
+- **Evidence:** Published workload rule: standard rows yield 1.0, ECLO rows 1.5, at most one access per activity-week, and total yield must be at least demand.
+- **Finding:** The number of output rows for an activity is a decision because ECLO can replace some standard rows. A direct formulation can use `x[a,w]` for an access and `e[a,w] <= x[a,w]` for ECLO, with integer half-unit workload `2*sum(x) + sum(e) >= 2*demand`. Any redundant row that can be removed while preserving workload is dominated because removal cannot worsen capacity, closures, dates, or ECLO penalty. An inclusion-minimal workload has at most two half-units of oversupply.
+- **Relevance:** Prefer week-indexed booleans over allocating a fixed list of `total_accesses` occurrence variables. Add a secondary row-count minimisation or a dominance bound, while keeping the official `>=` rule in the independent checker.
+- **Limitation:** A dominance restriction must be proved and regression-tested before entering the hard model; the validator may accept redundant rows even though they are never score-improving.
+- **Confidence:** High.
+
+### `R030` Benchmark score-versus-time and variability, not one lucky final run
+
+- **Sources:** Gleixner et al., [MIPLIB 2017: data-driven compilation of the 6th mixed-integer programming library](https://doi.org/10.1007/s12532-020-00194-3), 2021; current OR-Tools [`CpSolverResponse`](https://github.com/google/or-tools/blob/stable/ortools/sat/cp_model.proto) and [`SatParameters`](https://github.com/google/or-tools/blob/stable/ortools/sat/sat_parameters.proto).
+- **Finding:** MIPLIB deliberately selects structurally diverse instances for fair solver comparison. CP-SAT reports wall time, deterministic time, objective, best bound, and a gap integral, while its search exposes seeds and worker counts. Search performance can vary with random choices and parallel portfolios.
+- **Relevance:** Benchmark each formulation and search policy on a matrix spanning activity count, horizon, topology, access-type mix, buffer severity, predecessor density, deadline slack, hotspot concentration, and supply pressure. Under fixed budgets, record validator feasibility, time to first feasible, best validated score over time, best bound, gap or gap integral, deterministic time, wall time, workers, seed, solver version, model size, and memory. Report median and tail behaviour across seeds; keep best score only for the submission portfolio.
+- **Limitation:** MIPLIB's exact instance-selection process is not a PS1 generator. Deterministic time improves comparability but does not replace the competition's actual wall-clock limit.
+- **Confidence:** High.
+
+### `R031` The latest close urban-rail work still relies on structure-aware ALNS
+
+- **Source:** [Operational-level centralized maintenance scheduling optimization for urban rail transit infrastructure under network conditions](https://doi.org/10.1016/j.cacaie.2026.100035), 2026.
+- **Finding:** The study integrates task allocation, crew scheduling, and depot choice in a time-space network, then uses problem-specific destroy/repair operators and Q-learning operator selection. Its Beijing Subway experiments report better efficiency and solution quality than traditional ALNS and Gurobi on the tested instances.
+- **Relevance:** This reinforces the exact-model plus domain-neighbourhood architecture. Crew routing and depot choice are omitted from PS1 inputs and therefore belong only in a future extension. Q-learning should be tested only after the simpler online-bandit baseline.
+- **Limitation:** The accessible abstract does not expose enough experimental detail to transfer gains or hyperparameters. The problem is richer than PS1.
+- **Confidence:** High for the published method and reported comparison; Low for direct PS1 performance transfer.
+
+### `R032` Contractor negotiation can be evidence from alternatives, not an extra scheduling constraint
+
+- **Source:** Schaeffer et al., [A bilevel programming and bargaining game approach to negotiations regarding time on track for railway maintenance](https://doi.org/10.1016/j.jrtpm.2025.100552), 2025.
+- **Finding:** The paper models infrastructure-manager and contractor negotiation over track-work duration, including urgency, leverage, and strategic behaviour. Its central result is that cooperative negotiation can improve combined utility in the studied setting.
+- **Relevance:** A credible optional negotiation feature would present validated alternatives and marginal costs: the score and affected work if a contractor receives one more access, changes duration, or accepts a later window. It should not invent unprovided contractor utility or bargaining parameters.
+- **Limitation:** PS1 supplies no utility curves, prices, or negotiation behaviour, so implementing the paper's bilevel game would require unsupported assumptions.
+- **Confidence:** High.
+
+### `R033` Robust plans need explicit uncertainty data and should be judged by recovery frequency
+
+- **Source:** Wei et al., [Robust Optimization of High-Level Maintenance Scheduling for High-Speed Trains under Uncertainty](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6568962), 2026 working paper.
+- **Finding:** The authors combine min-max robust optimisation with ALNS and evaluate adjustment frequency across 10,000 simulated scenarios. They report fewer adjustment days than a deterministic plan in their case study.
+- **Relevance:** If a disruption bonus later gains scenario data, evaluate not only expected score but frequency and magnitude of rescheduling. Without calibrated scenarios, present weather or asset failure as a user-selected what-if, not a probability claim.
+- **Limitation:** This is a working paper on high-speed train-set maintenance, not track possession, and its uncertainty model is unavailable in PS1.
+- **Confidence:** Medium for the reported result; High for the data requirement.
+
+### `R034` A 2026 national-scale possession problem favoured MaxSAT over MIP
+
+- **Source:** Reisch, Großmann, and Weiß, [A MaxSAT model for solving the track maintenance possession problem for the railway network in Germany](https://doi.org/10.1016/j.jrtpm.2026.100569), 2026.
+- **Finding:** The study schedules German maintenance demands into predefined containers with machine and traffic restrictions. On the large whole-country instances, its MaxSAT encoding outperformed the MIP formulation after a 24-hour limit and fulfilled about 95% of demands, close to a reported upper bound. Neither method proved the large instances optimal. On two smaller regional instances both reached the optimum, with neither solver uniformly faster.
+- **Relevance:** Keep CP-SAT as the primary solver because it uses SAT-style reasoning plus integer constraints, but add a pure weighted-MaxSAT formulation as a later benchmark if the problem can be cleanly Booleanised. Preserve bounds and anytime curves. Do not assume MIP, MaxSAT, or CP-SAT dominates at every scale.
+- **Limitation:** The German objective permits unfulfilled demand, whereas PS1 requires every activity to complete and minimises lateness, excess, and ECLO. It also includes machine tours absent from PS1.
+- **Confidence:** High.
+
+### `R035` The current public repository still does not contain the promised validator or expander
+
+- **Evidence:** GitHub tree and issue audit at upstream commit `966c976005db2e3e40a691cff268fdb8f396a5df` on 2026-09-18.
+- **Finding:** PS1 contains eight input CSVs, three sample output CSVs, the README, and two diagram files. There is no validator executable, package metadata, or `trackaccess` implementation, and the public issue list is empty. Upstream `main` remains at the same commit previously inspected.
+- **Relevance:** The internal checker and controlled test plan are urgent, but all validator-dependent semantics must remain marked unconfirmed. Continue monitoring the portal and upstream rather than reverse-engineering a nonexistent public executable.
+- **Limitation:** The organiser portal or a private release may contain files absent from the public repository.
+- **Confidence:** High for the public repository state.
+
+### `R036` Direct local group slots are smaller than full batch enumeration on the public instance
+
+- **Evidence:** Reproducible variable-count experiment over the public data and exact corridor footprints.
+- **Finding:** Planned-start domains create 994 activity-week access booleans and 4,908 activity-location-week presences. Full legal local batch columns after week filtering still create about 72,683 group-week candidates, with 1,470 at the single worst location-week. Direct membership in canonical local slots needs about 10,966 booleans in A using nominal supply slots, 15,874 in C using supply+1 slots, or 9,875 under a static dominance cap. The dominance cap at a location is `PM + PC + ceil(max(0, C - 3*PC)/4)` over all activities that can touch it; its public maximum is four.
+- **Relevance:** Start with direct local group slots plus strong symmetry breaking, not full set-partitioning columns. Retain columns as a benchmark or generate them only where the label model propagates poorly. In B, “unlimited” soft excess does not require unbounded labels: merging legally compatible groups cannot increase excess, closures, or ECLO, so an objective-optimal solution should exist within the dominance cap.
+- **Limitation:** The B dominance argument assumes the validator's closure exemption is monotone under legal merging. Confirm with `V007` before making the cap irreversible.
+- **Confidence:** High for counts; Medium for the validator-dependent dominance cap.
+
+### `R037` Group-label symmetry should be broken as interchangeable values
+
+- **Sources:** Walsh, [Symmetry Breaking Using Value Precedence](https://arxiv.org/abs/0903.1136), 2009; current OR-Tools [`SymmetryProto`](https://github.com/google/or-tools/blob/stable/ortools/sat/cp_model.proto).
+- **Finding:** Value-precedence constraints remove symmetry among interchangeable labels by requiring lower labels to appear before higher labels. CP-SAT can also detect permutation symmetries and orbitopes, including the Boolean-matrix pattern used in graph colouring.
+- **Relevance:** For every location-week, enforce contiguous use `used[g+1] <= used[g]`. Order activities deterministically and benchmark explicit first-use/value-precedence constraints against CP-SAT's automatic symmetry detection. Present group labels only after canonical renumbering in the serializer.
+- **Limitation:** Overly elaborate manual symmetry constraints can enlarge the model or interfere with search. The comparison must use identical feasible spaces and fixed budgets.
+- **Confidence:** High.
+
+### `R038` Scenario dominance gives safe warm starts when the input instance is shared
+
+- **Evidence:** Published scenario policies.
+- **Finding:** Any Scenario A feasible schedule is also hard-feasible in C on the same input because C relaxes capacity by one group per location-week and permits ECLO without requiring it. Its C score equals its A delay score when it uses neither excess nor ECLO. A B schedule is not necessarily C-feasible because B has unlimited soft excess and no ECLO continuity window. A C schedule is not necessarily A-feasible, and A/C schedules may violate B's hard planned dates.
+- **Relevance:** Solve A first and inject its validated schedule as C's guaranteed incumbent. Build B by targeted compression of late A activities rather than from scratch, while allowing extra groups and ECLO. Maintain separate models and objectives; share only derived structures and eligible incumbents.
+- **Limitation:** This transfer holds only when A, B, and C are evaluated on the same eight input CSVs. If organisers provide scenario-specific instances, only the architecture transfers.
+- **Confidence:** High under a shared instance.
+
+### `R039` The sample contradicts a simplistic weekly buffer-conflict rule
+
+- **Evidence:** Public sample access and occupancy rows inspected before research stopped.
+- **Finding:** A003 and A041 are both `Non-live (Consist)` C activities, occupy `SEC:BET:S15_S16:EB` in weeks 11 and 12, and use different local groups there. Their contract-local access-night indices also differ. Similar buffered overlaps appear elsewhere. Therefore the sample cannot be reproduced by simply forbidding every pair of buffered activities that share a corridor location in one week unless they use the same group at every common location.
+- **Relevance:** Closure logic is the highest-risk unverified semantic. Reproduce sample grouping, then use the official expander and minimal validator cases to determine whether buffers are tied to nights, selected locations, group construction, or another rule. Do not encode the simplistic pairwise interpretation as settled fact.
+- **Limitation:** The public sample shows which interpretation is wrong, not the complete correct algorithm.
+- **Confidence:** High.
+
+## Current method candidates
+
+These are research candidates, not reconciled decisions:
+
+| Candidate | When it may help | Main risk or test |
+|---|---|---|
+| Monolithic CP-SAT | Public-scale model and first exact implementation | Variable explosion from per-location grouping and pairwise closures |
+| Restricted-domain CP-SAT | Most occurrences have narrow useful week ranges | Restriction can remove the true optimum; add controlled expansion |
+| CP-SAT large-neighbourhood search | Strong feasible incumbent exists | Bad neighbourhood definitions create repeated local optima |
+| Assignment/packing decomposition | Week assignment is easy but detailed grouping is hard | Weak cuts cause slow convergence or invalid master incumbents |
+| MILP baseline | Objective bounds and formulation comparison | Big-M and symmetry may weaken the relaxation |
+| Weighted MaxSAT baseline | Boolean week/group encoding or large hidden instances | Numeric objective and multi-location grouping may inflate clauses |
+| Greedy constructive heuristic | Fast warm start and fallback | May paint later predecessor or hotspot activities into infeasibility |
+| Learned search heuristic | Only after a large synthetic run corpus exists | Distribution shift and no feasibility guarantee |
+| Online bandit over LNS operators | Learns per-instance operator performance without offline data | Noisy rewards and excess exploration under short time limits |
+
+## Failure register
+
+| ID | Observed failure pattern | Protection for PS1 |
+|---|---|---|
+| `F001` | Monolithic exact formulations stop scaling with horizon or integration depth. | Precompute aggressively, restrict domains, use decomposition or LNS, and benchmark scale early. |
+| `F002` | A high-level assignment looks good but detailed resource packing is infeasible. | Validate each complete incumbent and feed infeasible subsets back as cuts or repairs. |
+| `F003` | One cut or neighbourhood strategy works early but stalls later. | Use a timed portfolio and record improvement curves, not only final scores. |
+| `F004` | Sequentially assigning work and grouping possessions loses the main sharing benefit. | Co-optimise week and compatible group composition, or iterate between them. |
+| `F005` | A realistic-looking objective diverges from the official scoring function. | Optimise the validator score first; operational qualities are secondary tie-breakers. |
+| `F006` | Instance-specific performance percentages are mistaken for expected gains. | Preserve experimental context and measure all claims on our own validated runs. |
+| `F007` | Robust or learned methods are added without uncertainty data or training coverage. | Keep the core deterministic; introduce these methods only with explicit data and exact validation. |
+| `F008` | Group labels create many mathematically identical solutions and waste search. | Compare direct labels against feasible-group columns and add canonical lowest-label symmetry breaking. |
+| `F009` | Pairwise compatibility is enforced while batch membership or timing remains inconsistent. | Tie every membership variable to location, week, capacity count, and closure exemption; add redundant checker assertions. |
+| `F010` | A warm start is mistaken for a minimal-change constraint. | Add explicit change variables and a lexicographic churn objective. |
+| `F011` | Solver status `FEASIBLE` is reported as proven optimal. | Record incumbent, best bound, gap, wall time, worker count, and status separately. |
+| `F012` | A fixed heuristic order is copied from qualitative scoring prose even when actions affect different numbers of rows and locations. | Compute the full marginal objective for every candidate move. |
+| `F013` | Adaptive search overfits to one operator or rewards slow gains that consume the budget. | Retain exploration, normalise rewards by scenario, and benchmark score-versus-time curves. |
+| `F014` | The prose objective is implemented despite unresolved aggregation semantics. | Differential-test controlled schedules against the official validator before trusting local scores. |
+| `F015` | A checker passes only hand-written happy paths and shares the solver's same mistaken assumptions. | Add independent boundary, metamorphic, and differential tests; parse outputs independently. |
+| `F016` | Pairwise conflicts create a large weak formulation. | Precompute maximal or covering cliques and add aggregate possession lower bounds. |
+| `F017` | A model memorises the public topology or generator quirks and degrades on hidden instances. | Hold out structural regimes, compare against non-learned baselines, and preserve exact feasibility checks. |
+| `F018` | One global possession group is assigned to an activity-week despite location-specific sample groups. | Index membership by location or use local batch columns linked to the same activity-week decision. |
+| `F019` | The number of access occurrences is fixed before ECLO decisions. | Use optional week-indexed access rows and half-unit workload conservation. |
+| `F020` | A method is selected from one lucky seed or only its final score. | Use fixed budgets, several seeds, score-over-time curves, feasibility rate, bounds, and held-out structural regimes. |
+| `F021` | One solver family is assumed to dominate because of one paper or one instance size. | Benchmark CP-SAT, MIP, and MaxSAT formulations under the same validated objective and time budgets. |
+
+## Validator experiment matrix
+
+Run these minimal, single-purpose cases when the official validator becomes available. Do not combine them, because one hard failure can mask another semantic.
+
+| ID | Question | Controlled comparison |
+|---|---|---|
+| `V001` | Is week completion the Sunday of the indexed week? | One one-access activity in weeks 1 and 2; compare derived completion dates. |
+| `V002` | Is the horizon a hard upper bound? | Move an otherwise valid one-access activity from the final week to week `horizon+1`. |
+| `V003` | How is weighted lateness aggregated? | Two activities in one contract, different activity priorities and finish weeks; vary one at a time. |
+| `V004` | Does `RESULTS.csv` drive or merely report score? | Keep schedule fixed and alter only submitted completion/overrun values. |
+| `V005` | What exactly counts as one ECLO night? | Compare one ECLO activity row with two co-shared ECLO activity rows in one possession. |
+| `V006` | Is excess counted per local possession group? | Add one group at one occupied location, then one corridor group spanning several locations. |
+| `V007` | What is the closure-exemption granularity? | Make two activities share only one of several common locations, then vary groups at the conflict location. |
+| `V008` | Are group labels purely local and arbitrary? | Bijectively rename labels within location-week, then rename inconsistently across locations. |
+| `V009` | What does `access_seq` enforce? | Permute rows, swap sequence labels, introduce a gap, and duplicate one sequence value. |
+| `V010` | Is beneficial workload oversupply accepted? | Compare exact, +0.5, and +1.0 work-unit coverage using different standard/ECLO mixes. |
+| `V011` | How are Scenario C line windows derived? | Place ECLO at both endpoints of a two-week span, then at three weeks; repeat with interchange Live work. |
+| `V012` | Are access-night indices independent across contracts and locations? | Reuse the same index across contracts, then exceed distinct indices within one contract/type/week. |
+
+## Deferred work after reconciliation
+
+Research stopped at the user's request. The following are implementation or evidence dependencies, not an active research queue:
+
+1. Obtain the executable validator and official expander, then run `V001`–`V012` plus the buffered-overlap cases in `R039`.
+2. Confirm runtime and hidden-instance limits.
+3. Implement and benchmark the reconciled primary model before deciding whether a fallback formulation is needed.
+4. Continue upstream monitoring only when work resumes or the organiser announces a change.
