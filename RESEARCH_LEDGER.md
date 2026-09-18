@@ -342,6 +342,14 @@ Confidence labels:
 - **Limitation:** The public sample shows which interpretation is wrong, not the complete correct algorithm.
 - **Confidence:** High.
 
+### `R040` The sample specifically permits buffer-to-buffer overlap
+
+- **Evidence:** Recomputed work footprints and external buffers from the public input, then matched them to the organizer's sample access rows. The three sample CSV hashes are unchanged from upstream's initial commit `3ea7744`; that same initial README already contained both “buffers never overlap” and the claim that the sample has zero hard violations. This is an original specification inconsistency, not a later sample drift introduced by the predecessor update.
+- **Finding:** The sample schedules A069 and A046 in week 12. Their work footprints are disjoint and neither activity's buffer intersects the other's work, but both external buffers contain `SEC:ALP:H02_S05:WB`. A rule that forbids buffer-to-buffer overlap would therefore reject the organizer's stated feasible sample. Four such buffer-only collisions occur under the current topology derivation, including another ALP case in week 11 and BET cases in weeks 17 and 20.
+- **Relevance:** Keep closure screening narrow: reject another possession's work inside a component's blocked area, but do not reject buffer-only overlap. Preserve this exact case as a regression. Treat it as sample-derived evidence, not proof that the full inferred closure semantics match the hidden validator.
+- **Limitation:** A topology or buffer-expansion error could produce the apparent overlap. Only the official expander or validator can resolve that remaining possibility.
+- **Confidence:** High that the derived sample contradiction is reproducible; Medium that the derivation matches the organizer's intended expander.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

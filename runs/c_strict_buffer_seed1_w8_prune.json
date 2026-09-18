@@ -1,10 +1,10 @@
 {
   "final_access_rows": 191,
   "final_score": 26.1,
-  "final_submission_hash": "091c030ac19f360b9cb5a8a58ef6998211bbc00801c3bf1b0ad03e586a6b0630",
+  "final_submission_hash": "eacbc92d557253be9aed8535b1ce487faa330aba06398734a9fc92a58e6cff7e",
   "initial_access_rows": 191,
   "initial_score": 26.1,
-  "initial_submission_hash": "091c030ac19f360b9cb5a8a58ef6998211bbc00801c3bf1b0ad03e586a6b0630",
+  "initial_submission_hash": "eacbc92d557253be9aed8535b1ce487faa330aba06398734a9fc92a58e6cff7e",
   "reference_validator_confirmed": false,
   "removed_accesses": [],
   "scenario": "C"

@@ -89,10 +89,30 @@ def _blocked_locations(instance: Instance, component: set[str]) -> set[str]:
     return blocked
 
 
+def _buffer_locations(instance: Instance, component: set[str]) -> set[str]:
+    """Return external buffer sectors, including Live opposite-bound mirroring."""
+
+    buffered: set[str] = set()
+    for activity_id in sorted(component):
+        activity = instance.activities[activity_id]
+        project = instance.projects[activity.contract_number]
+        external = _external_buffer_sectors(instance, activity_id)
+        buffered.update(external)
+        if project.nature_of_activity == "Live":
+            _, _, bound = split_sector_location(activity.start_location_id)
+            buffered.update(
+                _replace_bound(location_id, _opposite(bound))
+                for location_id in external
+            )
+    return buffered
+
+
 def screen_closures(
     instance: Instance,
     access_rows: Iterable[AccessLike],
     occupancy_rows: Iterable[OccupancyLike],
+    *,
+    forbid_buffer_overlap: bool = False,
 ) -> tuple[ClosureConflict, ...]:
     """Apply the narrow closure interpretation demonstrated by the public fixture.
 
@@ -137,7 +157,7 @@ def screen_closures(
         components: dict[str, set[str]] = defaultdict(set)
         for activity_id in activity_ids:
             components[find(activity_id)].add(activity_id)
-        component_data: list[tuple[set[str], set[str], set[str]]] = []
+        component_data: list[tuple[set[str], set[str], set[str], set[str]]] = []
         ordered_components = sorted(
             components.values(), key=lambda component: tuple(sorted(component))
         )
@@ -147,11 +167,30 @@ def screen_closures(
                 for activity_id in sorted(component)
                 for location_id in activity_footprint(instance, instance.activities[activity_id])
             }
-            component_data.append((component, work, _blocked_locations(instance, component)))
+            component_data.append(
+                (
+                    component,
+                    work,
+                    _blocked_locations(instance, component),
+                    _buffer_locations(instance, component),
+                )
+            )
 
-        for first_index, (first_component, first_work, first_blocked) in enumerate(component_data):
-            for second_component, second_work, second_blocked in component_data[first_index + 1 :]:
+        for first_index, (
+            first_component,
+            first_work,
+            first_blocked,
+            first_buffer,
+        ) in enumerate(component_data):
+            for (
+                second_component,
+                second_work,
+                second_blocked,
+                second_buffer,
+            ) in component_data[first_index + 1 :]:
                 collision = (first_blocked & second_work) | (second_blocked & first_work)
+                if forbid_buffer_overlap:
+                    collision |= first_buffer & second_buffer
                 if collision:
                     conflicts.append(
                         ClosureConflict(

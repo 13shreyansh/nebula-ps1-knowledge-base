@@ -8,7 +8,11 @@ import shutil
 import tempfile
 from dataclasses import replace
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
+from nebula_ps1.cli import main as cli_main
+from nebula_ps1.closure import _external_buffer_sectors, screen_closures
 from nebula_ps1.evaluate import evaluate_submission, load_submission
 from nebula_ps1.independent_score import independently_score
 from nebula_ps1.instance import load_instance
@@ -108,6 +112,84 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertAlmostEqual(evaluation.priority_weighted_score, 48.3)
         self.assertAlmostEqual(evaluation.objective_score, 48.3)
         self.assertIn("closure", evaluation.warnings[0])
+
+    def test_public_sample_contains_buffer_only_overlap(self) -> None:
+        access, occupancy, _ = load_submission(PACK / "03_submission_sample")
+        scheduled = {(row.activity_id, row.week) for row in access}
+        self.assertIn(("A069", 12), scheduled)
+        self.assertIn(("A046", 12), scheduled)
+
+        first_work = set(
+            activity_footprint(self.instance, self.instance.activities["A069"])
+        )
+        second_work = set(
+            activity_footprint(self.instance, self.instance.activities["A046"])
+        )
+        first_buffer = _external_buffer_sectors(self.instance, "A069")
+        second_buffer = _external_buffer_sectors(self.instance, "A046")
+
+        self.assertFalse(first_work & second_work)
+        self.assertFalse(first_buffer & second_work)
+        self.assertFalse(second_buffer & first_work)
+        self.assertEqual(
+            first_buffer & second_buffer,
+            {"SEC:ALP:H02_S05:WB"},
+        )
+        self.assertEqual(screen_closures(self.instance, access, occupancy), ())
+        strict_conflicts = screen_closures(
+            self.instance,
+            access,
+            occupancy,
+            forbid_buffer_overlap=True,
+        )
+        self.assertEqual(len(strict_conflicts), 4)
+        self.assertTrue(
+            any(
+                conflict.week == 12
+                and set(conflict.first_activities + conflict.second_activities)
+                == {"A046", "A069"}
+                and conflict.locations == ("SEC:ALP:H02_S05:WB",)
+                for conflict in strict_conflicts
+            )
+        )
+
+    def test_solve_a_cli_does_not_reference_an_undefined_audit_argument(self) -> None:
+        telemetry = SimpleNamespace(
+            objective_score=0.0,
+            remaining_closure_conflicts=0,
+            as_json=lambda: "{}",
+        )
+        argv = [
+            "nebula-ps1",
+            "solve-a-relaxation",
+            "--data",
+            str(PACK / "01_data"),
+            "--output",
+            "unused",
+        ]
+        with patch("sys.argv", argv), patch(
+            "nebula_ps1.cli.solve_scenario_a_relaxation", return_value=telemetry
+        ) as solve:
+            with self.assertRaisesRegex(SystemExit, "0"):
+                cli_main()
+        self.assertNotIn("audit_output_dir", solve.call_args.kwargs)
+
+    def test_c_portfolio_cli_forwards_custom_audit_directory(self) -> None:
+        argv = [
+            "nebula-ps1",
+            "solve-c-portfolio",
+            "--data",
+            str(PACK / "01_data"),
+            "--output",
+            "unused",
+            "--audit-output",
+            "custom-audit",
+        ]
+        with patch("sys.argv", argv), patch(
+            "nebula_ps1.cli.solve_scenario_c_portfolio", return_value={}
+        ) as solve:
+            cli_main()
+        self.assertEqual(solve.call_args.kwargs["audit_output_dir"], "custom-audit")
 
     def test_minimal_32_2_repair_passes_sample_consistent_closure_screen(self) -> None:
         candidate = ROOT / "runs" / "a_repair_late_a035_a038"
@@ -381,6 +463,17 @@ class PublicFixtureTests(unittest.TestCase):
                 evaluation = evaluate_submission(self.instance, answer_key, scenario=scenario)
                 audit = independently_score(PACK / "01_data", answer_key)
                 self.assertEqual(evaluation.hard_violations, ())
+                access, occupancy, _ = load_submission(answer_key)
+                strict_conflicts = screen_closures(
+                    self.instance,
+                    access,
+                    occupancy,
+                    forbid_buffer_overlap=True,
+                )
+                self.assertEqual(
+                    not strict_conflicts,
+                    expected["strict_buffer_overlap_checked"],
+                )
                 self.assertAlmostEqual(
                     evaluation.objective_score, expected["internally_checked_score"]
                 )

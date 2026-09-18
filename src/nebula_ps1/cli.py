@@ -55,6 +55,11 @@ def main() -> None:
         type=float,
         help="per-solve cap; defaults to 1s for A/B and 3s for C",
     )
+    flexible_parser.add_argument(
+        "--strict-buffer-overlap",
+        action="store_true",
+        help="also forbid buffer-to-buffer overlap as a published-rule hedge",
+    )
     portfolio_parser = subparsers.add_parser(
         "solve-c-portfolio",
         help="protect a checked A-as-C fallback before attempting a better C solve",
@@ -104,7 +109,6 @@ def main() -> None:
         telemetry = solve_scenario_a_relaxation(
             instance,
             args.output,
-            audit_output_dir=args.audit_output,
             time_limit_seconds=args.time_limit,
             workers=args.workers,
             seed=args.seed,
@@ -132,6 +136,7 @@ def main() -> None:
             closure_round_limit=args.closure_rounds,
             sample_hint_dir=args.sample_hint,
             round_time_limit_seconds=args.round_time_limit,
+            forbid_buffer_overlap=args.strict_buffer_overlap,
         )
         print(telemetry.as_json())
         if telemetry.objective_score is None:
@@ -142,6 +147,7 @@ def main() -> None:
         report = solve_scenario_c_portfolio(
             instance,
             args.output,
+            audit_output_dir=args.audit_output,
             a_time_limit_seconds=args.a_time_limit,
             c_time_limit_seconds=args.c_time_limit,
             workers=args.workers,

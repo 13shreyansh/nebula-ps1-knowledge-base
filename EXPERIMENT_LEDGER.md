@@ -270,3 +270,15 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: pruning removes nothing from any public incumbent; each directory contains exactly `SCHEDULE_ACCESS.csv`, `SCHEDULE_OCCUPANCY.csv`, and `RESULTS.csv`; both scorers agree; all implemented checks pass; 19 release regressions pass.
 - Limitation: `MANIFEST.json` explicitly records `reference_validator_confirmed=false`.
 - Decision: use `deliverables/public/{A,B,C}` as the protected public answer keys. Do not package telemetry, stages, manifests, or audit reports inside the scenario directories.
+
+### E022: Strict buffer-overlap hedge with no score cost
+
+- Timestamp: 2026-09-19 00:55:00 +08
+- Risk: the official README says buffers never overlap, but its unchanged stated-feasible sample has four buffer-only overlaps under the published topology expansion. The sample-consistent checker allowed buffer-buffer overlap and rejected only buffer-to-work collisions.
+- Method: add an explicit alternate closure policy that also rejects overlap between external buffer sectors of distinct possession components, including Live opposite-bound mirrored buffers. Keep the existing checker default unchanged; solve new candidates under the stricter policy and require both screens to pass before promotion.
+- Scenario A: `OPTIMAL` at `32.2`, matching bound, 145 solves/144 closure rounds, 106.178 seconds, 192 access rows, zero strict conflicts.
+- Scenario B: `OPTIMAL` at `30.0`, matching bound, 173 solves/172 closure rounds, 151.510 seconds, 189 access rows, six ECLO rows, zero excess/delay, zero strict conflicts.
+- Scenario C: `OPTIMAL` at `26.1`, matching bound, 30 solves/29 closure rounds, 76.730 seconds, 191 access rows, two ECLO rows, `16.1` delay, zero excess, zero strict conflicts.
+- Verification: full-gate pruning removed no rows; the main checker and independent raw-CSV scorer agree; each promoted answer key passes both closure screens; the manifest pins normalized file hashes and marks `strict_buffer_overlap_checked=true`; 22 regressions pass.
+- Result: all three protected scores are unchanged while no longer depending on the known buffer-only ambiguity. This is stronger robustness evidence, not reference-validator confirmation, because other closure details remain inferred.
+- Implementation defect found during the same audit: `solve-a-relaxation` referenced an undefined CLI argument and `solve-c-portfolio --audit-output` ignored its value. Both routes are corrected and directly regression-tested.

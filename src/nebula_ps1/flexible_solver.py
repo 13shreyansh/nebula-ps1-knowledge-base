@@ -26,6 +26,7 @@ def solve_flexible_supply_relaxation(
     closure_round_limit: int = 50,
     sample_hint_dir: str | Path | None = None,
     round_time_limit_seconds: float | None = None,
+    forbid_buffer_overlap: bool = False,
 ) -> SolveTelemetry:
     """Solve a scenario with iterative cuts from the inferred closure screen.
 
@@ -365,7 +366,12 @@ def solve_flexible_supply_relaxation(
         # Resetting after one feasible solve causes repeated UNKNOWN/retry cycles
         # as the relaxation becomes progressively harder.
         final_access_rows, final_occupancy_rows = extract_rows(solver)
-        final_conflicts = screen_closures(instance, final_access_rows, final_occupancy_rows)
+        final_conflicts = screen_closures(
+            instance,
+            final_access_rows,
+            final_occupancy_rows,
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
         current_objective_tenths = solver.value(primary_score)
         if not final_conflicts:
             if safe_objective_tenths is None or current_objective_tenths < safe_objective_tenths:
@@ -532,7 +538,10 @@ def solve_flexible_supply_relaxation(
         bound = None
     proto = model.proto
     telemetry = SolveTelemetry(
-        formulation=f"scenario_{scenario.lower()}_iterative_inferred_closure_relaxation",
+        formulation=(
+            f"scenario_{scenario.lower()}_iterative_"
+            f"{'strict_buffer' if forbid_buffer_overlap else 'sample_consistent'}_closure_relaxation"
+        ),
         status=status,
         objective_score=objective,
         best_bound=bound,
@@ -545,9 +554,15 @@ def solve_flexible_supply_relaxation(
         model_variables=len(proto.variables),
         model_constraints=len(proto.constraints),
         limitation=(
-            "Closure and buffer conflicts are separated using an inferred rule set that matches the public "
-            "fixture; reference-validator confirmation is still mandatory. The row-count tie-breaker cannot "
-            "alter the official penalty objective."
+            (
+                "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which "
+                "contradicts four cases in the organizer's stated-feasible sample. This output is a hedge, "
+                "not validator confirmation."
+                if forbid_buffer_overlap
+                else "Closure and buffer conflicts are separated using an inferred rule set that matches "
+                "the public fixture; reference-validator confirmation is still mandatory."
+            )
+            + " The row-count tie-breaker cannot alter the official penalty objective."
         ),
         closure_rounds=closure_rounds,
         remaining_closure_conflicts=len(final_conflicts),
