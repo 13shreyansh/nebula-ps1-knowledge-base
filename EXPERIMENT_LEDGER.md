@@ -862,3 +862,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Decision: do not replace the bounded production neighborhood with unconditional fixed-point closure without a targeted failure and matched runtime evidence. The protected incumbent and full checker remain the safety boundary.
 - Reporting correction: solver telemetry now emits `primary_bound_scope` as `full_instance`, `frozen_access_neighborhood`, or `fixed_access_schedule`; frozen formulations also explain the scope in `limitation`. This prevents a local proof from being reported as global evidence.
 - Verification: the new scope regression and all existing tests pass: 60 total. Official scores and artifacts are unchanged.
+
+### E089: Footprint-introduced dependency holdout is frozen before repair
+
+- Timestamp: 2026-09-19 07:06:13 +08
+- Fixture: `independent_footprint_dependency_v1` has three activities. `DIRECT` can avoid two ECLO rows only by using standard access in weeks 2–4. Its week-2 footprint competitor `COMP` can move later only if its disjoint successor `FOLLOW` also moves.
+- Checked artifacts: the incumbent is dual-scored, standard-clean, and strict-clean at C=`10.0`; the independently authored oracle is equally checked at C=`0.0`. Dataset hash: `bff7db75338331b9957deda68d00f8798fdff2f3799aca03611e3323c1fbab6f`.
+- Pre-exposure hypothesis: the current one-pass selector returns `DIRECT` and footprint-added `COMP` but omits `FOLLOW`, because precedence expansion already ran. Freezing `FOLLOW` should force a misleading conditional optimum above zero.
+- Protocol: generator, data, incumbent, oracle, hash, scope assertion, and feasibility regression are committed before invoking either the current repair or any broader variant.

@@ -1,0 +1,4 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+DIRECT,KDIRECT,FootprintDependencyTradeoff,SEC:LNX:X2_N3:EB,SEC:LNX:X2_N3:EB,3,2031-01-13,,1
+COMP,KCOMP,FootprintDependencyTradeoff,SEC:LNX:X2_N3:EB,SEC:LNX:X2_N3:EB,1,2031-01-13,,1
+FOLLOW,KFOLLOW,FootprintDependencyTradeoff,SEC:LNY:X2_S3:WB,SEC:LNY:S3_S4:WB,1,2031-01-06,COMP,1

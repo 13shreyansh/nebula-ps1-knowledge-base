@@ -1,0 +1,4 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+KDIRECT,ECLO cost contributor,2030-06-01,FootprintDependencyTradeoff,Non-live (Others),1,2031-06-22,2031-02-02,1,PM,1
+KCOMP,Footprint competitor,2030-06-01,FootprintDependencyTradeoff,Non-live (Others),3,2031-06-22,2031-03-16,1,C,1
+KFOLLOW,Competitor successor,2030-06-01,FootprintDependencyTradeoff,Non-live (Others),3,2031-06-22,2031-03-16,1,C,1

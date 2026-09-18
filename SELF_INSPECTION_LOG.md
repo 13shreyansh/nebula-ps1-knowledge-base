@@ -846,3 +846,13 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Failures and uncertainty: no official score improvement; no reference-validator call; fixed-point runtime at hidden scale is unknown; the current telemetry change improves truthfulness but not search quality.
 - Confidence: very high in official incumbents and the reporting correction; high in the measured growth; medium in the bounded-neighborhood runtime choice; low-to-medium in unseen dependency ordering.
 - Immediate next action: freeze a minimal footprint-introduced dependency holdout before solver exposure and use it to decide whether a targeted second expansion tier is justified.
+
+## 2026-09-19 07:06:13 +08
+
+- Interval: 2 minutes 45 seconds since the previous inspection; triggered early because the prescribed falsification fixture is now frozen before solver exposure.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- New holdout evidence: the three-activity oracle scores C=`0.0`; the incumbent scores C=`10.0` from two ECLO rows. Both independent scorers agree, both closure policies are clean, and the dataset hash is fixed.
+- Failure mechanism under test: the one-pass selector correctly adds `COMP` through `DIRECT`'s footprint but does not revisit precedence, so successor `FOLLOW` remains frozen. This is exactly the ordering caveat identified in the prior audit.
+- Integrity controls: the fixture uses public-independent identifiers and a pre-existing synthetic topology; all expected scores, hash, and the incomplete selector result are asserted before any solver call. It proves one mechanism, not hidden-distribution frequency.
+- Confidence: very high in official incumbents; high in fixture validity and expected selector behavior; no confidence yet in the actual repair result.
+- Immediate next action: commit the untouched holdout, run the current one-pass repair, preserve its result, then test the smallest second-tier expansion that reaches `FOLLOW`.
