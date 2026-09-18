@@ -806,6 +806,23 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertEqual(contributors, ["A036", "A059"])
 
+    def test_scenario_c_cost_repair_expands_to_footprint_competitors(self) -> None:
+        direct = set(
+            _scenario_b_cost_contributing_activities(
+                self.instance, ROOT / "deliverables" / "public" / "C"
+            )
+        )
+        expanded = set(
+            _scenario_b_cost_contributing_activities(
+                self.instance,
+                ROOT / "deliverables" / "public" / "C",
+                expand_footprints=True,
+            )
+        )
+        self.assertEqual(direct, {"A036", "A059"})
+        self.assertGreater(len(expanded), len(direct))
+        self.assertTrue(direct < expanded)
+
     def test_relabelled_a_incumbent_is_a_safe_scenario_c_fallback(self) -> None:
         source = ROOT / "deliverables" / "public" / "A"
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -1309,6 +1326,12 @@ class PublicFixtureTests(unittest.TestCase):
         )
 
     def test_staged_c_runs_guarded_cost_repair_on_derived_contributors(self) -> None:
+        expected = _scenario_b_cost_contributing_activities(
+            self.instance,
+            ROOT / "deliverables" / "public" / "C",
+            expand_footprints=True,
+        )
+
         def fake_solve(instance, output_dir, scenario, **kwargs):
             self.assertEqual(scenario, "C")
             _copy_submission(ROOT / "deliverables" / "public" / "C", Path(output_dir))
@@ -1343,9 +1366,9 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(solve.call_count, 3)
         cost_call = solve.call_args_list[2]
         self.assertTrue(cost_call.kwargs["freeze_access_hint"])
-        self.assertEqual(cost_call.kwargs["freeze_access_except"], {"A036", "A059"})
+        self.assertEqual(cost_call.kwargs["freeze_access_except"], set(expected))
         self.assertEqual(
-            report["bridge_safe_cost_repair_activities"], ["A036", "A059"]
+            report["bridge_safe_cost_repair_activities"], expected
         )
 
     def test_staged_solver_repairs_only_detected_conflict_activities_first(self) -> None:

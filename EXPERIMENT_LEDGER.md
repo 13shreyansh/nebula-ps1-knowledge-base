@@ -765,3 +765,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Dense holdout: under the established one-worker 2/1/3/2-second policy, production C retained the protected A-derived score `0.0`, remained standard/strict clean, and completed in 3.941 seconds. The independent C challenger did not displace an equal fallback; the cost neighborhood was empty.
 - Coupled trade-off: under the one-worker 2/10/3/2-second policy, production C retained the proved `920.0` optimum with zero standard/strict conflicts in 6.254 seconds. The C cost repair examined `WCOUPLED1`, returned the same score and bound, and did not replace the equal incumbent.
 - Decision: the independent challenger and generalized cost repair pass both tested cross-regime safety checks. Continue distributional testing; do not infer reliability from one seed per regime.
+
+### E077: Seed 3 falsifies narrow C repair; footprint expansion recovers the optimum
+
+- Timestamp: 2026-09-19 06:11:00 +08
+- Reproducibility: irregular seed 2 reached checked C=`31.0` with a distinct hash; direct construction and the narrow exact repair both returned the optimum.
+- Falsification: irregular seed 3 returned checked C=`52.0` with two ECLO rows and six excess local groups. The narrow repair over direct ECLO/excess participants returned `52.0` with a matching bound only inside the frozen neighborhood.
+- Structural correction: for C only, the repair neighborhood now expands to every incumbent activity touching a location occupied by a direct cost contributor. A manual 30-second test reduced the seed-3 incumbent from `52.0` to `31.0`.
+- End-to-end result: the corrected seed-3 controller started from C=`63.0`, verification reached `56.0`, and the expanded ten-second repair reached dual-scored, standard-clean, strict-clean C=`31.0` with hash `aec37022042df9d45d728b5daeeee9d701f75c28fcde64554f939276db3f0b05`.
+- Post-change safety checks: dense-holdout C remained `0.0`; coupled C remained `920.0` with a matching cost-repair bound. B keeps the smaller direct-contributor neighborhood. Fifty-four regressions pass.
+- Limitation: the correction was designed after the seed-3 failure. A fresh held-out footprint-coupled fixture or further unfiltered seeds are required before claiming broad reliability.

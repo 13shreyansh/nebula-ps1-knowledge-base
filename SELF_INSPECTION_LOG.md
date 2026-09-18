@@ -723,3 +723,17 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Strongest next falsification: run the corrected controller on the established dense holdout A-success route and the coupled trade-off route, then repeat the irregular C run with another seed or worker policy. Confirm that independent C construction cannot regress the protected A fallback and that cost repair does not overfit one corridor.
 - Confidence: very high in protected public results; high in irregular C=`31.0` feasibility and optimality; high in the 53-test regression; medium in corrected-controller transfer; low-to-medium in runtime reliability across seeds.
 - Immediate next action: preserve the complete evidence in the ledgers and benchmark, commit the controller changes, then run cross-regime production-C regressions before any new optimisation.
+
+## 2026-09-19 06:04:49 +08
+
+- Interval: 11 minutes 6 seconds since the previous inspection; triggered early by a seed-3 falsification and corrective neighborhood test.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No portal attempt or protected artifact changed.
+- Preserved cross-regime evidence: the corrected controller retained dense-holdout C=`0.0` in 3.941 seconds and coupled C=`920.0` in 6.254 seconds under their established one-worker budgets. The independent challenger did not displace the zero fallback, and equal-score cost repair did not cause churn.
+- Reproducibility result: irregular seed 2 reached C=`31.0`; its direct construction and exact repair independently returned the optimum. Its hash differs from seed 1, so score stability does not imply schedule determinism.
+- Strongest falsification: irregular seed 3 returned checked C=`52.0`. The narrow contributor repair reported a matching `52.0` bound only because all other access decisions were frozen. This disproves the claim that direct objective participants alone form a sufficient C repair neighborhood.
+- Corrective experiment: expanding the neighborhood to every incumbent activity touching any costly contributor location reduced seed 3 from `52.0` to checked `31.0` in 30 seconds. This includes competing rows in other weeks and is derived from occupancy structure, not fixture identifiers.
+- Candidate correction: B retains the narrow cost neighborhood. C expands through affected footprint locations while preserving all unrelated access decisions and the checked incumbent. Fifty-three regressions pass after the change; a fresh full seed-3 controller replay is still required before acceptance.
+- Integrity and overfit audit: the seed-3 `52.0` failure and its misleading local bound remain recorded. The broad neighborhood was designed only after seeing that failure, so transfer must be retested on dense, coupled, and at least one additional irregular seed. No claim of 3/3 success is made yet.
+- Delivery risk: commits `909d740` and `bf65bb5` are local and clean, but both push attempts failed because the host cannot obtain HTTPS GitHub credentials. This is an external publication blocker, not a solver result.
+- Confidence: very high in protected public results; high in seed-3 neighborhood diagnosis and the manual `31.0` recovery; high in 53 tests; medium-low in the unrerun controller correction; low in byte reproducibility.
+- Immediate next action: run the full corrected seed-3 controller, dual-score and strict-screen it, then repeat cross-regime safety checks before committing the expanded neighborhood.

@@ -14,9 +14,12 @@ from .solver import SolveTelemetry
 
 
 def _scenario_b_cost_contributing_activities(
-    instance: Instance, submission_dir: str | Path
+    instance: Instance,
+    submission_dir: str | Path,
+    *,
+    expand_footprints: bool = False,
 ) -> list[str]:
-    """Return activities that directly participate in ECLO or excess costs."""
+    """Return direct cost participants, optionally with their footprint competitors."""
 
     access, occupancy, _ = load_submission(submission_dir)
     contributors = {row.activity_id for row in access if row.eclo == 1}
@@ -30,6 +33,13 @@ def _scenario_b_cost_contributing_activities(
         location_id = key[1]
         if len(groups) > instance.locations[location_id].supply_capacity:
             contributors.update(activities_by_location_week[key])
+    if expand_footprints and contributors:
+        affected_locations = {
+            row.location_id for row in occupancy if row.activity_id in contributors
+        }
+        contributors.update(
+            row.activity_id for row in occupancy if row.location_id in affected_locations
+        )
     return sorted(contributors)
 
 
@@ -325,7 +335,7 @@ def solve_staged_scenario(
     cost_repair_activities: list[str] = []
     if scenario in {"B", "C"} and local_repair_time_limit_seconds > 0:
         cost_repair_activities = _scenario_b_cost_contributing_activities(
-            instance, selected_dir
+            instance, selected_dir, expand_footprints=scenario == "C"
         )
         if cost_repair_activities:
             cost_repair_raw = audit_output / "bridge_safe_cost_repair_raw"

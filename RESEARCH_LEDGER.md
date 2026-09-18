@@ -510,6 +510,14 @@ Confidence labels:
 - **Relevance:** Treat total and per-round budgets as separate contracts. Telemetry must expose both, and an exhausted retry cap must not be reported as an exhausted caller budget or evidence of optimality.
 - **Confidence:** High for budget accounting; no public score gain is attributed to this change.
 
+### `R063` Objective participants are too narrow when competitors occupy the same footprint in other weeks
+
+- **Status:** Confirmed on irregular Scenario C seed 3.
+- **Finding:** Releasing only ECLO and excess-group participants left a checked `52.0` local optimum. Releasing every incumbent activity that touched any of those participants' costly locations reached the global `31.0` bound, because competing rows in other weeks could move.
+- **Relevance:** Derive C large neighborhoods in two steps: direct objective contributors, then the incumbent footprint competitors that consume their alternative slots. Preserve the checked incumbent and keep B's smaller neighborhood unless B evidence justifies expansion.
+- **Limitation:** Footprint expansion can become large on network-spanning activities and may consume the whole repair budget. Cap and benchmark it by affected component size rather than assuming it is always superior.
+- **Confidence:** High for the failure and recovery; medium for transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
