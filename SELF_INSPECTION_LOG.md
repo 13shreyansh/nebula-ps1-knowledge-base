@@ -925,3 +925,16 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Falsification result: the feared solver regression is absent in the current test suite; the actual confirmed defect is incomplete report normalization. No claim of score improvement follows from this correction.
 - Confidence: very high in official incumbents and report-only scope; high in regression evidence; medium in transfer of the two-tier repair; low in unknown hidden-instance behavior.
 - Immediate next action: commit the report normalization, then run a cross-regime production-path audit that verifies every selected artifact, score, feasibility result, proof scope, and manifest hash using the current code.
+
+## 2026-09-19 07:51:25 +08
+
+- Interval: 14 minutes 10 seconds since the previous inspection; within the active 15-minute requirement.
+- Best independently validated public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- What improved: both Scenario C production controllers now have explicit terminal-precedence wiring regressions; 70 tests pass. A reproducible frontier audit measures dependencies outside the bounded repair rather than implying closure. Two independently permuted and row-shuffled irregular inputs both reached checked C=`31.0` without translated incumbents or oracle schedules.
+- What failed: ten-second fixed-point repair over 53 irregular activities added no value from C=`31.0` and returned a worse C=`84.0` candidate from C=`63.0`. The proof-only benchmark matrix also rejected the favorable first renamed run because its repair bound was absent; the matrix invariant was preserved.
+- Adversarial interpretation: equal final scores across two renamings argue against identifier memorization, but the construction scores (`147` and `140`) and repair widths (`27` and `52`) show substantial model-order sensitivity. The recovery result is robust so far, not deterministic and not solver-proved.
+- Integrity risks checked: no public identifiers entered the renamed fixtures; every identifier class was bijectively permuted; every input table was shuffled; solver seed, workers, and budgets were fixed; both scorers and standard/strict screens agree. Favorable unbounded results remain outside the proof matrix.
+- Remaining uncertainty: two permutations can still be lucky; hidden structural shift is much larger than renaming; wall-time parallel search remains nondeterministic; the official runtime limit is unknown; reference validation still covers only the public instance.
+- Falsification result: unconditional fixed-point expansion is rejected. The current narrow-first protected portfolio survives two identifier perturbations, including one with a much broader first repair set.
+- Confidence: very high in official incumbents and evidence boundaries; high in the two recorded metamorphic outcomes; medium in controller-level identifier robustness; low-to-medium in hidden structural generalization.
+- Immediate next action: run a third predeclared identifier permutation under the identical policy, preserve it regardless of outcome, then summarize the three-run distribution without converting feasibility into proof.
