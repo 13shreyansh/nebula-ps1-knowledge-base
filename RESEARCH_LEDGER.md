@@ -382,6 +382,22 @@ Confidence labels:
 - **Limitation:** Four successful public validations do not establish hidden-instance construction speed or reliability. The portal does not label solutions globally optimal; optimality follows from our independently stated bounds.
 - **Confidence:** Very high for public feasibility and score; high for public optimality; medium for hidden-instance transfer.
 
+### `R045` Wall time, seed, and worker count are not a reproducibility contract
+
+- **Evidence:** OR-Tools' current SAT parameter definition distinguishes wall-clock `max_time_in_seconds` from `max_deterministic_time`; it also describes experimental interleaved search as deterministic across worker counts. The installed OR-Tools 9.15 exposes both controls. Our prefix-40 one-worker staged repetitions ranged from checked `34.0` to `186.0`, and the full structural fixture failed with one worker while an eight-worker run reached and proved `30.0`.
+- **Finding:** A fixed random seed and one worker do not make a sequence of separately wall-time-limited CP-SAT solves reproducible. Iterative cut timing changes which incumbents and cuts survive. Worker count is part of the benchmark contract. [OR-Tools parameters](https://github.com/google/or-tools/blob/stable/ortools/sat/sat_parameters.proto)
+- **Relevance:** Record worker count, wall and deterministic time, per-stage budgets, seed, incumbent, bound, and conflicts. Evaluate score distributions and fail-closed rates, not one lucky run. Experiment with deterministic-time or interleaved search only as an explicit non-default policy until it is benchmarked.
+- **Limitation:** OR-Tools marks interleaved search experimental, and a 2026 upstream issue reports that deterministic batches can still have highly uneven wall duration on large models. Determinism can therefore trade away deadline predictability. [OR-Tools issue 5199](https://github.com/google/or-tools/issues/5199)
+- **Confidence:** High.
+
+### `R046` Separate incumbent generation, neighbourhood improvement, and proof
+
+- **Evidence:** Recent hybrid CP/SAT scheduling work describes a division of labour in which large-neighbourhood search supplies high-quality schedules and exhaustive/failure-directed search proves optimality. Our own B experiments mirror this: fast candidate generation, conflict-neighbourhood repair, cost-contributor repair, then a sound protected verifier. [Bit-Monnot, Enhancing Hybrid CP-SAT Search for Disjunctive Scheduling](https://journals.sagepub.com/doi/pdf/10.3233/FAIA230278)
+- **Finding:** A single monolithic timed solve is not the most reliable architecture. Preserve a checked incumbent, use multiple structurally meaningful neighbourhoods, and run a separate sound phase for improvement/proof. Neighbourhood failure is never infeasibility evidence.
+- **Relevance:** Keep conflict-participant and objective-contributor repairs as bounded LNS operators. Add new operators only when their free set is derived generically and benchmarked against the same protected incumbent and budget.
+- **Limitation:** Job/open-shop benchmarks are not the PS1 formulation. The paper supports the architecture, not a guaranteed score gain or the exact neighbourhood definitions used here.
+- **Confidence:** Medium-to-high.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
@@ -423,6 +439,7 @@ These are research candidates, not reconciled decisions:
 | `F019` | The number of access occurrences is fixed before ECLO decisions. | Use optional week-indexed access rows and half-unit workload conservation. |
 | `F020` | A method is selected from one lucky seed or only its final score. | Use fixed budgets, several seeds, score-over-time curves, feasibility rate, bounds, and held-out structural regimes. |
 | `F021` | One solver family is assumed to dominate because of one paper or one instance size. | Benchmark CP-SAT, MIP, and MaxSAT formulations under the same validated objective and time budgets. |
+| `F022` | Fixed seed or one worker is mistaken for deterministic output under wall-time-limited iterative solves. | Track deterministic time and complete telemetry; repeat full recipes, include worker count in the benchmark contract, and never replace a protected incumbent based on one run. |
 
 ## Validator experiment matrix
 
@@ -443,11 +460,11 @@ Run these minimal, single-purpose cases when the official validator becomes avai
 | `V011` | How are Scenario C line windows derived? | Place ECLO at both endpoints of a two-week span, then at three weeks; repeat with interchange Live work. |
 | `V012` | Are access-night indices independent across contracts and locations? | Reuse the same index across contracts, then exceed distinct indices within one contract/type/week. |
 
-## Deferred work after reconciliation
+## Active research queue
 
-Research stopped at the user's request. The following are implementation or evidence dependencies, not an active research queue:
+Research resumed under the user's continuous-improvement goal. Current evidence dependencies are:
 
 1. Obtain the executable validator and official expander, then run `V001`–`V012` plus the buffered-overlap cases in `R039`.
 2. Confirm runtime and hidden-instance limits.
-3. Implement and benchmark the reconciled primary model before deciding whether a fallback formulation is needed.
-4. Continue upstream monitoring only when work resumes or the organiser announces a change.
+3. Benchmark deterministic-time and experimental interleaved search against the current wall-time portfolio before changing defaults.
+4. Scale the independent synthetic generator across density, topology, deadlines, and access-type regimes without public-oracle input.
