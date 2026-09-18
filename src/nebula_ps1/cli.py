@@ -4,6 +4,7 @@ import argparse
 
 from .evaluate import evaluate_submission
 from .flexible_solver import solve_flexible_supply_relaxation
+from .independent_score import independently_score
 from .instance import load_instance
 from .solver import solve_scenario_a_relaxation
 from .submission import relabel_submission_scenario
@@ -54,6 +55,12 @@ def main() -> None:
     relabel_parser.add_argument("--source", required=True)
     relabel_parser.add_argument("--output", required=True)
     relabel_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
+    audit_parser = subparsers.add_parser(
+        "audit-score",
+        help="recompute score through the independent raw-CSV scorer",
+    )
+    audit_parser.add_argument("--data", required=True)
+    audit_parser.add_argument("--submission", required=True)
     args = parser.parse_args()
 
     if args.command == "inspect":
@@ -100,6 +107,9 @@ def main() -> None:
     if args.command == "relabel-scenario":
         instance = load_instance(args.data)
         relabel_submission_scenario(instance, args.source, args.output, args.scenario)
+        return
+    if args.command == "audit-score":
+        print(independently_score(args.data, args.submission).as_json())
 
 
 if __name__ == "__main__":

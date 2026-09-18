@@ -342,6 +342,14 @@ Confidence labels:
 - **Limitation:** The public sample shows which interpretation is wrong, not the complete correct algorithm.
 - **Confidence:** High.
 
+### `R040` A public fork's “validator” is an incomplete competitor implementation, not an oracle
+
+- **Sources:** Public fork [`qommaarr/NebulaX-Hackathon-ProblemStatement`](https://github.com/qommaarr/NebulaX-Hackathon-ProblemStatement), specifically [`src/utils/validator.ts`](https://github.com/qommaarr/NebulaX-Hackathon-ProblemStatement/blob/main/src/utils/validator.ts), inspected 2026-09-18 23:07 +08; current official PS1 README at upstream commit `966c976`.
+- **Finding:** The fork checks workload, starts, predecessors, allocation, workfronts, coarse capacity, and some scoring, but does not implement closure/buffer conflicts, legal possession mixes, occupancy completeness, Scenario C ECLO continuity, horizon bounds, access-sequence integrity, or result cross-checking. Its UI nevertheless presents closure and possession rules as passed. It also computes delay from contract-level `RESULTS.csv` using the contract's average activity nudge, producing about `31.7` on the organiser sample instead of the current README's activity-level `48.3` derivation.
+- **Relevance:** Do not use public competitor validators as ground truth or relax our constraints to match them. Their disagreements are useful only as adversarial test ideas and a concrete warning that a polished “verified” banner can conceal unimplemented rules.
+- **Limitation:** This review is static and limited to the exposed files; it does not establish the authors' intent or judge their complete project. The fork is not organiser-authoritative.
+- **Confidence:** High for the inspected code; zero as evidence of official validator behaviour.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
