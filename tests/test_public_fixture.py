@@ -348,6 +348,8 @@ class PublicFixtureTests(unittest.TestCase):
             "7",
             "--fallback-time-limit",
             "17",
+            "--fallback-attempts",
+            "4",
         ]
         with patch("sys.argv", argv), patch(
             "nebula_ps1.cli.solve_staged_scenario", return_value={}
@@ -355,6 +357,7 @@ class PublicFixtureTests(unittest.TestCase):
             cli_main()
         self.assertEqual(solve.call_args.kwargs["heuristic_attempts"], 7)
         self.assertEqual(solve.call_args.kwargs["fallback_time_limit_seconds"], 17.0)
+        self.assertEqual(solve.call_args.kwargs["fallback_attempts"], 4)
 
     def test_minimal_32_2_repair_passes_sample_consistent_closure_screen(self) -> None:
         candidate = ROOT / "runs" / "a_repair_late_a035_a038"
@@ -725,6 +728,13 @@ class PublicFixtureTests(unittest.TestCase):
                     "B",
                     heuristic_attempts=0,
                 )
+            with self.assertRaisesRegex(ValueError, "fallback_attempts"):
+                solve_staged_scenario(
+                    self.instance,
+                    Path(temp_dir) / "staged-fallback",
+                    "B",
+                    fallback_attempts=0,
+                )
 
     def test_staged_solver_uses_sound_fallback_after_heuristic_failure(self) -> None:
         def telemetry(
@@ -770,6 +780,7 @@ class PublicFixtureTests(unittest.TestCase):
                 "A",
                 audit_output_dir=Path(temp_dir) / "audit",
                 heuristic_attempts=1,
+                fallback_attempts=1,
                 forbid_buffer_overlap=True,
             )
         self.assertEqual(solve.call_count, 3)

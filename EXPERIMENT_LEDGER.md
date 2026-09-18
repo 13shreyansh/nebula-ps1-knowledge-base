@@ -398,3 +398,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Correction: `SolveTelemetry` now records CP-SAT deterministic time. Iterative closure solving accumulates it across every solve round rather than exposing only the final response; the closure-free solver records its single response value.
 - Smoke test: forced-fallback A001 construction records 0.000332 deterministic seconds, followed by a zero-deterministic-time protected `<0.0` infeasibility proof. The output remains strict-feasible at `0.0` and all 33 regressions pass.
 - Boundary: historical telemetry has no deterministic-time field and remains valid wall-time evidence only. Do not infer or backfill missing values. Wall time still governs the live deadline; deterministic time is for fairer search-work comparisons.
+
+### E036: Failed-heuristic repair and diversified sound fallback
+
+- Timestamp: 2026-09-19 02:07:04 +08
+- Repair experiment: use the preserved 40-activity heuristic candidate scoring `78.4` but carrying closure violations as a non-protected hint to bridge-safe search. In 30.013 wall seconds / 28.618 deterministic seconds, the sound model produced a strict-feasible `78.4`; full-gate pruning removed seven late redundant rows and improved it to `55.3`. This proves unsafe output can guide repair without being promoted.
+- Counterevidence: an unhinted 30-second sound run previously reached and proved `18.2` after pruning. A repair hint can trap search in a worse basin; it is not a universally better fallback.
+- Correction: after heuristic failure, staged solving now runs a checked sound portfolio. Attempt 1 may use the best failed heuristic output, ranked by fewest remaining conflicts then score; attempt 2 is unhinted with a different seed. Each safe candidate is independently pruned and only the best checked objective is protected for verification.
+- Short portfolio test: on the 40-activity fixture, a 0.5-second heuristic yielded no usable objective. Ten-second sound attempt 1 produced raw `819.7`, pruned `105.7`; attempt 2 reached `18.2` internally but retained one strict conflict and was rejected. The selected `105.7` passes both scorers and the strict screen; five-second verification retained it with lower bound `18.2`.
+- Integrity consequence: an invalid lower-score candidate never outranks a safe incumbent. Portfolio diversity improves opportunity but does not justify selecting the best invalid objective or reporting its bound as achieved.

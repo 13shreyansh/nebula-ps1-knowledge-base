@@ -119,6 +119,7 @@ def main() -> None:
     staged_parser.add_argument("--workers", type=int, default=8)
     staged_parser.add_argument("--seed", type=int, default=1)
     staged_parser.add_argument("--heuristic-attempts", type=int, default=3)
+    staged_parser.add_argument("--fallback-attempts", type=int, default=2)
     staged_parser.add_argument("--closure-rounds", type=int, default=500)
     staged_parser.add_argument("--strict-buffer-overlap", action="store_true")
     relabel_parser = subparsers.add_parser(
@@ -231,6 +232,7 @@ def main() -> None:
             workers=args.workers,
             seed=args.seed,
             heuristic_attempts=args.heuristic_attempts,
+            fallback_attempts=args.fallback_attempts,
             closure_round_limit=args.closure_rounds,
             forbid_buffer_overlap=args.strict_buffer_overlap,
         )

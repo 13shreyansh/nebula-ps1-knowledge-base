@@ -302,3 +302,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - What could still be wrong: wall-time telemetry alone hides deterministic search work; reported branch/conflict sums do not normalize across repeated solves; prefix instances change demand distribution and are not representative hidden samples; bridge-safe proof inherits our closure semantics.
 - Confidence: high in the final 18.2 synthetic artifact and its implemented proof; medium in staged policy correctness; low in wall-time reproducibility and full-scale fallback performance; zero in official validation.
 - Next action: add cumulative CP-SAT deterministic-time telemetry to every solve path, then repeat a bounded comparison before drawing runtime conclusions.
+
+## 2026-09-19 02:07:04 +08
+
+- Interval: 4 minutes 8 seconds since the previous inspection; early because repair-hint testing falsified the assumption that one fallback policy dominates.
+- Best independently validated score: no official/reference-validator result. Public internal optima remain A=`32.2`, B=`30.0`, C=`26.1`; score change is zero. Synthetic results remain separate.
+- What improved: cumulative deterministic-time telemetry is live. A preserved unsafe `78.4` candidate was repaired by the sound model to strict-feasible `78.4` in 28.618 deterministic seconds, then pruned to `55.3`. Unsafe hints are never protected.
+- Falsification: the repaired `55.3` is worse than the separately obtained unhinted `18.2`. Therefore always using the best failed heuristic as the only fallback can reduce result quality. The fallback is now a portfolio: repair-hinted first when available, then unhinted with a different seed; each safe result is pruned before checked selection.
+- Adversarial selection test: in a short 40-activity portfolio, attempt 1 produced safe `105.7` after pruning. Attempt 2 had apparent `18.2` but one strict conflict. The controller rejected attempt 2 and retained `105.7`; main scorer, independent scorer, and strict screen agree.
+- What remains bad: the short portfolio did not recover the best known synthetic `18.2`; more attempts consume linearly more wall time; prefix fixtures are not a representative distribution; no reference validator is available. Organizer upstream remains unchanged at `966c976`.
+- Integrity audit: no unsafe `18.2` candidate was promoted; the repaired schedule was checked before pruning; the lower bound `18.2` is not called an achieved score in the failed attempt; public outputs were untouched.
+- Confidence: high in portfolio selection safety and deterministic-time capture; medium in the value of hint diversification; low in full-scale fallback reliability; zero in official validation.
+- Next action: preserve the portfolio evidence, then use deterministic-time-normalized runs to decide budget allocation. Do not increase default attempts solely because one extra seed once succeeded.
