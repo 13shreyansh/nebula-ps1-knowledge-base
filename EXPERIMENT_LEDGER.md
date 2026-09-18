@@ -683,3 +683,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: current code produced locally hard-feasible A=`137.9` in 28.295 seconds, B=`30.0` in 11.160, and C=`62.7` in 29.569. Both local scorers agree. These schedules have new hashes and are not official-validator-confirmed, so the protected official artifacts were not replaced.
 - Strict audit: the reconstructed A/B/C schedules have 7/6/4 strict buffer-overlap conflicts while passing the confirmed standard rule. Strict mode remains diagnostic; treating it as a hard requirement would reject score-optimal public schedules without organizer evidence.
 - Limitation: one public seed is not a runtime distribution. A and C finished near the heuristic budget, and eight-worker success does not establish one-worker or hidden-hardware reliability.
+
+### E067: Public optimum reconstruction is score-stable but schedule-nondeterministic
+
+- Timestamp: 2026-09-19 04:39:54 +08
+- Protocol: E066's fixed eight-worker policy, extended without filtering to seeds 2–5 for A/B/C. The first seed and these 12 additional runs form a five-seed distribution per scenario.
+- Result: 15/15 locally feasible reconstructions matched the public optima A=`137.9`, B=`30.0`, C=`62.7`. Across all seeds, A took 20.097–33.840 seconds, B 11.160–23.961, and production C 28.974–39.665.
+- Nondeterminism: every run has a different submission hash. Strict diagnostic conflicts range from 3 to 8 even though every schedule passes the confirmed standard rule. Stable objective values therefore do not imply byte identity or stable operational structure.
+- Integrity boundary: every requested seed is recorded; no output was portal-submitted or promoted over the protected official artifacts. This is a reconstruction and runtime experiment on the known public dataset, not new score progress or hidden-generalization evidence.

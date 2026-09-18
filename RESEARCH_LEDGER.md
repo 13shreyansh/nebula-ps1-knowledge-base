@@ -448,6 +448,12 @@ Confidence labels:
 - **Status:** Confirmed by public reconstruction; release policy fixed.
 - **Finding:** The current controller reconstructed A=`137.9`, B=`30.0`, C=`62.7` with new hashes and both local scorers agreeing. The new schedules were not submitted to the reference validator, and their strict diagnostic conflicts differ from the protected official artifacts.
 - **Relevance:** Keep official validation attached to an exact artifact hash, not a score or algorithm version. Never replace an officially accepted incumbent with an equal-scoring local reconstruction. Treat unconfirmed strict-buffer semantics as an audit dimension, not a hard constraint.
+
+### `R054` Objective stability can coexist with structural and runtime instability
+
+- **Status:** Confirmed on five public seeds per scenario.
+- **Finding:** Fifteen fixed-policy reconstructions all reached the same optimum, yet all hashes differed, strict conflicts ranged from 3 to 8, and scenario wall times varied by up to roughly twofold.
+- **Relevance:** Report objective, feasibility, artifact hash, strict diagnostics, selected stage, and runtime separately. Use repeated-seed distributions for deployment claims. Deterministic-time or interleaved search is worth comparing only under the same end-to-end budget and protected-incumbent gates.
 - **Limitation:** The tight activity is spatially isolated, so the result does not cover ECLO decisions coupled to possession conflicts or C's global two-week line window.
 - **Confidence:** High for the tested trade-off; medium for coupled cases.
 

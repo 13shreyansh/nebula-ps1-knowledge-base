@@ -623,3 +623,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Unknown risk: one successful eight-worker public seed does not establish runtime reliability. A and C nearly consumed the 30-second heuristic budget, and hidden hardware, worker count, or density may shift success into slower repair stages.
 - Confidence: very high in protected public scores; high that current code can reconstruct them under this policy; low-to-medium in cross-hardware runtime portability; unchanged uncertainty about strict buffer semantics outside official evidence.
 - Immediate next action: preserve the reconstruction policy and telemetry, then test fixed-budget runtime variance across additional public seeds without spending validator attempts.
+
+## 2026-09-19 04:39:54 +08
+
+- Interval: 5 minutes 45 seconds since the previous inspection; triggered by completion of the unfiltered public seed distribution.
+- Best independently validated and official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No portal attempt or official artifact changed.
+- Falsification result: four additional seeds per scenario all reconstructed the exact optimum under the fixed eight-worker policy. Together with seed 1, score success is 15/15: A=`137.9`, B=`30.0`, C=`62.7`.
+- What went well: every candidate passed both local scorers and the confirmed standard closure rule. A took 20.097–33.840 seconds, B 11.160–23.961, and production C 28.974–39.665.
+- What remains bad: all 15 schedule hashes differ, and strict conflicts vary from 3 to 8. Fixed scores do not imply deterministic schedules, strict-policy robustness, or equal operational shape. C's wall-time tail exceeds the nominal 30-second heuristic budget because the guarded controller includes A construction and verification.
+- Integrity audit: all requested seeds are retained; no fastest or strictest candidate was promoted; reference-validator status remains attached only to the protected hashes. The result tests reconstruction reliability on one known dataset, not hidden-instance generalization.
+- Unknown risk: score stability may depend on eight parallel workers and the public instance's already-understood lower bounds. A hidden case may send different seeds into expensive repair or fail closed.
+- Confidence: very high in protected public results; high in eight-worker public reconstruction reliability; low in byte reproducibility and strict-buffer robustness; medium-low in cross-hardware transfer.
+- Immediate next action: preserve the complete distribution, then test whether a deterministic-time/interleaved policy can reduce hash and runtime variance without losing score or exceeding a fair total budget.
