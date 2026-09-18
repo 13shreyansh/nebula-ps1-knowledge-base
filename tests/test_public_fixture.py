@@ -406,6 +406,9 @@ class PublicFixtureTests(unittest.TestCase):
             "unused",
             "--scenario",
             "B",
+            "--max-deterministic-time-per-solve",
+            "0.5",
+            "--interleave-search",
         ]
         with patch("sys.argv", argv), patch(
             "nebula_ps1.cli.solve_flexible_supply_relaxation", return_value=telemetry
@@ -414,6 +417,8 @@ class PublicFixtureTests(unittest.TestCase):
                 cli_main()
         self.assertNotIn("heuristic_attempts", solve.call_args.kwargs)
         self.assertEqual(solve.call_args.kwargs["separator_mode"], "bridge_safe")
+        self.assertEqual(solve.call_args.kwargs["max_deterministic_time_per_solve"], 0.5)
+        self.assertTrue(solve.call_args.kwargs["interleave_search"])
 
     def test_c_portfolio_cli_forwards_custom_audit_directory(self) -> None:
         argv = [
@@ -863,6 +868,14 @@ class PublicFixtureTests(unittest.TestCase):
                     "A",
                     time_limit_seconds=0.0,
                     separator_mode="unsafe-unknown",
+                )
+            with self.assertRaisesRegex(ValueError, "max_deterministic_time_per_solve"):
+                solve_flexible_supply_relaxation(
+                    self.instance,
+                    temp_dir,
+                    "A",
+                    time_limit_seconds=0.0,
+                    max_deterministic_time_per_solve=0.0,
                 )
             with self.assertRaisesRegex(ValueError, "heuristic_attempts"):
                 solve_staged_scenario(

@@ -30,6 +30,8 @@ def solve_flexible_supply_relaxation(
     freeze_access_hint: bool = False,
     freeze_access_except: set[str] | None = None,
     separator_mode: str = "bridge_safe",
+    max_deterministic_time_per_solve: float | None = None,
+    interleave_search: bool = False,
 ) -> SolveTelemetry:
     """Solve a scenario with iterative cuts from the differential-tested closure screen.
 
@@ -59,6 +61,11 @@ def solve_flexible_supply_relaxation(
     )
     if effective_round_limit <= 0:
         raise ValueError("round_time_limit_seconds must be positive")
+    if (
+        max_deterministic_time_per_solve is not None
+        and max_deterministic_time_per_solve <= 0
+    ):
+        raise ValueError("max_deterministic_time_per_solve must be positive")
 
     model = cp_model.CpModel()
     horizon = instance.horizon_weeks
@@ -365,6 +372,11 @@ def solve_flexible_supply_relaxation(
     solver.parameters.num_search_workers = workers
     solver.parameters.random_seed = seed
     solver.parameters.log_search_progress = False
+    if max_deterministic_time_per_solve is not None:
+        solver.parameters.max_deterministic_time = max_deterministic_time_per_solve
+    if interleave_search:
+        solver.parameters.interleave_search = True
+        solver.parameters.interleave_batch_size = workers
     started = time.monotonic()
     deadline = started + time_limit_seconds
     status_code = cp_model.UNKNOWN
@@ -639,6 +651,7 @@ def solve_flexible_supply_relaxation(
             f"scenario_{scenario.lower()}_iterative_{separator_mode}_"
             f"{'strict_buffer' if forbid_buffer_overlap else 'sample_consistent'}_closure_relaxation"
             f"{'_partially_frozen_access' if free_activities else '_frozen_access' if freeze_access_hint else ''}"
+            f"{'_interleaved' if interleave_search else ''}"
         ),
         status=status,
         objective_score=objective,
@@ -676,6 +689,8 @@ def solve_flexible_supply_relaxation(
         unknown_retries=unknown_retries,
         primary_score_proven_optimal=safe_proven_optimal,
         tie_break_proven_optimal=safe_tie_break_proven,
+        max_deterministic_time_per_solve=max_deterministic_time_per_solve,
+        interleave_search=interleave_search,
     )
     (output_root / "TELEMETRY.json").write_text(telemetry.as_json() + "\n", encoding="utf-8")
     return telemetry

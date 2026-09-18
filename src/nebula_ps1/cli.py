@@ -77,6 +77,12 @@ def main() -> None:
         default="bridge_safe",
         help="sound bridge-safe separation or faster over-restrictive candidate generation",
     )
+    flexible_parser.add_argument("--max-deterministic-time-per-solve", type=float)
+    flexible_parser.add_argument(
+        "--interleave-search",
+        action="store_true",
+        help="experiment with OR-Tools deterministic interleaved parallel search",
+    )
     portfolio_parser = subparsers.add_parser(
         "solve-c-portfolio",
         help="protect a checked A-as-C fallback before attempting a better C solve",
@@ -224,6 +230,8 @@ def main() -> None:
                 else None
             ),
             separator_mode=args.separator,
+            max_deterministic_time_per_solve=args.max_deterministic_time_per_solve,
+            interleave_search=args.interleave_search,
         )
         print(telemetry.as_json())
         if telemetry.objective_score is None:

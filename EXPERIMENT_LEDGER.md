@@ -602,3 +602,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Blind reconstruction: staged runs received only the synthetic input tables. They reached and bridge-safe proved A=`7.0`, B=`10.0`, and C=`7.0`. Both scorers agree; all outputs have zero hard violations and zero excess.
 - Intended trade-off recovered: A and C schedule Q001 over three standard weeks and pay seven delay points. B's hard deadline forces Q001 into two ECLO weeks, costing `2 × 5 = 10` with zero delay. C correctly chooses the cheaper `7.0` delay rather than the `10.0` ECLO alternative.
 - Evidence boundary: the synthetic case is small and authored to cover selected rule interactions. It reduces public-sample leakage risk but does not represent the full size, density, or every topology pattern of a hidden instance.
+
+### E059: Deterministic interleaving reproduces bytes but is much slower
+
+- Timestamp: 2026-09-19 03:49:06 +08
+- Method: structural-fixture Scenario B, direct heuristic, eight workers, seed 1, OR-Tools experimental interleaved search, `max_deterministic_time=5` per cut solve, 120-second wall budget, and two identical repetitions. A 0.5 deterministic-time pilot returned no solution and is rejected as underbudgeted.
+- Reproducibility result: both 5.0 runs used 31 solves, 29 closure rounds, 7,247,261 branches, 22,736 conflicts, and 230.613294 accumulated deterministic-time units. Both emitted byte-identical access and occupancy files with checked score `30.0`, six ECLO nights, zero excess, and hash `eb52d62e1e18fe9a4e5bb31509670cbe1a3594b9bba97c3d981c094008814c43`.
+- Runtime cost: wall times were 98.765 and 104.905 seconds. The ordinary eight-worker portfolio reached the same proven objective in 16.648–21.169 seconds on successful seeds.
+- Decision: retain deterministic interleaving as an opt-in audit/reproduction mode. Do not make it the score-maximizing default; its large runtime premium and experimental upstream status outweigh the benefit when a protected incumbent and full telemetry already prevent unsafe promotion.
