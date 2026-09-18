@@ -936,3 +936,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Falsification harness: both the generic staged Scenario C controller and the guarded A-to-C portfolio start from the frozen score-`10.0` post-contract-precedence incumbent. Their narrow and earlier expanded calls retain `10.0`; only the terminal five-activity expansion is supplied the checked score-`0.0` oracle.
 - Result: each controller makes the terminal expanded call with exactly `COMP`, `DIRECT`, `FOLLOW`, `PEER`, and `PREPEER`, selects the zero-score artifact, and independently re-evaluates it. The full suite passes 69 tests.
 - Scope: this is controller-wiring evidence, not new optimizer or hidden-distribution evidence. Official scores and protected artifacts are unchanged.
+
+### E098: Full dependency closure is rejected as the next default tier
+
+- Timestamp: 2026-09-19 07:41:53 +08
+- Frontier audit: the final bounded repair leaves union frontiers of public `8`, irregular `24`, coupled `24`, and cross-module `0` activities. The irregular fixed point contains `53` activities versus `29` in the expanded production tier.
+- From C=`31.0`: a ten-second, eight-worker fixed-point repair with seed 7 returned the identical dual-scored, standard-clean, strict-clean C=`31.0` schedule and hash `18b6eee516d8239407a52172ae7c5f66bbd0f53bd59a526284bdd22c4079711c`.
+- From C=`63.0`: the matched fixed-point repair returned a worse but checked C=`84.0` candidate, hash `d8416452de4c7f43c01a4d07a4322b056e04fa95effa09b26a90a340b3a481c0`, with bound `12.8`. Protected selection would retain C=`63.0`.
+- Decision: preserve the outputs as negative evidence and do not integrate fixed-point recursion. The experiment measures search power, not whether the larger neighborhood contains the optimum.

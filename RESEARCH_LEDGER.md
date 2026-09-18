@@ -600,6 +600,15 @@ Confidence labels:
 - **Limitation:** A dependency introduced by the terminal pass can still have unexpanded contract or footprint neighbors. The method is intentionally bounded; another tier requires a new failure and runtime comparison.
 - **Confidence:** High in the failure and correction; medium in hidden transfer.
 
+### `R074` Residual dependency closure is real, but fixed-point repair is search-weak
+
+- **Status:** Confirmed by a reproducible frontier audit and two matched irregular repairs.
+- **Finding:** After the bounded expanded selector, dependency frontiers contain 8 activities on public, 24 on irregular, 24 on coupled, and 0 on the cross-module holdout. Full alternating closure grows the irregular repair from 29 to 53 activities.
+- **Falsification:** A ten-second, eight-worker fixed-point repair from the protected irregular C=`31.0` incumbent returned the identical schedule. The same repair from its C=`63.0` predecessor returned a worse checked C=`84.0` candidate with bound `12.8`; protected selection rejects it.
+- **Decision:** Do not add unconditional fixed-point recursion as a production tier. Retain the narrow-first bounded portfolio. Use `scripts/audit_cost_repair_frontier.py` to measure residual exposure and require a matched recovery result before adding another dependency pass.
+- **Limitation:** Failure on one irregular regime does not show that fixed-point repair can never help. It shows that logical closure alone is insufficient evidence for spending the runtime budget.
+- **Confidence:** High in counts and outcomes; medium in hidden transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
