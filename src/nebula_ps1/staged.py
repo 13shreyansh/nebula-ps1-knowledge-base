@@ -18,8 +18,9 @@ def _scenario_b_cost_contributing_activities(
     submission_dir: str | Path,
     *,
     expand_footprints: bool = False,
+    expand_contracts: bool = False,
 ) -> list[str]:
-    """Return direct cost participants, optionally with their footprint competitors."""
+    """Return direct cost participants and selected scheduling dependencies."""
 
     access, occupancy, _ = load_submission(submission_dir)
     contributors = {row.activity_id for row in access if row.eclo == 1}
@@ -33,6 +34,17 @@ def _scenario_b_cost_contributing_activities(
         location_id = key[1]
         if len(groups) > instance.locations[location_id].supply_capacity:
             contributors.update(activities_by_location_week[key])
+    direct_contributors = set(contributors)
+    if expand_contracts and direct_contributors:
+        affected_contracts = {
+            instance.activities[activity_id].contract_number
+            for activity_id in direct_contributors
+        }
+        contributors.update(
+            activity_id
+            for activity_id, activity in instance.activities.items()
+            if activity.contract_number in affected_contracts
+        )
     if expand_footprints and contributors:
         affected_locations = {
             row.location_id for row in occupancy if row.activity_id in contributors
@@ -335,7 +347,10 @@ def solve_staged_scenario(
     cost_repair_activities: list[str] = []
     if scenario in {"B", "C"} and local_repair_time_limit_seconds > 0:
         cost_repair_activities = _scenario_b_cost_contributing_activities(
-            instance, selected_dir, expand_footprints=scenario == "C"
+            instance,
+            selected_dir,
+            expand_footprints=scenario == "C",
+            expand_contracts=scenario == "C",
         )
         if cost_repair_activities:
             cost_repair_raw = audit_output / "bridge_safe_cost_repair_raw"

@@ -526,6 +526,14 @@ Confidence labels:
 - **Limitation:** This is one authored fixture and one seed. It establishes a failure, not a universal worker threshold.
 - **Confidence:** High for the observed run; low for the exact worker-count boundary.
 
+### `R065` Repair neighborhoods must follow shared scheduling constraints, not only space
+
+- **Status:** Confirmed by a precommitted cross-module fixture and controlled incumbent.
+- **Finding:** Spatial expansion froze four standard-only activities in the same one-workfront contract as an ECLO contributor and conditionally proved C=`101.0`, although C=`76.0` was feasible. Adding the direct contributor's contract peers before footprint expansion recovered and proved `76.0`.
+- **Relevance:** ECLO, excess, and delay trade-offs propagate through contract workfront and weekly-access limits even when activities occupy disjoint locations. Scenario C repair now includes those direct contract peers; Scenario B remains narrow.
+- **Limitation:** Contract-plus-footprint expansion can approach the full instance, as 43/54 public activities did. Preserve a checked incumbent, cap time, report neighborhood size, and do not interpret a frozen-neighborhood bound as global.
+- **Confidence:** High for the mechanism and tested correction; medium for runtime transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

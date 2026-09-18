@@ -815,3 +815,19 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Independent oracle: 72 activities, 134 access rows, four ECLO rows, no excess, no KMM delay, and total C=`76.0`. Both scorers agree and standard/strict closure screens are clean.
 - Bound: the eight untouched module bottlenecks contribute `56`. KMM has 15 workload units; zero delay by week 13 requires at most 13 rows, hence at least four ECLO half-unit gains costing `20`. With two or fewer ECLO rows it needs at least 14 rows and pays at least `35` delay plus ECLO cost. The oracle attains `56 + 20 = 76`.
 - Protocol: commit the generator, input, oracle, hash, and 55th regression before the first solver run. The purpose is to test contract/workfront coupling across spatially disjoint footprints without adapting the algorithm to the observed outcome.
+
+### E083: Blind cross-module construction reaches and proves 76
+
+- Timestamp: 2026-09-19 06:48:33 +08
+- Blind result: the unchanged eight-worker controller generated C=`76.0` in 1.730 seconds; the sound verification model returned the same score and bound in 0.250 seconds. The final hash is `ac27d3e191fc88a5d398e2c3dd0fa0eb187a05a967cb13ceb3781488409e1fd5`.
+- Independent checks: both scorers agree; the output has 56 delay points, four ECLO rows, no excess, and zero KMM delay. Standard and strict closure screens are clean.
+- Limitation: direct construction solved the fixture before repair, so the blind run did not test the intended spatial-neighborhood omission. A controlled valid suboptimal incumbent is required for that mechanism test.
+
+### E084: Contract peers close a proven spatial-repair blind spot
+
+- Timestamp: 2026-09-19 06:50:56 +08
+- Falsification: a checked, strict-clean C=`101.0` incumbent used two ECLO rows and ended KMM in week 14. The existing footprint repair freed only `R0103` and spatial competitor `R0101`, then proved `101.0` optimal under those frozen decisions despite the known C=`76.0` schedule.
+- Correction: for Scenario C only, add every activity sharing a contract with a direct ECLO/excess contributor before expanding through affected footprint locations. Scenario B retains its direct-contributor neighborhood.
+- Result: the corrected eight-activity neighborhood reduced `101.0` to dual-scored, standard-clean, strict-clean C=`76.0` and proved the bound in 0.114 seconds. The repaired hash is `958a1b2fc5a3552ea0a76ddbc6e8085d4c260e32460769450d034844e6671325`.
+- Cross-regime checks: public C retained and proved `62.7` in 0.332 seconds; irregular seed 5 recovered `31.0` in 30.008 seconds; coupled C retained and proved `920.0` in 0.070 seconds. The public repair set grew to 43 activities, so component growth remains a runtime risk.
+- Regression: the first 30-case matrix run failed because its expected count remained 29; the second misrouted the new case to the older synthetic fixture. Both harness assumptions were corrected before the 56-test pass.

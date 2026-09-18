@@ -463,6 +463,22 @@
       "standard_feasible": true,
       "strict_conflicts": 0,
       "submission_hash": "12f8415537193b2f45fb8a4dac0c8c95caece0fb6116181d1195db476a6d29bb"
+    },
+    {
+      "case": "independent_multimodule_tradeoff_C",
+      "dataset_hash": "3220b2c715aaf57df46d10570ed0de9b6b79a1900e26d6df9c342e760ab9a293",
+      "delay_score": 56.0,
+      "eclo_nights": 4,
+      "excess_nights": 0,
+      "proof_bound": 76.0,
+      "proof_matches_score": true,
+      "proof_status": "PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 76.0,
+      "standard_feasible": true,
+      "strict_conflicts": 0,
+      "submission_hash": "ac27d3e191fc88a5d398e2c3dd0fa0eb187a05a967cb13ceb3781488409e1fd5"
     }
   ],
   "integrity_rule": "main and independent scores must agree; hard violations abort generation",

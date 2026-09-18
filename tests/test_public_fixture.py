@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 29)
+        self.assertEqual(len(matrix["cases"]), 30)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -130,6 +130,9 @@ class PublicFixtureTests(unittest.TestCase):
                         else "independent_irregular_partial_v1_guarded_independent_c120_costrepair_w8"
                     )
                 )
+            elif row["case"] == "independent_multimodule_tradeoff_C":
+                data = ROOT / "fixtures" / "independent_multimodule_tradeoff_v1"
+                submission = ROOT / "runs" / "postb651753_multimodule_c_seed1_w8"
             else:
                 self.assertTrue(row["case"].startswith("independent_"))
                 data = ROOT / "fixtures" / "independent_synthetic_v1"
@@ -846,11 +849,29 @@ class PublicFixtureTests(unittest.TestCase):
                 self.instance,
                 ROOT / "deliverables" / "public" / "C",
                 expand_footprints=True,
+                expand_contracts=True,
             )
         )
         self.assertEqual(direct, {"A036", "A059"})
         self.assertGreater(len(expanded), len(direct))
         self.assertTrue(direct < expanded)
+
+    def test_scenario_c_cost_repair_expands_direct_contributor_contracts(self) -> None:
+        data = ROOT / "fixtures" / "independent_multimodule_tradeoff_v1"
+        instance = load_instance(data)
+        contributors = _scenario_b_cost_contributing_activities(
+            instance,
+            ROOT / "fixtures" / "independent_multimodule_tradeoff_v1_delayed_incumbent",
+            expand_footprints=True,
+            expand_contracts=True,
+        )
+        kmm = {
+            activity_id
+            for activity_id, activity in instance.activities.items()
+            if activity.contract_number == "KMM"
+        }
+        self.assertTrue(kmm <= set(contributors))
+        self.assertIn("R0101", contributors)
 
     def test_relabelled_a_incumbent_is_a_safe_scenario_c_fallback(self) -> None:
         source = ROOT / "deliverables" / "public" / "A"
@@ -1359,6 +1380,7 @@ class PublicFixtureTests(unittest.TestCase):
             self.instance,
             ROOT / "deliverables" / "public" / "C",
             expand_footprints=True,
+            expand_contracts=True,
         )
 
         def fake_solve(instance, output_dir, scenario, **kwargs):

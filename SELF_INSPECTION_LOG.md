@@ -785,3 +785,17 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Regression state: 55 tests pass, including dual scoring and strict screening of the frozen oracle. No solver code or default changed while constructing the fixture.
 - Confidence: very high in official incumbents; high in the new oracle's feasibility and counting bound; high that the test targets a real omission mode; no confidence yet in solver performance because it has not been run.
 - Immediate next action: commit the holdout and then run the unchanged eight-worker production Scenario C controller once. Preserve the blind result before considering any repair expansion.
+
+## 2026-09-19 06:52:48 +08
+
+- Interval: 5 minutes 58 seconds since the previous inspection; triggered early because the frozen holdout produced both a blind proof and a controlled repair counterexample.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No official artifact or portal attempt changed.
+- Blind result: unchanged direct construction reached cross-module C=`76.0`; sound verification matched and proved `76.0`. Both scorers and both closure policies accept the output. This validates construction but did not exercise repair.
+- Strongest falsification: from a separately checked C=`101.0` incumbent, spatial-only repair freed two activities and proved `101.0` inside the frozen neighborhood despite the known `76.0` optimum. The model was correct for the wrong subproblem; the neighborhood omitted four disjoint same-contract workfront peers.
+- Accepted correction: Scenario C now adds all same-contract activities of direct ECLO/excess contributors before footprint expansion. The corrected neighborhood proved `76.0` in 0.114 seconds. Scenario B remains narrow.
+- Cross-regime evidence: public C=`62.7`, irregular seed-5 C=`31.0`, and coupled C=`920.0` were preserved; public and coupled returned matching repair bounds. Fifty-six regressions and the 30-case dual-scored benchmark pass.
+- Harness failures preserved: matrix expansion first failed the hard-coded 29-case count, then misrouted the new case to the old synthetic fixture. Neither affected solver results; both demonstrate that evidence routing can silently invalidate comparisons if not asserted.
+- Adversarial risk: public repair expands to 43/54 activities. It solved quickly here, but hidden large contracts or connected footprints could turn this into a near-global solve. A checked incumbent prevents score regression, not timeout cost. The expansion is one contract step plus one footprint step, not an unbounded transitive closure.
+- Integrity audit: C=`101.0` remains a valid incumbent and its conditional proof remains labelled conditional. C=`76.0` is locally proved, not official-validator-confirmed. No result was promoted from an internal metric alone.
+- Confidence: very high in official incumbents; high in the repair counterexample and correction; high in tested cross-regime safety; medium in scale/runtime transfer; low-to-medium in untested cross-contract predecessor dependencies.
+- Immediate next action: commit the corrected algorithm and evidence, then stress neighborhood growth or a cross-contract predecessor case without changing the protected public artifacts.

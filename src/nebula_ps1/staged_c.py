@@ -214,7 +214,10 @@ def solve_staged_c_portfolio(
     cost_repair_activities: list[str] = []
     if a_local_repair_time_limit_seconds > 0:
         cost_repair_activities = _scenario_b_cost_contributing_activities(
-            instance, selected_dir, expand_footprints=True
+            instance,
+            selected_dir,
+            expand_footprints=True,
+            expand_contracts=True,
         )
         if cost_repair_activities:
             cost_repair_raw = stages / "scenario_c_cost_repair_raw"
