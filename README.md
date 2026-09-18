@@ -1,8 +1,9 @@
 ---
 document_id: NH-PS1-KB
-version: 0.4.0
+version: 0.5.0
 last_verified: 2026-09-18
 research_status: reconciled
+implementation_status: active
 official_spec: https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/blob/main/PS1/PS1_README.md
 ---
 
@@ -321,6 +322,17 @@ Resource-independent earliest-finish calculations give useful lower bounds under
 
 These are regression bounds, not proofs of the global optimum. A feasible solution matching one would prove optimality only after all location, closure, allocation, and workfront rules pass validation.
 
+### Current executable evidence
+
+- The schema-driven footprint expander reproduces all 928 public activity-location-week occupancy keys without activity-specific rules.
+- The independent partial checker reproduces the organiser sample's derived Scenario A penalty of `48.3` and rejects omitted workload.
+- A closure-free CP-SAT relaxation proves its own optimistic `25.2` optimum but fails the inferred closure screen and is quarantined.
+- The protected Scenario A candidate changes only two late sample rows: A035 week 27 to week 11 and A038 week 27 to week 26. It scores `32.2` and passes all implemented checks, including the sample-consistent closure screen.
+- `32.2` is the current internally supported lower bound because A036 occupies the H01 eastbound boundary in every week 22-28, while A075 is a Live PM at the interchange and cannot be scheduled by its week-28 target under the inferred closure semantics.
+- Neither `32.2` nor the closure interpretation is reference-validator confirmed. The organiser sample remains the only organiser-described feasible artifact.
+
+The append-only evidence, hashes, parameters, failures, and limitations are in `EXPERIMENT_LEDGER.md`. Executable code is under `src/nebula_ps1`; regression tests are under `tests`.
+
 <a id="improvement"></a>
 
 ## 9. Score improvement loop
@@ -438,6 +450,8 @@ Warm-starting is not minimal-change replanning. For a disruption, use a lexicogr
 | `P4: Controller experience` | Provide upload, solve, inspect, explain, validate, and export in one usable flow. |
 | `P5: Replanning bonus` | Apply a disruption, identify impact, produce a lexicographically low-churn recovery, and validate it. |
 | `P6: Extensions` | Add natural-language analysis, negotiation briefs, fragility views, or richer simulation only if earlier gates are secure. |
+
+Current gate: P0 is partially complete. Parsing, footprint expansion, deterministic output loading, score calculation, mutation checks, and a sample-consistent closure screen exist. Reference-validator differential testing is still missing, so P0 is not closed.
 
 ### Required product states
 
@@ -598,3 +612,4 @@ When sources conflict:
 | `0.2.0` | 2026-09-18 | Removed low-value branches and repetition; retained only actionable knowledge and likely ambiguity guards. |
 | `0.3.0` | 2026-09-18 | Added the CP-SAT model, constraint encoding, validator-guided improvement loop, benchmark facts, and training decision. |
 | `0.4.0` | 2026-09-18 | Reconciled the research ledger into the formulation, lower bounds, adaptive-search plan, benchmark protocol, validator risks, and revised build order. |
+| `0.5.0` | 2026-09-18 | Added executable evidence, the quarantined `25.2` relaxation, the protected `32.2` Scenario A repair, and the remaining validator boundary. |

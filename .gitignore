@@ -5,3 +5,10 @@ current-problem-statement/
 *.wav
 *.mp3
 *.tmp
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+build/
+dist/
+*.egg-info/

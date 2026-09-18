@@ -1,0 +1,15 @@
+{
+  "best_bound": 25.2,
+  "branches": 3120,
+  "conflicts": 0,
+  "formulation": "scenario_a_relaxation_without_closure_buffers",
+  "limitation": "Closure and buffer conflicts are omitted. Output is an optimistic candidate only and must not be called feasible or submitted without the reference validator.",
+  "model_constraints": 44257,
+  "model_variables": 21065,
+  "objective_score": 25.2,
+  "seed": 1,
+  "status": "OPTIMAL",
+  "time_limit_seconds": 20.0,
+  "wall_time_seconds": 0.42790729099942837,
+  "workers": 8
+}
