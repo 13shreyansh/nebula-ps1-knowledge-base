@@ -758,3 +758,10 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - End-to-end evidence: a fresh guarded run generated C=`52.0`, repaired it to the proved `31.0` in 0.296 seconds, and emitted hash `12f8415537193b2f45fb8a4dac0c8c95caece0fb6116181d1195db476a6d29bb`. Both scorers agree; standard and strict conflicts are zero; the repair reports `OPTIMAL` with bound `31.0`.
 - Regression: 53 tests pass. `BENCHMARK_MATRIX.json` now contains 29 dual-scored, bound-matching cases, including irregular B=`30.0` and C=`31.0`. Its first regression run exposed and corrected a test router that sent the new cases to an older fixture.
 - Limitation: direct C construction remains nondeterministic and must first return a safe cost-bearing incumbent. One optimal end-to-end run is not a distributional reliability result.
+
+### E076: Corrected C controller preserves dense fallback and coupled optimum
+
+- Timestamp: 2026-09-19 05:56:30 +08
+- Dense holdout: under the established one-worker 2/1/3/2-second policy, production C retained the protected A-derived score `0.0`, remained standard/strict clean, and completed in 3.941 seconds. The independent C challenger did not displace an equal fallback; the cost neighborhood was empty.
+- Coupled trade-off: under the one-worker 2/10/3/2-second policy, production C retained the proved `920.0` optimum with zero standard/strict conflicts in 6.254 seconds. The C cost repair examined `WCOUPLED1`, returned the same score and bound, and did not replace the equal incumbent.
+- Decision: the independent challenger and generalized cost repair pass both tested cross-regime safety checks. Continue distributional testing; do not infer reliability from one seed per regime.

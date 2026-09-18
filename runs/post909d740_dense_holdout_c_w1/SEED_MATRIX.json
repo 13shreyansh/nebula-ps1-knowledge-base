@@ -1,0 +1,39 @@
+{
+  "data": "fixtures/independent_dense_holdout_v1",
+  "dataset_hash": "68ee1017ac7bf59bfc50519a7e3cdc15540c6d22a262a6b899eaab51f7242481",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "production_c": true,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "C"
+  ],
+  "requested_seeds": [
+    1
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 0.0,
+      "seed": 1,
+      "selected_stage": "scenario_c_fallback",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "eca1fc1aa3e2a0b92b5019917d59e9ac596a71709ceb790c7a1ba9552329b132",
+      "wall_seconds": 3.9414030000043567
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 1
+}
