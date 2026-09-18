@@ -12,3 +12,6 @@ __pycache__/
 build/
 dist/
 *.egg-info/
+runs/*seed_matrix*/
+fixtures/independent_scaled_m4*/
+fixtures/independent_scaled_m8*/

@@ -1,0 +1,198 @@
+{
+  "data": "fixtures/independent_scaled_m20",
+  "dataset_hash": "3abfdf7654084890d556ad8bb456183cff215d83767dc35a342604342d25cb44",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "A",
+    "B",
+    "C"
+  ],
+  "requested_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 140.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "650d82c2c5e249861e3f4448aeee1eca0e0ec37a42f8a74d6f624e5ea0f3bffc",
+      "wall_seconds": 2.085593041992979
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 140.0,
+      "seed": 2,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "650d82c2c5e249861e3f4448aeee1eca0e0ec37a42f8a74d6f624e5ea0f3bffc",
+      "wall_seconds": 2.101031250000233
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 140.0,
+      "seed": 3,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "650d82c2c5e249861e3f4448aeee1eca0e0ec37a42f8a74d6f624e5ea0f3bffc",
+      "wall_seconds": 2.067617375010741
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 140.0,
+      "seed": 4,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "650d82c2c5e249861e3f4448aeee1eca0e0ec37a42f8a74d6f624e5ea0f3bffc",
+      "wall_seconds": 2.0670074579975335
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 140.0,
+      "seed": 5,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "650d82c2c5e249861e3f4448aeee1eca0e0ec37a42f8a74d6f624e5ea0f3bffc",
+      "wall_seconds": 2.089817708998453
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 200.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "9a60b9c3325d4ade4242a4e921b1b8c5150c37b78a09e02c4389f6f5dcff30b7",
+      "wall_seconds": 1.590421166998567
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 200.0,
+      "seed": 2,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "9a60b9c3325d4ade4242a4e921b1b8c5150c37b78a09e02c4389f6f5dcff30b7",
+      "wall_seconds": 1.59358220800641
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 200.0,
+      "seed": 3,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "9a60b9c3325d4ade4242a4e921b1b8c5150c37b78a09e02c4389f6f5dcff30b7",
+      "wall_seconds": 1.593508333011414
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 200.0,
+      "seed": 4,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "9a60b9c3325d4ade4242a4e921b1b8c5150c37b78a09e02c4389f6f5dcff30b7",
+      "wall_seconds": 1.5953974160074722
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 200.0,
+      "seed": 5,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "9a60b9c3325d4ade4242a4e921b1b8c5150c37b78a09e02c4389f6f5dcff30b7",
+      "wall_seconds": 1.58783770800801
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 140.0,
+      "seed": 1,
+      "selected_stage": "bridge_safe_improvement",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "02bcb72744a6088678d5c42bb8bd268573a361c64108a294daab702ee4c8a206",
+      "wall_seconds": 5.487987583008362
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 140.0,
+      "seed": 2,
+      "selected_stage": "bridge_safe_improvement",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "02bcb72744a6088678d5c42bb8bd268573a361c64108a294daab702ee4c8a206",
+      "wall_seconds": 5.346779707993846
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 140.0,
+      "seed": 3,
+      "selected_stage": "bridge_safe_improvement",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "02bcb72744a6088678d5c42bb8bd268573a361c64108a294daab702ee4c8a206",
+      "wall_seconds": 5.4673394999990705
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 140.0,
+      "seed": 4,
+      "selected_stage": "bridge_safe_improvement",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "02bcb72744a6088678d5c42bb8bd268573a361c64108a294daab702ee4c8a206",
+      "wall_seconds": 5.5882726660056505
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 140.0,
+      "seed": 5,
+      "selected_stage": "bridge_safe_improvement",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "02bcb72744a6088678d5c42bb8bd268573a361c64108a294daab702ee4c8a206",
+      "wall_seconds": 5.492055708004045
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 15
+}

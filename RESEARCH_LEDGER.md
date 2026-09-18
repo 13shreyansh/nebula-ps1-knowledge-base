@@ -406,6 +406,14 @@ Confidence labels:
 - **Limitation:** Timetabling decomposition results do not transfer numerically to PS1, whose co-sharing and closure rules differ. “Up to 20×” is paper-specific and is not an expected gain here.
 - **Confidence:** Medium.
 
+### `R048` Independent size scaling is not a substitute for interaction-density scaling
+
+- **Evidence:** A public-independent 20-module fixture with 180 activities solved 15/15 fixed-budget one-worker A/B/C runs to matching bounds, yet the modules are spatially separated and contract-independent. C took 5.35–5.59 seconds while A/B remained near two seconds or below.
+- **Finding:** Variable count alone is not the current failure mode. Closure density, shared bottlenecks, predecessor coupling, and ECLO-window interaction are more likely to trigger cut growth and unstable construction than additional separable modules.
+- **Relevance:** Retain the current monolithic-plus-separator architecture. Benchmark dense shared corridors before implementing Benders, learning, or another solver family; otherwise a rewrite would optimize an unobserved bottleneck.
+- **Limitation:** The 180-activity result is not a hidden-runtime guarantee. It is an authored, decomposable fixture and has no reference-validator confirmation.
+- **Confidence:** High for this fixture; medium for the prioritization inference.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

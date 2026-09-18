@@ -24,6 +24,9 @@ CASES = (
     ("independent_A", "fixtures/independent_synthetic_v1", "runs/a_independent_synthetic_v1", "A", "runs/a_independent_synthetic_v1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_B", "fixtures/independent_synthetic_v1", "runs/b_independent_synthetic_v1", "B", "runs/b_independent_synthetic_v1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_C", "fixtures/independent_synthetic_v1", "runs/c_independent_synthetic_v1", "C", "runs/c_independent_synthetic_v1_audit/stages/scenario_c_verification_raw/TELEMETRY.json", None, None),
+    ("independent_scaled_m20_A", "fixtures/independent_scaled_m20", "runs/independent_scaled_m20_seed_matrix5_w1/a_seed_1", "A", "runs/independent_scaled_m20_seed_matrix5_w1/a_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_scaled_m20_B", "fixtures/independent_scaled_m20", "runs/independent_scaled_m20_seed_matrix5_w1/b_seed_1", "B", "runs/independent_scaled_m20_seed_matrix5_w1/b_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_scaled_m20_C", "fixtures/independent_scaled_m20", "runs/independent_scaled_m20_seed_matrix5_w1/c_seed_1", "C", "runs/independent_scaled_m20_seed_matrix5_w1/c_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
 )
 
 

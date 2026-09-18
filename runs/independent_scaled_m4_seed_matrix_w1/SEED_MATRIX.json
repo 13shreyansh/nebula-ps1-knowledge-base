@@ -1,0 +1,198 @@
+{
+  "data": "fixtures/independent_scaled_m4",
+  "dataset_hash": "d73310ef04eedbbd06514b4d78aceba77c56b6f3230be8fd4693170e8cbec7e5",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "A",
+    "B",
+    "C"
+  ],
+  "requested_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 28.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "78c5865740f53cb5926c0e7d85d34312bac79c3ea3c43869290916608ed43243",
+      "wall_seconds": 0.21974945900728926
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 28.0,
+      "seed": 2,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "78c5865740f53cb5926c0e7d85d34312bac79c3ea3c43869290916608ed43243",
+      "wall_seconds": 0.21030149998841807
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 28.0,
+      "seed": 3,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "78c5865740f53cb5926c0e7d85d34312bac79c3ea3c43869290916608ed43243",
+      "wall_seconds": 0.21101520799857099
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 28.0,
+      "seed": 4,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "78c5865740f53cb5926c0e7d85d34312bac79c3ea3c43869290916608ed43243",
+      "wall_seconds": 0.22088204199098982
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 28.0,
+      "seed": 5,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "78c5865740f53cb5926c0e7d85d34312bac79c3ea3c43869290916608ed43243",
+      "wall_seconds": 0.21240395799395628
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 40.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "679b1edaf45acc2a999726e7184732087a8f8907622c221cfa0252c8870d1c1c",
+      "wall_seconds": 0.07301320899568964
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 40.0,
+      "seed": 2,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "679b1edaf45acc2a999726e7184732087a8f8907622c221cfa0252c8870d1c1c",
+      "wall_seconds": 0.07441566600755323
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 40.0,
+      "seed": 3,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "679b1edaf45acc2a999726e7184732087a8f8907622c221cfa0252c8870d1c1c",
+      "wall_seconds": 0.07229774999723304
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 40.0,
+      "seed": 4,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "679b1edaf45acc2a999726e7184732087a8f8907622c221cfa0252c8870d1c1c",
+      "wall_seconds": 0.07911183299438562
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 40.0,
+      "seed": 5,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "679b1edaf45acc2a999726e7184732087a8f8907622c221cfa0252c8870d1c1c",
+      "wall_seconds": 0.07315333299629856
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 28.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "1b2d0973f02a463bace4307a03cd12d6a3f0b30bea5ebc53f23419fc0ed20d2b",
+      "wall_seconds": 0.39283429099305067
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 28.0,
+      "seed": 2,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "1b2d0973f02a463bace4307a03cd12d6a3f0b30bea5ebc53f23419fc0ed20d2b",
+      "wall_seconds": 0.39201629199669696
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 28.0,
+      "seed": 3,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "1b2d0973f02a463bace4307a03cd12d6a3f0b30bea5ebc53f23419fc0ed20d2b",
+      "wall_seconds": 0.3925667920120759
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 28.0,
+      "seed": 4,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "1b2d0973f02a463bace4307a03cd12d6a3f0b30bea5ebc53f23419fc0ed20d2b",
+      "wall_seconds": 0.4015098749950994
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 28.0,
+      "seed": 5,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "1b2d0973f02a463bace4307a03cd12d6a3f0b30bea5ebc53f23419fc0ed20d2b",
+      "wall_seconds": 0.3969209589995444
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 15
+}

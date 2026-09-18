@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 12)
+        self.assertEqual(len(matrix["cases"]), 15)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -87,6 +87,14 @@ class PublicFixtureTests(unittest.TestCase):
                     "C": "c_structural_demand_portfolio_w8",
                 }[row["scenario"]]
                 submission = ROOT / "runs" / run_name
+            elif row["case"].startswith("independent_scaled_m20_"):
+                data = ROOT / "fixtures" / "independent_scaled_m20"
+                submission = (
+                    ROOT
+                    / "runs"
+                    / "independent_scaled_m20_seed_matrix5_w1"
+                    / f"{row['scenario'].lower()}_seed_1"
+                )
             else:
                 self.assertTrue(row["case"].startswith("independent_"))
                 data = ROOT / "fixtures" / "independent_synthetic_v1"
@@ -104,6 +112,20 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(evaluation.objective_score, row["score"], row["case"])
             self.assertEqual(independent.objective_score, row["score"], row["case"])
             self.assertTrue(row["proof_matches_score"], row["case"])
+
+    def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
+        data = ROOT / "fixtures" / "independent_scaled_m20"
+        oracle = ROOT / "fixtures" / "independent_scaled_m20_oracle"
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, oracle, scenario="A")
+        independent = independently_score(data, oracle)
+        self.assertEqual(set(instance.lines), {"LSX", "LSY"})
+        self.assertEqual(len(instance.projects), 160)
+        self.assertEqual(len(instance.activities), 180)
+        self.assertGreater(len(instance.activities), len(self.instance.activities))
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertAlmostEqual(evaluation.objective_score, 140.0)
+        self.assertAlmostEqual(independent.objective_score, 140.0)
 
     def test_hard_deadline_uses_last_completed_week_not_containing_week(self) -> None:
         midweek_deadline = date(2027, 1, 13)
