@@ -574,7 +574,7 @@ Any activity count, score, time saving, or improvement stated in the demo must c
 | `E2` | `AUDIO-2026-09-18-19-50-30.m4a`, approximately 10m31s | Organiser intent and clarification | Room audio and overlapping speech reduce verbatim accuracy. |
 | `E3` | User-supplied Wispr Flow transcript | Improved recovery of the full conversation | Speaker numbers are inconsistent; several domain terms are mistranscribed. |
 | `E4` | Independent local transcription passes | Cross-check of Q&A meaning | One failed middle-section pass was discarded and reprocessed. |
-| `E5` | [`RESEARCH_LEDGER.md`](RESEARCH_LEDGER.md), 63 research entries plus failure and validator-test registers | Full paper trail, experiments, alternatives, and limitations | Evidence archive; this README contains the reconciled decisions. |
+| `E5` | [`RESEARCH_LEDGER.md`](RESEARCH_LEDGER.md), 64 research entries plus failure and validator-test registers | Full paper trail, experiments, alternatives, and limitations | Evidence archive; this README contains the reconciled decisions. |
 
 Combined confidence:
 

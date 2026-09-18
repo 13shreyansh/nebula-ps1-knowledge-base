@@ -518,6 +518,14 @@ Confidence labels:
 - **Limitation:** Footprint expansion can become large on network-spanning activities and may consume the whole repair budget. Cap and benchmark it by affected component size rather than assuming it is always superior.
 - **Confidence:** High for the failure and recovery; medium for transfer.
 
+### `R064` Improvement operators cannot compensate for failure to construct one checked incumbent
+
+- **Status:** Confirmed on irregular Scenario C with one worker.
+- **Finding:** The expanded neighborhood repairs 8-worker incumbents to `31.0`, but a 120-second one-worker construction never became safe and therefore never reached that stage. Local conflict repair also worsened 56 residual conflicts to 57.
+- **Relevance:** Separate construction reliability from incumbent improvement. Benchmark time to first checked incumbent by worker count; retain a feasibility-oriented decomposition or portfolio branch before tuning score neighborhoods.
+- **Limitation:** This is one authored fixture and one seed. It establishes a failure, not a universal worker threshold.
+- **Confidence:** High for the observed run; low for the exact worker-count boundary.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

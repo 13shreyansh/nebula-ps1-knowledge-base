@@ -737,3 +737,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Delivery risk: commits `909d740` and `bf65bb5` are local and clean, but both push attempts failed because the host cannot obtain HTTPS GitHub credentials. This is an external publication blocker, not a solver result.
 - Confidence: very high in protected public results; high in seed-3 neighborhood diagnosis and the manual `31.0` recovery; high in 53 tests; medium-low in the unrerun controller correction; low in byte reproducibility.
 - Immediate next action: run the full corrected seed-3 controller, dual-score and strict-screen it, then repeat cross-regime safety checks before committing the expanded neighborhood.
+
+## 2026-09-19 06:15:11 +08
+
+- Interval: 10 minutes 22 seconds since the previous inspection; triggered early by completed end-to-end and compute-portability tests.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No official artifact or portal attempt changed.
+- Accepted corrective evidence: the full corrected seed-3 controller started from C=`63.0`, verification reached `56.0`, and footprint-expanded repair reached dual-scored, standard-clean, strict-clean `31.0` within its ten-second budget. Dense C=`0.0` and coupled C=`920.0` remained unchanged after the exact code change. Fifty-four regressions pass.
+- Strongest new failure: the same irregular policy with one worker failed closed. The 120-second direct C attempt retained 56 conflicts, local repair 57, and bridge-safe fallback 27. No checked incumbent existed, so score repair could not run.
+- Adversarial interpretation: the eight-worker path has improved score robustness across observed seeds, but construction remains dependent on parallel search. A broad LNS repair is not a complete algorithm if it requires a lucky safe starting point. Adding a hand-written KIRR/ECLO schedule now would risk encoding the co-developed fixture.
+- Integrity audit: seed-3 narrow `52.0`, expanded `31.0`, and one-worker total failure are all preserved. The local repair bound is explicitly conditional on frozen decisions and is not a global proof. No failed output was promoted.
+- Delivery state: commits through `1a494f7` remain local because HTTPS GitHub credentials are unavailable; repeated push attempts fail before authentication.
+- Confidence: very high in public incumbents; high in expanded-repair safety on the tested regimes; high in one-worker failure; medium in eight-worker irregular robustness; low in hidden compute portability.
+- Immediate next action: test four workers under the identical irregular policy. If it fails, stop worker-count probing and investigate a generic feasibility decomposition; if it succeeds, record the threshold as empirical and continue with a held-out structural case.

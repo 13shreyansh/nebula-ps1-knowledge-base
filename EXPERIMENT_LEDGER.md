@@ -775,3 +775,19 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - End-to-end result: the corrected seed-3 controller started from C=`63.0`, verification reached `56.0`, and the expanded ten-second repair reached dual-scored, standard-clean, strict-clean C=`31.0` with hash `aec37022042df9d45d728b5daeeee9d701f75c28fcde64554f939276db3f0b05`.
 - Post-change safety checks: dense-holdout C remained `0.0`; coupled C remained `920.0` with a matching cost-repair bound. B keeps the smaller direct-contributor neighborhood. Fifty-four regressions pass.
 - Limitation: the correction was designed after the seed-3 failure. A fresh held-out footprint-coupled fixture or further unfiltered seeds are required before claiming broad reliability.
+
+### E078: One-worker irregular C fails before improvement can begin
+
+- Timestamp: 2026-09-19 06:15:11 +08
+- Policy: the corrected guarded controller, seed 1, one worker, A budgets 30/10/30/10 seconds and C heuristic/verification budgets 120/10 seconds.
+- Result: A failed closed. Direct C consumed 120.002 seconds and returned an unsafe `136584.0` candidate with 56 closure conflicts. The ten-second local repair worsened the residual to 57 conflicts; the 30-second bridge-safe fallback retained 27. No final submission was emitted.
+- Interpretation: the footprint-expanded cost repair is irrelevant until a checked incumbent exists. Eight-worker success does not establish one-worker construction portability, and a longer direct budget alone is insufficient on this case.
+- Decision: retain one worker as a falsification mode, not the production default. Do not add a fixture-specific ECLO construction rule; first test intermediate worker counts or a generic feasibility decomposition.
+
+### E079: Four workers construct the irregular C optimum, but do not establish a threshold
+
+- Timestamp: 2026-09-19 06:19:58 +08
+- Matched test: E078's fixture, seed, budgets, attempts, and controller were retained; only worker count changed from one to four.
+- Result: A again failed closed, but direct C reached checked `31.0` in 120.007 seconds after 35 solves and 29 closure rounds. Verification and footprint-expanded repair each retained `31.0`; neither supplied a global solver proof. The final hash is `d45951d25022b6485eebb58a5c2c3d57272fb4fa8d67e0fd2a1f1bb6cd9f74a4`.
+- Independent checks: both local scorers report two ECLO rows, three excess groups, zero delay, and objective `31.0`; standard and strict closure screens are clean. The analytical bound from E074 supplies the optimality proof under implemented rules.
+- Interpretation: four workers are sufficient on this one seed where one worker failed. This is an empirical compute-sensitivity result, not a universal minimum-worker claim. Test two workers next under the identical policy.
