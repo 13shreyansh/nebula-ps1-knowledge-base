@@ -691,3 +691,35 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: 15/15 locally feasible reconstructions matched the public optima A=`137.9`, B=`30.0`, C=`62.7`. Across all seeds, A took 20.097–33.840 seconds, B 11.160–23.961, and production C 28.974–39.665.
 - Nondeterminism: every run has a different submission hash. Strict diagnostic conflicts range from 3 to 8 even though every schedule passes the confirmed standard rule. Stable objective values therefore do not imply byte identity or stable operational structure.
 - Integrity boundary: every requested seed is recorded; no output was portal-submitted or promoted over the protected official artifacts. This is a reconstruction and runtime experiment on the known public dataset, not new score progress or hidden-generalization evidence.
+
+### E068: One-worker public construction fails, and three attempts do not repair it
+
+- Timestamp: 2026-09-19 04:48:51 +08
+- Controlled portability test: E066's 30-second heuristic, 10-second local repair, 30-second fallback, and 10-second verification budgets were retained while worker count changed from eight to one.
+- Result: A failed closed in 70.979 seconds; B returned checked `149.0` in 51.139 seconds against a verified `30.0` lower bound; guarded C failed because its A stage failed. The one-worker success rate was 1/3 versus 15/15 optimum reconstruction with eight workers.
+- Portfolio falsification: raising heuristic attempts from one to three preserved the per-attempt budget but increased total work. A still failed after 131.166 seconds, with 27, 12, and 14 conflicts across attempts. B remained `149.0` after 111.325 seconds. Seed diversification did not fix the structural gap.
+- Diagnostic: the first A hint returned objective `30283.4` with 24 conflicts; sound fallback retained 15 conflicts. The current identical-footprint packer does not screen one packed footprint against previously packed different footprints, a risk absent from the deliberately regular dense fixtures.
+- Integrity boundary: unsafe candidates remain audit-only, B=`149.0` did not replace any incumbent, and the eight-worker result is no longer described without its hardware condition.
+
+### E069: Transactional cross-footprint screening is rejected
+
+- Timestamp: 2026-09-19 04:51:49 +08
+- Hypothesis: independently packed footprint classes were causing the one-worker public closure conflicts, so each packed activity was screened against prior classes and prevented from reusing their local group slots.
+- Controlled result: 49 regressions passed, but the same one-worker public A policy still failed with 27 heuristic and 22 fallback conflicts, worse than E068's 24 and 15. B remained checked at `149.0` in 51.154 seconds.
+- Decision: revert the code. A locally cleaner partial hint can still steer a timed exact search into a worse trajectory, and the screen did not create a complete global construction. Preserve the negative ledger and test hint-on versus hint-off before another design change.
+
+### E070: Hint coverage explains the public A failure, but a universal gate breaks B
+
+- Timestamp: 2026-09-19 04:57:30 +08
+- Coverage diagnostic: structural telemetry now records proposed activity/access coverage and whether the hint is complete. Independent dense, held-out, additive, and coupled A fixtures all covered 100% and solved at their bounds. Public A covered 35/54 activities and 108/192 accesses.
+- Matched ablation: with one worker and 30 seconds, public A hint-on returned `11155.9` with 27 closure conflicts; hint-off returned `2713.2` with 7. The partial warm start was harmful.
+- Rejected universal rule: clearing every incomplete hint improved staged A to six heuristic conflicts and two after 10-second local repair, but A still failed; B changed from feasible `149.0` to failure with 34 heuristic and 14 fallback conflicts. B needs the partial packing hint for deadline feasibility.
+- Longer repair falsification: increasing A local repair from 10 to 30 seconds did not finish the two-conflict repair; timed iterative search instead ended with six conflicts. More wall time is not monotonic without a protected safe incumbent.
+
+### E071: Scenario-aware hint gate preserves scores and improves public runtime tails
+
+- Timestamp: 2026-09-19 05:05:22 +08
+- Policy: clear incomplete structural hints for Scenario A only; retain them for B/C and retain complete hints for every scenario. This is schema-derived and records attempted coverage even when the hint is cleared.
+- Regression: 51 tests pass. The independent dense, holdout, additive, and coupled cases keep complete hints and their proved results. One eight-worker public seed reconstructed A=`137.9`, B=`30.0`, C=`62.7` before the full comparison.
+- Unfiltered five-seed result: 15/15 public A/B/C runs matched their optima. A min/median/max wall time changed from 20.097/23.083/33.840 to 15.425/23.639/25.742 seconds; B from 11.160/14.035/23.961 to 9.902/13.977/23.039; C from 28.974/29.569/39.665 to 17.360/23.505/37.354.
+- Boundary: A's median improvement is negligible and one-worker A still fails. The gain is eight-worker tail reduction on known public data, not hidden-score progress or compute portability. Strict diagnostics remain non-objective and variable.

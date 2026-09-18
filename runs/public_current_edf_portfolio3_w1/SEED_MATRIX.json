@@ -1,0 +1,48 @@
+{
+  "data": "current-problem-statement/PS1/01_data",
+  "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+  "failures": 1,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 30.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 3,
+    "heuristic_time_limit_seconds": 30.0,
+    "local_repair_time_limit_seconds": 10.0,
+    "production_c": false,
+    "verification_time_limit_seconds": 10.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "A",
+    "B"
+  ],
+  "requested_seeds": [
+    1
+  ],
+  "runs": [
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "A",
+      "seed": 1,
+      "status": "FAILURE",
+      "wall_seconds": 131.1656569159968
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 149.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 8,
+      "submission_hash": "ed8a35860beb193aa77d006627856c1a86baed99af23d6d5a244f68954f4b8d4",
+      "wall_seconds": 111.3247074999963
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 0.5,
+  "successes": 1
+}

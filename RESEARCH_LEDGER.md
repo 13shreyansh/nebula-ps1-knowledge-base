@@ -454,6 +454,25 @@ Confidence labels:
 - **Status:** Confirmed on five public seeds per scenario.
 - **Finding:** Fifteen fixed-policy reconstructions all reached the same optimum, yet all hashes differed, strict conflicts ranged from 3 to 8, and scenario wall times varied by up to roughly twofold.
 - **Relevance:** Report objective, feasibility, artifact hash, strict diagnostics, selected stage, and runtime separately. Use repeated-seed distributions for deployment claims. Deterministic-time or interleaved search is worth comparing only under the same end-to-end budget and protected-incumbent gates.
+
+### `R055` Portfolio diversity cannot compensate for a systematically unsafe construction hint
+
+- **Status:** Demonstrated on the public one-worker policy.
+- **Finding:** Three 30-second A trajectories retained 27, 12, and 14 closure conflicts, while one attempt retained 24. B stayed at `149.0` with one or three attempts. Additional seeds increased runtime without changing the failure class.
+- **Relevance:** Diagnose repeated violation structure before allocating more attempts. Construction hints should be transactionally screened across interacting footprint classes, while remaining non-binding and independently checked. Use portfolio diversity after structural feasibility improves, not as a substitute for it.
+
+### `R056` A cleaner partial hint can worsen timed exact search
+
+- **Status:** Demonstrated and rejected on the public one-worker case.
+- **Finding:** Cross-footprint closure screening made the provisional packing more conservative, yet final A conflicts worsened from 24/15 to 27/22 and B stayed at `149.0`.
+- **Relevance:** Evaluate hints by checked end-to-end outcomes, not local plausibility. Measure hint coverage and run matched hint-on/off ablations before adding more construction rules; revert changes that do not improve the fixed-policy distribution.
+
+### `R057` Hint completeness matters differently by objective regime
+
+- **Status:** Confirmed on public A/B and four independent dense A regimes; hidden transfer unverified.
+- **Finding:** A partial public warm start harmed delay-minimizing A, while removing the same packing information made fixed-deadline B lose feasibility. Complete hints solved every independent dense regime tested.
+- **Relevance:** Record coverage explicitly. Clear incomplete hints for A, where neutral search can trade delay against placement; retain them for B/C, where packing can establish hard-date feasibility. Validate any scenario-specific policy on full score/feasibility/runtime distributions and preserve an unhinted portfolio path.
+- **Limitation:** This rule is selected from known fixtures and may not dominate on every hidden distribution. Later unhinted attempts and fail-closed verification remain necessary safeguards.
 - **Limitation:** The tight activity is spatially isolated, so the result does not cover ECLO decisions coupled to possession conflicts or C's global two-week line window.
 - **Confidence:** High for the tested trade-off; medium for coupled cases.
 

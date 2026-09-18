@@ -41,6 +41,9 @@ class SolveTelemetry:
     max_deterministic_time_per_solve: float | None = None
     interleave_search: bool = False
     structural_hints_used: bool = False
+    structural_hint_activity_count: int = 0
+    structural_hint_access_count: int = 0
+    structural_hint_complete: bool = False
 
     def as_json(self) -> str:
         return json.dumps(asdict(self), indent=2, sort_keys=True)

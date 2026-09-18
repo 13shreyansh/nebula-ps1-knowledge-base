@@ -635,3 +635,37 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Unknown risk: score stability may depend on eight parallel workers and the public instance's already-understood lower bounds. A hidden case may send different seeds into expensive repair or fail closed.
 - Confidence: very high in protected public results; high in eight-worker public reconstruction reliability; low in byte reproducibility and strict-buffer robustness; medium-low in cross-hardware transfer.
 - Immediate next action: preserve the complete distribution, then test whether a deterministic-time/interleaved policy can reduce hash and runtime variance without losing score or exceeding a fair total budget.
+
+## 2026-09-19 04:48:51 +08
+
+- Interval: 8 minutes 57 seconds since the previous inspection; triggered by the one-worker portability falsification and failed portfolio correction.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. Protected artifacts remain untouched.
+- Strongest failure: under the same 30/10/30/10 stage budgets with one worker, A and production C failed closed after about 71 seconds; B returned checked `149.0` against the proved `30.0` bound. Success was 1/3.
+- Failed correction: increasing to three heuristic attempts did not recover A after 131.166 seconds and did not improve B after 111.325 seconds. A's three unsafe candidates retained 27, 12, and 14 closure conflicts. More random trajectories alone are not the remedy.
+- What this disproves: five-seed eight-worker success is not compute-portable, and portfolio multiplicity cannot be assumed to replace structural construction. Worker count and aggregate budget are material parts of the method.
+- Integrity audit: no unsafe A/C output was emitted; B=`149.0` was recorded but not promoted over official B=`30.0`; every failed attempt and conflict count is preserved. No portal action occurred.
+- Likely root cause: the structural hint packs each identical footprint independently but does not screen a packed activity against already packed different footprints. Dense synthetic fixtures rarely expose that interaction; the public topology does.
+- Corrective experiment: make each packed activity transactional against the accumulated standard closure screen. This remains a non-binding, schema-derived hint. Rerun all regressions and the exact one-worker public policy; revert if prior regimes regress or public conflict counts do not improve.
+- Confidence: very high in protected public scores and fail-closed behavior; high in one-worker failure; medium in the proposed root cause; low in one-worker hidden reliability.
+
+## 2026-09-19 04:51:49 +08
+
+- Interval: 2 minutes 58 seconds since the previous inspection; triggered early because the proposed corrective hypothesis was falsified and reverted.
+- Public scores and protected artifacts are unchanged. The candidate code never reached a release commit.
+- Rejected change: transactionally closure-screening each packed C/PC activity against prior footprint classes still failed A and left 27 heuristic plus 22 fallback conflicts, worse than the baseline 24 and 15. B remained `149.0` with eight strict diagnostic conflicts.
+- Why the plausible fix failed: non-binding hints can alter CP-SAT's trajectory even when the provisional rows are cleaner; screening only committed footprint classes also does not construct a complete globally coherent schedule. Local hint cleanliness is not a sufficient proxy for final feasibility.
+- Integrity audit: the negative run is preserved, the implementation was reverted exactly, all earlier passing code remains, and no score or feasibility improvement is claimed.
+- Next action: stop tuning the same public failure by intuition. Add diagnostic coverage telemetry for the structural hint, then compare hinted versus no-hint one-worker A under the same budget. This will test whether the hint itself helps or harms before redesigning construction.
+- Confidence: high that cross-footprint screening as implemented is not beneficial; low in the earlier root-cause attribution; very high in the protected official artifacts.
+
+## 2026-09-19 05:05:22 +08
+
+- Interval: 13 minutes 33 seconds since the previous inspection; within the 15-minute audit requirement and triggered by completion of the five-seed policy comparison.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. Current code again reconstructs all three optima, but protected official hashes remain unchanged.
+- Falsification evidence: public A's partial structural hint covered only 35/54 activities and 108/192 accesses. In matched one-worker direct runs, hint-on ended at `11155.9` with 27 conflicts; hint-off reached `2713.2` with 7. A universal complete-only gate improved A but made B lose its feasible `149.0` incumbent and fail. A 30-second repair extension also failed and was worse than a prior 10-second trajectory.
+- Accepted correction: incomplete structural hints are cleared only for Scenario A. B retains them for fixed-deadline feasibility; complete hints remain active in every scenario. The independent dense, holdout, additive, and coupled A cases all have 100% activity/access coverage and remain solved. Fifty-one regressions pass.
+- Five-seed public comparison: the corrected eight-worker policy remained 15/15 at A=`137.9`, B=`30.0`, C=`62.7`. A changed from min/median/max 20.097/23.083/33.840 to 15.425/23.639/25.742 seconds; B from 11.160/14.035/23.961 to 9.902/13.977/23.039; C from 28.974/29.569/39.665 to 17.360/23.505/37.354.
+- Adversarial interpretation: the A median barely changed, B's algorithm was intentionally unchanged, and all runs remain eight-worker public-data tests. One-worker A still fails even after its initial conflict count improves, so this is runtime-tail hardening, not compute portability or hidden-score progress.
+- Integrity audit: the universal gate, cross-footprint screen, and longer-repair failures are preserved; only the measured scenario-aware rule remains. No internal candidate replaced an official artifact and no portal run was consumed.
+- Confidence: high that the new gate improves public A/C tail runtime without score regression; high in complete-hint synthetic regimes; low in one-worker A/C reliability; medium in hidden transfer.
+- Immediate next action: commit the gate and evidence, then attack the remaining two-conflict one-worker A repair using conflict structure rather than more wall time or random attempts.

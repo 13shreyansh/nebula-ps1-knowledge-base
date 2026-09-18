@@ -175,9 +175,45 @@ class PublicFixtureTests(unittest.TestCase):
             evaluation = evaluate_submission(instance, root / "submission", "B")
             independent = independently_score(data, root / "submission")
             self.assertEqual(report["selected_stage"], "heuristic_incumbent")
+            self.assertTrue(report["heuristic_telemetry"]["structural_hints_used"])
+            self.assertTrue(report["heuristic_telemetry"]["structural_hint_complete"])
             self.assertEqual(evaluation.hard_violations, ())
             self.assertEqual(evaluation.objective_score, 0.0)
             self.assertEqual(independent.objective_score, 0.0)
+
+    def test_partial_public_structural_hint_is_dropped(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            telemetry = solve_flexible_supply_relaxation(
+                self.instance,
+                Path(temporary) / "candidate",
+                "A",
+                time_limit_seconds=0.05,
+                workers=1,
+                seed=1,
+                closure_round_limit=1,
+                separator_mode="direct_heuristic",
+            )
+        self.assertFalse(telemetry.structural_hints_used)
+        self.assertFalse(telemetry.structural_hint_complete)
+        self.assertEqual(telemetry.structural_hint_activity_count, 35)
+        self.assertEqual(telemetry.structural_hint_access_count, 108)
+
+    def test_partial_public_b_hint_is_retained_for_deadline_feasibility(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            telemetry = solve_flexible_supply_relaxation(
+                self.instance,
+                Path(temporary) / "candidate",
+                "B",
+                time_limit_seconds=0.05,
+                workers=1,
+                seed=1,
+                closure_round_limit=1,
+                separator_mode="direct_heuristic",
+            )
+        self.assertTrue(telemetry.structural_hints_used)
+        self.assertFalse(telemetry.structural_hint_complete)
+        self.assertEqual(telemetry.structural_hint_activity_count, 35)
+        self.assertEqual(telemetry.structural_hint_access_count, 108)
 
     def test_tradeoff_holdout_recovers_nonzero_a_b_c_optima(self) -> None:
         data = ROOT / "fixtures" / "independent_tradeoff_holdout_v1"

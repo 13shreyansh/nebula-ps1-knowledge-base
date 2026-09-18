@@ -319,6 +319,9 @@ def solve_flexible_supply_relaxation(
         and sample_hint_dir is None
         and separator_mode == "direct_heuristic"
     )
+    structural_hint_activity_count = 0
+    structural_hint_access_count = 0
+    structural_hint_complete = False
     if structural_hints_used:
         # Supply a deterministic, feasibility-oriented packing hint for
         # interchangeable C/PC work on identical footprints. It is never a
@@ -606,6 +609,17 @@ def solve_flexible_supply_relaxation(
                             int(is_selected and group == selected_slot),
                         )
             pending.remove(activity_id)
+
+        structural_hint_activity_count = len(hinted_weeks)
+        structural_hint_access_count = sum(map(len, hinted_weeks.values()))
+        structural_hint_complete = (
+            structural_hint_activity_count == len(instance.activities)
+            and structural_hint_access_count
+            == sum(activity.total_accesses for activity in instance.activities.values())
+        )
+        if not structural_hint_complete and scenario == "A":
+            model.clear_hints()
+            structural_hints_used = False
 
     primary_terms: list[cp_model.LinearExpr] = []
     if scenario in {"A", "C"}:
@@ -1025,6 +1039,9 @@ def solve_flexible_supply_relaxation(
         max_deterministic_time_per_solve=max_deterministic_time_per_solve,
         interleave_search=interleave_search,
         structural_hints_used=structural_hints_used,
+        structural_hint_activity_count=structural_hint_activity_count,
+        structural_hint_access_count=structural_hint_access_count,
+        structural_hint_complete=structural_hint_complete,
     )
     (output_root / "TELEMETRY.json").write_text(telemetry.as_json() + "\n", encoding="utf-8")
     return telemetry

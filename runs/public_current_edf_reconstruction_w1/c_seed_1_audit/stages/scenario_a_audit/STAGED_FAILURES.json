@@ -1,0 +1,65 @@
+{
+  "bridge_safe_fallback_attempts": [
+    {
+      "attempt": 1,
+      "repair_hint_heuristic_attempt": 1,
+      "telemetry": {
+        "best_bound": 130.9,
+        "branches": 2247021,
+        "closure_rounds": 22,
+        "conflicts": 2289,
+        "deterministic_time_seconds": 30.271955494082373,
+        "formulation": "scenario_a_iterative_bridge_safe_sample_consistent_closure_relaxation",
+        "interleave_search": false,
+        "limitation": "Closure and buffer conflicts use the rule set that reproduced official A-001 and accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed. The row-count tie-breaker cannot alter the official penalty objective.",
+        "max_deterministic_time_per_solve": null,
+        "maximum_round_time_seconds": 2.0,
+        "model_constraints": 128695,
+        "model_variables": 49548,
+        "objective_score": 33348.0,
+        "primary_score_proven_optimal": false,
+        "remaining_closure_conflicts": 15,
+        "round_time_limit_seconds": 1.0,
+        "seed": 1,
+        "solve_rounds": 23,
+        "status": "FEASIBLE",
+        "structural_hints_used": false,
+        "tie_break_proven_optimal": false,
+        "time_limit_seconds": 30.0,
+        "unknown_retries": 1,
+        "wall_time_seconds": 30.021439290998387,
+        "workers": 1
+      }
+    }
+  ],
+  "bridge_safe_repair_hint_source_attempt": 1,
+  "heuristic_attempts": [
+    {
+      "best_bound": null,
+      "branches": 2698719,
+      "closure_rounds": 17,
+      "conflicts": 2577,
+      "deterministic_time_seconds": 17.994096889966517,
+      "formulation": "scenario_a_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+      "interleave_search": false,
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "max_deterministic_time_per_solve": null,
+      "maximum_round_time_seconds": 2.0,
+      "model_constraints": 41103,
+      "model_variables": 20350,
+      "objective_score": 30283.4,
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 24,
+      "round_time_limit_seconds": 1.0,
+      "seed": 1,
+      "solve_rounds": 18,
+      "status": "FEASIBLE",
+      "structural_hints_used": true,
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 30.0,
+      "unknown_retries": 1,
+      "wall_time_seconds": 30.01312849999522,
+      "workers": 1
+    }
+  ]
+}
