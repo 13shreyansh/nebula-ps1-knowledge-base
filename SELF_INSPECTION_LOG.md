@@ -914,9 +914,9 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Confidence: very high in official incumbents; high in five-seed same-regime reliability and fixture validity; no confidence yet in the new repair outcome; medium in hidden transfer.
 - Immediate next action: commit the holdout, run the unchanged expanded repair, preserve its result, then test one final targeted precedence pass without introducing fixed-point recursion.
 
-## 2026-09-19 07:39:03 +08
+## 2026-09-19 07:37:15 +08
 
-- Interval: 6 minutes 51 seconds since the previous inspection; triggered by the user's audit-status challenge and completion of the reporting check.
+- Interval: 5 minutes 3 seconds since the previous inspection; triggered by the user's audit-status challenge and completion of the reporting check. The timestamp is anchored to commit `8361b01`; an initially handwritten future timestamp was corrected immediately.
 - Best independently validated public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
 - What improved: the terminal precedence correction is covered by 67 passing regressions, and the direct-C fallback now exposes narrow and expanded prune decisions at stable top-level keys. This makes future audit consumers less likely to miss why a candidate was retained or rejected.
 - Adversarial finding: the solver result did not regress, but audit evidence was branch-dependent. A successful fallback could expose activities and telemetry at the top level while leaving pruning evidence nested, creating a risk of incomplete automated summaries.
