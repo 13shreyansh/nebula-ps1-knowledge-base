@@ -36,6 +36,9 @@ CASES = (
     ("independent_tradeoff_holdout_A", "fixtures/independent_tradeoff_holdout_v1", "runs/independent_tradeoff_holdout_v1_blind_w1/a_seed_1", "A", "runs/independent_tradeoff_holdout_v1_blind_w1/a_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_tradeoff_holdout_B", "fixtures/independent_tradeoff_holdout_v1", "runs/independent_tradeoff_holdout_v1_blind_w1/b_seed_1", "B", "runs/independent_tradeoff_holdout_v1_blind_w1/b_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
     ("independent_tradeoff_holdout_C", "fixtures/independent_tradeoff_holdout_v1", "runs/independent_tradeoff_holdout_v1_blind_w1/c_seed_1", "C", "runs/independent_tradeoff_holdout_v1_blind_w1/c_seed_1_audit/stages/scenario_c_verification_raw/TELEMETRY.json", None, None),
+    ("independent_coupled_tradeoff_A", "fixtures/independent_coupled_tradeoff_v1", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/a_seed_1", "A", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/a_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_coupled_tradeoff_B", "fixtures/independent_coupled_tradeoff_v1", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/b_seed_1", "B", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/b_seed_1_audit/verification_raw/TELEMETRY.json", None, None),
+    ("independent_coupled_tradeoff_C", "fixtures/independent_coupled_tradeoff_v1", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/c_seed_1", "C", "runs/independent_coupled_tradeoff_v1_repair10_matrix_w1/c_seed_1_audit/stages/scenario_c_verification_raw/TELEMETRY.json", None, None),
 )
 
 

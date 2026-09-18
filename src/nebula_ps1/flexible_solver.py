@@ -364,63 +364,71 @@ def solve_flexible_supply_relaxation(
                 ].access_type
                 == "C"
             ]
-            batches: list[list[str]] = []
-            max_occurrences = max(
-                (instance.activities[activity_id].total_accesses for activity_id in activity_ids),
-                default=0,
-            )
-            for occurrence in range(max_occurrences):
-                pc_round = [
-                    activity_id
-                    for activity_id in pc_ids
-                    if instance.activities[activity_id].total_accesses > occurrence
-                ]
-                c_round = [
-                    activity_id
-                    for activity_id in c_ids
-                    if instance.activities[activity_id].total_accesses > occurrence
-                ]
-                c_index = 0
-                for pc_id in pc_round:
-                    batch = [pc_id, *c_round[c_index : c_index + 3]]
-                    c_index += min(3, len(c_round) - c_index)
-                    batches.append(batch)
-                while c_index < len(c_round):
-                    batches.append(c_round[c_index : c_index + 4])
-                    c_index += 4
-
             preferred: dict[str, list[tuple[int, int]]] = defaultdict(list)
-            batches_by_week: dict[int, int] = defaultdict(int)
-            packing_failed = False
             preferred_supply = min(
                 instance.locations[location_id].supply_capacity
                 for location_id in footprint
             )
-            for batch in batches:
-                selected_week = next(
-                    (
-                        week
-                        for week in range(1, horizon + 1)
-                        if batches_by_week[week] < preferred_supply
-                        and all(week in eligible[activity_id] for activity_id in batch)
-                        and all(
-                            week not in {value[0] for value in preferred[activity_id]}
-                            for activity_id in batch
-                        )
-                    ),
-                    None,
-                )
-                if selected_week is None:
-                    packing_failed = True
-                    break
-                slot = batches_by_week[selected_week]
-                batches_by_week[selected_week] += 1
-                for activity_id in batch:
-                    preferred[activity_id].append((selected_week, slot))
-            if packing_failed:
-                continue
+            # Each slot tracks (PC count, C count). Place scarce PC tokens
+            # first, then insert C work by deadline into legal spare capacity.
+            # An activity is committed only if every standard occurrence fits;
+            # ECLO-required activities remain completely free for CP-SAT.
+            slot_counts: dict[tuple[int, int], tuple[int, int]] = {}
 
-            for activity_id in activity_ids:
+            def deadline_key(activity_id: str) -> tuple[date, date, str]:
+                activity = instance.activities[activity_id]
+                project = instance.projects[activity.contract_number]
+                return (
+                    project.planned_completion_date,
+                    activity.planned_start_date,
+                    activity_id,
+                )
+
+            def place_activity(activity_id: str, access_type: str) -> None:
+                activity = instance.activities[activity_id]
+                if activity.total_accesses > len(eligible[activity_id]):
+                    return
+                tentative_counts = dict(slot_counts)
+                placements: list[tuple[int, int]] = []
+                for _ in range(activity.total_accesses):
+                    options: list[tuple[int, int, int]] = []
+                    used_weeks = {week for week, _ in placements}
+                    for week in eligible[activity_id]:
+                        if week in used_weeks:
+                            continue
+                        for slot in range(preferred_supply):
+                            pc_count, c_count = tentative_counts.get(
+                                (week, slot), (0, 0)
+                            )
+                            if access_type == "PC":
+                                if pc_count >= 1 or c_count > 3:
+                                    continue
+                                sharing_rank = 0 if c_count else 1
+                            else:
+                                c_limit = 3 if pc_count else 4
+                                if c_count >= c_limit:
+                                    continue
+                                sharing_rank = 0 if pc_count else 1 if c_count else 2
+                            options.append((week, sharing_rank, slot))
+                    if not options:
+                        return
+                    week, _, slot = min(options)
+                    pc_count, c_count = tentative_counts.get((week, slot), (0, 0))
+                    tentative_counts[(week, slot)] = (
+                        pc_count + int(access_type == "PC"),
+                        c_count + int(access_type == "C"),
+                    )
+                    placements.append((week, slot))
+                slot_counts.clear()
+                slot_counts.update(tentative_counts)
+                preferred[activity_id].extend(placements)
+
+            for activity_id in sorted(pc_ids, key=deadline_key):
+                place_activity(activity_id, "PC")
+            for activity_id in sorted(c_ids, key=deadline_key):
+                place_activity(activity_id, "C")
+
+            for activity_id in sorted(preferred):
                 selected = dict(preferred[activity_id])
                 hinted_weeks[activity_id] = sorted(selected)
                 for sequence, (week, slot) in enumerate(sorted(selected.items()), start=1):

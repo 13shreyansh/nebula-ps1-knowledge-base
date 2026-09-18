@@ -599,3 +599,16 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Strongest next counterexample: place two tight activities on contested corridors and opposite lines such that C's two-week ECLO window, Live cross-line closure, and capacity trade-offs interact. Pre-compute a feasible oracle and lower bound before running. If exact coupling cannot be bounded reliably, preserve the case as a feasibility/runtime stress test rather than claiming optimality.
 - Confidence: very high in public results; high in nonzero additive transfer; medium in dense feasibility transfer; low-to-medium in coupled nonzero trade-offs.
 - Immediate next action: commit this untuned transfer result, then generate a coupled trade-off case without changing the solver.
+
+## 2026-09-19 04:29:29 +08
+
+- Interval: 8 minutes 38 seconds since the previous inspection; triggered by the coupled ECLO-window falsification and repair-budget sensitivity result.
+- Best independently validated public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No portal attempt or protected public artifact changed.
+- Blind failure: on the pre-generated coupled case, the frozen construction returned A/C=`16380.0` against bounds `1820.0`/`920.0`, and B failed in all five seeds under a one-second local-repair budget. The original 15-run ledger is preserved.
+- What was wrong: batching C work by identifier ignored heterogeneous release/deadline windows. The replacement hint places PC slots first, inserts C work by earliest deadline, checks closures transactionally, and leaves ECLO-dependent activities free for exact search. It uses input structure only and remains non-binding.
+- Corrective evidence: with the corrected hint, A=`1820.0` and C=`920.0` immediately, while B reached only `48.0` at one second. Raising local repair to ten seconds produced 15/15 feasible runs at the analytical optima A=`1820.0`, B=`20.0`, C=`920.0`; both scorers agree and verification bounds match.
+- Runtime and reproducibility risk: B took 6.068–20.025 seconds and produced five different optimal hashes. Stable score and feasibility do not imply byte determinism. The ten-second repair parameter is part of the method, though it remains below the 30-second production default.
+- Integrity audit: the fixture and bounds were fixed before the blind run; the correction followed a recorded failure; no oracle rows or identifiers enter the solver; the budget change is explicit; failed and suboptimal runs remain available. The coupled fixture is still locally authored from the same family, so this is not external hidden-distribution evidence.
+- Strongest remaining counterexample: generate several coupled variants before any further tuning, vary line/window placement and contract weights, and run the same fixed production budget. A single co-developed case can still reward an overly specific EDF construction.
+- Confidence: very high in public results; high in the coupled case's analytical bounds and final outputs; medium in transfer of the corrected hint; medium-low in B runtime robustness.
+- Immediate next action: add the coupled case to the executable benchmark and regression suite, preserve representative failure telemetry, then run a cross-regime regression before any new optimization.

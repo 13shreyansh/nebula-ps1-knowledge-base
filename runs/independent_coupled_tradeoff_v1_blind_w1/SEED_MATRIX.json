@@ -1,0 +1,184 @@
+{
+  "data": "fixtures/independent_coupled_tradeoff_v1",
+  "dataset_hash": "2beb69ebb55f9d4dad7ed053e4aa57cda9d0342ff98c6776427ebd9d1c2dd59f",
+  "failures": 5,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "production_c": true,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "A",
+    "B",
+    "C"
+  ],
+  "requested_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 16380.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "96c107657b013186737135d06cfcc99d4d8b44ace9f83e8b3d75b21031bb7a93",
+      "wall_seconds": 4.441025874999468
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 16380.0,
+      "seed": 2,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "96c107657b013186737135d06cfcc99d4d8b44ace9f83e8b3d75b21031bb7a93",
+      "wall_seconds": 4.441510292002931
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 16380.0,
+      "seed": 3,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "96c107657b013186737135d06cfcc99d4d8b44ace9f83e8b3d75b21031bb7a93",
+      "wall_seconds": 4.4482995420112275
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 16380.0,
+      "seed": 4,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "96c107657b013186737135d06cfcc99d4d8b44ace9f83e8b3d75b21031bb7a93",
+      "wall_seconds": 4.423979625003994
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 16380.0,
+      "seed": 5,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "96c107657b013186737135d06cfcc99d4d8b44ace9f83e8b3d75b21031bb7a93",
+      "wall_seconds": 4.433930165992933
+    },
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "B",
+      "seed": 1,
+      "status": "FAILURE",
+      "wall_seconds": 5.639124042005278
+    },
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "B",
+      "seed": 2,
+      "status": "FAILURE",
+      "wall_seconds": 5.635735499992734
+    },
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "B",
+      "seed": 3,
+      "status": "FAILURE",
+      "wall_seconds": 5.633874999999534
+    },
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "B",
+      "seed": 4,
+      "status": "FAILURE",
+      "wall_seconds": 5.678150375009864
+    },
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "B",
+      "seed": 5,
+      "status": "FAILURE",
+      "wall_seconds": 5.640282708001905
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 16380.0,
+      "seed": 1,
+      "selected_stage": "scenario_c_fallback",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "bbc703d0f28dda4e08237c9d24c65bed46242f40bd93d1ec58c1107fd13a2a8b",
+      "wall_seconds": 8.9745982500026
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 16380.0,
+      "seed": 2,
+      "selected_stage": "scenario_c_fallback",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "bbc703d0f28dda4e08237c9d24c65bed46242f40bd93d1ec58c1107fd13a2a8b",
+      "wall_seconds": 8.935518083002535
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 16380.0,
+      "seed": 3,
+      "selected_stage": "scenario_c_fallback",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "bbc703d0f28dda4e08237c9d24c65bed46242f40bd93d1ec58c1107fd13a2a8b",
+      "wall_seconds": 8.924777125008404
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 16380.0,
+      "seed": 4,
+      "selected_stage": "scenario_c_fallback",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "bbc703d0f28dda4e08237c9d24c65bed46242f40bd93d1ec58c1107fd13a2a8b",
+      "wall_seconds": 8.941514209000161
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 16380.0,
+      "seed": 5,
+      "selected_stage": "scenario_c_fallback",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "bbc703d0f28dda4e08237c9d24c65bed46242f40bd93d1ec58c1107fd13a2a8b",
+      "wall_seconds": 8.933936375004123
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 0.6666666666666666,
+  "successes": 10
+}

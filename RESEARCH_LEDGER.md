@@ -435,6 +435,13 @@ Confidence labels:
 - **Evidence:** On a dense holdout with a provable A=`7`, B=`10`, C=`7` extension, the standard-only structural hint could not schedule B's tight activity by its deadline. The exact model nevertheless found the required two ECLO rows in all five seeds, while guarded C retained the cheaper seven-point delay.
 - **Finding:** A partial feasibility hint need not encode every policy lever. Keeping ECLO, excess, and timing as free exact decisions allows CP-SAT to repair or ignore the hint. This is safer than a constructive algorithm that commits to one lever order.
 - **Relevance:** Continue treating hints as portfolio operators and keep the exact objective dominant. Add specialized ECLO hints only if coupled trade-off benchmarks show a measured need; do not assume “ECLO first.”
+
+### `R052` Search budget is part of the algorithm, and a proof bound is not an incumbent
+
+- **Status:** Locally demonstrated; external generality unverified.
+- **Finding:** On the coupled ECLO-window fixture, the corrected construction exposed the exact B lower bound `20.0`, but one second of repair returned `48.0`. Ten seconds reached `20.0` in all five seeds, with wall time varying from 6.068 to 20.025 seconds and five different optimal hashes.
+- **Relevance:** Record stage budgets with every score. A bound-incumbent gap should trigger continued protected repair when budget remains; never report the bound as achieved until a dual-scored feasible incumbent matches it. Compare policies by complete score/runtime distributions, not one seed or one output hash.
+- **Limitation:** This evidence comes from one locally authored family. An adaptive continuation rule still needs fixed-budget cross-regime testing so it does not starve hard feasibility construction or exploit case-specific stopping behavior.
 - **Limitation:** The tight activity is spatially isolated, so the result does not cover ECLO decisions coupled to possession conflicts or C's global two-week line window.
 - **Confidence:** High for the tested trade-off; medium for coupled cases.
 

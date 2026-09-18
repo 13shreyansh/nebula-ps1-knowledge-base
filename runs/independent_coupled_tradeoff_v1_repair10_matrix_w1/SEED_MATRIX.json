@@ -1,0 +1,199 @@
+{
+  "data": "fixtures/independent_coupled_tradeoff_v1",
+  "dataset_hash": "2beb69ebb55f9d4dad7ed053e4aa57cda9d0342ff98c6776427ebd9d1c2dd59f",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 10.0,
+    "production_c": true,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "A",
+    "B",
+    "C"
+  ],
+  "requested_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 1820.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "d87bfba8099ca83b29fbda9f7a615ed35bad4ddd79675a72055fae1451fd8b51",
+      "wall_seconds": 1.4751821249956265
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 1820.0,
+      "seed": 2,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "d87bfba8099ca83b29fbda9f7a615ed35bad4ddd79675a72055fae1451fd8b51",
+      "wall_seconds": 1.4752570410055341
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 1820.0,
+      "seed": 3,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "d87bfba8099ca83b29fbda9f7a615ed35bad4ddd79675a72055fae1451fd8b51",
+      "wall_seconds": 1.4795744169969112
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 1820.0,
+      "seed": 4,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "d87bfba8099ca83b29fbda9f7a615ed35bad4ddd79675a72055fae1451fd8b51",
+      "wall_seconds": 1.4707384159992216
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 1820.0,
+      "seed": 5,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "d87bfba8099ca83b29fbda9f7a615ed35bad4ddd79675a72055fae1451fd8b51",
+      "wall_seconds": 1.4779922919988167
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 20.0,
+      "seed": 1,
+      "selected_stage": "bridge_safe_local_repair",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "0e6ed90ff54efa6ed909bb39c86e8df6cf9d554f7c73224607a8cbc1f550ca29",
+      "wall_seconds": 8.116146792002837
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 20.0,
+      "seed": 2,
+      "selected_stage": "bridge_safe_cost_repair",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "3611994fb67d29605495e0a14cdf2cf5d5fe3f5402f198806c0ddc2fb409c24c",
+      "wall_seconds": 20.025406749991816
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 20.0,
+      "seed": 3,
+      "selected_stage": "bridge_safe_local_repair",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "a5e1e903e460143d54a042a2e1231d76969d9cb1f8f936c3075328b0ae866b00",
+      "wall_seconds": 8.253615499997977
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 20.0,
+      "seed": 4,
+      "selected_stage": "bridge_safe_local_repair",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "9894ad7a0b2756c42883c117fd75a7f4b65f05d046e77065ae69137e1d145cd7",
+      "wall_seconds": 10.338011374988127
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 20.0,
+      "seed": 5,
+      "selected_stage": "bridge_safe_local_repair",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "530ad9632c087d4208f47e1c33eb5acfd787754ddbc655b88bbba56597a90b0a",
+      "wall_seconds": 6.067708333008341
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 920.0,
+      "seed": 1,
+      "selected_stage": "scenario_c_heuristic",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "76742e7f7f547b077ed6a17cf5a537e75cc8a4b2c9ba61baa0a093bd69e95395",
+      "wall_seconds": 4.161155082998448
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 920.0,
+      "seed": 2,
+      "selected_stage": "scenario_c_heuristic",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "76742e7f7f547b077ed6a17cf5a537e75cc8a4b2c9ba61baa0a093bd69e95395",
+      "wall_seconds": 4.185235291006393
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 920.0,
+      "seed": 3,
+      "selected_stage": "scenario_c_heuristic",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "76742e7f7f547b077ed6a17cf5a537e75cc8a4b2c9ba61baa0a093bd69e95395",
+      "wall_seconds": 4.149614167006803
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 920.0,
+      "seed": 4,
+      "selected_stage": "scenario_c_heuristic",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "76742e7f7f547b077ed6a17cf5a537e75cc8a4b2c9ba61baa0a093bd69e95395",
+      "wall_seconds": 4.155207083007554
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 920.0,
+      "seed": 5,
+      "selected_stage": "scenario_c_heuristic",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "76742e7f7f547b077ed6a17cf5a537e75cc8a4b2c9ba61baa0a093bd69e95395",
+      "wall_seconds": 4.1534189590020105
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 15
+}

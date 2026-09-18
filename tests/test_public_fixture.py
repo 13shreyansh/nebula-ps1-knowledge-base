@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 24)
+        self.assertEqual(len(matrix["cases"]), 27)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -109,6 +109,14 @@ class PublicFixtureTests(unittest.TestCase):
                     ROOT
                     / "runs"
                     / "independent_tradeoff_holdout_v1_blind_w1"
+                    / f"{row['scenario'].lower()}_seed_1"
+                )
+            elif row["case"].startswith("independent_coupled_tradeoff_"):
+                data = ROOT / "fixtures" / "independent_coupled_tradeoff_v1"
+                submission = (
+                    ROOT
+                    / "runs"
+                    / "independent_coupled_tradeoff_v1_repair10_matrix_w1"
                     / f"{row['scenario'].lower()}_seed_1"
                 )
             else:
@@ -192,6 +200,47 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(evaluation.hard_violations, (), scenario)
             self.assertEqual(evaluation.objective_score, score, scenario)
             self.assertEqual(independent.objective_score, score, scenario)
+
+    def test_coupled_tradeoff_recovers_window_bound(self) -> None:
+        data = ROOT / "fixtures" / "independent_coupled_tradeoff_v1"
+        instance = load_instance(data)
+        for activity_id, target_week in (("WCOUPLED1", 2), ("WCOUPLED2", 6)):
+            activity = instance.activities[activity_id]
+            self.assertEqual(activity.total_accesses, 3)
+            self.assertEqual(
+                instance.last_week_completing_by(
+                    instance.projects[activity.contract_number].planned_completion_date
+                ),
+                target_week,
+            )
+        expected = {"A": 1820.0, "B": 20.0, "C": 920.0}
+        for scenario, score in expected.items():
+            submission = (
+                ROOT
+                / "runs"
+                / "independent_coupled_tradeoff_v1_repair10_matrix_w1"
+                / f"{scenario.lower()}_seed_1"
+            )
+            evaluation = evaluate_submission(instance, submission, scenario)
+            independent = independently_score(data, submission)
+            self.assertEqual(evaluation.hard_violations, (), scenario)
+            self.assertEqual(evaluation.objective_score, score, scenario)
+            self.assertEqual(independent.objective_score, score, scenario)
+        b_access, _, _ = load_submission(
+            ROOT
+            / "runs"
+            / "independent_coupled_tradeoff_v1_repair10_matrix_w1"
+            / "b_seed_1"
+        )
+        c_access, _, _ = load_submission(
+            ROOT
+            / "runs"
+            / "independent_coupled_tradeoff_v1_repair10_matrix_w1"
+            / "c_seed_1"
+        )
+        coupled = {"WCOUPLED1", "WCOUPLED2"}
+        self.assertEqual(sum(row.eclo for row in b_access if row.activity_id in coupled), 4)
+        self.assertEqual(sum(row.eclo for row in c_access if row.activity_id in coupled), 2)
 
     def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_holdout_v1"
