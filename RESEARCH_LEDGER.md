@@ -617,6 +617,14 @@ Confidence labels:
 - **Interpretation:** CP-SAT search order is label-sensitive under wall-time limits, while the protected controller recovered the same semantic optimum. This is evidence against identifier memorization in the final method, not proof of distribution-wide invariance.
 - **Confidence:** High in the metamorphic result; medium in generalization beyond this fixture and seed.
 
+### `R076` Strict closure is useful as a score-preserving hedge, not a default law
+
+- **Status:** Confirmed by the third identifier permutation and constrained repair.
+- **Finding:** Three independently renamed and shuffled irregular fixtures all reached standard-feasible C=`31.0`, but the third retained one conflict under the stricter buffer-to-buffer screen. Freeing only the two conflicting activities and one precedence successor produced a standard-clean and strict-clean C=`31.0` schedule in 0.282 seconds.
+- **Relevance:** The strict rule contradicts four cases in the organizer's stated-feasible sample, so enforcing it throughout search can reject validator-feasible schedules. A final protected repair can nevertheless select an equal-score schedule accepted by both interpretations when one exists.
+- **Integrity rule:** Never replace the official-rule incumbent with a higher-score hedge. Report strict status separately from official feasibility, preserve the original candidate, and label any repair proof as conditional on its frozen neighborhood.
+- **Confidence:** High in the counterexample and repair; medium in general usefulness; low that strict overlap is the official hidden rule.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

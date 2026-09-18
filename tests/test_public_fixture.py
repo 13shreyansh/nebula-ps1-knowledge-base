@@ -532,30 +532,74 @@ class PublicFixtureTests(unittest.TestCase):
             hashes.add(evaluation.submission_hash)
         self.assertEqual(len(hashes), 5)
 
-    def test_renamed_irregular_production_run_preserves_score_not_proof(self) -> None:
-        data = ROOT / "fixtures" / "independent_irregular_partial_v1_renamed"
-        submission = ROOT / "runs" / "c_irregular_renamed_seed5_production"
-        report_path = (
-            ROOT / "runs" / "c_irregular_renamed_seed5_production_audit" / "STAGED.json"
+    def test_renamed_irregular_series_preserves_score_not_proof(self) -> None:
+        cases = (
+            ("", "baaf099eeb469ec74074bb11e116861fe569c6594caad619fee24a03bf3d5233", 147.0, 27, 0),
+            ("_s2", "c2f9fc4e4fc0d1f16e3acbe5486555ec73888b373a0354fef4026f252e95e8be", 140.0, 52, 0),
+            ("_s3", "b254b9ff508add4c777c96d20da017b19f9f47e856890feb9d42da9931570d49", 112.0, 27, 1),
+        )
+        hashes = set()
+        for suffix, dataset_hash, construction_score, narrow_count, strict_count in cases:
+            with self.subTest(suffix=suffix or "_s1"):
+                data = ROOT / "fixtures" / f"independent_irregular_partial_v1_renamed{suffix}"
+                submission = ROOT / "runs" / f"c_irregular_renamed{suffix}_seed5_production"
+                report_path = submission.with_name(f"{submission.name}_audit") / "STAGED.json"
+                instance = load_instance(data)
+                evaluation = evaluate_submission(instance, submission, "C")
+                independent = independently_score(data, submission)
+                access, occupancy, _ = load_submission(submission)
+                report = json.loads(report_path.read_text(encoding="utf-8"))
+
+                self.assertEqual(instance.dataset_hash, dataset_hash)
+                self.assertEqual(set(instance.lines), {"L01", "L02"})
+                self.assertTrue(
+                    all(activity_id.startswith("Z") for activity_id in instance.activities)
+                )
+                self.assertEqual(evaluation.hard_violations, ())
+                self.assertEqual(evaluation.objective_score, 31.0)
+                self.assertEqual(independent.objective_score, 31.0)
+                self.assertEqual(evaluation.priority_weighted_score, 0.0)
+                self.assertEqual(evaluation.eclo_nights_total, 2)
+                self.assertEqual(evaluation.excess_access_nights_total, 3)
+                self.assertEqual(screen_closures(instance, access, occupancy), ())
+                self.assertEqual(
+                    len(
+                        screen_closures(
+                            instance,
+                            access,
+                            occupancy,
+                            forbid_buffer_overlap=True,
+                        )
+                    ),
+                    strict_count,
+                )
+                self.assertEqual(report["selected_stage"], "bridge_safe_cost_repair")
+                self.assertEqual(report["heuristic_telemetry"]["objective_score"], construction_score)
+                self.assertEqual(len(report["bridge_safe_cost_repair_activities"]), narrow_count)
+                self.assertEqual(len(report["bridge_safe_expanded_cost_repair_activities"]), 29)
+                self.assertIsNone(report["bridge_safe_cost_repair_telemetry"]["best_bound"])
+                self.assertFalse(
+                    report["bridge_safe_cost_repair_telemetry"][
+                        "primary_score_proven_optimal"
+                    ]
+                )
+                hashes.add(evaluation.submission_hash)
+        self.assertEqual(len(hashes), 3)
+
+    def test_renamed_irregular_strict_hedge_preserves_score(self) -> None:
+        data = ROOT / "fixtures" / "independent_irregular_partial_v1_renamed_s3"
+        submission = ROOT / "runs" / "c_irregular_renamed_s3_strict_repair_pruned"
+        telemetry_path = (
+            ROOT / "runs" / "c_irregular_renamed_s3_strict_repair" / "TELEMETRY.json"
         )
         instance = load_instance(data)
         evaluation = evaluate_submission(instance, submission, "C")
         independent = independently_score(data, submission)
         access, occupancy, _ = load_submission(submission)
-        report = json.loads(report_path.read_text(encoding="utf-8"))
-
-        self.assertEqual(
-            instance.dataset_hash,
-            "baaf099eeb469ec74074bb11e116861fe569c6594caad619fee24a03bf3d5233",
-        )
-        self.assertEqual(set(instance.lines), {"L01", "L02"})
-        self.assertTrue(all(activity_id.startswith("Z") for activity_id in instance.activities))
+        telemetry = json.loads(telemetry_path.read_text(encoding="utf-8"))
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(evaluation.objective_score, 31.0)
         self.assertEqual(independent.objective_score, 31.0)
-        self.assertEqual(evaluation.priority_weighted_score, 0.0)
-        self.assertEqual(evaluation.eclo_nights_total, 2)
-        self.assertEqual(evaluation.excess_access_nights_total, 3)
         self.assertEqual(screen_closures(instance, access, occupancy), ())
         self.assertEqual(
             screen_closures(
@@ -566,15 +610,8 @@ class PublicFixtureTests(unittest.TestCase):
             ),
             (),
         )
-        self.assertEqual(report["selected_stage"], "bridge_safe_cost_repair")
-        self.assertEqual(len(report["bridge_safe_cost_repair_activities"]), 27)
-        self.assertEqual(len(report["bridge_safe_expanded_cost_repair_activities"]), 29)
-        self.assertIsNone(report["bridge_safe_cost_repair_telemetry"]["best_bound"])
-        self.assertFalse(
-            report["bridge_safe_cost_repair_telemetry"][
-                "primary_score_proven_optimal"
-            ]
-        )
+        self.assertEqual(telemetry["best_bound"], 31.0)
+        self.assertEqual(telemetry["primary_bound_scope"], "frozen_access_neighborhood")
 
     def test_post_contract_precedence_holdout_is_frozen_before_repair(self) -> None:
         data = ROOT / "fixtures" / "independent_post_contract_precedence_v1"

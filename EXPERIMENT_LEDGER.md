@@ -952,3 +952,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: construction and verification reached C=`147.0`; the 27-activity narrow repair reached C=`31.0`; the 29-activity expanded repair retained it. The final hash is `337dade9fbc52bee64af93ebc5ea2e61d269fcd9d7c94d2f932723f49d85ab0a`.
 - Independent checks: main and raw-CSV scorers agree; delay=`0.0`, ECLO nights=`2`, excess access-nights=`3`; hard, standard-closure, and strict-closure conflicts are all zero.
 - Boundary: the worse initial construction confirms wall-time search sensitivity to model ordering. Recovery of the same final score supports controller-level identifier invariance on this regime only. The repair has no solver bound, so the favorable run is deliberately excluded from the proof-only benchmark matrix.
+
+### E100: Three identifier permutations expose one strict-only conflict
+
+- Timestamp: 2026-09-19 07:56:05 +08
+- Fixed policy: permutation seeds `20260919`–`20260921`, solver seed 5, eight workers, 120-second construction, 10-second verification, 30-second narrow repair, and 10-second expanded repair; no translated schedule or oracle input.
+- Distribution: construction scores were `[147, 140, 112]`; first repair widths were `[27, 52, 27]`; all three final scores were C=`31.0`; all final hashes differ; both scorers agree; all are standard-clean. No repair produced a bound.
+- Contradictory evidence: strict conflicts were `[0, 0, 1]`, not 3/3 clean. Permutation 3 conflicts at week 13 between `Z528` and `Z572` on `SEC:L02:N007_N001:WB` under the stricter buffer-to-buffer interpretation.
+- Targeted hedge: freeing `Z528`, `Z572`, and successor `Z596` under strict closure produced C=`31.0`, standard conflicts=`0`, strict conflicts=`0`, hash `e551e776edde090420c03a4eab3145697c3311315549a7d154c511bfcb4c031c`, with a conditional bound of `31.0` in 0.282 seconds.
+- Decision: retain standard closure as the validator-matching rule. Implement strict closure only as a protected equal-or-better final hedge, never as evidence that the official rule is strict.

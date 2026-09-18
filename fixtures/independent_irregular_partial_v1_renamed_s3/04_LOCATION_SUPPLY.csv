@@ -1,0 +1,45 @@
+location_id,location_kind,line_code,bound,supply_capacity
+SEC:L01:N003_N008:EB,tunnel sector,L01,EB,1
+SEC:L02:N004_N007:EB,tunnel sector,L02,EB,1
+SEC:L02:N002_N004:WB,tunnel sector,L02,WB,1
+PLAT:L02:N001:WB,platform,L02,WB,1
+PLAT:L01:N005:EB,platform,L01,EB,1
+PLAT:L01:N006:EB,platform,L01,EB,1
+PLAT:L01:N002:EB,platform,L01,EB,1
+PLAT:L02:N007:EB,platform,L02,EB,1
+SEC:L01:N003_N008:WB,tunnel sector,L01,WB,1
+PLAT:L02:N002:EB,platform,L02,EB,1
+PLAT:L02:N007:WB,platform,L02,WB,1
+PLAT:L02:N010:EB,platform,L02,EB,1
+PLAT:L02:N001:EB,platform,L02,EB,1
+SEC:L01:N002_N004:EB,tunnel sector,L01,EB,1
+PLAT:L02:N010:WB,platform,L02,WB,1
+SEC:L02:N007_N001:WB,tunnel sector,L02,WB,1
+SEC:L02:N001_N010:EB,tunnel sector,L02,EB,1
+SEC:L01:N005_N006:EB,tunnel sector,L01,EB,1
+SEC:L01:N002_N004:WB,tunnel sector,L01,WB,1
+SEC:L02:N001_N010:WB,tunnel sector,L02,WB,1
+SEC:L01:N006_N003:EB,tunnel sector,L01,EB,1
+SEC:L02:N002_N004:EB,tunnel sector,L02,EB,1
+PLAT:L02:N009:WB,platform,L02,WB,1
+SEC:L01:N006_N003:WB,tunnel sector,L01,WB,1
+PLAT:L01:N005:WB,platform,L01,WB,1
+PLAT:L01:N006:WB,platform,L01,WB,1
+PLAT:L02:N009:EB,platform,L02,EB,1
+PLAT:L01:N004:EB,platform,L01,EB,1
+PLAT:L02:N004:WB,platform,L02,WB,1
+SEC:L02:N010_N009:WB,tunnel sector,L02,WB,1
+PLAT:L01:N002:WB,platform,L01,WB,1
+SEC:L01:N004_N005:WB,tunnel sector,L01,WB,1
+PLAT:L01:N003:EB,platform,L01,EB,1
+SEC:L01:N004_N005:EB,tunnel sector,L01,EB,1
+PLAT:L01:N004:WB,platform,L01,WB,1
+PLAT:L02:N004:EB,platform,L02,EB,1
+SEC:L01:N005_N006:WB,tunnel sector,L01,WB,1
+PLAT:L01:N008:WB,platform,L01,WB,1
+SEC:L02:N004_N007:WB,tunnel sector,L02,WB,1
+SEC:L02:N010_N009:EB,tunnel sector,L02,EB,1
+PLAT:L01:N008:EB,platform,L01,EB,1
+SEC:L02:N007_N001:EB,tunnel sector,L02,EB,1
+PLAT:L02:N002:WB,platform,L02,WB,1
+PLAT:L01:N003:WB,platform,L01,WB,1
