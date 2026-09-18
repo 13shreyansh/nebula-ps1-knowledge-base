@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 33)
+        self.assertEqual(len(matrix["cases"]), 34)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -142,6 +142,9 @@ class PublicFixtureTests(unittest.TestCase):
             elif row["case"] == "independent_post_precedence_contract_C":
                 data = ROOT / "fixtures" / "independent_post_precedence_contract_v1"
                 submission = ROOT / "runs" / "c_postprecedence_contract_targeted_repair"
+            elif row["case"] == "independent_post_contract_precedence_C":
+                data = ROOT / "fixtures" / "independent_post_contract_precedence_v1"
+                submission = ROOT / "runs" / "c_postcontract_precedence_final_repair"
             else:
                 self.assertTrue(row["case"].startswith("independent_"))
                 data = ROOT / "fixtures" / "independent_synthetic_v1"
@@ -506,7 +509,6 @@ class PublicFixtureTests(unittest.TestCase):
             ),
             ["COMP", "DIRECT", "FOLLOW", "PEER"],
         )
-
     def test_irregular_two_tier_repair_matrix_is_dual_scored_and_clean(self) -> None:
         data = ROOT / "fixtures" / "independent_irregular_partial_v1"
         matrix_root = ROOT / "runs" / "c_two_tier_irregular_repair_seed_matrix5"
@@ -571,6 +573,58 @@ class PublicFixtureTests(unittest.TestCase):
             ),
             ["COMP", "DIRECT", "FOLLOW", "PEER"],
         )
+
+        self.assertEqual(
+            _scenario_b_cost_contributing_activities(
+                instance,
+                incumbent,
+                expand_footprints=True,
+                expand_contracts=True,
+                expand_precedence=True,
+                revisit_precedence_after_footprints=True,
+                revisit_contracts_after_precedence=True,
+                revisit_precedence_after_contracts=True,
+                include_delays=True,
+            ),
+            ["COMP", "DIRECT", "FOLLOW", "PEER", "PREPEER"],
+        )
+
+    def test_final_precedence_repair_reaches_post_contract_oracle(self) -> None:
+        data = ROOT / "fixtures" / "independent_post_contract_precedence_v1"
+        source = ROOT / "fixtures/independent_post_contract_precedence_v1_incumbent"
+        instance = load_instance(data)
+        free = _scenario_b_cost_contributing_activities(
+            instance,
+            source,
+            expand_footprints=True,
+            expand_contracts=True,
+            expand_precedence=True,
+            revisit_precedence_after_footprints=True,
+            revisit_contracts_after_precedence=True,
+            revisit_precedence_after_contracts=True,
+            include_delays=True,
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            telemetry = solve_flexible_supply_relaxation(
+                instance,
+                temp_dir,
+                "C",
+                time_limit_seconds=1.0,
+                workers=1,
+                seed=1,
+                sample_hint_dir=source,
+                freeze_access_hint=True,
+                freeze_access_except=set(free),
+                separator_mode="bridge_safe",
+            )
+            evaluation = evaluate_submission(instance, temp_dir, "C")
+            independent = independently_score(data, temp_dir)
+        self.assertTrue(telemetry.primary_score_proven_optimal)
+        self.assertEqual(telemetry.primary_bound_scope, "frozen_access_neighborhood")
+        self.assertEqual(telemetry.best_bound, 0.0)
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 0.0)
+        self.assertEqual(independent.objective_score, 0.0)
 
     def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_holdout_v1"

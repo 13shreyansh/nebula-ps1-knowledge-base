@@ -22,6 +22,7 @@ def _scenario_b_cost_contributing_activities(
     expand_precedence: bool = False,
     revisit_precedence_after_footprints: bool = False,
     revisit_contracts_after_precedence: bool = False,
+    revisit_precedence_after_contracts: bool = False,
     include_delays: bool = False,
 ) -> list[str]:
     """Return direct cost participants and selected scheduling dependencies."""
@@ -38,6 +39,10 @@ def _scenario_b_cost_contributing_activities(
         raise ValueError(
             "revisit_contracts_after_precedence requires contract and post-footprint "
             "precedence expansion"
+        )
+    if revisit_precedence_after_contracts and not revisit_contracts_after_precedence:
+        raise ValueError(
+            "revisit_precedence_after_contracts requires the targeted contract revisit"
         )
 
     access, occupancy, results = load_submission(submission_dir)
@@ -115,6 +120,8 @@ def _scenario_b_cost_contributing_activities(
             for activity_id, activity in instance.activities.items()
             if activity.contract_number in newly_affected_contracts
         )
+    if revisit_precedence_after_contracts and contributors:
+        expand_precedence_component()
     return sorted(contributors)
 
 
@@ -475,6 +482,7 @@ def solve_staged_scenario(
                     expand_precedence=True,
                     revisit_precedence_after_footprints=True,
                     revisit_contracts_after_precedence=True,
+                    revisit_precedence_after_contracts=True,
                     include_delays=True,
                 )
             )

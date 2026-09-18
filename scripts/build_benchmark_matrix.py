@@ -45,6 +45,7 @@ CASES = (
     ("independent_predecessor_tradeoff_C", "fixtures/independent_predecessor_tradeoff_v1", "runs/postprecedenceexpand_delayed7_repair30", "C", "runs/postprecedenceexpand_delayed7_repair30_raw/TELEMETRY.json", None, None),
     ("independent_footprint_dependency_C", "fixtures/independent_footprint_dependency_v1", "runs/c_footprint_dependency_postprecedence", "C", "runs/c_footprint_dependency_postprecedence/TELEMETRY.json", None, None),
     ("independent_post_precedence_contract_C", "fixtures/independent_post_precedence_contract_v1", "runs/c_postprecedence_contract_targeted_repair", "C", "runs/c_postprecedence_contract_targeted_repair/TELEMETRY.json", None, None),
+    ("independent_post_contract_precedence_C", "fixtures/independent_post_contract_precedence_v1", "runs/c_postcontract_precedence_final_repair", "C", "runs/c_postcontract_precedence_final_repair/TELEMETRY.json", None, None),
 )
 
 

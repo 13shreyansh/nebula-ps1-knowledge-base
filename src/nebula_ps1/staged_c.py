@@ -287,6 +287,7 @@ def solve_staged_c_portfolio(
             expand_precedence=True,
             revisit_precedence_after_footprints=True,
             revisit_contracts_after_precedence=True,
+            revisit_precedence_after_contracts=True,
             include_delays=True,
         )
         if set(expanded_cost_repair_activities) != set(current_narrow_activities):

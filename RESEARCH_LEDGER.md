@@ -592,6 +592,14 @@ Confidence labels:
 - **Limitation:** This is one instance, source incumbent, machine, worker count, and serial-load regime. Neither tier proved a bound; optimality comes from the independent analytical lower bound.
 - **Confidence:** High for this regime; medium for transfer.
 
+### `R073` A terminal precedence pass closes the measured alternating chain
+
+- **Status:** Confirmed on a precommitted five-activity holdout.
+- **Finding:** The expanded tier added a contract peer but left its cross-contract predecessor frozen, then conditionally proved C=`10.0` despite a checked C=`0.0` oracle. One final transitive precedence pass freed the predecessor and proved zero.
+- **Scale evidence:** The final pass adds zero activities to current public, irregular, coupled, and cross-module neighborhoods. It therefore covers the observed contract-to-precedence boundary without approaching the much larger fixed-point closures measured in R068.
+- **Limitation:** A dependency introduced by the terminal pass can still have unexpanded contract or footprint neighbors. The method is intentionally bounded; another tier requires a new failure and runtime comparison.
+- **Confidence:** High in the failure and correction; medium in hidden transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

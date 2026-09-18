@@ -920,3 +920,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Checked artifacts: incumbent C=`10.0`, oracle C=`0.0`, both dual-scored and clean under standard and strict closures. Dataset hash: `ab66356785225b6b5ff03d5d9495c125ae8bc88c5067cfc774a039f3bc697996`.
 - Pre-exposure hypothesis: the expanded selector returns `COMP`, `DIRECT`, `FOLLOW`, and `PEER` but omits `PREPEER`, because the last operation adds contract peers after precedence expansion. The expanded tier should therefore remain conditionally stuck at C=`10.0`.
 - Scope check before change: one final precedence pass adds zero activities to the public, irregular, coupled, and cross-module retained neighborhoods. Generator, artifacts, hash, and selector assertion are committed before the first repair run.
+
+### E096: Final targeted precedence pass removes the fourth conditional trap
+
+- Timestamp: 2026-09-19 07:35:00 +08
+- Falsification: the existing expanded selector freed `COMP`, `DIRECT`, `FOLLOW`, and `PEER`, omitted `PREPEER`, and proved C=`10.0` in 0.007 seconds. Both scorers and both closure policies accept hash `4282e9d217271b120c3db72cf5b2218a973b60f2834b63abecd153083046d2bb`.
+- Correction: one terminal transitive precedence pass adds `PREPEER`. The five-activity repair proved C=`0.0` in 0.014 seconds; both scorers and both closure policies accept hash `02092a079563ecc2d331c033b2cb42055081edd39546ccba8864e867c51bfb75`.
+- Cross-regime scope: activity counts remain public `46`, irregular `29`, coupled `25`, and cross-module `18`. No fixed-point contract or footprint recursion was added.
+- Evidence: the new zero-score case raises the matrix to 34 cases; 67 regressions pass.

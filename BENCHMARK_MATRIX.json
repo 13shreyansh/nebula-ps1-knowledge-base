@@ -560,6 +560,23 @@
       "standard_feasible": true,
       "strict_conflicts": 0,
       "submission_hash": "cee2e4faaf310d156e9884948760e943373deff3c36a8138bc25fb101bf8dcd2"
+    },
+    {
+      "case": "independent_post_contract_precedence_C",
+      "dataset_hash": "ab66356785225b6b5ff03d5d9495c125ae8bc88c5067cfc774a039f3bc697996",
+      "delay_score": 0.0,
+      "eclo_nights": 0,
+      "excess_nights": 0,
+      "proof_bound": 0.0,
+      "proof_matches_score": true,
+      "proof_scope": "frozen_access_neighborhood",
+      "proof_status": "OPTIMAL",
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 0.0,
+      "standard_feasible": true,
+      "strict_conflicts": 0,
+      "submission_hash": "02092a079563ecc2d331c033b2cb42055081edd39546ccba8864e867c51bfb75"
     }
   ],
   "integrity_rule": "main and independent scores must agree; hard violations abort generation",
