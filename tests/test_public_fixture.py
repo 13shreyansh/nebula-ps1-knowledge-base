@@ -760,15 +760,23 @@ class PublicFixtureTests(unittest.TestCase):
                 remaining_closure_conflicts=remaining_conflicts,
             )
 
-        failed = telemetry("direct_heuristic", "FEASIBLE", 32.2, 1)
-        fallback = telemetry("bridge_safe", "FEASIBLE_SAFE_INCUMBENT", 32.2, 0)
+        failed = telemetry("direct_heuristic", "FEASIBLE", 48.3, 1)
+        fallback_one = telemetry("bridge_safe", "FEASIBLE_SAFE_INCUMBENT", 48.3, 0)
+        fallback_two = telemetry("bridge_safe", "FEASIBLE_SAFE_INCUMBENT", 32.2, 0)
 
         def fake_solve(instance, output_dir, scenario, **kwargs):
             if kwargs["separator_mode"] == "direct_heuristic":
-                _copy_submission(ROOT / "deliverables" / "public" / "A", Path(output_dir))
+                _copy_submission(PACK / "03_submission_sample", Path(output_dir))
                 return failed
+            hint = kwargs.get("sample_hint_dir")
+            if hint is not None and Path(hint).name == "bridge_safe_fallback_attempt_2_pruned":
+                _copy_submission(ROOT / "deliverables" / "public" / "A", Path(output_dir))
+                return fallback_two
+            if kwargs["seed"] == 1:
+                _copy_submission(PACK / "03_submission_sample", Path(output_dir))
+                return fallback_one
             _copy_submission(ROOT / "deliverables" / "public" / "A", Path(output_dir))
-            return fallback
+            return fallback_two
 
         with tempfile.TemporaryDirectory() as temp_dir, patch(
             "nebula_ps1.staged.solve_flexible_supply_relaxation",
@@ -780,15 +788,16 @@ class PublicFixtureTests(unittest.TestCase):
                 "A",
                 audit_output_dir=Path(temp_dir) / "audit",
                 heuristic_attempts=1,
-                fallback_attempts=1,
-                forbid_buffer_overlap=True,
+                fallback_attempts=2,
             )
-        self.assertEqual(solve.call_count, 3)
+        self.assertEqual(solve.call_count, 4)
         self.assertEqual(
             Path(solve.call_args_list[1].kwargs["sample_hint_dir"]).name,
             "heuristic_attempt_1_raw",
         )
         self.assertEqual(report["selected_stage"], "bridge_safe_fallback")
+        self.assertEqual(report["bridge_safe_fallback_selected_attempt"], 2)
+        self.assertAlmostEqual(report["selected_objective_score"], 32.2)
         self.assertIsNone(report["heuristic_telemetry"])
         self.assertEqual(
             report["bridge_safe_fallback_telemetry"]["status"],
