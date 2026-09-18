@@ -60,6 +60,15 @@ def main() -> None:
         action="store_true",
         help="also forbid buffer-to-buffer overlap as a published-rule hedge",
     )
+    flexible_parser.add_argument(
+        "--freeze-access-hint",
+        action="store_true",
+        help="fix hinted access, ECLO, and local-night rows while repairing groups",
+    )
+    flexible_parser.add_argument(
+        "--freeze-except",
+        help="comma-separated activities left free when --freeze-access-hint is used",
+    )
     portfolio_parser = subparsers.add_parser(
         "solve-c-portfolio",
         help="protect a checked A-as-C fallback before attempting a better C solve",
@@ -147,6 +156,12 @@ def main() -> None:
             sample_hint_dir=args.sample_hint,
             round_time_limit_seconds=args.round_time_limit,
             forbid_buffer_overlap=args.strict_buffer_overlap,
+            freeze_access_hint=args.freeze_access_hint,
+            freeze_access_except=(
+                {item.strip() for item in args.freeze_except.split(",") if item.strip()}
+                if args.freeze_except
+                else None
+            ),
         )
         print(telemetry.as_json())
         if telemetry.objective_score is None:

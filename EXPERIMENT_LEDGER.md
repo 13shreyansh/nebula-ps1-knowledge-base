@@ -317,3 +317,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Bridge-safe cut: if conflicting activities remain in the week, permit the first component to join any activity sharing a local footprint, which preserves every possible direct or transitive path. A 300-second strict A run retained the checked `32.2` fallback with zero conflicts but did not prove a lower bound; 127 solves, 123 closure rounds, three `UNKNOWN` retries, 127,564 variables, and 362,941 constraints.
 - Consequence: A=`32.2`, B=`30.0`, and C=`26.1` remain the protected dual-screen feasible scores. B's `30.0` still matches its independent workload/deadline lower bound. C=`26.1` is no longer described as proven optimal; its closure-free lower bound remains `25.2`.
 - Next direction: reduce connectivity-cut growth or encode possession connectivity exactly. Do not regain speed by restoring the unsound direct-component cut.
+
+### E027: Targeted C=25.2 repair neighborhoods
+
+- Timestamp: 2026-09-19 01:26:00 +08
+- Starting point: closure-free C=`25.2` has six strict closure conflicts involving 15 activities.
+- Group-only repair: fix every access week, ECLO value, and local night index while leaving all possession groups free. The bridge-safe model became infeasible after one cut in 0.123 seconds. Regrouping alone cannot repair that exact access plan under the strict screen.
+- Conflict-activity neighborhood: free access decisions only for the 15 conflict activities and fix all others. The model reached strict-feasible `26.1` and a matching restricted bound in 9.211 seconds over 21 solves/20 rounds. Main and independent scorers agree; hash `10940b782b678be691bdac11647a4623e26941e76bbc1772b20c177f33e2c08c`.
+- Topology neighborhood: expand freedom to all 43 activities sharing any footprint with an original conflict activity; keep 11 remote activities fixed. The 300-second run ended nonzero with seven conflicts, 134,604 variables, 381,265 constraints, and no safe incumbent.
+- Interpretation: the protected `26.1` is optimal in the small conflict neighborhood, not globally proven. The larger failure is a formulation-growth result, not evidence that `25.2` is impossible.

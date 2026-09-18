@@ -565,6 +565,35 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(strict_conflicts, ())
 
+    def test_freeze_access_requires_an_explicit_hint(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with self.assertRaisesRegex(ValueError, "requires sample_hint_dir"):
+                solve_flexible_supply_relaxation(
+                    self.instance,
+                    temp_dir,
+                    "C",
+                    time_limit_seconds=0.0,
+                    freeze_access_hint=True,
+                )
+            with self.assertRaisesRegex(ValueError, "requires freeze_access_hint"):
+                solve_flexible_supply_relaxation(
+                    self.instance,
+                    temp_dir,
+                    "C",
+                    time_limit_seconds=0.0,
+                    freeze_access_except={"A001"},
+                )
+            with self.assertRaisesRegex(ValueError, "unknown free activities"):
+                solve_flexible_supply_relaxation(
+                    self.instance,
+                    temp_dir,
+                    "C",
+                    time_limit_seconds=0.0,
+                    sample_hint_dir=ROOT / "runs" / "c_relax_seed1",
+                    freeze_access_hint=True,
+                    freeze_access_except={"UNKNOWN_ACTIVITY"},
+                )
+
     def test_packaged_public_answer_keys_match_manifest(self) -> None:
         deliverables = ROOT / "deliverables" / "public"
         if not deliverables.exists():

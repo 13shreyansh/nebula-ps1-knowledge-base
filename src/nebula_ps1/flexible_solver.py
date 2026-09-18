@@ -27,6 +27,8 @@ def solve_flexible_supply_relaxation(
     sample_hint_dir: str | Path | None = None,
     round_time_limit_seconds: float | None = None,
     forbid_buffer_overlap: bool = False,
+    freeze_access_hint: bool = False,
+    freeze_access_except: set[str] | None = None,
 ) -> SolveTelemetry:
     """Solve a scenario with iterative cuts from the inferred closure screen.
 
@@ -39,6 +41,14 @@ def solve_flexible_supply_relaxation(
 
     if scenario not in {"A", "B", "C"}:
         raise ValueError("scenario must be A, B, or C")
+    if freeze_access_hint and sample_hint_dir is None:
+        raise ValueError("freeze_access_hint requires sample_hint_dir")
+    if freeze_access_except and not freeze_access_hint:
+        raise ValueError("freeze_access_except requires freeze_access_hint")
+    free_activities = freeze_access_except or set()
+    unknown_free_activities = sorted(free_activities - set(instance.activities))
+    if unknown_free_activities:
+        raise ValueError(f"unknown free activities: {unknown_free_activities}")
     effective_round_limit = (
         round_time_limit_seconds
         if round_time_limit_seconds is not None
@@ -257,6 +267,25 @@ def solve_flexible_supply_relaxation(
         hinted_eclo = {(row.activity_id, row.week): row.eclo for row in hint_access}
         for key, variable in sorted(eclo.items()):
             model.add_hint(variable, hinted_eclo.get(key, 0))
+        if freeze_access_hint:
+            hint_by_key = {(row.activity_id, row.week): row for row in hint_access}
+            unknown_keys = sorted(set(hint_by_key) - set(access))
+            if unknown_keys:
+                raise ValueError(f"hint contains ineligible access rows: {unknown_keys[:5]}")
+            for key, variable in sorted(access.items()):
+                if key[0] in free_activities:
+                    continue
+                row = hint_by_key.get(key)
+                model.add(variable == int(row is not None))
+                model.add(eclo[key] == (row.eclo if row is not None else 0))
+            for (activity_id, week, access_night), variable in sorted(night.items()):
+                if activity_id in free_activities:
+                    continue
+                row = hint_by_key.get((activity_id, week))
+                model.add(
+                    variable
+                    == int(row is not None and row.access_night == access_night)
+                )
 
     # Official penalty is lexicographically dominant; row count only removes
     # redundant, score-neutral access rows and cannot trade against one tenth.
@@ -568,6 +597,7 @@ def solve_flexible_supply_relaxation(
         formulation=(
             f"scenario_{scenario.lower()}_iterative_bridge_safe_"
             f"{'strict_buffer' if forbid_buffer_overlap else 'sample_consistent'}_closure_relaxation"
+            f"{'_partially_frozen_access' if free_activities else '_frozen_access' if freeze_access_hint else ''}"
         ),
         status=status,
         objective_score=objective,
