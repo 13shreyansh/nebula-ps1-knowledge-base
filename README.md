@@ -331,10 +331,11 @@ Each protected public answer matches its bound and has passed the official valid
 - Combined public penalty is `230.6`. Lower is better; the portal does not publish a cross-scenario combined metric.
 - Both local scorers reproduce every official score exactly. The earlier activity-completion proxy was rejected after A-002 exposed the correct contract-completion aggregation.
 - The corrected closure checker reproduces the five A-001 violations exactly and accepts all three official incumbents under both standard and strict buffer screens.
-- All 43 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, incumbent protection, full heuristic-portfolio execution, guarded Scenario B cost-contributor repair, and an independently constructed synthetic oracle.
+- All 44 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, incumbent protection, full heuristic-portfolio execution, guarded Scenario B cost-contributor repair, an independently constructed synthetic oracle, and recomputation of the benchmark matrix.
 - On the altered-capacity/priority fixture, no-hint standard construction reaches A=`4599.7` with a 0.87% bound gap, and proves B=`30.0` and C=`59.9`. The stricter buffer-to-buffer hedge fails to construct B after 240 seconds while the validator-confirmed standard rule solves it in 18.7 seconds; strict overlap is therefore audit-only on unseen inputs.
 - On a separately generated two-line topology with novel identifiers and no public-submission input, the staged solver reconstructs and proves A=`7.0`, B=`10.0`, and C=`7.0`. The independent oracle is generated with separate footprint/result logic; B pays two necessary ECLO nights while C rationally accepts seven points of delay instead.
 - Experimental `solve-flexible-relaxation` flags expose per-solve deterministic time and OR-Tools interleaved search. Two structural-B repetitions were byte-identical at `30.0`, but took 98.8–104.9 seconds versus 16.6–21.2 seconds for successful ordinary portfolio seeds. Keep this as an audit mode, not the default score path.
+- [`BENCHMARK_MATRIX.json`](BENCHMARK_MATRIX.json) is the machine-readable cross-regime evidence table. All 12 retained A/B/C cases are hard-feasible, dual-scored, and match recorded proof bounds; only the three public rows are reference-validator-confirmed.
 - Generalisation remains the main risk: timed no-hint construction varies across seeds and hidden topology/scale are unknown. No official run is spent on an unvalidated candidate.
 
 The append-only evidence, hashes, parameters, failures, and limitations are in `EXPERIMENT_LEDGER.md`. Executable code is under `src/nebula_ps1`; regression tests are under `tests`.
@@ -569,7 +570,7 @@ Any activity count, score, time saving, or improvement stated in the demo must c
 | `E2` | `AUDIO-2026-09-18-19-50-30.m4a`, approximately 10m31s | Organiser intent and clarification | Room audio and overlapping speech reduce verbatim accuracy. |
 | `E3` | User-supplied Wispr Flow transcript | Improved recovery of the full conversation | Speaker numbers are inconsistent; several domain terms are mistranscribed. |
 | `E4` | Independent local transcription passes | Cross-check of Q&A meaning | One failed middle-section pass was discarded and reprocessed. |
-| `E5` | [`RESEARCH_LEDGER.md`](RESEARCH_LEDGER.md), 39 evidence entries plus failure and validator-test registers | Full paper trail, experiments, alternatives, and limitations behind version 0.4.0 | Evidence archive; this README contains the reconciled decisions. |
+| `E5` | [`RESEARCH_LEDGER.md`](RESEARCH_LEDGER.md), 47 research entries plus failure and validator-test registers | Full paper trail, experiments, alternatives, and limitations | Evidence archive; this README contains the reconciled decisions. |
 
 Combined confidence:
 
@@ -628,3 +629,4 @@ When sources conflict:
 | `0.8.0` | 2026-09-19 | Added official A/B/C validation, corrected contract-completion scoring and Live cross-line closure, official-score manifests, exact lower bounds, and 39 passing regressions. |
 | `0.8.1` | 2026-09-19 | Added full heuristic portfolios, a guarded Scenario B cost-contributor repair, prefix-40 A/B/C proofs, wall-time instability evidence, and 42 passing regressions. |
 | `0.8.2` | 2026-09-19 | Added a fully synthetic two-line oracle and no-hint A/B/C proof benchmark, plus explicit separation between independent and public-derived metamorphic evidence. |
+| `0.8.3` | 2026-09-19 | Added the reproducible 12-case benchmark matrix, strict-hedge diagnostics, and a regression that recomputes every retained score and feasibility result. |

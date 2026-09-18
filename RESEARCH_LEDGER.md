@@ -398,6 +398,14 @@ Confidence labels:
 - **Limitation:** Job/open-shop benchmarks are not the PS1 formulation. The paper supports the architecture, not a guaranteed score gain or the exact neighbourhood definitions used here.
 - **Confidence:** Medium-to-high.
 
+### `R047` Decomposition should separate schedule choice from detailed possession feasibility only when scale requires it
+
+- **Evidence:** Railway logic-based Benders work separates high-level timetable decisions from microscopic feasibility and reports improved scalability on real Swiss railway cases. A 2023 set-covering/Benders variant reports up to 20× faster solutions with small gaps, while a 2025 geographic-decomposition study finds that decomposition shape and coordination overhead interact non-trivially. [Leutwiler and Corman](https://www.research-collection.ethz.ch/handle/20.500.11850/535049), [set-covering Benders](https://doi.org/10.1016/j.cor.2023.106339), [geographic decomposition study](https://fis.tu-dresden.de/portal/en/publications/geographic-decompositions-in-railway-timetable-planning%284aa12519-e138-4fa1-b9f4-11465a5f3fcc%29.html)
+- **Finding:** PS1 has a natural decomposition: a master chooses activity weeks, ECLO, and coarse capacity; per-week/location subproblems test legal possession grouping and closure compatibility; infeasible subsets return aggregated cuts. Our iterative closure separator is a partial version of this idea, but it still keeps all group variables in the master.
+- **Relevance:** Keep the current formulation while it proves public and synthetic optima quickly. Switch to a true master/subproblem design only if hidden-scale benchmarks show group-variable or cut-growth failure. Premature decomposition can add coordination overhead and weaken bounds.
+- **Limitation:** Timetabling decomposition results do not transfer numerically to PS1, whose co-sharing and closure rules differ. “Up to 20×” is paper-specific and is not an expected gain here.
+- **Confidence:** Medium.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

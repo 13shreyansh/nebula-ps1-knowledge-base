@@ -63,6 +63,48 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(len(self.instance.locations), 76)
         self.assertEqual(self.instance.horizon_weeks, 30)
 
+    def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
+        matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
+        self.assertEqual(matrix["schema_version"], 1)
+        self.assertEqual(len(matrix["cases"]), 12)
+        for row in matrix["cases"]:
+            if row["case"].startswith("public_"):
+                data = PACK / "01_data"
+                submission = ROOT / "deliverables" / "public" / row["scenario"]
+            elif row["case"].startswith("prefix040_"):
+                data = ROOT / "fixtures" / "prefix_040"
+                run_name = {
+                    "A": "a_prefix040_corrected_w1",
+                    "B": "b_prefix040_portfolio_costrepair_w1",
+                    "C": "c_prefix040_corrected_w1",
+                }[row["scenario"]]
+                submission = ROOT / "runs" / run_name
+            elif row["case"].startswith("structural_demand_"):
+                data = ROOT / "fixtures" / "structural_demand_seed_20260920"
+                run_name = {
+                    "A": "a_structural_demand_portfolio_w8",
+                    "B": "b_structural_demand_portfolio_w8",
+                    "C": "c_structural_demand_portfolio_w8",
+                }[row["scenario"]]
+                submission = ROOT / "runs" / run_name
+            else:
+                self.assertTrue(row["case"].startswith("independent_"))
+                data = ROOT / "fixtures" / "independent_synthetic_v1"
+                run_name = {
+                    "A": "a_independent_synthetic_v1",
+                    "B": "b_independent_synthetic_v1",
+                    "C": "c_independent_synthetic_v1",
+                }[row["scenario"]]
+                submission = ROOT / "runs" / run_name
+
+            instance = load_instance(data)
+            evaluation = evaluate_submission(instance, submission, row["scenario"])
+            independent = independently_score(data, submission)
+            self.assertEqual(evaluation.hard_violations, (), row["case"])
+            self.assertEqual(evaluation.objective_score, row["score"], row["case"])
+            self.assertEqual(independent.objective_score, row["score"], row["case"])
+            self.assertTrue(row["proof_matches_score"], row["case"])
+
     def test_hard_deadline_uses_last_completed_week_not_containing_week(self) -> None:
         midweek_deadline = date(2027, 1, 13)
         self.assertEqual(self.instance.week_for_date(midweek_deadline), 2)

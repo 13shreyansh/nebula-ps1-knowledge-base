@@ -610,3 +610,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Reproducibility result: both 5.0 runs used 31 solves, 29 closure rounds, 7,247,261 branches, 22,736 conflicts, and 230.613294 accumulated deterministic-time units. Both emitted byte-identical access and occupancy files with checked score `30.0`, six ECLO nights, zero excess, and hash `eb52d62e1e18fe9a4e5bb31509670cbe1a3594b9bba97c3d981c094008814c43`.
 - Runtime cost: wall times were 98.765 and 104.905 seconds. The ordinary eight-worker portfolio reached the same proven objective in 16.648–21.169 seconds on successful seeds.
 - Decision: retain deterministic interleaving as an opt-in audit/reproduction mode. Do not make it the score-maximizing default; its large runtime premium and experimental upstream status outweigh the benefit when a protected incumbent and full telemetry already prevent unsafe promotion.
+
+### E060: Cross-regime benchmark matrix is executable, but the independent sample remains small
+
+- Timestamp: 2026-09-19 03:53:00 +08
+- Artifact: `scripts/build_benchmark_matrix.py` rebuilds `BENCHMARK_MATRIX.json` from 12 retained submissions spanning the public, prefix-40, public-derived demand-mutation, and independent-synthetic regimes. Generation aborts on any hard violation or disagreement between the main and independent scorers.
+- Result: every retained row is standard-feasible, both scorers agree, and the score equals its recorded model or analytical bound. The three public rows remain the only reference-validator-confirmed rows. The independent synthetic A/B/C rows have zero strict conflicts; public-derived transformations contain one to four buffer-only strict conflicts while remaining clean under the validator-confirmed standard policy.
+- Regression: a 44th test reloads all 12 submissions and recomputes feasibility and both scores. The full suite passes in the project Python 3.11 environment.
+- Correction: public proof labels now state their actual evidence source. Official validation establishes feasibility and score, while analytical and/or model lower bounds establish optimality; the portal itself did not claim optimality.
+- Limitation: this table contains selected retained incumbents, not a fair method comparison or fresh multi-seed distribution. Nine non-public rows come from only three datasets, and only one small dataset is independent of the public fixture. It can detect artifact drift but cannot yet establish hidden-scale reliability.
+- Next requirement: scale the independent generator across topology, density, deadlines, and access-type regimes, then report success rate and score/bound distributions under fixed budgets without dropping failed seeds.
