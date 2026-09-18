@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.1
+version: 0.8.2
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -331,8 +331,9 @@ Each protected public answer matches its bound and has passed the official valid
 - Combined public penalty is `230.6`. Lower is better; the portal does not publish a cross-scenario combined metric.
 - Both local scorers reproduce every official score exactly. The earlier activity-completion proxy was rejected after A-002 exposed the correct contract-completion aggregation.
 - The corrected closure checker reproduces the five A-001 violations exactly and accepts all three official incumbents under both standard and strict buffer screens.
-- All 42 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, incumbent protection, full heuristic-portfolio execution, and guarded Scenario B cost-contributor repair.
+- All 43 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, topology-derived interchange crossover, workload, packing, ECLO windows, pruning, incumbent protection, full heuristic-portfolio execution, guarded Scenario B cost-contributor repair, and an independently constructed synthetic oracle.
 - On the altered-capacity/priority fixture, no-hint standard construction reaches A=`4599.7` with a 0.87% bound gap, and proves B=`30.0` and C=`59.9`. The stricter buffer-to-buffer hedge fails to construct B after 240 seconds while the validator-confirmed standard rule solves it in 18.7 seconds; strict overlap is therefore audit-only on unseen inputs.
+- On a separately generated two-line topology with novel identifiers and no public-submission input, the staged solver reconstructs and proves A=`7.0`, B=`10.0`, and C=`7.0`. The independent oracle is generated with separate footprint/result logic; B pays two necessary ECLO nights while C rationally accepts seven points of delay instead.
 - Generalisation remains the main risk: timed no-hint construction varies across seeds and hidden topology/scale are unknown. No official run is spent on an unvalidated candidate.
 
 The append-only evidence, hashes, parameters, failures, and limitations are in `EXPERIMENT_LEDGER.md`. Executable code is under `src/nebula_ps1`; regression tests are under `tests`.
@@ -625,3 +626,4 @@ When sources conflict:
 | `0.7.0` | 2026-09-19 | Added strict buffer-overlap hedging, dual-policy release checks, validator-gated pruning, and exact three-file answer-key packaging. |
 | `0.8.0` | 2026-09-19 | Added official A/B/C validation, corrected contract-completion scoring and Live cross-line closure, official-score manifests, exact lower bounds, and 39 passing regressions. |
 | `0.8.1` | 2026-09-19 | Added full heuristic portfolios, a guarded Scenario B cost-contributor repair, prefix-40 A/B/C proofs, wall-time instability evidence, and 42 passing regressions. |
+| `0.8.2` | 2026-09-19 | Added a fully synthetic two-line oracle and no-hint A/B/C proof benchmark, plus explicit separation between independent and public-derived metamorphic evidence. |

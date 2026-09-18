@@ -511,3 +511,27 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Unknown unknown: freezing all non-cost-contributing access can prevent improvements requiring a zero-cost bridge activity to move. Failure of targeted repair is inconclusive and must preserve the broader incumbent/search path.
 - Confidence: high in the prefix-40 optimum and final artifact; medium that portfolio plus cost repair improves hidden B reliability; low in deterministic runtime behavior; very high in the official public results.
 - Next experiment: add a forced controller test where verification preserves a suboptimal safe B incumbent and only generic cost repair can improve it. Then benchmark the revised controller on the earlier structural fixture and a differently transformed capacity/topology fixture before generalizing.
+
+## 2026-09-19 03:35:29 +08
+
+- Interval: 6 minutes 52 seconds since the previous inspection; early because the structural stress test exhausted every recovery stage.
+- Best independently validated public score remains A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No structural candidate was validated in this interval.
+- What failed: on the altered-capacity structural fixture, one-worker seeds 1–3 left 24, 14, and 47 conflicts. Local repair left seven. Two broad fallbacks left 31 and 45. The workflow correctly failed closed and emitted no submission.
+- What improved: the full portfolio and failure ledger worked as intended; all contradictory telemetry is preserved. The controller did not mistake low objectives or solver bounds for feasibility.
+- Adversarial interpretation: prefix-40 success was not enough evidence for full structural robustness. Single-worker search may be too weak for the full altered fixture, and dividing 90 seconds across three seeds can be worse than one longer attempt. Portfolio diversification has an opportunity cost.
+- Integrity risks: comparing this run with E052 without noting its eight-worker configuration would be unfair. Conversely, dismissing the one-worker failure would hide a portability risk if the competition runtime offers limited cores.
+- Strongest falsification result: even the `77.0` local repair retained seven conflicts; lower objective was not progress. No unsafe candidate was promoted, no budget was extended, and no portal run was consumed.
+- Confidence: high in the failure and fail-closed behavior; medium that eight-worker production settings recover the known `30.0`; low in one-worker full-instance reliability; unchanged very high confidence in official public results.
+- Next experiment: rerun the revised structural B controller with eight workers and the same total heuristic budget. If it succeeds, compare wall time and proof; if it fails, revert portfolio allocation or add adaptive budget continuation rather than cherry-picking a lucky seed.
+
+## 2026-09-19 03:39:59 +08
+
+- Interval: 4 minutes 30 seconds since the previous inspection; early because the second transformed fixture completed and its provenance required an immediate leakage audit.
+- Best independently validated public score remains A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. Internal metamorphic optima are A=`39.9`, B=`10.0`, C=`10.0` with matching bridge-safe bounds.
+- What improved: under eight workers, the first structural fixture recovered checked/proven B=`30.0`. On the demand-mutated fixture, every A/B/C seed succeeded, both scorers agree, and sound verification proves all three returned objectives.
+- What was overstated: the demand-mutated fixture is not independent. Its generator reads the official A schedule to preserve capacity feasibility and add oracle-safe predecessors. Calling it hidden-like without qualification would be leakage-adjacent evidence inflation.
+- Cheating audit: the solver runs did not receive the oracle schedule, but the input distribution was constructed around it. This cannot demonstrate freedom from public-schedule shortcuts. The fixture remains useful for metamorphic correctness and controller stability only.
+- Strongest counterexample: a genuinely new topology and activity set could defeat assumptions that all current fixtures inherit, including two-line interchange structure, identifier parsing, possession density, or public timing patterns.
+- Integrity: the evidence label is corrected immediately; no official claim or portal action followed from the transformed scores; exact hashes and independent scores are preserved.
+- Confidence: very high in the public official results; high in metamorphic correctness under eight workers; medium in controller performance on public-derived transformations; low in independent topology generalization.
+- Next experiment: create a fully synthetic, schema-valid instance and oracle without reading any public submission, test the checker on the oracle, hide the oracle from staged A/B/C construction, and measure whether it reconstructs feasible/proven results. Treat generator validity as a separate testable component.

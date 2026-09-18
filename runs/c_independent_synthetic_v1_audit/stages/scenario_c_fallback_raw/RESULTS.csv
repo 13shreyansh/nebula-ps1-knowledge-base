@@ -1,0 +1,9 @@
+scenario,contract_number,simulated_completion_date,overrun_days
+C,K101,2031-01-26,7
+C,K102,2031-02-09,0
+C,K103,2031-02-16,0
+C,K104,2031-03-09,0
+C,K105,2031-03-23,0
+C,K106,2031-04-06,0
+C,K107,2031-04-13,0
+C,K108,2031-02-09,0

@@ -46,6 +46,18 @@ class PublicFixtureTests(unittest.TestCase):
 
     def test_instance_counts_are_loaded_from_schema(self) -> None:
         self.assertEqual(len(self.instance.lines), 2)
+
+    def test_independent_synthetic_oracle_is_valid_without_public_identifiers(self) -> None:
+        synthetic_root = ROOT / "fixtures" / "independent_synthetic_v1"
+        oracle = ROOT / "fixtures" / "independent_synthetic_v1_oracle"
+        instance = load_instance(synthetic_root)
+        evaluation = evaluate_submission(instance, oracle, scenario="A")
+        independent = independently_score(synthetic_root, oracle)
+        self.assertEqual(set(instance.lines), {"LNX", "LNY"})
+        self.assertTrue(all(activity_id.startswith("Q") for activity_id in instance.activities))
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertAlmostEqual(evaluation.objective_score, 7.0)
+        self.assertAlmostEqual(independent.objective_score, 7.0)
         self.assertEqual(len(self.instance.projects), 14)
         self.assertEqual(len(self.instance.activities), 54)
         self.assertEqual(len(self.instance.locations), 76)

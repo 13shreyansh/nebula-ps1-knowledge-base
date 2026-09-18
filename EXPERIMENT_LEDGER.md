@@ -568,3 +568,37 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - End-to-end result: three 30-second one-worker heuristic attempts all ended unsafe; generic conflict-neighborhood repair recovered checked `37.0`; 30-second bridge-safe verification reached and proved `20.0`; the cost-contributor stage preserved the optimum. Independent rescoring reports zero delay, zero excess, four ECLO nights, and objective `20.0`; hash `899e6761db4dbe30584b81f06edf0001900729226eaced83148e70d06d51b766`.
 - Tests: 42 regressions pass, including full heuristic-attempt selection, B cost-contributor derivation, and invocation of the guarded repair with only the derived contributor set left free.
 - Remaining limitation: the verifier had previously stalled at `30.0` under nominally identical seed/worker settings, so this successful rerun does not establish wall-time reproducibility. The new stages improve recovery opportunities but do not eliminate time-sensitive CP-SAT variance.
+
+### E055: Structural B remains unsolved under a one-worker portfolio
+
+- Timestamp: 2026-09-19 03:35:29 +08
+- Method: `fixtures/structural_seed_20260919`, standard closure, one worker, seeds 1–3, three 30-second heuristics, 30-second local repair, and two 60-second bridge-safe fallbacks. No public or prior structural submission hint was supplied.
+- Failure: heuristic attempts retained objectives/conflicts of `200.0/24`, `315.0/14`, and `473.0/47`. Conflict-neighborhood repair reduced the best unsafe trajectory to `77.0/7` but did not reach feasibility. Broad fallbacks ended at `393.0/31` and `610.0/45`; no final output was emitted.
+- Comparison boundary: E052 solved this fixture at checked and proven `30.0` under a different parallel-search configuration. This run changes both worker count and per-seed allocation, so it falsifies one-worker robustness but does not show a regression against the earlier production-like run.
+- Decision: retain the failure, test the same revised controller with eight workers, and keep the one-worker regime as a stress test rather than a required release gate unless the hidden environment restricts parallelism.
+
+### E056: Eight-worker structural B recovers and proves `30.0`
+
+- Timestamp: 2026-09-19 03:37:05 +08
+- Method: same structural fixture and total heuristic allocation as E055, changing only workers from one to eight.
+- Result: seed 1 retained seven conflicts at `30.0` after 30 seconds; seeds 2 and 3 reached checked `30.0` in 16.648 and 21.169 seconds. The controller selected seed 2's checked/pruned candidate. Bridge-safe verification matched the `30.0` bound in 0.188 seconds, and cost-contributor repair over A036/A059 preserved the optimum in 0.060 seconds.
+- Interpretation: the portfolio succeeds in the intended eight-worker regime and tolerates one failed seed, but E055 shows it is not compute-portable to one worker at the same wall-time budget. Worker count is therefore part of the benchmark contract, not a cosmetic setting.
+- Integrity: no unsafe seed-1 candidate was selected; score and proof are internal structural-fixture evidence, not an official result.
+
+### E057: Demand-mutated metamorphic fixture solves, but is not independent
+
+- Timestamp: 2026-09-19 03:39:59 +08
+- Input: `fixtures/structural_demand_seed_20260920`; it changes workloads, planned starts, up to ten predecessor links, capacities, priorities, and row order. The generator uses the official public A schedule to cap capacity reductions and choose predecessor relations that preserve that schedule's ordering.
+- Results: eight-worker, three-seed staged construction and bridge-safe verification reach and prove A=`39.9`, B=`10.0`, and C=`10.0`. Both scorers agree. B/C use two ECLO nights, zero excess, and zero delay; A uses no ECLO/excess and has `39.9` weighted delay.
+- Reproducibility: all three B seeds reached checked `10.0`; all three A seeds reached checked `39.9`; all three C seeds reached checked `10.0`. Final hashes are A `132e593a43c2fd05cbb53e25e51f11a554966baf1b727a7f4000b709da599122`, B `d2120848f51e21b76ab78a1bc55da4413f924b76281e4c8c4ea691ba631f176e`, and C `2acb69dc9ade6a4cea14b7b056d26b54e1092e45157944122ef43df96d8d8752`.
+- Evidence boundary: this is a metamorphic robustness test, not an independent hidden-like sample. Oracle-guided capacity and predecessor construction can preserve public-schedule structure and therefore cannot rule out topology- or schedule-specific shortcuts.
+- Next requirement: build a fully synthetic instance and feasible oracle from a new topology without reading any public submission, then discard the oracle during solver runs and compare reconstruction against independently computed scores/bounds.
+
+### E058: Independent synthetic topology reconstruction and proof
+
+- Timestamp: 2026-09-19 03:42:08 +08
+- Generator: `scripts/make_independent_synthetic_fixture.py` creates two new lines (`LNX`, `LNY`), new stations/contracts/activities, an interchange bridge, mixed C/PC/PM access, legal C+PC co-sharing, a predecessor chain, and one tight three-unit activity. It does not read the official data or any public submission.
+- Oracle independence: the A oracle is manually scheduled and its footprints and contract result rows are generated by separate local logic, not `nebula_ps1.topology`, the main evaluator, solver, or submission writer. The main checker and independent raw-CSV scorer then both accept it at A=`7.0`.
+- Blind reconstruction: staged runs received only the synthetic input tables. They reached and bridge-safe proved A=`7.0`, B=`10.0`, and C=`7.0`. Both scorers agree; all outputs have zero hard violations and zero excess.
+- Intended trade-off recovered: A and C schedule Q001 over three standard weeks and pay seven delay points. B's hard deadline forces Q001 into two ECLO weeks, costing `2 × 5 = 10` with zero delay. C correctly chooses the cheaper `7.0` delay rather than the `10.0` ECLO alternative.
+- Evidence boundary: the synthetic case is small and authored to cover selected rule interactions. It reduces public-sample leakage risk but does not represent the full size, density, or every topology pattern of a hidden instance.
