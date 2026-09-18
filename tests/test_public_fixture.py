@@ -20,6 +20,7 @@ from nebula_ps1.independent_score import independently_score
 from nebula_ps1.instance import load_instance
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from nebula_ps1.prune import prune_submission
+from nebula_ps1.solver import _activity_costs
 from nebula_ps1.submission import relabel_submission_scenario
 from nebula_ps1.topology import (
     activity_footprint,
@@ -53,6 +54,49 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(
             self.instance.last_week_completing_by(date(2027, 1, 17)),
             2,
+        )
+
+    def test_c_26_1_lower_bound_critical_path_facts(self) -> None:
+        a036 = self.instance.activities["A036"]
+        a059 = self.instance.activities["A059"]
+        a075 = self.instance.activities["A075"]
+        self.assertEqual((a036.total_accesses, a059.total_accesses, a075.total_accesses), (7, 7, 1))
+        self.assertEqual(self.instance.week_for_date(a036.planned_start_date), 22)
+        self.assertEqual(self.instance.week_for_date(a059.planned_start_date), 14)
+        self.assertEqual(self.instance.week_for_date(a075.planned_start_date), 24)
+        self.assertEqual(
+            self.instance.week_for_date(
+                self.instance.projects[a036.contract_number].planned_completion_date
+            ),
+            26,
+        )
+        self.assertEqual(
+            self.instance.week_for_date(
+                self.instance.projects[a059.contract_number].planned_completion_date
+            ),
+            19,
+        )
+        self.assertEqual(
+            self.instance.week_for_date(
+                self.instance.projects[a075.contract_number].planned_completion_date
+            ),
+            28,
+        )
+        self.assertEqual(_activity_costs(self.instance, "A036")[27], 182)
+        self.assertEqual(_activity_costs(self.instance, "A036")[26], 91)
+        self.assertEqual(_activity_costs(self.instance, "A059")[19], 70)
+        self.assertEqual(_activity_costs(self.instance, "A075")[28], 70)
+        self.assertEqual(
+            self.instance.projects[a075.contract_number].access_type,
+            "PM",
+        )
+        self.assertFalse(
+            set(activity_footprint(self.instance, a036))
+            & set(activity_footprint(self.instance, a075))
+        )
+        self.assertTrue(
+            set(activity_footprint(self.instance, a036))
+            & _blocked_locations(self.instance, {"A075"})
         )
 
     def test_generated_work_footprints_match_all_public_occupancy_keys(self) -> None:

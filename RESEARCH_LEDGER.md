@@ -366,6 +366,14 @@ Confidence labels:
 - **Limitation:** This settles the invalid equality constraint; it does not reveal any unlisted validator checks on night indices.
 - **Confidence:** High.
 
+### `R043` Scenario C has a direct 26.1 lower bound under implemented closures
+
+- **Evidence:** Public activity/project rows, week calendar, workload rule, ECLO yield/cost, activity-delay weights, and derived Live mirror/buffer footprint.
+- **Finding:** A036 has seven units, starts in week 22, and costs `18.2` if completed in week 28 or `9.1` in week 27. A059's seven units from week 14 make its week-20 `7.0` delay unavoidable without spending a more expensive pair of ECLOs. A075 is a one-night Live PM starting week 24 with an on-time limit of week 28; its mirrored closure blocks A036's BET `S14_H01:EB` location, and PM cannot co-share. With no ECLO, A036 occupies every week 22–28, so A075 must either be delayed to week 29, raising the total to at least `32.2`, or A036 must be compressed. Six A036 access rows need two ECLO bonuses, cost `10`, and can finish in week 27 at `9.1` delay. Adding A059's `7.0` gives `26.1`, achieved by the protected schedule.
+- **Relevance:** This proves C=`26.1` optimal under the implemented published-rule interpretation without relying on the withdrawn direct-component cuts. Keep official-validator confirmation separate.
+- **Limitation:** The proof inherits the Live closure expansion and one-access-per-activity-per-week interpretation. Both are directly published and regression-tested locally but not reference-validator confirmed.
+- **Confidence:** High under implemented semantics.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

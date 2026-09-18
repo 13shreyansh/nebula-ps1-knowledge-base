@@ -326,3 +326,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Conflict-activity neighborhood: free access decisions only for the 15 conflict activities and fix all others. The model reached strict-feasible `26.1` and a matching restricted bound in 9.211 seconds over 21 solves/20 rounds. Main and independent scorers agree; hash `10940b782b678be691bdac11647a4623e26941e76bbc1772b20c177f33e2c08c`.
 - Topology neighborhood: expand freedom to all 43 activities sharing any footprint with an original conflict activity; keep 11 remote activities fixed. The 300-second run ended nonzero with seven conflicts, 134,604 variables, 381,265 constraints, and no safe incumbent.
 - Interpretation: the protected `26.1` is optimal in the small conflict neighborhood, not globally proven. The larger failure is a formulation-growth result, not evidence that `25.2` is impossible.
+
+### E028: Analytical C=26.1 lower bound and bridge-neighborhood failure
+
+- Timestamp: 2026-09-19 01:33:00 +08
+- Lower-bound chain: A059's seven standard accesses from week 14 finish in week 20, contributing unavoidable delay `7.0`; replacing that delay requires at least two ECLO nights costing `10`. A036's seven accesses from week 22 occupy every week 22–28 without ECLO and contribute `18.2` delay in week 28. Live PM A075 must use one of weeks 24–28 to remain on time and its mirrored/buffered closure blocks A036's `S14_H01:EB`; the two cannot co-share.
+- Cheapest resolution: six A036 rows require at least two ECLO bonuses, cost `10`, and can finish in week 27 at delay `9.1`; schedule A075 in week 28. Adding A059's `7.0` yields `26.1`. Leaving A036 uncompressed forces A075 to week 29 and gives at least `18.2 + 7.0 + 7.0 = 32.2`. More ECLO or excess capacity cannot reduce the hard closure at lower cost.
+- Verification: the protected strict schedule attains `26.1`; regressions pin the three workloads, start/planned weeks, activity costs, A075 PM type, disjoint work footprints, and A075-to-A036 blocked-location intersection.
+- Conclusion: C=`26.1` is optimal under the implemented published-rule interpretation without using the withdrawn direct-component proof. Reference-validator confirmation remains absent.
+- Additional search: a 30-activity neighborhood containing the 15 original conflict activities plus every one-step bridge candidate exhausted 300 seconds, reached 140,487 variables/400,285 constraints, and ended `UNKNOWN` with five conflicts and no safe incumbent. It adds no score evidence and is retained as a scalability failure.
