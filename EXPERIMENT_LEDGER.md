@@ -364,3 +364,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Reproducibility defect: all CSV emitters relied on the platform-default `\r\n` dialect. Repository normalization changed byte-level dataset and submission hashes while leaving parsed rows and scores unchanged. Every solver, relabeler, pruner, and fixture generator now explicitly emits LF; regressions check generated submission files.
 - Final normalized submission hash: `dc61f3c7d84130fe2e9ee36172d113354ea8863f1d0c058f2bc968ba83e31245`.
 - Decision: retain this as cross-regime construction evidence. Do not claim structural optimality, and do not spend more runtime on the same sound formulation without a stronger lower bound or compact connectivity model.
+
+### E032: Sound construction fallback after total heuristic failure
+
+- Timestamp: 2026-09-19 01:54:35 +08
+- Defect: the staged workflow aborted when all direct-heuristic seeds failed, even though the bridge-safe model might still construct a schedule. Heuristic failure is not infeasibility.
+- Correction: after exhausting heuristic attempts, run one bounded bridge-safe solve from raw input. Keep its telemetry and prune report separate; accept it only after the same full checker, optional strict screen, pruning, exact-three-file, and final-copy gates.
+- Real falsification: generate a schema-valid fixture containing only A001/C001 while retaining the full network and parameters. Force the sole heuristic attempt to zero seconds, producing `UNKNOWN` with no objective, then give the bridge-safe fallback 10 seconds with one worker.
+- Result: fallback solved Scenario A to the `0.0` floor in one solve and 0.004 seconds; 175 variables, 455 constraints, 47 branches, two access rows, ten occupancy rows, zero strict conflicts. Main and independent scorers agree; hash `35dc55405c542e6bb803cfc62c3bcb0ce6b9a5b2423c25dddcf4bc997e062dbd`.
+- Boundary: this proves control flow and small-instance recovery, not public-scale fallback performance. Public-scale bridge-safe failures remain preserved.

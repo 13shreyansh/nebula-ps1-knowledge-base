@@ -10,6 +10,7 @@ from .flexible_solver import solve_flexible_supply_relaxation
 from .instance import Instance
 from .portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from .prune import prune_submission
+from .solver import SolveTelemetry
 
 
 def solve_staged_scenario(
@@ -47,10 +48,12 @@ def solve_staged_scenario(
 
     heuristic_raw: Path | None = None
     heuristic_pruned = audit_output / "heuristic_pruned"
+    fallback_raw = audit_output / "bridge_safe_fallback_raw"
+    fallback_pruned = audit_output / "bridge_safe_fallback_pruned"
     verification_raw = audit_output / "verification_raw"
     verification_pruned = audit_output / "verification_pruned"
     attempt_telemetry: list[dict[str, object]] = []
-    heuristic = None
+    heuristic: SolveTelemetry | None = None
     for attempt in range(heuristic_attempts):
         attempt_seed = seed + attempt
         attempt_output = audit_output / f"heuristic_attempt_{attempt + 1}_raw"
@@ -73,51 +76,89 @@ def solve_staged_scenario(
             heuristic = attempt_result
             heuristic_raw = attempt_output
             break
-    if heuristic is None or heuristic_raw is None:
-        (audit_output / "STAGED_FAILURES.json").write_text(
-            json.dumps(attempt_telemetry, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
+    fallback: SolveTelemetry | None = None
+    heuristic_prune = None
+    fallback_prune = None
+    verification: SolveTelemetry | None = None
+    verification_prune = None
+    if heuristic is not None and heuristic_raw is not None:
+        heuristic_prune = prune_submission(
+            instance,
+            heuristic_raw,
+            heuristic_pruned,
+            scenario,
+            report_path=audit_output / "HEURISTIC_PRUNE.json",
+            forbid_buffer_overlap=forbid_buffer_overlap,
         )
-        raise RuntimeError("direct heuristic did not produce a checked safe incumbent")
-    heuristic_prune = prune_submission(
-        instance,
-        heuristic_raw,
-        heuristic_pruned,
-        scenario,
-        report_path=audit_output / "HEURISTIC_PRUNE.json",
-        forbid_buffer_overlap=forbid_buffer_overlap,
-    )
-    incumbent = evaluate_submission(instance, heuristic_pruned, scenario)
+        incumbent = evaluate_submission(instance, heuristic_pruned, scenario)
+        verification = solve_flexible_supply_relaxation(
+            instance,
+            verification_raw,
+            scenario,
+            time_limit_seconds=verification_time_limit_seconds,
+            workers=workers,
+            seed=seed,
+            closure_round_limit=closure_round_limit,
+            sample_hint_dir=heuristic_pruned,
+            forbid_buffer_overlap=forbid_buffer_overlap,
+            separator_mode="bridge_safe",
+        )
+        verification_prune = prune_submission(
+            instance,
+            verification_raw,
+            verification_pruned,
+            scenario,
+            report_path=audit_output / "VERIFICATION_PRUNE.json",
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+        verified = evaluate_submission(instance, verification_pruned, scenario)
 
-    verification = solve_flexible_supply_relaxation(
-        instance,
-        verification_raw,
-        scenario,
-        time_limit_seconds=verification_time_limit_seconds,
-        workers=workers,
-        seed=seed,
-        closure_round_limit=closure_round_limit,
-        sample_hint_dir=heuristic_pruned,
-        forbid_buffer_overlap=forbid_buffer_overlap,
-        separator_mode="bridge_safe",
-    )
-    verification_prune = prune_submission(
-        instance,
-        verification_raw,
-        verification_pruned,
-        scenario,
-        report_path=audit_output / "VERIFICATION_PRUNE.json",
-        forbid_buffer_overlap=forbid_buffer_overlap,
-    )
-    verified = evaluate_submission(instance, verification_pruned, scenario)
-
-    selected_stage = "heuristic_incumbent"
-    selected_dir = heuristic_pruned
-    selected: Evaluation = incumbent
-    if _candidate_is_better(verified, incumbent):
-        selected_stage = "bridge_safe_improvement"
-        selected_dir = verification_pruned
-        selected = verified
+        selected_stage = "heuristic_incumbent"
+        selected_dir = heuristic_pruned
+        selected: Evaluation = incumbent
+        if _candidate_is_better(verified, incumbent):
+            selected_stage = "bridge_safe_improvement"
+            selected_dir = verification_pruned
+            selected = verified
+    else:
+        fallback = solve_flexible_supply_relaxation(
+            instance,
+            fallback_raw,
+            scenario,
+            time_limit_seconds=verification_time_limit_seconds,
+            workers=workers,
+            seed=seed,
+            closure_round_limit=closure_round_limit,
+            forbid_buffer_overlap=forbid_buffer_overlap,
+            separator_mode="bridge_safe",
+        )
+        if fallback.objective_score is None or fallback.remaining_closure_conflicts:
+            (audit_output / "STAGED_FAILURES.json").write_text(
+                json.dumps(
+                    {
+                        "heuristic_attempts": attempt_telemetry,
+                        "bridge_safe_fallback": asdict(fallback),
+                    },
+                    indent=2,
+                    sort_keys=True,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            raise RuntimeError(
+                "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent"
+            )
+        fallback_prune = prune_submission(
+            instance,
+            fallback_raw,
+            fallback_pruned,
+            scenario,
+            report_path=audit_output / "FALLBACK_PRUNE.json",
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+        selected_stage = "bridge_safe_fallback"
+        selected_dir = fallback_pruned
+        selected = evaluate_submission(instance, fallback_pruned, scenario)
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, scenario)
@@ -150,11 +191,13 @@ def solve_staged_scenario(
         "reference_validator_confirmed": False,
         "submission_files": list(SUBMISSION_FILES),
         "selection_rule": "strictly lower fully checked objective; otherwise preserve incumbent",
-        "heuristic_telemetry": asdict(heuristic),
+        "heuristic_telemetry": asdict(heuristic) if heuristic is not None else None,
         "heuristic_attempts": attempt_telemetry,
-        "heuristic_prune": asdict(heuristic_prune),
-        "verification_telemetry": asdict(verification),
-        "verification_prune": asdict(verification_prune),
+        "heuristic_prune": asdict(heuristic_prune) if heuristic_prune is not None else None,
+        "bridge_safe_fallback_telemetry": asdict(fallback) if fallback is not None else None,
+        "bridge_safe_fallback_prune": asdict(fallback_prune) if fallback_prune is not None else None,
+        "verification_telemetry": asdict(verification) if verification is not None else None,
+        "verification_prune": asdict(verification_prune) if verification_prune is not None else None,
     }
     (audit_output / "STAGED.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",

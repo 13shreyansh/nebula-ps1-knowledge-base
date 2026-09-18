@@ -20,7 +20,7 @@ from nebula_ps1.independent_score import independently_score
 from nebula_ps1.instance import load_instance
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from nebula_ps1.prune import prune_submission
-from nebula_ps1.solver import _activity_costs
+from nebula_ps1.solver import SolveTelemetry, _activity_costs
 from nebula_ps1.staged import solve_staged_scenario
 from nebula_ps1.submission import relabel_submission_scenario
 from nebula_ps1.topology import (
@@ -721,6 +721,60 @@ class PublicFixtureTests(unittest.TestCase):
                     "B",
                     heuristic_attempts=0,
                 )
+
+    def test_staged_solver_uses_sound_fallback_after_heuristic_failure(self) -> None:
+        def telemetry(
+            formulation: str,
+            status: str,
+            objective: float | None,
+            remaining_conflicts: int,
+        ) -> SolveTelemetry:
+            return SolveTelemetry(
+                formulation=formulation,
+                status=status,
+                objective_score=objective,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=1,
+                workers=1,
+                time_limit_seconds=0.0,
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=remaining_conflicts,
+            )
+
+        failed = telemetry("direct_heuristic", "UNKNOWN", None, 1)
+        fallback = telemetry("bridge_safe", "FEASIBLE_SAFE_INCUMBENT", 32.2, 0)
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            if kwargs["separator_mode"] == "direct_heuristic":
+                return failed
+            _copy_submission(ROOT / "deliverables" / "public" / "A", Path(output_dir))
+            return fallback
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation",
+            side_effect=fake_solve,
+        ) as solve:
+            report = solve_staged_scenario(
+                self.instance,
+                Path(temp_dir) / "submission",
+                "A",
+                audit_output_dir=Path(temp_dir) / "audit",
+                heuristic_attempts=1,
+                forbid_buffer_overlap=True,
+            )
+        self.assertEqual(solve.call_count, 2)
+        self.assertEqual(report["selected_stage"], "bridge_safe_fallback")
+        self.assertIsNone(report["heuristic_telemetry"])
+        self.assertEqual(
+            report["bridge_safe_fallback_telemetry"]["status"],
+            "FEASIBLE_SAFE_INCUMBENT",
+        )
+        self.assertIsNone(report["verification_telemetry"])
 
     def test_packaged_public_answer_keys_match_manifest(self) -> None:
         deliverables = ROOT / "deliverables" / "public"
