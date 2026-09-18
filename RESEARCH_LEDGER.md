@@ -567,6 +567,16 @@ Confidence labels:
 - **Limitation:** The second pass does not recursively add contract peers or footprint competitors of newly added dependencies. A future counterexample may justify another bounded tier, but this evidence does not justify fixed-point expansion.
 - **Confidence:** High in the failure and correction; high in measured neighborhood growth; medium in hidden-instance transfer.
 
+### `R070` Logical neighborhood coverage and search power require separate tiers
+
+- **Status:** Confirmed by two opposing precommitted regimes.
+- **Finding:** An expanded dependency neighborhood fixed a C=`10.0` conditional optimum, but replacing the narrower neighborhood caused two 30-second irregular repairs to remain at C=`63.0`; the narrower 27-activity repair reached C=`31.0` under the same production seed and budget.
+- **Relevance:** Neighborhood inclusion is not monotonic in time-limited solution quality. A broader subproblem contains the better schedule mathematically but may fail to find it. Run narrow and expanded repairs as protected portfolio members rather than treating breadth as an upgrade.
+- **Method:** Tier one keeps objective, contract, precedence, and footprint expansion. Tier two revisits precedence after footprints, then adds contract peers only for activities newly reached in that revisit. Tier two uses a distinct seed and at most ten seconds. Each result is pruned, fully checked, and promoted only if strictly better.
+- **Scope evidence:** Targeted contract revisit grows public `45→46`, irregular `29→29`, coupled `25→25`, cross-module `18→18`, and the contract holdout `3→4`; broad all-current-contract expansion would grow public to `52`.
+- **Limitation:** Two tiers add runtime and still do not close every alternating dependency chain. The protected incumbent controls score risk, not runtime risk.
+- **Confidence:** High in current dominance evidence; medium in hidden-instance and runtime transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

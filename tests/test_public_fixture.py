@@ -66,7 +66,7 @@ class PublicFixtureTests(unittest.TestCase):
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 32)
+        self.assertEqual(len(matrix["cases"]), 33)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -139,6 +139,9 @@ class PublicFixtureTests(unittest.TestCase):
             elif row["case"] == "independent_footprint_dependency_C":
                 data = ROOT / "fixtures" / "independent_footprint_dependency_v1"
                 submission = ROOT / "runs" / "c_footprint_dependency_postprecedence"
+            elif row["case"] == "independent_post_precedence_contract_C":
+                data = ROOT / "fixtures" / "independent_post_precedence_contract_v1"
+                submission = ROOT / "runs" / "c_postprecedence_contract_targeted_repair"
             else:
                 self.assertTrue(row["case"].startswith("independent_"))
                 data = ROOT / "fixtures" / "independent_synthetic_v1"
@@ -400,6 +403,19 @@ class PublicFixtureTests(unittest.TestCase):
             ),
             ["COMP", "DIRECT", "FOLLOW"],
         )
+        self.assertEqual(
+            _scenario_b_cost_contributing_activities(
+                instance,
+                incumbent,
+                expand_footprints=True,
+                expand_contracts=True,
+                expand_precedence=True,
+                revisit_precedence_after_footprints=True,
+                revisit_contracts_after_precedence=True,
+                include_delays=True,
+            ),
+            ["COMP", "DIRECT", "FOLLOW"],
+        )
 
     def test_post_footprint_precedence_repair_reaches_oracle(self) -> None:
         data = ROOT / "fixtures" / "independent_footprint_dependency_v1"
@@ -412,6 +428,7 @@ class PublicFixtureTests(unittest.TestCase):
             expand_contracts=True,
             expand_precedence=True,
             revisit_precedence_after_footprints=True,
+            revisit_contracts_after_precedence=True,
             include_delays=True,
         )
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -475,6 +492,19 @@ class PublicFixtureTests(unittest.TestCase):
                 include_delays=True,
             ),
             ["COMP", "DIRECT", "FOLLOW"],
+        )
+        self.assertEqual(
+            _scenario_b_cost_contributing_activities(
+                instance,
+                incumbent,
+                expand_footprints=True,
+                expand_contracts=True,
+                expand_precedence=True,
+                revisit_precedence_after_footprints=True,
+                revisit_contracts_after_precedence=True,
+                include_delays=True,
+            ),
+            ["COMP", "DIRECT", "FOLLOW", "PEER"],
         )
 
     def test_dense_holdout_production_c_preserves_zero_a_fallback(self) -> None:
@@ -1025,6 +1055,7 @@ class PublicFixtureTests(unittest.TestCase):
             expand_contracts=True,
             expand_precedence=True,
             revisit_precedence_after_footprints=True,
+            revisit_contracts_after_precedence=True,
             include_delays=True,
         )
         kmm = {
@@ -1620,13 +1651,22 @@ class PublicFixtureTests(unittest.TestCase):
         )
 
     def test_staged_c_runs_guarded_cost_repair_on_derived_contributors(self) -> None:
-        expected = _scenario_b_cost_contributing_activities(
+        expected_narrow = _scenario_b_cost_contributing_activities(
+            self.instance,
+            ROOT / "deliverables" / "public" / "C",
+            expand_footprints=True,
+            expand_contracts=True,
+            expand_precedence=True,
+            include_delays=True,
+        )
+        expected_expanded = _scenario_b_cost_contributing_activities(
             self.instance,
             ROOT / "deliverables" / "public" / "C",
             expand_footprints=True,
             expand_contracts=True,
             expand_precedence=True,
             revisit_precedence_after_footprints=True,
+            revisit_contracts_after_precedence=True,
             include_delays=True,
         )
 
@@ -1661,13 +1701,78 @@ class PublicFixtureTests(unittest.TestCase):
                 heuristic_attempts=1,
                 local_repair_time_limit_seconds=1.0,
             )
-        self.assertEqual(solve.call_count, 3)
+        self.assertEqual(solve.call_count, 4)
         cost_call = solve.call_args_list[2]
         self.assertTrue(cost_call.kwargs["freeze_access_hint"])
-        self.assertEqual(cost_call.kwargs["freeze_access_except"], set(expected))
         self.assertEqual(
-            report["bridge_safe_cost_repair_activities"], expected
+            cost_call.kwargs["freeze_access_except"], set(expected_narrow)
         )
+        expanded_call = solve.call_args_list[3]
+        self.assertEqual(
+            expanded_call.kwargs["freeze_access_except"], set(expected_expanded)
+        )
+        self.assertEqual(expanded_call.kwargs["time_limit_seconds"], 1.0)
+        self.assertEqual(
+            report["bridge_safe_cost_repair_activities"], expected_narrow
+        )
+        self.assertEqual(
+            report["bridge_safe_expanded_cost_repair_activities"], expected_expanded
+        )
+
+    def test_staged_c_escalates_from_narrow_to_expanded_cost_repair(self) -> None:
+        data = ROOT / "fixtures" / "independent_post_precedence_contract_v1"
+        incumbent = ROOT / "fixtures/independent_post_precedence_contract_v1_incumbent"
+        oracle = ROOT / "fixtures" / "independent_post_precedence_contract_v1_oracle"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            source = oracle if calls == 4 else incumbent
+            _copy_submission(source, Path(output_dir))
+            objective = 0.0 if calls == 4 else 10.0
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="OPTIMAL",
+                objective_score=objective,
+                best_bound=objective,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=1,
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+                primary_score_proven_optimal=True,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ) as solve:
+            report = solve_staged_scenario(
+                instance,
+                Path(temp_dir) / "submission",
+                "C",
+                audit_output_dir=Path(temp_dir) / "audit",
+                heuristic_attempts=1,
+                local_repair_time_limit_seconds=1.0,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+        self.assertEqual(solve.call_count, 4)
+        self.assertEqual(
+            solve.call_args_list[2].kwargs["freeze_access_except"],
+            {"COMP", "DIRECT"},
+        )
+        self.assertEqual(
+            solve.call_args_list[3].kwargs["freeze_access_except"],
+            {"COMP", "DIRECT", "FOLLOW", "PEER"},
+        )
+        self.assertEqual(report["selected_stage"], "bridge_safe_expanded_cost_repair")
+        self.assertEqual(final.objective_score, 0.0)
 
     def test_staged_solver_repairs_only_detected_conflict_activities_first(self) -> None:
         unsafe_access, unsafe_occupancy, _ = load_submission(PACK / "03_submission_sample")
@@ -1835,13 +1940,16 @@ class PublicFixtureTests(unittest.TestCase):
                 c_heuristic_attempts=1,
                 forbid_buffer_overlap=True,
             )
-        self.assertEqual(solve.call_count, 3)
+        self.assertEqual(solve.call_count, 4)
         self.assertEqual(solve.call_args_list[0].kwargs["separator_mode"], "direct_heuristic")
         self.assertIsNone(solve.call_args_list[0].kwargs["sample_hint_dir"])
         self.assertEqual(solve.call_args_list[1].kwargs["separator_mode"], "bridge_safe")
         self.assertEqual(solve.call_args_list[2].kwargs["separator_mode"], "bridge_safe")
         self.assertEqual(solve.call_args_list[2].kwargs["time_limit_seconds"], 30.0)
         self.assertTrue(solve.call_args_list[2].kwargs["freeze_access_hint"])
+        self.assertEqual(solve.call_args_list[3].kwargs["separator_mode"], "bridge_safe")
+        self.assertEqual(solve.call_args_list[3].kwargs["time_limit_seconds"], 10.0)
+        self.assertTrue(solve.call_args_list[3].kwargs["freeze_access_hint"])
         self.assertEqual(report["selected_stage"], "scenario_c_heuristic")
         self.assertEqual(report["scenario_c_heuristic_selected_attempt"], 1)
         self.assertAlmostEqual(report["selected_objective_score"], 62.7)

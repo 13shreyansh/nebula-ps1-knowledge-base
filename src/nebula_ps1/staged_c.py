@@ -212,6 +212,9 @@ def solve_staged_c_portfolio(
     cost_repair = None
     cost_repair_prune = None
     cost_repair_activities: list[str] = []
+    expanded_cost_repair = None
+    expanded_cost_repair_prune = None
+    expanded_cost_repair_activities: list[str] = []
     if a_local_repair_time_limit_seconds > 0:
         cost_repair_activities = _scenario_b_cost_contributing_activities(
             instance,
@@ -219,7 +222,6 @@ def solve_staged_c_portfolio(
             expand_footprints=True,
             expand_contracts=True,
             expand_precedence=True,
-            revisit_precedence_after_footprints=True,
             include_delays=True,
         )
         if cost_repair_activities:
@@ -257,6 +259,63 @@ def solve_staged_c_portfolio(
                     selected_stage = "scenario_c_cost_repair"
                     selected_dir = cost_repair_pruned
                     selected = repaired
+        current_narrow_activities = _scenario_b_cost_contributing_activities(
+            instance,
+            selected_dir,
+            expand_footprints=True,
+            expand_contracts=True,
+            expand_precedence=True,
+            include_delays=True,
+        )
+        expanded_cost_repair_activities = _scenario_b_cost_contributing_activities(
+            instance,
+            selected_dir,
+            expand_footprints=True,
+            expand_contracts=True,
+            expand_precedence=True,
+            revisit_precedence_after_footprints=True,
+            revisit_contracts_after_precedence=True,
+            include_delays=True,
+        )
+        if set(expanded_cost_repair_activities) != set(current_narrow_activities):
+            expanded_cost_repair_raw = stages / "scenario_c_expanded_cost_repair_raw"
+            expanded_cost_repair_pruned = (
+                stages / "scenario_c_expanded_cost_repair_pruned"
+            )
+            expanded_cost_repair = solve_flexible_supply_relaxation(
+                instance,
+                expanded_cost_repair_raw,
+                "C",
+                time_limit_seconds=min(a_local_repair_time_limit_seconds, 10.0),
+                workers=workers,
+                seed=seed + 1,
+                closure_round_limit=closure_round_limit,
+                sample_hint_dir=selected_dir,
+                round_time_limit_seconds=5.0,
+                forbid_buffer_overlap=forbid_buffer_overlap,
+                freeze_access_hint=True,
+                freeze_access_except=set(expanded_cost_repair_activities),
+                separator_mode="bridge_safe",
+            )
+            if (
+                expanded_cost_repair.objective_score is not None
+                and expanded_cost_repair.remaining_closure_conflicts == 0
+            ):
+                expanded_cost_repair_prune = prune_submission(
+                    instance,
+                    expanded_cost_repair_raw,
+                    expanded_cost_repair_pruned,
+                    "C",
+                    report_path=audit_output / "C_EXPANDED_COST_REPAIR_PRUNE.json",
+                    forbid_buffer_overlap=forbid_buffer_overlap,
+                )
+                expanded_repaired = evaluate_submission(
+                    instance, expanded_cost_repair_pruned, "C"
+                )
+                if _candidate_is_better(expanded_repaired, selected):
+                    selected_stage = "scenario_c_expanded_cost_repair"
+                    selected_dir = expanded_cost_repair_pruned
+                    selected = expanded_repaired
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, "C")
@@ -299,6 +358,15 @@ def solve_staged_c_portfolio(
         ),
         "scenario_c_cost_repair_prune": (
             asdict(cost_repair_prune) if cost_repair_prune is not None else None
+        ),
+        "scenario_c_expanded_cost_repair_activities": expanded_cost_repair_activities,
+        "scenario_c_expanded_cost_repair_telemetry": (
+            asdict(expanded_cost_repair) if expanded_cost_repair is not None else None
+        ),
+        "scenario_c_expanded_cost_repair_prune": (
+            asdict(expanded_cost_repair_prune)
+            if expanded_cost_repair_prune is not None
+            else None
         ),
     }
     (audit_output / "STAGED_C.json").write_text(

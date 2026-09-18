@@ -887,3 +887,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Checked artifacts: incumbent C=`10.0`, oracle C=`0.0`, both dual-scored and clean under standard and strict closures. Dataset hash: `e5f513a65637232af1d6263763c5f4e437772dee505c7c611464ec188ed9d267`.
 - Pre-exposure hypothesis: the accepted post-footprint precedence pass returns `COMP`, `DIRECT`, and `FOLLOW` but omits same-contract `PEER`, because contract expansion ran before `FOLLOW` entered the set. The repair should therefore remain conditionally stuck above zero.
 - Protocol: generator, data, oracle, incumbent, hash, and selector assertion are committed before the first repair run. This is an authored mechanism test, not evidence of hidden frequency.
+
+### E092: Narrow-plus-expanded portfolio dominates either repair scope alone
+
+- Timestamp: 2026-09-19 07:19:37 +08
+- Contract-peer falsification: the three-activity post-precedence repair conditionally proved C=`10.0`, hash `6233aa42075903ee29075f417c873f65f8229e1ca9523f5e6bbc2bf161c89faa`. Adding only the final dependencies' contract peers freed `PEER` and proved C=`0.0`, hash `cee2e4faaf310d156e9884948760e943373deff3c36a8138bc25fb101bf8dcd2`.
+- Search-power falsification: two 30-second 29-activity irregular repairs, including production seed 5, retained C=`63.0`. The former 27-activity neighborhood under seed 5 and the same budget recovered dual-scored, standard-clean, strict-clean C=`31.0`, hash `9a3d12499d9b284d63a0c880738a75177af1aa022ed5c7386e8a3e7440da9d61`.
+- Correction: both staged C paths now run the narrow repair first and a separate targeted expansion second. The expanded tier uses seed `seed+1`, at most ten seconds, independent telemetry, independent pruning, and strict-better promotion.
+- Regression evidence: public C=`62.7`, coupled C=`920.0`, and cross-module C=`76.0` remain dual-scored and clean under both closure policies. The 33-case matrix records the new zero-score holdout; 64 tests pass.
+- Integrity: all failed and successful outputs are retained. The expanded repair is not called globally optimal unless an external lower bound independently makes its score decisive.

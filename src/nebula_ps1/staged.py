@@ -21,6 +21,7 @@ def _scenario_b_cost_contributing_activities(
     expand_contracts: bool = False,
     expand_precedence: bool = False,
     revisit_precedence_after_footprints: bool = False,
+    revisit_contracts_after_precedence: bool = False,
     include_delays: bool = False,
 ) -> list[str]:
     """Return direct cost participants and selected scheduling dependencies."""
@@ -30,6 +31,13 @@ def _scenario_b_cost_contributing_activities(
     ):
         raise ValueError(
             "revisit_precedence_after_footprints requires precedence and footprint expansion"
+        )
+    if revisit_contracts_after_precedence and not (
+        expand_contracts and revisit_precedence_after_footprints
+    ):
+        raise ValueError(
+            "revisit_contracts_after_precedence requires contract and post-footprint "
+            "precedence expansion"
         )
 
     access, occupancy, results = load_submission(submission_dir)
@@ -75,13 +83,15 @@ def _scenario_b_cost_contributing_activities(
                 precedence_neighbors[activity_id].add(predecessor)
                 precedence_neighbors[predecessor].add(activity_id)
 
-    def expand_precedence_component() -> None:
+    def expand_precedence_component() -> set[str]:
+        original = set(contributors)
         pending = list(contributors)
         while pending:
             activity_id = pending.pop()
             for neighbor in precedence_neighbors[activity_id] - contributors:
                 contributors.add(neighbor)
                 pending.append(neighbor)
+        return contributors - original
 
     if expand_precedence and contributors:
         expand_precedence_component()
@@ -92,8 +102,19 @@ def _scenario_b_cost_contributing_activities(
         contributors.update(
             row.activity_id for row in occupancy if row.location_id in affected_locations
         )
+    post_footprint_precedence_additions: set[str] = set()
     if revisit_precedence_after_footprints and contributors:
-        expand_precedence_component()
+        post_footprint_precedence_additions = expand_precedence_component()
+    if revisit_contracts_after_precedence and post_footprint_precedence_additions:
+        newly_affected_contracts = {
+            instance.activities[activity_id].contract_number
+            for activity_id in post_footprint_precedence_additions
+        }
+        contributors.update(
+            activity_id
+            for activity_id, activity in instance.activities.items()
+            if activity.contract_number in newly_affected_contracts
+        )
     return sorted(contributors)
 
 
@@ -387,6 +408,9 @@ def solve_staged_scenario(
     cost_repair: SolveTelemetry | None = None
     cost_repair_prune = None
     cost_repair_activities: list[str] = []
+    expanded_cost_repair: SolveTelemetry | None = None
+    expanded_cost_repair_prune = None
+    expanded_cost_repair_activities: list[str] = []
     if scenario in {"B", "C"} and local_repair_time_limit_seconds > 0:
         cost_repair_activities = _scenario_b_cost_contributing_activities(
             instance,
@@ -394,7 +418,6 @@ def solve_staged_scenario(
             expand_footprints=scenario == "C",
             expand_contracts=scenario == "C",
             expand_precedence=scenario == "C",
-            revisit_precedence_after_footprints=scenario == "C",
             include_delays=scenario == "C",
         )
         if cost_repair_activities:
@@ -434,6 +457,68 @@ def solve_staged_scenario(
                     selected_stage = "bridge_safe_cost_repair"
                     selected_dir = cost_repair_pruned
                     selected = cost_repaired
+        if scenario == "C":
+            current_narrow_activities = _scenario_b_cost_contributing_activities(
+                instance,
+                selected_dir,
+                expand_footprints=True,
+                expand_contracts=True,
+                expand_precedence=True,
+                include_delays=True,
+            )
+            expanded_cost_repair_activities = (
+                _scenario_b_cost_contributing_activities(
+                    instance,
+                    selected_dir,
+                    expand_footprints=True,
+                    expand_contracts=True,
+                    expand_precedence=True,
+                    revisit_precedence_after_footprints=True,
+                    revisit_contracts_after_precedence=True,
+                    include_delays=True,
+                )
+            )
+            if set(expanded_cost_repair_activities) != set(current_narrow_activities):
+                expanded_cost_repair_raw = (
+                    audit_output / "bridge_safe_expanded_cost_repair_raw"
+                )
+                expanded_cost_repair_pruned = (
+                    audit_output / "bridge_safe_expanded_cost_repair_pruned"
+                )
+                expanded_cost_repair = solve_flexible_supply_relaxation(
+                    instance,
+                    expanded_cost_repair_raw,
+                    scenario,
+                    time_limit_seconds=min(local_repair_time_limit_seconds, 10.0),
+                    workers=workers,
+                    seed=seed + 1,
+                    closure_round_limit=closure_round_limit,
+                    sample_hint_dir=selected_dir,
+                    round_time_limit_seconds=5.0,
+                    forbid_buffer_overlap=forbid_buffer_overlap,
+                    freeze_access_hint=True,
+                    freeze_access_except=set(expanded_cost_repair_activities),
+                    separator_mode="bridge_safe",
+                )
+                if (
+                    expanded_cost_repair.objective_score is not None
+                    and expanded_cost_repair.remaining_closure_conflicts == 0
+                ):
+                    expanded_cost_repair_prune = prune_submission(
+                        instance,
+                        expanded_cost_repair_raw,
+                        expanded_cost_repair_pruned,
+                        scenario,
+                        report_path=audit_output / "EXPANDED_COST_REPAIR_PRUNE.json",
+                        forbid_buffer_overlap=forbid_buffer_overlap,
+                    )
+                    expanded_repaired = evaluate_submission(
+                        instance, expanded_cost_repair_pruned, scenario
+                    )
+                    if _candidate_is_better(expanded_repaired, selected):
+                        selected_stage = "bridge_safe_expanded_cost_repair"
+                        selected_dir = expanded_cost_repair_pruned
+                        selected = expanded_repaired
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, scenario)
@@ -495,6 +580,15 @@ def solve_staged_scenario(
         ),
         "bridge_safe_cost_repair_prune": (
             asdict(cost_repair_prune) if cost_repair_prune is not None else None
+        ),
+        "bridge_safe_expanded_cost_repair_activities": expanded_cost_repair_activities,
+        "bridge_safe_expanded_cost_repair_telemetry": (
+            asdict(expanded_cost_repair) if expanded_cost_repair is not None else None
+        ),
+        "bridge_safe_expanded_cost_repair_prune": (
+            asdict(expanded_cost_repair_prune)
+            if expanded_cost_repair_prune is not None
+            else None
         ),
     }
     (audit_output / "STAGED.json").write_text(

@@ -878,3 +878,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Integrity controls: all inputs and expected artifacts are public-independent, dual-scored, closure-clean, hashed, and asserted before solver exposure. The test does not justify full fixed-point expansion unless the unchanged repair actually fails.
 - Confidence: very high in official incumbents; high in fixture validity and selector omission; no confidence yet in repair outcome or the correct general closure policy.
 - Immediate next action: commit this holdout, run the unchanged accepted repair, preserve the outcome, and compare a bounded contract revisit against fixed-point size and runtime.
+
+## 2026-09-19 07:16:36 +08
+
+- Interval: 4 minutes 13 seconds since the previous inspection; triggered early because the proposed broader default failed a known recovery case.
+- Best official public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- Confirmed omission: the three-activity accepted selector retained and conditionally proved C=`10.0`; adding only the contract peers of activities introduced by the final precedence pass freed four activities and proved C=`0.0` in 0.011 seconds.
+- Counterevidence: on the irregular score-63 incumbent, the broader 29-activity neighborhood failed to improve in two serial/parallel 30-second runs (seeds 1 and 5), while the former 27-activity neighborhood recovered checked C=`31.0` under the same 30-second, eight-worker production seed. The broadened set is logically safer but search-weaker under the fixed budget.
+- Paranoid conclusion: replacing the narrow repair is wrong. A larger neighborhood can remove a false local proof and simultaneously destroy the practical recovery path. Protected selection prevents score regression, but it does not recover the lost opportunity.
+- Integrity controls: all score-63 failures and the narrow score-31 success are preserved. No successful seed is substituted for the failed production-seed result, and no internal bound is called official.
+- Corrective design: retain the 27-activity-style one-pass repair as tier one. Run the bounded post-footprint precedence and targeted-contract neighborhood as a second protected tier. Each tier has independent telemetry; neither can replace a better checked incumbent.
+- Confidence: very high in official incumbents; high in both counterexamples; high that a two-tier portfolio dominates either neighborhood alone on current evidence; medium in added runtime and hidden transfer.
+- Immediate next action: implement the two-tier repair portfolio in both staged C paths, add regression coverage for tier ordering and incumbent protection, then rerun the irregular and holdout cases.
