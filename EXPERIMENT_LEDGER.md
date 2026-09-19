@@ -1057,3 +1057,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Positive-score ranked result: production mode ranks the same 120 transformations, fully validates one, prunes 119 only after exact score agreement, and selects the same `2,864,830` result in 0.24 seconds.
 - Real-controller replay: the eight-job strict controller checks one of eight ranked candidates, selects the same C=`262.0` hash `2eebc28b…`, remains dual-scored and strict-clean, and passes the candidate to sound verification. Its audit directory contains one candidate and is 344 KB, down from 20 candidates and 580 KB before hardening.
 - Regression status: 83 tests pass. No official artifact, score, or portal quota changed.
+
+### E112: Multi-activity contract holdout preserves exact compaction ranking
+
+- Timestamp: 2026-09-19 08:51:00 +08
+- Precommit protocol: the three-contract, six-activity fixture and its serialized source were committed as `0e0c6c1` before calling the compaction helper. Dataset hash is `8167da5960f185f65bf717ac1fdb1b33400b6db20878a129d6f229e2d4a36259`.
+- Coverage: every contract has two activities; contract priorities are 1, 2, and 3; activity priorities cover 1, 2, and 3. The source is dual-scored and strict-clean at C=`23,765`, hash `33a1ff54…`.
+- Falsification result: exhaustive mode checks all six unique transformations, skips 12 duplicates, and records zero predicted-versus-serialized score mismatches. Ranked mode validates one, prunes five, and selects the same strict-clean hash `2d37c2fa…` at C=`21,990`.
+- Boundary: this is independent synthetic evidence for local arithmetic, not official portal confirmation. No protected official artifact or portal quota changed.
+- Regression status: 84 tests pass.

@@ -698,6 +698,14 @@ Confidence labels:
 - **Limitation:** Ranking is exact only under the operator's serialization preconditions. Signature generation and score calculation remain quadratic in the number of access rows, although measured overhead is small at 120 activities.
 - **Confidence:** High in the score-order equivalence and measured speedup; medium beyond the tested scale.
 
+### `R086` Exact ordering survives contract-level aggregation and mixed priorities
+
+- **Status:** Confirmed on a precommitted three-contract, six-activity holdout.
+- **Finding:** Each contract contains two activities, contract priorities span 1–3, and activity priorities span 1–3. The feasible strict-clean source scores C=`23,765`. Exhaustive evaluation of all six unique ECLO transformations reports zero prediction mismatches; ranked and exhaustive modes choose the same hash at C=`21,990`.
+- **Safety:** The source fixture and its activity order were committed as `0e0c6c1` before the ranking operator saw them. Both source and selected output agree under the main and independent scorers; the strict closure screen is clean. Production ranking checks one candidate and prunes five only after its predicted score matches serialized evaluation.
+- **Limitation:** This falsifies errors in contract maximum-completion aggregation and priority nudges for the covered combinations. It does not independently confirm the locally reconstructed formula against the portal on hidden data.
+- **Confidence:** High in implementation equivalence under the operator preconditions; low-to-medium in untested official-validator semantics.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

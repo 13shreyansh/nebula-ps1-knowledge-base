@@ -688,6 +688,40 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(ranked["minimum_candidate_score"], 2864830.0)
         self.assertEqual(ranked["source_score"], 2880360.0)
 
+    def test_eclo_compaction_score_order_matches_contract_aggregation_audit(
+        self,
+    ) -> None:
+        audit = json.loads(
+            (ROOT / "runs" / "eclo_contract_aggregation_audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(audit["contract_count"], 3)
+        self.assertEqual(audit["activity_count"], 6)
+        self.assertEqual(audit["source_score"], 23765.0)
+        self.assertEqual(audit["source_independent_score"], 23765.0)
+        self.assertEqual(audit["source_hard_violations"], [])
+        self.assertEqual(audit["source_strict_conflicts"], 0)
+        ranked = audit["ranked"]
+        exhaustive = audit["exhaustive"]
+        self.assertEqual(ranked["unique_candidates_ranked"], 6)
+        self.assertEqual(ranked["candidates_checked"], 1)
+        self.assertEqual(ranked["candidates_pruned_by_exact_score_order"], 5)
+        self.assertEqual(exhaustive["candidates_checked"], 6)
+        self.assertEqual(exhaustive["duplicate_candidates_skipped"], 12)
+        self.assertEqual(exhaustive["score_prediction_mismatches"], 0)
+        self.assertTrue(
+            all(candidate["matches"] for candidate in exhaustive["candidate_scores"])
+        )
+        self.assertEqual(ranked["selected_score"], 21990.0)
+        self.assertEqual(ranked["selected_score"], exhaustive["selected_score"])
+        self.assertEqual(
+            ranked["selected_submission_hash"],
+            exhaustive["selected_submission_hash"],
+        )
+        self.assertEqual(ranked["independent_score"], ranked["selected_score"])
+        self.assertEqual(exhaustive["strict_conflicts"], 0)
+
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"
         oracle = ROOT / "fixtures" / "independent_scaled_m20_oracle"

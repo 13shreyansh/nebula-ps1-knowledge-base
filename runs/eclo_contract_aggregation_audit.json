@@ -1,0 +1,89 @@
+{
+  "activity_count": 6,
+  "contract_count": 3,
+  "dataset_hash": "8167da5960f185f65bf717ac1fdb1b33400b6db20878a129d6f229e2d4a36259",
+  "exhaustive": {
+    "candidate_scores": [
+      {
+        "activity_id": "TC11",
+        "matches": true,
+        "predicted_score": 21990.0,
+        "removed_week": 1,
+        "serialized_score": 21990.0
+      },
+      {
+        "activity_id": "TC21",
+        "matches": true,
+        "predicted_score": 21990.0,
+        "removed_week": 4,
+        "serialized_score": 21990.0
+      },
+      {
+        "activity_id": "TC22",
+        "matches": true,
+        "predicted_score": 21990.0,
+        "removed_week": 13,
+        "serialized_score": 21990.0
+      },
+      {
+        "activity_id": "TC31",
+        "matches": true,
+        "predicted_score": 21990.0,
+        "removed_week": 7,
+        "serialized_score": 21990.0
+      },
+      {
+        "activity_id": "TC32",
+        "matches": true,
+        "predicted_score": 21990.0,
+        "removed_week": 10,
+        "serialized_score": 21990.0
+      },
+      {
+        "activity_id": "TC12",
+        "matches": true,
+        "predicted_score": 22165.0,
+        "removed_week": 16,
+        "serialized_score": 22165.0
+      }
+    ],
+    "candidates_checked": 6,
+    "candidates_pruned_by_exact_score_order": 0,
+    "duplicate_candidates_skipped": 12,
+    "elapsed_seconds": 0.00916,
+    "exhaustive": true,
+    "independent_score": 21990.0,
+    "score_prediction_mismatches": 0,
+    "selected_score": 21990.0,
+    "selected_submission_hash": "2d37c2fa914233e3a8747345f7a308a71c39470e8a01c5a484ef8c944e2333dd",
+    "strict_conflicts": 0,
+    "unique_candidates_ranked": 6
+  },
+  "ranked": {
+    "candidate_scores": [
+      {
+        "activity_id": "TC11",
+        "matches": true,
+        "predicted_score": 21990.0,
+        "removed_week": 1,
+        "serialized_score": 21990.0
+      }
+    ],
+    "candidates_checked": 1,
+    "candidates_pruned_by_exact_score_order": 5,
+    "duplicate_candidates_skipped": 12,
+    "elapsed_seconds": 0.003747,
+    "exhaustive": false,
+    "independent_score": 21990.0,
+    "score_prediction_mismatches": 0,
+    "selected_score": 21990.0,
+    "selected_submission_hash": "2d37c2fa914233e3a8747345f7a308a71c39470e8a01c5a484ef8c944e2333dd",
+    "strict_conflicts": 0,
+    "unique_candidates_ranked": 6
+  },
+  "source_hard_violations": [],
+  "source_independent_score": 23765.0,
+  "source_score": 23765.0,
+  "source_strict_conflicts": 0,
+  "source_submission_hash": "33a1ff5428c0f1377e4747662d1c4b17ad741ad62efce9567bb64556f843ffa0"
+}
