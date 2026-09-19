@@ -847,11 +847,48 @@ class PublicFixtureTests(unittest.TestCase):
                 for record in audit["permutations"]
             )
         )
+        long_access = audit["long_access_case"]
+        self.assertEqual(long_access["permutation_count"], 24)
+        self.assertTrue(long_access["all_ranked_scores_match_exhaustive"])
+        self.assertEqual(
+            long_access["total_unique_candidates_filtered_by_window"], 1920
+        )
+        self.assertEqual(
+            long_access["total_feasible_candidates_filtered_by_window"], 0
+        )
         live = audit["live_cross_line_case"]
         self.assertEqual(live["source_score"], 262.0)
         self.assertEqual(live["best_score"], 262.0)
         self.assertEqual(live["unique_candidates_filtered_by_window"], 7)
         self.assertEqual(live["feasible_candidates_filtered_by_window"], 0)
+
+    def test_eclo_compaction_generalizes_to_four_standard_accesses(self) -> None:
+        audit = json.loads(
+            (ROOT / "runs" / "eclo_long_access_audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(audit["activity_count"], 4)
+        self.assertEqual(audit["line_count"], 2)
+        self.assertEqual(audit["total_accesses_per_activity"], [4])
+        self.assertEqual(audit["source_score"], 32760.0)
+        self.assertEqual(audit["source_independent_score"], 32760.0)
+        self.assertEqual(audit["source_hard_violations"], [])
+        ranked = audit["ranked"]
+        exhaustive = audit["exhaustive"]
+        self.assertEqual(ranked["promotions"], 2)
+        self.assertEqual(ranked["candidates_checked"], 2)
+        self.assertEqual(ranked["candidates_pruned_by_exact_score_order"], 10)
+        self.assertEqual(exhaustive["candidates_checked"], 12)
+        self.assertEqual(exhaustive["score_prediction_mismatches"], 0)
+        self.assertEqual(ranked["selected_score"], 27320.0)
+        self.assertEqual(ranked["selected_score"], exhaustive["selected_score"])
+        self.assertEqual(
+            ranked["selected_submission_hash"],
+            exhaustive["selected_submission_hash"],
+        )
+        self.assertEqual(ranked["independent_score"], ranked["selected_score"])
+        self.assertEqual(exhaustive["strict_conflicts"], 0)
 
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"

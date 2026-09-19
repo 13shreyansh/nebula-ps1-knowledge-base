@@ -1,0 +1,54 @@
+{
+  "activity_count": 4,
+  "dataset_hash": "06660e467be28c897c74d57088ed5360fcb3471aa2d847b6950174f536b9a1cb",
+  "exhaustive": {
+    "candidates_checked": 12,
+    "candidates_pruned_by_exact_score_order": 0,
+    "candidates_skipped_existing_eclo_window": 3,
+    "duplicate_candidates_skipped": 36,
+    "elapsed_seconds": 0.014361,
+    "exhaustive": true,
+    "independent_score": 27320.0,
+    "promotions": 2,
+    "round_count": 3,
+    "round_scores": [
+      29130.0,
+      27320.0,
+      null
+    ],
+    "score_prediction_mismatches": 0,
+    "selected_score": 27320.0,
+    "selected_submission_hash": "ce83a1d49e61c274e0ffefb0376ccee5bab68054264dac65ecd0d8c5cd90480c",
+    "source_score": 32760.0,
+    "strict_conflicts": 0
+  },
+  "line_count": 2,
+  "ranked": {
+    "candidates_checked": 2,
+    "candidates_pruned_by_exact_score_order": 10,
+    "candidates_skipped_existing_eclo_window": 3,
+    "duplicate_candidates_skipped": 36,
+    "elapsed_seconds": 0.005755,
+    "exhaustive": false,
+    "independent_score": 27320.0,
+    "promotions": 2,
+    "round_count": 3,
+    "round_scores": [
+      29130.0,
+      27320.0,
+      null
+    ],
+    "score_prediction_mismatches": 0,
+    "selected_score": 27320.0,
+    "selected_submission_hash": "ce83a1d49e61c274e0ffefb0376ccee5bab68054264dac65ecd0d8c5cd90480c",
+    "source_score": 32760.0,
+    "strict_conflicts": 0
+  },
+  "source_hard_violations": [],
+  "source_independent_score": 32760.0,
+  "source_score": 32760.0,
+  "source_submission_hash": "72ae47c55e963c84a61e70357e4b4f646b41dcaf441e9d873469cbba514da414",
+  "total_accesses_per_activity": [
+    4
+  ]
+}

@@ -712,16 +712,26 @@ Confidence labels:
 - **Finding:** A one-pass controller lowers the strict-clean source from C=`23,660` to `20,030` but leaves a legal independent-line compaction. Repeating checked improvements reaches C=`18,220`; ranked and exhaustive sequences select the same hash with zero prediction mismatches.
 - **Safety:** Every round writes a complete candidate and requires a strict score decrease after full validation. The sequence is bounded by the original access-row count. Activities whose affected lines already contain ECLO are skipped because disjoint serialized activity blocks cannot share that line's two-week window; cross-line Live work marks every affected line.
 - **Efficiency:** Ranked mode checks two candidates across three rounds; exhaustive mode checks six. Both promote twice and stop when the remaining lines are occupied.
-- **Limitation:** This operator still requires a globally gap-free one-activity-per-week incumbent and only transforms three standard accesses into two ECLO accesses. It is a safe targeted improvement, not a general Scenario C optimiser.
+- **Limitation:** This operator still requires a globally gap-free one-activity-per-week incumbent. It is a safe targeted improvement, not a general Scenario C optimiser.
 - **Confidence:** High in checked multipass behavior; medium in how often hidden schedules meet the narrow structural precondition.
 
 ### `R088` Existing-window filtering survives unfiltered sequence enumeration
 
-- **Status:** Confirmed on all 24 block orders of the frozen two-line holdout plus a cross-line Live case.
-- **Finding:** An independent audit materializes every structural transformation without applying the existing-window filter and recursively visits every improving state. The ranked production sequence matches the best reachable score in all 24 orders. Across those state graphs, 288 unique candidates that production would filter are all infeasible. On the eight-job Live final, all seven unique filtered candidates are also infeasible and the exhaustive best remains C=`262`.
+- **Status:** Confirmed on all 24 block orders of both the three-access and four-access two-line holdouts, plus a cross-line Live case.
+- **Finding:** An independent audit materializes every structural transformation without applying the existing-window filter and recursively visits every improving state. The ranked production sequence matches the best reachable score in all 48 orders. Across the three-access graphs, all 288 unique candidates that production would filter are infeasible; across the four-access graphs, all 1,920 are infeasible. On the eight-job Live final, all seven unique filtered candidates are also infeasible and the exhaustive best remains C=`262`.
 - **Consequence:** The filter removes only candidates that violate the already occupied two-week line window in the tested serialized regimes. It cuts repeated file generation without changing the reachable result.
 - **Limitation:** This is exhaustive for four activities and one retained eight-job Live state, not a formal proof over arbitrary topology. Full candidate validation remains the acceptance gate for every unfiltered line.
-- **Confidence:** High for serialized Non-live independent lines and the tested all-line Live crossover; medium beyond these structures.
+- **Confidence:** High for serialized three- and four-access Non-live independent lines and the tested all-line Live crossover; medium beyond these structures.
+
+### `R089` Two ECLO upgrades can remove one row from longer activities
+
+- **Status:** Confirmed on a precommitted four-access, two-line holdout.
+- **Finding:** The three-row-only operator checks nothing on the strict-clean C=`32,760` source. The generalized transformation removes one standard row from an all-standard activity and marks exactly two retained adjacent rows as ECLO, preserving total workload. Repeated production compaction reaches C=`27,320` after two line-local promotions.
+- **Audit:** Exhaustive mode checks 12 unique candidates and reports zero predicted-versus-serialized score mismatches. Ranked mode checks two and prunes ten after exact agreement. Both select hash `ce83a1d4…`; main and independent scorers agree and the strict screen is clean.
+- **Order falsification:** Across all 24 activity-block permutations, ranked repeated compaction matches unfiltered exhaustive sequence search. The largest state graph visits 25 schedules and materializes 480 candidates; none of 1,920 candidates skipped by existing-window filtering is feasible.
+- **Transfer relevance:** Public activities require up to seven accesses, so limiting the operator to exactly three scheduled rows was not schema-general even though the protected public C artifact is structurally inapplicable.
+- **Limitation:** The transformation removes only one row per affected line window and still requires a globally serialized incumbent. Full validation remains the acceptance gate for workload, windows, deadlines, and closures.
+- **Confidence:** High in four-access behavior and backward compatibility; medium for longer or irregular access patterns until separately exercised.
 
 ## Current method candidates
 

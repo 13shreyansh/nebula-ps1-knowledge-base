@@ -22,6 +22,8 @@ DATA = ROOT / "fixtures" / "independent_eclo_multipass_v1"
 SOURCE = ROOT / "fixtures" / "independent_eclo_multipass_v1_source_c"
 LIVE_DATA = ROOT / "fixtures" / "independent_multi_bridge_scale_v1"
 LIVE_SOURCE = ROOT / "runs" / "independent_multi_bridge_scale_v1_c_compaction_controller"
+LONG_DATA = ROOT / "fixtures" / "independent_eclo_long_access_v1"
+LONG_SOURCE = ROOT / "fixtures" / "independent_eclo_long_access_v1_source_c"
 
 
 def _write(path: Path, fields: tuple[str, ...], rows: list[dict[str, object]]) -> None:
@@ -32,8 +34,14 @@ def _write(path: Path, fields: tuple[str, ...], rows: list[dict[str, object]]) -
         writer.writerows(rows)
 
 
-def _permuted_source(instance: Instance, order: tuple[str, ...], output: Path) -> None:
-    _, template_occupancy, _ = load_submission(SOURCE)
+def _permuted_source(
+    instance: Instance,
+    template_source: Path,
+    accesses_per_activity: int,
+    order: tuple[str, ...],
+    output: Path,
+) -> None:
+    _, template_occupancy, _ = load_submission(template_source)
     locations_by_activity: dict[str, set[str]] = defaultdict(set)
     for row in template_occupancy:
         locations_by_activity[row.activity_id].add(row.location_id)
@@ -41,9 +49,13 @@ def _permuted_source(instance: Instance, order: tuple[str, ...], output: Path) -
     occupancy: list[dict[str, object]] = []
     results: list[dict[str, object]] = []
     for position, activity_id in enumerate(order, 1):
-        completion_week = 3 * position
+        completion_week = accesses_per_activity * position
         for sequence, week in enumerate(
-            range(completion_week - 2, completion_week + 1), 1
+            range(
+                completion_week - accesses_per_activity + 1,
+                completion_week + 1,
+            ),
+            1,
         ):
             access.append(
                 {
@@ -119,45 +131,53 @@ def _unfiltered_children(
     feasible_filter_targets = 0
     for activity_id in sorted(by_activity):
         rows = sorted(by_activity[activity_id], key=lambda row: row.week)
-        if len(rows) != 3 or any(row.eclo for row in rows):
+        if len(rows) < 3 or any(row.eclo for row in rows):
             continue
         would_filter = bool(
             _affected_eclo_lines(instance, activity_id) & existing_lines
         )
         for removed in rows:
-            retained = [
-                row.week - int(row.week > removed.week)
-                for row in rows
-                if row.week != removed.week
-            ]
-            if max(retained) - min(retained) > 1:
-                continue
-            counter[0] += 1
-            candidate_dir = root / f"candidate_{counter[0]:05d}"
-            _write_candidate(
-                instance,
-                access,
-                occupancy,
-                candidate_dir,
-                activity_id,
-                removed.week,
-            )
-            evaluation = evaluate_submission(instance, candidate_dir, "C")
-            if evaluation.submission_hash in seen_hashes:
-                continue
-            seen_hashes.add(evaluation.submission_hash)
-            candidate_access, candidate_occupancy, _ = load_submission(candidate_dir)
-            feasible = evaluation.internally_feasible and not screen_closures(
-                instance,
-                candidate_access,
-                candidate_occupancy,
-                forbid_buffer_overlap=True,
-            )
-            if would_filter:
-                filter_targets += 1
-                feasible_filter_targets += int(feasible)
-            if feasible and evaluation.objective_score < source_evaluation.objective_score:
-                children.append((candidate_dir, evaluation))
+            retained = [row for row in rows if row.week != removed.week]
+            for first, second in itertools.combinations(retained, 2):
+                eclo_weeks = frozenset((first.week, second.week))
+                transformed = [
+                    week - int(week > removed.week) for week in eclo_weeks
+                ]
+                if max(transformed) - min(transformed) > 1:
+                    continue
+                counter[0] += 1
+                candidate_dir = root / f"candidate_{counter[0]:05d}"
+                _write_candidate(
+                    instance,
+                    access,
+                    occupancy,
+                    candidate_dir,
+                    activity_id,
+                    removed.week,
+                    eclo_weeks,
+                )
+                evaluation = evaluate_submission(instance, candidate_dir, "C")
+                if evaluation.submission_hash in seen_hashes:
+                    continue
+                seen_hashes.add(evaluation.submission_hash)
+                candidate_access, candidate_occupancy, _ = load_submission(
+                    candidate_dir
+                )
+                feasible = evaluation.internally_feasible and not screen_closures(
+                    instance,
+                    candidate_access,
+                    candidate_occupancy,
+                    forbid_buffer_overlap=True,
+                )
+                if would_filter:
+                    filter_targets += 1
+                    feasible_filter_targets += int(feasible)
+                if (
+                    feasible
+                    and evaluation.objective_score
+                    < source_evaluation.objective_score
+                ):
+                    children.append((candidate_dir, evaluation))
     return children, filter_targets, feasible_filter_targets
 
 
@@ -205,7 +225,7 @@ def main() -> None:
         scratch = Path(temp_dir)
         for index, order in enumerate(itertools.permutations(activities), 1):
             source = scratch / f"source_{index:02d}"
-            _permuted_source(instance, order, source)
+            _permuted_source(instance, SOURCE, 3, order, source)
             source_evaluation = evaluate_submission(instance, source, "C")
             selected_dir, selected, report = best_serialized_eclo_compaction_sequence(
                 instance,
@@ -242,6 +262,52 @@ def main() -> None:
                 }
             )
 
+        long_instance = load_instance(LONG_DATA)
+        long_activities = tuple(sorted(long_instance.activities))
+        long_permutations: list[dict[str, object]] = []
+        for index, order in enumerate(itertools.permutations(long_activities), 1):
+            source = scratch / f"long_source_{index:02d}"
+            _permuted_source(long_instance, LONG_SOURCE, 4, order, source)
+            source_evaluation = evaluate_submission(long_instance, source, "C")
+            _, selected, report = best_serialized_eclo_compaction_sequence(
+                long_instance,
+                source,
+                scratch / f"long_ranked_{index:02d}",
+                forbid_buffer_overlap=True,
+            )
+            exhaustive = _exhaustive_best(
+                long_instance,
+                source,
+                scratch / f"long_exhaustive_{index:02d}",
+            )
+            ranked_score = (
+                selected.objective_score
+                if selected is not None
+                else source_evaluation.objective_score
+            )
+            long_permutations.append(
+                {
+                    "order": list(order),
+                    "source_score": source_evaluation.objective_score,
+                    "ranked_score": ranked_score,
+                    "ranked_promotions": report["promotions"],
+                    "ranked_hash": selected.submission_hash if selected else None,
+                    "exhaustive_best_score": exhaustive["best_score"],
+                    "score_matches_exhaustive": ranked_score
+                    == exhaustive["best_score"],
+                    "states_visited": exhaustive["states_visited"],
+                    "materialized_candidates": exhaustive[
+                        "materialized_candidates"
+                    ],
+                    "unique_candidates_filtered_by_window": exhaustive[
+                        "unique_candidates_filtered_by_window"
+                    ],
+                    "feasible_candidates_filtered_by_window": exhaustive[
+                        "feasible_candidates_filtered_by_window"
+                    ],
+                }
+            )
+
         live_instance = load_instance(LIVE_DATA)
         live_exhaustive = _exhaustive_best(
             live_instance,
@@ -263,6 +329,23 @@ def main() -> None:
             for record in permutations
         ),
         "permutations": permutations,
+        "long_access_case": {
+            "dataset_hash": long_instance.dataset_hash,
+            "permutation_count": len(long_permutations),
+            "all_ranked_scores_match_exhaustive": all(
+                record["score_matches_exhaustive"]
+                for record in long_permutations
+            ),
+            "total_unique_candidates_filtered_by_window": sum(
+                int(record["unique_candidates_filtered_by_window"])
+                for record in long_permutations
+            ),
+            "total_feasible_candidates_filtered_by_window": sum(
+                int(record["feasible_candidates_filtered_by_window"])
+                for record in long_permutations
+            ),
+            "permutations": long_permutations,
+        },
         "live_cross_line_case": {
             "dataset_hash": live_instance.dataset_hash,
             "source_score": evaluate_submission(

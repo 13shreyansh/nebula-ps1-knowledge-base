@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 from collections import defaultdict
 from dataclasses import asdict
+from itertools import combinations
 from pathlib import Path
 
 from .closure import screen_closures
@@ -41,6 +42,7 @@ def _write_candidate(
     output_dir: Path,
     activity_id: str,
     removed_week: int,
+    eclo_weeks: frozenset[int],
 ) -> None:
     occupied_weeks = sorted({row.week for row in access})
     week_map = {
@@ -48,12 +50,6 @@ def _write_candidate(
         for week in occupied_weeks
         if week != removed_week
     }
-    target_weeks = {
-        row.week
-        for row in access
-        if row.activity_id == activity_id and row.week != removed_week
-    }
-
     by_activity: dict[str, list[dict[str, object]]] = defaultdict(list)
     for row in access:
         if row.activity_id == activity_id and row.week == removed_week:
@@ -64,7 +60,7 @@ def _write_candidate(
                 "access_seq": row.access_seq,
                 "week": week_map[row.week],
                 "eclo": (
-                    int(row.week in target_weeks)
+                    int(row.week in eclo_weeks)
                     if row.activity_id == activity_id
                     else row.eclo
                 ),
@@ -134,17 +130,13 @@ def _candidate_signature(
     occupancy: list[OccupancyRow],
     activity_id: str,
     removed_week: int,
+    eclo_weeks: frozenset[int],
 ) -> tuple[tuple[object, ...], ...]:
     occupied_weeks = sorted({row.week for row in access})
     week_map = {
         week: week - int(week > removed_week)
         for week in occupied_weeks
         if week != removed_week
-    }
-    target_weeks = {
-        row.week
-        for row in access
-        if row.activity_id == activity_id and row.week != removed_week
     }
     transformed_access = tuple(
         sorted(
@@ -153,7 +145,7 @@ def _candidate_signature(
                 row.activity_id,
                 week_map[row.week],
                 (
-                    int(row.week in target_weeks)
+                    int(row.week in eclo_weeks)
                     if row.activity_id == activity_id
                     else row.eclo
                 ),
@@ -184,6 +176,7 @@ def _predicted_objective(
     access: list[AccessRow],
     activity_id: str,
     removed_week: int,
+    eclo_weeks: frozenset[int],
 ) -> float:
     """Return the exact C objective if this serialized transform is feasible."""
 
@@ -201,7 +194,10 @@ def _predicted_objective(
         completion_by_activity[row.activity_id] = max(
             completion_by_activity[row.activity_id], week_map[row.week]
         )
-        eclo_total += int(row.activity_id == activity_id or row.eclo == 1)
+        eclo_total += int(
+            (row.activity_id == activity_id and row.week in eclo_weeks)
+            or (row.activity_id != activity_id and row.eclo == 1)
+        )
 
     completion_by_contract: dict[str, int] = defaultdict(int)
     for current_activity, week in completion_by_activity.items():
@@ -236,7 +232,7 @@ def best_single_lane_eclo_compaction(
 
     The transformation is deliberately narrow and never constrains search. It
     applies only when the incumbent has one activity per occupied week and no
-    gaps. It ranks legal three-standard-to-two-ECLO transformations by their
+    gaps. It ranks legal remove-one-standard/add-two-ECLO transformations by their
     exact serialized score, then fully checks the first potentially optimal
     candidate. The caller may promote only a strictly lower checked result;
     exhaustive mode evaluates every unique transformation for audits.
@@ -266,6 +262,7 @@ def best_single_lane_eclo_compaction(
         "improving_candidates": 0,
         "selected_activity": None,
         "selected_removed_week": None,
+        "selected_eclo_weeks": None,
         "selected_score": None,
         "selected_submission_hash": None,
     }
@@ -296,14 +293,14 @@ def best_single_lane_eclo_compaction(
     }
     best_dir: Path | None = None
     best: Evaluation | None = None
-    best_key: tuple[str, int] | None = None
+    best_key: tuple[str, int, tuple[int, int]] | None = None
     candidate_records: list[dict[str, object]] = []
     seen_signatures: set[tuple[tuple[object, ...], ...]] = set()
     duplicate_candidates_skipped = 0
-    candidate_specs: list[tuple[float, str, int]] = []
+    candidate_specs: list[tuple[float, str, int, tuple[int, int]]] = []
     for activity_id in sorted(by_activity):
         rows = sorted(by_activity[activity_id], key=lambda row: row.week)
-        if len(rows) != 3 or any(row.eclo for row in rows):
+        if len(rows) < 3 or any(row.eclo for row in rows):
             continue
         if _affected_eclo_lines(instance, activity_id) & existing_eclo_lines:
             report["candidates_skipped_existing_eclo_window"] = (
@@ -311,43 +308,54 @@ def best_single_lane_eclo_compaction(
             )
             continue
         for removed in rows:
-            retained_weeks = [
-                row.week - int(row.week > removed.week)
-                for row in rows
-                if row.week != removed.week
-            ]
-            if max(retained_weeks) - min(retained_weeks) > 1:
-                continue
-            signature = _candidate_signature(
-                access,
-                occupancy,
-                activity_id,
-                removed.week,
-            )
-            if signature in seen_signatures:
-                duplicate_candidates_skipped += 1
-                continue
-            seen_signatures.add(signature)
-            candidate_specs.append(
-                (
-                    _predicted_objective(
-                        instance,
-                        access,
-                        activity_id,
-                        removed.week,
-                    ),
+            retained = [row for row in rows if row.week != removed.week]
+            for first, second in combinations(retained, 2):
+                eclo_weeks = frozenset((first.week, second.week))
+                transformed_eclo_weeks = [
+                    week - int(week > removed.week) for week in eclo_weeks
+                ]
+                if max(transformed_eclo_weeks) - min(transformed_eclo_weeks) > 1:
+                    continue
+                signature = _candidate_signature(
+                    access,
+                    occupancy,
                     activity_id,
                     removed.week,
+                    eclo_weeks,
                 )
-            )
+                if signature in seen_signatures:
+                    duplicate_candidates_skipped += 1
+                    continue
+                seen_signatures.add(signature)
+                candidate_specs.append(
+                    (
+                        _predicted_objective(
+                            instance,
+                            access,
+                            activity_id,
+                            removed.week,
+                            eclo_weeks,
+                        ),
+                        activity_id,
+                        removed.week,
+                        tuple(sorted(eclo_weeks)),
+                    )
+                )
     candidate_specs.sort()
     report["duplicate_candidates_skipped"] = duplicate_candidates_skipped
     report["unique_candidates_ranked"] = len(candidate_specs)
     prediction_mismatch = False
-    for candidate_index, (predicted_score, activity_id, removed_week) in enumerate(
-        candidate_specs
-    ):
-        candidate_dir = root / f"{activity_id}_remove_week_{removed_week}"
+    for candidate_index, (
+        predicted_score,
+        activity_id,
+        removed_week,
+        eclo_week_pair,
+    ) in enumerate(candidate_specs):
+        eclo_weeks = frozenset(eclo_week_pair)
+        candidate_dir = root / (
+            f"{activity_id}_remove_week_{removed_week}"
+            f"_eclo_{eclo_week_pair[0]}_{eclo_week_pair[1]}"
+        )
         _write_candidate(
             instance,
             access,
@@ -355,6 +363,7 @@ def best_single_lane_eclo_compaction(
             candidate_dir,
             activity_id,
             removed_week,
+            eclo_weeks,
         )
         evaluation = evaluate_submission(instance, candidate_dir, "C")
         candidate_access, candidate_occupancy, _ = load_submission(candidate_dir)
@@ -379,6 +388,7 @@ def best_single_lane_eclo_compaction(
             {
                 "activity_id": activity_id,
                 "removed_week": removed_week,
+                "eclo_weeks": list(eclo_week_pair),
                 "predicted_score": predicted_score,
                 "score": evaluation.objective_score,
                 "score_prediction_matches": evaluation.objective_score
@@ -393,7 +403,7 @@ def best_single_lane_eclo_compaction(
             report["score_prediction_mismatches"] = (
                 int(report["score_prediction_mismatches"]) + 1
             )
-        candidate_key = (activity_id, removed_week)
+        candidate_key = (activity_id, removed_week, eclo_week_pair)
         if (
             candidate_is_feasible
             and evaluation.objective_score < source_evaluation.objective_score
@@ -425,6 +435,7 @@ def best_single_lane_eclo_compaction(
     if best is not None and best_key is not None:
         report["selected_activity"] = best_key[0]
         report["selected_removed_week"] = best_key[1]
+        report["selected_eclo_weeks"] = list(best_key[2])
         report["selected_score"] = best.objective_score
         report["selected_submission_hash"] = best.submission_hash
     elif not candidate_records:
@@ -434,7 +445,7 @@ def best_single_lane_eclo_compaction(
             )
         else:
             report["reason"] = (
-                "no three-standard-access activity yielded a two-week window"
+                "no all-standard activity yielded a removable row and two-week ECLO pair"
             )
     else:
         report["reason"] = "no fully checked candidate improved the source"

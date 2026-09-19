@@ -1083,6 +1083,17 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Timestamp: 2026-09-19 08:57:13 +08
 - Method: enumerate all 24 orders of the four frozen two-line activity blocks. At every recursively reached improving state, materialize every structural three-to-two ECLO transformation without the production prefilter, then apply the full evaluator and strict closure screen.
 - Result: the ranked production sequence equals the best exhaustively reachable score in 24/24 orders. Exhaustive state graphs visit up to nine unique schedules and materialize up to 72 candidates per order. All 288 unique candidates that production would filter because their affected line already has ECLO are infeasible.
+- Four-access extension: the same differential audit covers all 24 orders of the generalized holdout. Ranked equals exhaustive in 24/24; state graphs visit up to 25 schedules and materialize up to 480 candidates. All 1,920 filtered candidates are infeasible.
 - Cross-line Live check: the retained eight-job C=`262` final exposes seven unique same-window candidates. All seven are infeasible under unfiltered materialization; exhaustive best remains the source hash and score.
 - Boundary: this supports the filter under serialized schedules but is not a proof for arbitrary non-serialized schedules, where the operator does not run. No official portal attempt was used.
 - Regression status: 87 tests pass.
+
+### E115: Generalized compaction improves a frozen four-access holdout
+
+- Timestamp: 2026-09-19 09:01:38 +08
+- Precommit protocol: the four-access, two-line fixture and strict-clean source were committed as `f30f900` before generalizing the operator. Dataset hash is `06660e467be28c897c74d57088ed5360fcb3471aa2d847b6950174f536b9a1cb`.
+- Preserved blind failure: the old exactly-three-row operator checks zero candidates and leaves C=`32,760` unchanged.
+- Implementation: for any all-standard activity with at least three rows, enumerate removal of one row and selection of exactly two retained rows that become adjacent after the global shift. Those two rows receive ECLO; every other target row remains standard and every non-target ECLO flag is preserved.
+- Result: ranked production mode checks two candidates, prunes ten, and promotes twice to C=`27,320`. Exhaustive mode checks all 12 unique candidates and reaches the same hash with zero prediction mismatches. Both scorers agree and the strict screen is clean.
+- Sequence falsification: all 24 activity orders match unfiltered exhaustive best-reachable scores, including alternate equal-score ECLO pairs.
+- Regression status: 88 tests pass. No official portal attempt was used.
