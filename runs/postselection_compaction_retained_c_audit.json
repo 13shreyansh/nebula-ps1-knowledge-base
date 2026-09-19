@@ -4,7 +4,7 @@
     {
       "case": "public_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.048636,
+      "elapsed_seconds": 0.04664,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 62.7,
@@ -20,7 +20,7 @@
     {
       "case": "prefix040_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.037836,
+      "elapsed_seconds": 0.036307,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 52.7,
@@ -36,7 +36,7 @@
     {
       "case": "structural_demand_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.04413,
+      "elapsed_seconds": 0.045444,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 10.0,
@@ -52,7 +52,7 @@
     {
       "case": "independent_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.002531,
+      "elapsed_seconds": 0.002538,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 7.0,
@@ -68,7 +68,7 @@
     {
       "case": "independent_three_line_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.002557,
+      "elapsed_seconds": 0.002721,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 7.0,
@@ -84,7 +84,7 @@
     {
       "case": "independent_multi_bridge_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.001292,
+      "elapsed_seconds": 0.001335,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 0.0,
@@ -100,7 +100,7 @@
     {
       "case": "independent_multi_bridge_congestion_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.002862,
+      "elapsed_seconds": 0.003082,
       "hash_changed": false,
       "idle_candidates_checked": 1,
       "independent_score": 10.0,
@@ -116,7 +116,7 @@
     {
       "case": "independent_multi_bridge_scale_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.005749,
+      "elapsed_seconds": 0.005854,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 262.0,
@@ -132,7 +132,7 @@
     {
       "case": "independent_scaled_m20_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.487874,
+      "elapsed_seconds": 0.472794,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 140.0,
@@ -148,7 +148,7 @@
     {
       "case": "independent_dense_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.017779,
+      "elapsed_seconds": 0.017204,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 0.0,
@@ -164,7 +164,7 @@
     {
       "case": "independent_dense_holdout_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.025214,
+      "elapsed_seconds": 0.02492,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 0.0,
@@ -180,7 +180,7 @@
     {
       "case": "independent_tradeoff_holdout_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.03712,
+      "elapsed_seconds": 0.035941,
       "hash_changed": false,
       "idle_candidates_checked": 1,
       "independent_score": 7.0,
@@ -196,7 +196,7 @@
     {
       "case": "independent_coupled_tradeoff_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.0342,
+      "elapsed_seconds": 0.033519,
       "hash_changed": false,
       "idle_candidates_checked": 1,
       "independent_score": 920.0,
@@ -212,7 +212,7 @@
     {
       "case": "independent_irregular_partial_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.027391,
+      "elapsed_seconds": 0.025672,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 31.0,
@@ -228,7 +228,7 @@
     {
       "case": "independent_multimodule_tradeoff_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.055522,
+      "elapsed_seconds": 0.053938,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 76.0,
@@ -244,7 +244,7 @@
     {
       "case": "independent_predecessor_tradeoff_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.001034,
+      "elapsed_seconds": 0.001043,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 0.0,
@@ -260,7 +260,7 @@
     {
       "case": "independent_footprint_dependency_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.001269,
+      "elapsed_seconds": 0.001207,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 0.0,
@@ -276,7 +276,7 @@
     {
       "case": "independent_post_precedence_contract_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.001361,
+      "elapsed_seconds": 0.001326,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 0.0,
@@ -292,7 +292,7 @@
     {
       "case": "independent_post_contract_precedence_C",
       "eclo_candidates_checked": 0,
-      "elapsed_seconds": 0.001524,
+      "elapsed_seconds": 0.001431,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 0.0,
@@ -307,11 +307,11 @@
     }
   ],
   "hash_changed_count": 0,
-  "max_case_elapsed_seconds": 0.487874,
+  "max_case_elapsed_seconds": 0.472794,
   "promoted_count": 0,
   "scope": "retained Scenario C benchmark incumbents",
   "strict_buffer_overlap_required": true,
   "total_eclo_candidates_checked": 0,
-  "total_elapsed_seconds": 1.151661,
+  "total_elapsed_seconds": 1.120974,
   "total_idle_candidates_checked": 3
 }
