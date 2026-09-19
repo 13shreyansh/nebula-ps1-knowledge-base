@@ -2960,6 +2960,49 @@ class PublicFixtureTests(unittest.TestCase):
             & _blocked_locations(self.instance, {"A075"})
         )
 
+    def test_independent_public_optimality_certificate_matches_current_bytes(
+        self,
+    ) -> None:
+        certificate = json.loads(
+            (
+                ROOT
+                / "artifacts"
+                / "public-optimality-audit-2026-09-19"
+                / "CERTIFICATE.json"
+            ).read_text(encoding="utf-8")
+        )
+        expected = {"A": 137.9, "B": 30.0, "C": 62.7}
+        self.assertEqual(
+            certificate["scope"],
+            "exact current public input; no portal interaction",
+        )
+        self.assertEqual(certificate["analytical_lower_bounds"], expected)
+        for name, record in certificate["input_audit"]["files"].items():
+            path = PACK / "01_data" / name
+            self.assertEqual(
+                hashlib.sha256(path.read_bytes()).hexdigest(), record["sha256"]
+            )
+        for scenario, score in expected.items():
+            relaxation = certificate["independent_cp_relaxations"][scenario]
+            exclusion = certificate["strictly_better_infeasibility_checks"][
+                scenario
+            ]
+            witness = certificate["feasible_witnesses"][scenario]
+            optimum = certificate["exact_optima"][scenario]
+            self.assertEqual(relaxation["status"], "OPTIMAL")
+            self.assertEqual(relaxation["score"], score)
+            self.assertEqual(relaxation["best_bound"], score)
+            self.assertTrue(relaxation["no_hints"])
+            self.assertTrue(relaxation["no_frozen_activities"])
+            self.assertEqual(exclusion["status"], "INFEASIBLE")
+            self.assertEqual(exclusion["tested_score_at_most"], score - 0.1)
+            self.assertEqual(witness["score"], score)
+            self.assertTrue(witness["matches_archived_successful_csv_bytes"])
+            self.assertTrue(witness["three_score_calculations_agree"])
+            self.assertEqual(optimum["lower_bound"], score)
+            self.assertEqual(optimum["achieved_upper_bound"], score)
+            self.assertEqual(optimum["absolute_gap"], 0.0)
+
     def test_official_a002_contract_score_is_reproduced(self) -> None:
         candidate = ROOT / "runs" / "a_official_a001_local_repair_pruned"
         evaluation = evaluate_submission(self.instance, candidate, scenario="A")

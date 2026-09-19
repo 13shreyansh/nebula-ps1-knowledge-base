@@ -1062,6 +1062,16 @@ Confidence labels:
 - **Boundary:** This is a compact exact case, not a scale result. It covers ECLO plus transitive local packing and excess capacity, but not Live buffers, predecessors, or multiple lines.
 - **Confidence:** Very high in the counting proof, validation, and refusal behavior; medium in transfer to large coupled instances.
 
+### `R127` A deliberately relaxed model can certify the public optima independently
+
+- **Status:** Confirmed by an executable raw-CSV audit and an independent rerun.
+- **Method:** Parse the eight public input files without importing production code. Model access weeks, ECLO workload, contract completion, predecessors, mandatory PM exclusions, and Scenario C's per-line two-week ECLO windows. Deliberately omit capacity/excess cost, possession packing, workfronts, allocation, and non-PM closures. Every officially feasible schedule therefore maps into this cheaper relaxation, so its optimum is a valid lower bound.
+- **Result:** One-worker, no-hint, no-frozen-activity CP-SAT relaxations prove A=`137.9`, B=`30.0`, and C=`62.7`. Separate satisfaction models prove scores at most `137.8`, `29.9`, and `62.6` infeasible. The A certificate additionally enumerates all 5,842 within-horizon A036/A075 access-subset pairs, including oversupply, to compose the mandatory PM-conflict cost with independent contract bounds.
+- **Upper-bound check:** The protected A-002/B-001/C-001 CSVs are re-read as feasible witnesses. Production, independent raw-CSV, and a third embedded score calculation agree; strict closures are clean; the bytes match both archived successful uploads and final packages.
+- **Sensitivity:** Dropping mandatory PM exclusion lowers relaxed A from `137.9` to `130.9`; dropping C's two-week ECLO windows lowers relaxed C from `62.7` to `30.0`. These counterfactuals identify exactly which confirmed rules make the positive floors unavoidable.
+- **Boundary:** The certificate covers the exact published bytes and confirmed semantics only. Because the model is intentionally relaxed, it does not construct general schedules or predict hidden-instance quality. Portal validation established witness feasibility and score, not optimality.
+- **Confidence:** Very high after source inspection, byte-hash pinning, stored model exports/responses, and an independent successful rerun.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

@@ -1457,3 +1457,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Blind result: fixed one-worker 2/1/3/2-second policy reaches strict-clean B=`72` in 0.015 seconds, hash `382e54ec…`, different from oracle `170c73a0…`. The direct heuristic's structural hint is partial at 2/3 activities and therefore cannot use the pre-model proof return.
 - Proof behavior: heuristic B=`72` reports `primary_score_proven_optimal=false`; staged verification is not skipped. The 116-variable bridge-safe model then reports objective and full-instance bound `72`, proving the resource-coupled optimum. Later frozen-neighborhood cost repair preserves it without changing the global proof source.
 - Integrity: both scorers agree, standard and strict closure screens are clean, and no public identifier, oracle path, portal feedback, or target score is available to the solver. No official artifact changed and no portal attempt was used.
+
+### E153: Independent raw-CSV models certify every public optimum
+
+- Timestamp: 2026-09-19 11:30:35 +08.
+- Origin and trust boundary: a scheduled self-inspection produced an untracked audit directory. It was treated as untrusted concurrent output, source-reviewed, and rerun locally before acceptance. The proof portion parses raw public CSVs and does not import `nebula_ps1`; production modules are used only in the separately labelled upper-bound witness check.
+- Relaxation proof: no-hint, no-frozen-activity models intentionally omit capacity and its nonnegative excess penalty, detailed packing, workfronts, allocation, and non-PM closures. They retain workload, releases, one row per activity/week, ECLO, contract completion, predecessors, mandatory PM non-coexistence, and C line windows. Their OPTIMAL score/bounds are A=`137.9`, B=`30.0`, C=`62.7`.
+- Strict-better proof: separately exported satisfaction models with objective caps `137.8`, `29.9`, and `62.6` return `INFEASIBLE`. Stored `.pbtxt` models and solver response summaries make each check inspectable.
+- A composition: independent contract relaxations total A=`130.9`. Exhaustive enumeration of all 5,842 access-subset pairs for A036/A075 leaves 84 nonconflicting pairs and forces their combined contract cost to at least `92.4`; replacing the isolated C006/C014 terms yields exact A=`137.9`.
+- Witness audit: A-002/B-001/C-001 remain hard-feasible, strict-clean, byte-identical to archived successful uploads and final ZIP members, and independently score `137.9/30.0/62.7` under three calculations. All gaps are zero.
+- Sensitivity: removing mandatory PM exclusion gives A=`130.9`; removing C's two-week ECLO window gives C=`30.0`. These are counterfactual diagnostics, not candidate submissions.
+- Protection: scope is the exact current public input, no portal interaction occurred, and no protected file was changed.

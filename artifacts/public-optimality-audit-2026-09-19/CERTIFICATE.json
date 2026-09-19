@@ -1,0 +1,1201 @@
+{
+  "analytical_lower_bounds": {
+    "A": 137.9,
+    "B": 30.0,
+    "C": 62.7
+  },
+  "enumerated_contract_relaxations": {
+    "A": {
+      "contracts": {
+        "C001": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 22,
+          "eclo_by_activity": {
+            "A001": 0,
+            "A002": 0,
+            "A003": 0,
+            "A004": 0,
+            "A006": 0,
+            "A007": 0
+          }
+        },
+        "C002": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 25,
+          "eclo_by_activity": {
+            "A008": 0,
+            "A009": 0,
+            "A011": 0,
+            "A012": 0,
+            "A013": 0
+          }
+        },
+        "C003": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 23,
+          "eclo_by_activity": {
+            "A014": 0,
+            "A017": 0,
+            "A019": 0,
+            "A020": 0
+          }
+        },
+        "C004": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 27,
+          "eclo_by_activity": {
+            "A021": 0,
+            "A023": 0,
+            "A025": 0
+          }
+        },
+        "C005": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 10,
+          "eclo_by_activity": {
+            "A028": 0,
+            "A031": 0
+          }
+        },
+        "C006": {
+          "bound": 85.4,
+          "delay": 85.4,
+          "earliest_best_finish_week": 28,
+          "eclo_by_activity": {
+            "A035": 0,
+            "A036": 0,
+            "A037": 0,
+            "A038": 0,
+            "A039": 0
+          }
+        },
+        "C007": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 25,
+          "eclo_by_activity": {
+            "A040": 0,
+            "A041": 0,
+            "A042": 0,
+            "A043": 0,
+            "A046": 0
+          }
+        },
+        "C008": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 27,
+          "eclo_by_activity": {
+            "A047": 0,
+            "A048": 0,
+            "A049": 0,
+            "A050": 0,
+            "A051": 0
+          }
+        },
+        "C009": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 21,
+          "eclo_by_activity": {
+            "A054": 0,
+            "A055": 0,
+            "A056": 0,
+            "A057": 0
+          }
+        },
+        "C010": {
+          "bound": 45.5,
+          "delay": 45.5,
+          "earliest_best_finish_week": 20,
+          "eclo_by_activity": {
+            "A058": 0,
+            "A059": 0,
+            "A060": 0,
+            "A061": 0,
+            "A063": 0,
+            "A064": 0
+          }
+        },
+        "C011": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 25,
+          "eclo_by_activity": {
+            "A065": 0,
+            "A066": 0,
+            "A069": 0,
+            "A070": 0,
+            "A071": 0
+          }
+        },
+        "C012": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 23,
+          "eclo_by_activity": {
+            "A072": 0,
+            "A073": 0
+          }
+        },
+        "C013": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 19,
+          "eclo_by_activity": {
+            "A074": 0
+          }
+        },
+        "C014": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 24,
+          "eclo_by_activity": {
+            "A075": 0
+          }
+        }
+      },
+      "score": 130.9
+    },
+    "B": {
+      "contracts": {
+        "C001": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 22,
+          "eclo_by_activity": {
+            "A001": 0,
+            "A002": 0,
+            "A003": 0,
+            "A004": 0,
+            "A006": 0,
+            "A007": 0
+          }
+        },
+        "C002": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 25,
+          "eclo_by_activity": {
+            "A008": 0,
+            "A009": 0,
+            "A011": 0,
+            "A012": 0,
+            "A013": 0
+          }
+        },
+        "C003": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 23,
+          "eclo_by_activity": {
+            "A014": 0,
+            "A017": 0,
+            "A019": 0,
+            "A020": 0
+          }
+        },
+        "C004": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 27,
+          "eclo_by_activity": {
+            "A021": 0,
+            "A023": 0,
+            "A025": 0
+          }
+        },
+        "C005": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 10,
+          "eclo_by_activity": {
+            "A028": 0,
+            "A031": 0
+          }
+        },
+        "C006": {
+          "bound": 20.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 26,
+          "eclo_by_activity": {
+            "A035": 0,
+            "A036": 4,
+            "A037": 0,
+            "A038": 0,
+            "A039": 0
+          }
+        },
+        "C007": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 25,
+          "eclo_by_activity": {
+            "A040": 0,
+            "A041": 0,
+            "A042": 0,
+            "A043": 0,
+            "A046": 0
+          }
+        },
+        "C008": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 27,
+          "eclo_by_activity": {
+            "A047": 0,
+            "A048": 0,
+            "A049": 0,
+            "A050": 0,
+            "A051": 0
+          }
+        },
+        "C009": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 21,
+          "eclo_by_activity": {
+            "A054": 0,
+            "A055": 0,
+            "A056": 0,
+            "A057": 0
+          }
+        },
+        "C010": {
+          "bound": 10.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 19,
+          "eclo_by_activity": {
+            "A058": 0,
+            "A059": 2,
+            "A060": 0,
+            "A061": 0,
+            "A063": 0,
+            "A064": 0
+          }
+        },
+        "C011": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 25,
+          "eclo_by_activity": {
+            "A065": 0,
+            "A066": 0,
+            "A069": 0,
+            "A070": 0,
+            "A071": 0
+          }
+        },
+        "C012": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 23,
+          "eclo_by_activity": {
+            "A072": 0,
+            "A073": 0
+          }
+        },
+        "C013": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 19,
+          "eclo_by_activity": {
+            "A074": 0
+          }
+        },
+        "C014": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 24,
+          "eclo_by_activity": {
+            "A075": 0
+          }
+        }
+      },
+      "score": 30.0
+    },
+    "C": {
+      "contracts": {
+        "C001": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 22,
+          "eclo_by_activity": {
+            "A001": 0,
+            "A002": 0,
+            "A003": 0,
+            "A004": 0,
+            "A006": 0,
+            "A007": 0
+          }
+        },
+        "C002": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 25,
+          "eclo_by_activity": {
+            "A008": 0,
+            "A009": 0,
+            "A011": 0,
+            "A012": 0,
+            "A013": 0
+          }
+        },
+        "C003": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 23,
+          "eclo_by_activity": {
+            "A014": 0,
+            "A017": 0,
+            "A019": 0,
+            "A020": 0
+          }
+        },
+        "C004": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 27,
+          "eclo_by_activity": {
+            "A021": 0,
+            "A023": 0,
+            "A025": 0
+          }
+        },
+        "C005": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 10,
+          "eclo_by_activity": {
+            "A028": 0,
+            "A031": 0
+          }
+        },
+        "C006": {
+          "bound": 52.7,
+          "delay": 42.7,
+          "earliest_best_finish_week": 27,
+          "eclo_by_activity": {
+            "A035": 0,
+            "A036": 2,
+            "A037": 0,
+            "A038": 0,
+            "A039": 0
+          }
+        },
+        "C007": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 25,
+          "eclo_by_activity": {
+            "A040": 0,
+            "A041": 0,
+            "A042": 0,
+            "A043": 0,
+            "A046": 0
+          }
+        },
+        "C008": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 27,
+          "eclo_by_activity": {
+            "A047": 0,
+            "A048": 0,
+            "A049": 0,
+            "A050": 0,
+            "A051": 0
+          }
+        },
+        "C009": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 21,
+          "eclo_by_activity": {
+            "A054": 0,
+            "A055": 0,
+            "A056": 0,
+            "A057": 0
+          }
+        },
+        "C010": {
+          "bound": 10.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 19,
+          "eclo_by_activity": {
+            "A058": 0,
+            "A059": 2,
+            "A060": 0,
+            "A061": 0,
+            "A063": 0,
+            "A064": 0
+          }
+        },
+        "C011": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 25,
+          "eclo_by_activity": {
+            "A065": 0,
+            "A066": 0,
+            "A069": 0,
+            "A070": 0,
+            "A071": 0
+          }
+        },
+        "C012": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 23,
+          "eclo_by_activity": {
+            "A072": 0,
+            "A073": 0
+          }
+        },
+        "C013": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 19,
+          "eclo_by_activity": {
+            "A074": 0
+          }
+        },
+        "C014": {
+          "bound": 0.0,
+          "delay": 0.0,
+          "earliest_best_finish_week": 24,
+          "eclo_by_activity": {
+            "A075": 0
+          }
+        }
+      },
+      "score": 62.7
+    }
+  },
+  "exact_optima": {
+    "A": {
+      "absolute_gap": 0.0,
+      "achieved_upper_bound": 137.9,
+      "lower_bound": 137.9
+    },
+    "B": {
+      "absolute_gap": 0.0,
+      "achieved_upper_bound": 30.0,
+      "lower_bound": 30.0
+    },
+    "C": {
+      "absolute_gap": 0.0,
+      "achieved_upper_bound": 62.7,
+      "lower_bound": 62.7
+    }
+  },
+  "exhaustive_a_pair": {
+    "all_pairs_enumerated": 5842,
+    "minimum_if_a075_on_time": 128.1,
+    "minimum_pair_cost": 92.4,
+    "nonconflicting_pairs": 84
+  },
+  "feasible_witnesses": {
+    "A": {
+      "delay_score": 137.9,
+      "eclo_rows": 0,
+      "exact_three_root_files": true,
+      "excess": 0,
+      "hard_violations": [],
+      "matches_archived_successful_csv_bytes": true,
+      "matches_pinned_official_archive_hash": true,
+      "official_archive_sha256": "76bf26e19161337daf4f186d2a678aeb23bcb8613bc3bba42d00451d30325437",
+      "official_record": "A-002",
+      "score": 137.9,
+      "strict_closure_conflicts": 0,
+      "submission_hash": "8ecab02fa499d057b66faaec730698aa71d163297e3fe0e8c26c1693ace4f7eb",
+      "three_score_calculations_agree": true
+    },
+    "B": {
+      "delay_score": 0.0,
+      "eclo_rows": 6,
+      "exact_three_root_files": true,
+      "excess": 0,
+      "hard_violations": [],
+      "matches_archived_successful_csv_bytes": true,
+      "matches_pinned_official_archive_hash": true,
+      "official_archive_sha256": "1ef95698cc456f5a037bcd3939a6ee6a6ea06bd32fc4c74c0ff403eb3d00b76c",
+      "official_record": "B-001",
+      "score": 30.0,
+      "strict_closure_conflicts": 0,
+      "submission_hash": "0b38e83c94b9e9a1dfb9c33d3ab9c3a7a8cc00e08dba6b8a561570ad3ebfd373",
+      "three_score_calculations_agree": true
+    },
+    "C": {
+      "delay_score": 42.7,
+      "eclo_rows": 4,
+      "exact_three_root_files": true,
+      "excess": 0,
+      "hard_violations": [],
+      "matches_archived_successful_csv_bytes": true,
+      "matches_pinned_official_archive_hash": true,
+      "official_archive_sha256": "ee6b09ccf0584cf4d3dfb6b825669c39491329a9f756ca50dc1879fd5e274f43",
+      "official_record": "C-001",
+      "score": 62.7,
+      "strict_closure_conflicts": 0,
+      "submission_hash": "30247f5773477ca3e26a0e0d1704ef2f7aecd1fb8efbda15c6f0aa9bb4047733",
+      "three_score_calculations_agree": true
+    }
+  },
+  "generated_utc": "2026-09-19T03:30:16.749841+00:00",
+  "independent_cp_relaxations": {
+    "A": {
+      "best_bound": 137.9,
+      "branches": 8726,
+      "c_line_windows_included": false,
+      "conflicts": 6,
+      "eclo_budget": null,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "score": 137.9,
+      "status": "OPTIMAL",
+      "wall_seconds": 0.09774500000000001
+    },
+    "B": {
+      "best_bound": 30.0,
+      "branches": 3694,
+      "c_line_windows_included": false,
+      "conflicts": 0,
+      "eclo_budget": null,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "score": 30.0,
+      "status": "OPTIMAL",
+      "wall_seconds": 0.042217000000000005
+    },
+    "C": {
+      "best_bound": 62.7,
+      "branches": 11964,
+      "c_line_windows_included": true,
+      "conflicts": 5,
+      "eclo_budget": null,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "score": 62.7,
+      "status": "OPTIMAL",
+      "wall_seconds": 0.206323
+    }
+  },
+  "input_audit": {
+    "all_activity_corridors_resolve_to_supplied_locations": true,
+    "all_planned_deadlines_are_sundays": true,
+    "all_planned_starts_are_mondays": true,
+    "all_references_valid": true,
+    "files": {
+      "01_LINES.csv": {
+        "rows": 2,
+        "sha256": "b6e60b0e7726e4266efd059bf5061b3b3a2c9825ae7dd85a6431f41b81b383e7"
+      },
+      "02_STATIONS.csv": {
+        "rows": 20,
+        "sha256": "4a27d6508defd03e8c833133b523390ac8850a1c1717f309033e40f364720e24"
+      },
+      "03_SECTORS.csv": {
+        "rows": 18,
+        "sha256": "643fdb2bd317126b42572fafcce8f8108008e8e9c7b71c08dfd31cec11c3ee34"
+      },
+      "04_LOCATION_SUPPLY.csv": {
+        "rows": 76,
+        "sha256": "9d8a92d6ffd340f40dae28302ed6f88958f8661e2b046bb6b4e0b79c385be1e6"
+      },
+      "05_BUFFER_LOCATION.csv": {
+        "rows": 3,
+        "sha256": "4b9fe7fd6a1f9128bd6e83405496dc64a8028f997bb1fcd28355582a6d554de0"
+      },
+      "06_PARAMETERS.csv": {
+        "rows": 2,
+        "sha256": "9400b7b082069c56b8cae85d56994cf06fe08ae54fcd116ff6edc890034cc8e6"
+      },
+      "07_PROJECT_DETAILS.csv": {
+        "rows": 14,
+        "sha256": "393f0dcc7e7b9a54f0eff12eb0dd0122dbd74f4b4b8b73b7676f9f232fb8a4c7"
+      },
+      "08_ACTIVITY_DETAILS.csv": {
+        "rows": 54,
+        "sha256": "6a1ef90cd3bed93a8970ef49454e9c02e0c1df93ce8e0f0f4b071563cfb43e30"
+      }
+    },
+    "mandatory_pm_conflicts": [
+      [
+        "A001",
+        "A075",
+        [
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A003",
+        "A075",
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A004",
+        "A075",
+        [
+          "PLAT:ALP:H01:EB",
+          "PLAT:ALP:S03:EB",
+          "PLAT:ALP:S04:EB",
+          "SEC:ALP:S03_S04:EB",
+          "SEC:ALP:S04_H01:EB"
+        ]
+      ],
+      [
+        "A006",
+        "A075",
+        [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:H02:WB",
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:H01_H02:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ]
+      ],
+      [
+        "A007",
+        "A075",
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB"
+        ]
+      ],
+      [
+        "A009",
+        "A075",
+        [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ]
+      ],
+      [
+        "A011",
+        "A075",
+        [
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A012",
+        "A075",
+        [
+          "PLAT:BET:H01:WB",
+          "PLAT:BET:H02:WB",
+          "SEC:BET:H01_H02:WB",
+          "SEC:BET:H02_S15:WB"
+        ]
+      ],
+      [
+        "A013",
+        "A075",
+        [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ]
+      ],
+      [
+        "A017",
+        "A075",
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A020",
+        "A075",
+        [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:H02:WB",
+          "PLAT:ALP:S04:WB",
+          "PLAT:ALP:S05:WB",
+          "SEC:ALP:H01_H02:WB",
+          "SEC:ALP:H02_S05:WB",
+          "SEC:ALP:S04_H01:WB"
+        ]
+      ],
+      [
+        "A023",
+        "A075",
+        [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ]
+      ],
+      [
+        "A025",
+        "A075",
+        [
+          "PLAT:ALP:S03:EB"
+        ]
+      ],
+      [
+        "A028",
+        "A075",
+        [
+          "PLAT:ALP:H01:EB",
+          "PLAT:ALP:S03:EB",
+          "PLAT:ALP:S04:EB",
+          "SEC:ALP:S03_S04:EB",
+          "SEC:ALP:S04_H01:EB"
+        ]
+      ],
+      [
+        "A031",
+        "A075",
+        [
+          "PLAT:ALP:S06:WB"
+        ]
+      ],
+      [
+        "A035",
+        "A075",
+        [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ]
+      ],
+      [
+        "A036",
+        "A075",
+        [
+          "PLAT:BET:H01:EB",
+          "SEC:BET:S14_H01:EB"
+        ]
+      ],
+      [
+        "A037",
+        "A075",
+        [
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A039",
+        "A075",
+        [
+          "SEC:BET:S13_S14:WB"
+        ]
+      ],
+      [
+        "A040",
+        "A075",
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A041",
+        "A075",
+        [
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A042",
+        "A075",
+        [
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A043",
+        "A075",
+        [
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A046",
+        "A075",
+        [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ]
+      ],
+      [
+        "A047",
+        "A075",
+        [
+          "PLAT:ALP:H02:EB",
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:H02_S05:EB",
+          "SEC:ALP:S05_S06:EB"
+        ]
+      ],
+      [
+        "A048",
+        "A075",
+        [
+          "SEC:BET:S13_S14:EB"
+        ]
+      ],
+      [
+        "A049",
+        "A075",
+        [
+          "PLAT:BET:H02:WB",
+          "SEC:BET:H01_H02:WB",
+          "SEC:BET:H02_S15:WB",
+          "SEC:BET:S15_S16:WB"
+        ]
+      ],
+      [
+        "A050",
+        "A075",
+        [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ]
+      ],
+      [
+        "A054",
+        "A075",
+        [
+          "PLAT:ALP:H01:EB",
+          "PLAT:ALP:H02:EB",
+          "PLAT:ALP:S04:EB",
+          "PLAT:ALP:S05:EB",
+          "SEC:ALP:H01_H02:EB",
+          "SEC:ALP:H02_S05:EB",
+          "SEC:ALP:S04_H01:EB"
+        ]
+      ],
+      [
+        "A055",
+        "A075",
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:S13_S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ]
+      ],
+      [
+        "A056",
+        "A075",
+        [
+          "PLAT:ALP:H02:WB",
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:H02_S05:WB",
+          "SEC:ALP:S05_S06:WB"
+        ]
+      ],
+      [
+        "A057",
+        "A075",
+        [
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A058",
+        "A075",
+        [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:H02:WB",
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:H01_H02:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ]
+      ],
+      [
+        "A059",
+        "A075",
+        [
+          "PLAT:ALP:S06:WB"
+        ]
+      ],
+      [
+        "A060",
+        "A075",
+        [
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A061",
+        "A075",
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB"
+        ]
+      ],
+      [
+        "A063",
+        "A075",
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:S14_H01:EB"
+        ]
+      ],
+      [
+        "A064",
+        "A075",
+        [
+          "SEC:BET:S15_S16:WB"
+        ]
+      ],
+      [
+        "A066",
+        "A075",
+        [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ]
+      ],
+      [
+        "A069",
+        "A075",
+        [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:H02:WB",
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:H01_H02:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ]
+      ],
+      [
+        "A070",
+        "A075",
+        [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ]
+      ],
+      [
+        "A071",
+        "A075",
+        [
+          "SEC:BET:S15_S16:EB"
+        ]
+      ],
+      [
+        "A072",
+        "A075",
+        [
+          "PLAT:ALP:H01:EB",
+          "PLAT:ALP:H02:EB",
+          "PLAT:ALP:S04:EB",
+          "SEC:ALP:H01_H02:EB",
+          "SEC:ALP:S04_H01:EB"
+        ]
+      ],
+      [
+        "A073",
+        "A075",
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB"
+        ]
+      ],
+      [
+        "A074",
+        "A075",
+        [
+          "PLAT:ALP:H01:EB",
+          "PLAT:ALP:H02:EB",
+          "PLAT:BET:H01:WB",
+          "PLAT:BET:H02:WB",
+          "SEC:ALP:H01_H02:EB",
+          "SEC:BET:H01_H02:WB"
+        ]
+      ]
+    ],
+    "predecessor_graph_acyclic": true,
+    "predecessor_links": 6,
+    "required_standard_work_units": 192
+  },
+  "ortools_version": "9.15.6755",
+  "scope": "exact current public input; no portal interaction",
+  "sensitivity": {
+    "A_keep_A075_on_time": {
+      "best_bound": 173.6,
+      "branches": 8066,
+      "c_line_windows_included": false,
+      "conflicts": 32,
+      "eclo_budget": null,
+      "forced_finish_weeks": {
+        "A075": 28
+      },
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "score": 173.6,
+      "status": "OPTIMAL",
+      "wall_seconds": 0.082774
+    },
+    "A_without_pm_closure": {
+      "best_bound": 130.9,
+      "branches": 6814,
+      "c_line_windows_included": false,
+      "conflicts": 2,
+      "eclo_budget": null,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": false,
+      "score": 130.9,
+      "status": "OPTIMAL",
+      "wall_seconds": 0.079155
+    },
+    "B_at_most_five_eclo": {
+      "branches": 0,
+      "c_line_windows_included": false,
+      "conflicts": 0,
+      "eclo_budget": 5,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "status": "INFEASIBLE",
+      "wall_seconds": 0.011759
+    },
+    "C_A036_on_time": {
+      "branches": 0,
+      "c_line_windows_included": true,
+      "conflicts": 0,
+      "eclo_budget": null,
+      "forced_finish_weeks": {
+        "A036": 26
+      },
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "status": "INFEASIBLE",
+      "wall_seconds": 0.010152000000000001
+    },
+    "C_at_most_three_eclo": {
+      "best_bound": 98.2,
+      "branches": 9156,
+      "c_line_windows_included": true,
+      "conflicts": 39,
+      "eclo_budget": 3,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "score": 98.2,
+      "status": "OPTIMAL",
+      "wall_seconds": 0.18763100000000002
+    },
+    "C_without_two_week_eclo_window": {
+      "best_bound": 30.0,
+      "branches": 10327,
+      "c_line_windows_included": false,
+      "conflicts": 0,
+      "eclo_budget": null,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "score": 30.0,
+      "status": "OPTIMAL",
+      "wall_seconds": 0.075838
+    }
+  },
+  "strictly_better_infeasibility_checks": {
+    "A": {
+      "branches": 0,
+      "c_line_windows_included": false,
+      "conflicts": 0,
+      "eclo_budget": null,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "status": "INFEASIBLE",
+      "tested_score_at_most": 137.8,
+      "wall_seconds": 0.005795000000000001
+    },
+    "B": {
+      "branches": 0,
+      "c_line_windows_included": false,
+      "conflicts": 0,
+      "eclo_budget": null,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "status": "INFEASIBLE",
+      "tested_score_at_most": 29.9,
+      "wall_seconds": 0.011297000000000001
+    },
+    "C": {
+      "branches": 1576,
+      "c_line_windows_included": true,
+      "conflicts": 0,
+      "eclo_budget": null,
+      "forced_finish_weeks": {},
+      "no_frozen_activities": true,
+      "no_hints": true,
+      "pm_exclusion_included": true,
+      "status": "INFEASIBLE",
+      "tested_score_at_most": 62.6,
+      "wall_seconds": 0.041627000000000004
+    }
+  }
+}
