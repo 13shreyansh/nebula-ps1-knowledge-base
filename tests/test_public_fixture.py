@@ -2233,6 +2233,36 @@ class PublicFixtureTests(unittest.TestCase):
             groups[(row.week, row.location_id)].add(row.co_share_group)
         self.assertEqual(set(map(len, groups.values())), {2})
         self.assertEqual(len(groups), 6)
+        run_root = (
+            ROOT / "runs" / "independent_coupled_b_deadline_v1_blind_seed1_w1"
+        )
+        matrix = json.loads((run_root / "SEED_MATRIX.json").read_text())
+        submission = run_root / "b_seed_1"
+        solved = evaluate_submission(instance, submission, "B")
+        solved_independent = independently_score(data, submission)
+        report = json.loads(
+            (run_root / "b_seed_1_audit" / "STAGED.json").read_text()
+        )
+        self.assertEqual(matrix["successes"], 1)
+        self.assertEqual(matrix["failures"], 0)
+        self.assertEqual(matrix["runs"][0]["score"], 72.0)
+        self.assertEqual(matrix["runs"][0]["strict_conflicts"], 0)
+        self.assertEqual(solved.hard_violations, ())
+        self.assertEqual(solved.objective_score, 72.0)
+        self.assertEqual(solved_independent.objective_score, 72.0)
+        self.assertNotEqual(solved.submission_hash, evaluation.submission_hash)
+        self.assertFalse(report["verification_skipped_primary_proven"])
+        self.assertFalse(
+            report["heuristic_telemetry"]["primary_score_proven_optimal"]
+        )
+        self.assertTrue(
+            report["verification_telemetry"]["primary_score_proven_optimal"]
+        )
+        self.assertEqual(report["verification_telemetry"]["best_bound"], 72.0)
+        self.assertEqual(
+            report["verification_telemetry"]["primary_bound_scope"],
+            "full_instance",
+        )
 
     def test_invalid_complete_structural_hint_is_not_promoted(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_v1"

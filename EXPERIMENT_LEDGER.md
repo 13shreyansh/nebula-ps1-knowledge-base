@@ -1447,3 +1447,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Public boundary: the same schema-derived lower-bound function returns B=`30.0` on the public instance, matching the protected official score. Public construction remains partial at 36/54 activities and 114 rows, so it does not take the pre-model return.
 - Integrity gates: all 124 regressions pass in 7.240 seconds; the positive dense regression re-evaluates the failure, B-only recovery, and full A/B/C replay. All 30 final-readiness checks remain true. No protected public artifact changed and no portal attempt was used.
 - Limitation: the recovered tight activity is independent of the dense bottleneck. A coupled ECLO/capacity/closure fixture is required before generalizing the construction result.
+
+### E152: Coupled B case refuses the workload shortcut and proves capacity cost
+
+- Timestamp: 2026-09-19 11:29:02 +08.
+- Precommit: generator, input, independent oracle, dataset hash `cf9aba4c…`, and analytical regression were committed at `1edb68a` before the production solver ran.
+- Structure: BPC1/BPC2 are PC and BC3 is C. All three require three units by week 2, so each uses two ECLO rows. The C activity alternates its local group membership across the common three-location footprint, transitively connecting the otherwise incompatible PC possession groups without a closure conflict.
+- Independent optimum: six ECLO rows cost `30`; two groups against supply one at three locations in two weeks force six excess access-nights costing `42`; total B=`72`. The oracle is hard-feasible, strict-clean, and dual-scored at `72`.
+- Blind result: fixed one-worker 2/1/3/2-second policy reaches strict-clean B=`72` in 0.015 seconds, hash `382e54ec…`, different from oracle `170c73a0…`. The direct heuristic's structural hint is partial at 2/3 activities and therefore cannot use the pre-model proof return.
+- Proof behavior: heuristic B=`72` reports `primary_score_proven_optimal=false`; staged verification is not skipped. The 116-variable bridge-safe model then reports objective and full-instance bound `72`, proving the resource-coupled optimum. Later frozen-neighborhood cost repair preserves it without changing the global proof source.
+- Integrity: both scorers agree, standard and strict closure screens are clean, and no public identifier, oracle path, portal feedback, or target score is available to the solver. No official artifact changed and no portal attempt was used.

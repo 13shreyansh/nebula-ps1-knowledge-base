@@ -1,0 +1,39 @@
+{
+  "data": "fixtures/independent_coupled_b_deadline_v1",
+  "dataset_hash": "cf9aba4cc7f8dbc7ef7774a0c9f50d4fbca13e5185735b9c9ee904028d06b4c2",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "production_c": false,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "B"
+  ],
+  "requested_seeds": [
+    1
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 72.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "382e54ecc96d3ad7f7a484e1640dd7cf6d1672b24b40727b4ba51df1f6687b35",
+      "wall_seconds": 0.015084707993082702
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 1
+}

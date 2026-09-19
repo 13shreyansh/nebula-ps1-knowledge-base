@@ -1053,6 +1053,15 @@ Confidence labels:
 - **Boundary:** Equality with this bound proves only the B primary objective. A candidate above it is not proved optimal and must continue through the model path. The current dense trade-off is spatially independent, so interacting ECLO/capacity/closure cases remain the next test.
 - **Confidence:** High in the bound derivation and checked return; high in the recorded recovery; medium in construction reliability under coupled positive congestion.
 
+### `R126` A workload bound must not absorb possession-capacity cost
+
+- **Status:** Confirmed on a fixture committed before solver exposure.
+- **Finding:** Three deadline-tight activities share one three-location footprint: two PC and one C. Each needs two ECLO rows in weeks 1–2, forcing `6 × 5 = 30`. The two PC activities cannot occupy one local possession group; the C activity legally bridges them into one transitive closure component using different local groups. Two groups against supply one at three locations over two weeks force `6 × 7 = 42` excess cost. The exact B optimum is therefore `72`.
+- **Falsification result:** The structural hint is partial at two of three activities. The heuristic finds checked `72` but reports no proof; `verification_skipped_primary_proven=false`. The bridge-safe full model then proves score and bound `72`. Production therefore does not mistake the workload-only `30` for the resource-constrained optimum.
+- **Anti-copy evidence:** The solver receives no oracle path and emits a different submission hash while matching both scorers and the strict closure screen. End-to-end time is 0.015 seconds under the fixed one-worker policy.
+- **Boundary:** This is a compact exact case, not a scale result. It covers ECLO plus transitive local packing and excess capacity, but not Live buffers, predecessors, or multiple lines.
+- **Confidence:** Very high in the counting proof, validation, and refusal behavior; medium in transfer to large coupled instances.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
