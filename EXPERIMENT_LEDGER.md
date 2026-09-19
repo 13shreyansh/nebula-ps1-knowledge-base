@@ -1097,3 +1097,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: ranked production mode checks two candidates, prunes ten, and promotes twice to C=`27,320`. Exhaustive mode checks all 12 unique candidates and reaches the same hash with zero prediction mismatches. Both scorers agree and the strict screen is clean.
 - Sequence falsification: all 24 activity orders match unfiltered exhaustive best-reachable scores, including alternate equal-score ECLO pairs.
 - Regression status: 88 tests pass. No official portal attempt was used.
+
+### E116: Access-length sweep covers public lengths through seven
+
+- Timestamp: 2026-09-19 09:03:51 +08
+- Method: generate isolated two-line serializations with four activities each and uniform access counts 3, 4, 5, 6, and 7. For each length, compare ranked and exhaustive repeated compaction, the main and independent scorers, and the strict closure screen.
+- Result: all five ranked scores and hashes equal exhaustive mode; every case promotes twice with zero prediction mismatches and zero strict conflicts. Final scores are `18,220`, `27,320`, `36,420`, `45,520`, and `54,620` respectively.
+- Efficiency: ranked mode checks exactly two candidates per case. Exhaustive checks grow from 6 to 30 and duplicate signatures from 12 to 180; measured ranked runtime remains below 0.01 seconds at length 7.
+- Boundary: this is locally generated structural evidence, not portal confirmation. No official attempt or protected artifact changed.
+- Regression status: 89 tests pass.

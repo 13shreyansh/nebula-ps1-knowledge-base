@@ -733,6 +733,15 @@ Confidence labels:
 - **Limitation:** The transformation removes only one row per affected line window and still requires a globally serialized incumbent. Full validation remains the acceptance gate for workload, windows, deadlines, and closures.
 - **Confidence:** High in four-access behavior and backward compatibility; medium for longer or irregular access patterns until separately exercised.
 
+### `R090` Generalized compaction remains exact through seven accesses
+
+- **Status:** Confirmed on a deterministic two-line sweep for access counts 3, 4, 5, 6, and 7.
+- **Finding:** At every length, ranked mode checks two serialized candidates and reaches the same final score and hash as exhaustive per-round evaluation. The main and independent scorers agree, strict conflicts remain zero, and all predicted scores match serialized scores.
+- **Scale:** Exhaustive unique checks grow linearly from 6 at length 3 to 30 at length 7; duplicate transformations grow from 12 to 180. Exact ordering keeps ranked checks fixed at two. The length-7 source falls from C=`60,060` to `54,620` in under 0.01 seconds in ranked mode.
+- **Relevance:** The covered lengths include every `total_accesses` value greater than two in the public data, including the previously untested five- and seven-access activities.
+- **Limitation:** Rows are contiguous within serialized activity blocks. Irregular interleaving is outside the current operator's global one-activity-per-week use case.
+- **Confidence:** High for access-length arithmetic, workload preservation, and candidate ranking through seven rows.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

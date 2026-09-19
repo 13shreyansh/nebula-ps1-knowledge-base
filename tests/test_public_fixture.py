@@ -890,6 +890,31 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(ranked["independent_score"], ranked["selected_score"])
         self.assertEqual(exhaustive["strict_conflicts"], 0)
 
+    def test_eclo_compaction_access_length_sweep_matches_exhaustive(self) -> None:
+        audit = json.loads(
+            (ROOT / "runs" / "eclo_access_length_sweep.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(audit["access_counts"], [3, 4, 5, 6, 7])
+        self.assertTrue(audit["all_scores_match"])
+        self.assertTrue(audit["all_hashes_match"])
+        self.assertEqual(audit["total_prediction_mismatches"], 0)
+        for case in audit["cases"]:
+            ranked = case["ranked"]
+            exhaustive = case["exhaustive"]
+            self.assertEqual(ranked["promotions"], 2)
+            self.assertEqual(ranked["candidates_checked"], 2)
+            self.assertEqual(ranked["selected_score"], exhaustive["selected_score"])
+            self.assertEqual(
+                ranked["selected_submission_hash"],
+                exhaustive["selected_submission_hash"],
+            )
+            self.assertEqual(
+                exhaustive["independent_score"], exhaustive["selected_score"]
+            )
+            self.assertEqual(exhaustive["strict_conflicts"], 0)
+
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"
         oracle = ROOT / "fixtures" / "independent_scaled_m20_oracle"
