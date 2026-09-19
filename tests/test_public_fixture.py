@@ -3122,6 +3122,37 @@ class PublicFixtureTests(unittest.TestCase):
             groups[(row.week, row.location_id)].add(row.co_share_group)
         self.assertEqual(set(map(len, groups.values())), {4})
         self.assertEqual(len(groups), 6)
+        run_root = (
+            ROOT
+            / "runs"
+            / "independent_coupled_b_deadline_n4_v1_blind_seed1_w1"
+        )
+        matrix = json.loads((run_root / "SEED_MATRIX.json").read_text())
+        submission = run_root / "b_seed_1"
+        solved = evaluate_submission(instance, submission, "B")
+        solved_independent = independently_score(data, submission)
+        report = json.loads(
+            (run_root / "b_seed_1_audit" / "STAGED.json").read_text()
+        )
+        self.assertEqual(matrix["successes"], 1)
+        self.assertEqual(matrix["failures"], 0)
+        self.assertEqual(matrix["runs"][0]["selected_stage"], "bridge_safe_fallback")
+        self.assertEqual(matrix["runs"][0]["score"], 196.0)
+        self.assertEqual(matrix["runs"][0]["strict_conflicts"], 0)
+        self.assertEqual(solved.hard_violations, ())
+        self.assertEqual(solved.objective_score, 196.0)
+        self.assertEqual(solved_independent.objective_score, 196.0)
+        self.assertNotEqual(solved.submission_hash, evaluation.submission_hash)
+        heuristic = report["heuristic_attempts"][0]
+        fallback = report["bridge_safe_fallback_telemetry"]
+        self.assertEqual(heuristic["status"], "INFEASIBLE")
+        self.assertEqual(heuristic["structural_hint_activity_count"], 4)
+        self.assertEqual(heuristic["structural_hint_access_count"], 8)
+        self.assertEqual(fallback["status"], "OPTIMAL")
+        self.assertEqual(fallback["objective_score"], 196.0)
+        self.assertEqual(fallback["best_bound"], 196.0)
+        self.assertTrue(fallback["primary_score_proven_optimal"])
+        self.assertEqual(fallback["primary_bound_scope"], "full_instance")
 
     def test_official_a002_contract_score_is_reproduced(self) -> None:
         candidate = ROOT / "runs" / "a_official_a001_local_repair_pruned"

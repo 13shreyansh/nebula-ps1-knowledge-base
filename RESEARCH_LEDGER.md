@@ -1081,6 +1081,15 @@ Confidence labels:
 - **Boundary:** This is reproducibility under the current Python, OR-Tools, platform, and input bytes; it is not a formally checked proof trace independent of the CP-SAT implementation.
 - **Confidence:** Very high in local reproducibility and stale-certificate detection; high in the combined analytical/computational certificate.
 
+### `R129` The unrestricted fallback recovers group counts beyond the heuristic domain
+
+- **Status:** Confirmed on a fixture committed before solver exposure.
+- **Finding:** Four incompatible PC activities share a three-location footprint and are connected into one legal closure component by three C bridges. Every activity needs two ECLO rows by week 2. Four local groups against supply one force three excess groups at each location/week, so the exact B lower bound is `14 × 5 + 18 × 7 = 196`.
+- **Result:** The direct B heuristic has only `supply + 1 = 2` group labels, emits a partial 4/7-activity hint, and correctly returns `INFEASIBLE` without a candidate. The unrestricted bridge-safe fallback uses 2,200 variables and 6,027 constraints, constructs strict-clean B=`196`, and proves a matching full-instance bound in 0.085 seconds; the end-to-end staged run takes 0.127 seconds.
+- **Anti-overfitting evidence:** The input and independent oracle were committed first. The solver receives no oracle path and returns a different submission hash. Both scorers agree and the later full verifier preserves the bound.
+- **Boundary:** This is still seven activities, one footprint, two weeks, and a deliberately regular bridge chain. It validates fallback coverage, not large coupled scaling.
+- **Confidence:** Very high in the exact result and path selection; high in fallback correctness for this group-count regime; medium in large-instance runtime transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

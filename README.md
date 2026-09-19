@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.76
+version: 0.8.77
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -346,6 +346,7 @@ Each protected public answer matches its bound and has passed the official valid
 - A precommitted coupled B fixture separates workload and capacity proofs: two PC and one C activity each require two ECLO rows before week 2, while their transitive legal packing forces two groups at each of three locations in both weeks. The independent optimum is `30` ECLO plus `42` excess, or `72`. Production correctly refuses the workload-only `30` bound, runs full verification, and proves `72` in 0.015 seconds with a solver-generated hash different from the oracle.
 - [`artifacts/public-optimality-audit-2026-09-19/CERTIFICATE.json`](artifacts/public-optimality-audit-2026-09-19/CERTIFICATE.json) independently certifies the public optima from raw CSVs. A no-hint, no-frozen-activity CP-SAT relaxation deliberately omits nonnegative capacity cost and several hard constraints yet still optimizes to A=`137.9`, B=`30.0`, C=`62.7`; separate models prove thresholds `137.8/29.9/62.6` infeasible. The executable audit also enumerates all 5,842 A036/A075 access-subset pairs and rechecks the unchanged official witness bytes three ways. This is a local mathematical certificate, not a portal optimality statement.
 - The certificate is regenerated inside an isolated temporary directory during the test suite. Stable input hashes, analytical enumerations, relaxed optima/bounds, strict-better infeasibility results, and six sensitivity outcomes must match the committed evidence; wall times and timestamps are deliberately excluded from equality.
+- Scaling the coupled B fixture to four PC groups linked by three C bridges forces 14 ECLO rows and 18 excess access-nights, for exact B=`196`. The deliberately restricted direct heuristic is infeasible at its two-group domain; the unrestricted bridge-safe fallback independently constructs and proves `196` in 0.127 seconds. Its hash differs from the frozen oracle, and both closure policies pass.
 - On the altered-capacity/priority fixture, no-hint standard construction reaches A=`4599.7` with a 0.87% bound gap, and proves B=`30.0` and C=`59.9`. The stricter buffer-to-buffer hedge fails to construct B after 240 seconds while the validator-confirmed standard rule solves it in 18.7 seconds; strict overlap is therefore audit-only on unseen inputs.
 - On a separately generated two-line topology with novel identifiers and no public-submission input, the staged solver reconstructs and proves A=`7.0`, B=`10.0`, and C=`7.0`. The independent oracle is generated with separate footprint/result logic; B pays two necessary ECLO nights while C rationally accepts seven points of delay instead.
 - Experimental `solve-flexible-relaxation` flags expose per-solve deterministic time and OR-Tools interleaved search. Two structural-B repetitions were byte-identical at `30.0`, but took 98.8–104.9 seconds versus 16.6–21.2 seconds for successful ordinary portfolio seeds. Keep this as an audit mode, not the default score path.
@@ -727,3 +728,4 @@ When sources conflict:
 | `0.8.74` | 2026-09-19 | Falsified workload-only proof promotion on a precommitted coupled B case; production refuses the `30` lower bound and independently proves the resource-constrained `72` optimum. |
 | `0.8.75` | 2026-09-19 | Added and independently reran a raw-CSV public optimality certificate: relaxed no-hint models match all three protected scores and prove each next-lower tenth infeasible. |
 | `0.8.76` | 2026-09-19 | Made the public optimality audit reproducible in an isolated output directory and added an end-to-end regeneration regression over every stable proof fact. |
+| `0.8.77` | 2026-09-19 | Scaled the coupled Scenario B test to four PC groups; the restricted heuristic fails as designed, while the safe fallback constructs and proves the exact `196` optimum. |

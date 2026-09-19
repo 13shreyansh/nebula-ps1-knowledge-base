@@ -1477,3 +1477,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Change: `audit.py` now accepts `NEBULA_PS1_OPTIMALITY_AUDIT_OUT` for generated evidence while resolving repository inputs independently from the script path. Production files and the committed certificate remain read-only during isolated verification.
 - Regression: launch the exact audit in a fresh temporary directory and compare all stable input, analytical, exhaustive, solver-bound, infeasibility, witness, and sensitivity facts with committed evidence. Ignore timestamps and wall time only.
 - Result: isolated regeneration passes in 1.340 seconds. No portal interaction, schedule mutation, or protected-artifact replacement occurs.
+
+### E155: Four-group coupled B case exercises the safe fallback
+
+- Timestamp: 2026-09-19 11:35:04 +08.
+- Precommit: generalized generator, seven-activity input, independent oracle, dataset hash `0c1a9a80…`, and analytical regression were committed at `4b179b1` before the solver ran. Replaying the generator with its default two-PC setting reproduces the earlier fixture and oracle byte-for-byte.
+- Exact bound: four PC plus three C bridge activities each force two ECLO rows, costing `70`. The transitive bridge chain makes four local groups closure-feasible at each of three locations in weeks 1–2; supply one therefore forces 18 excess access-nights costing `126`. Oracle B=`196` is hard-feasible, strict-clean, and dual-scored.
+- Blind result: fixed one-worker 2/1/3/2-second policy succeeds at B=`196` in 0.127 seconds, strict conflicts zero, hash `e295c9f4…`, distinct from the oracle.
+- Path evidence: the two-group direct heuristic is `INFEASIBLE` with a partial 4/7-activity, eight-row structural hint. The unrestricted fallback reaches `OPTIMAL` score/bound `196` after one closure-separation round, using 2,200 variables and 6,027 constraints. Full verification and frozen-neighborhood cost repair preserve `196`.
+- Integrity: no oracle path, public identifier, target score, portal signal, or relaxed checker enters production. No official artifact changed and no portal attempt was used.
