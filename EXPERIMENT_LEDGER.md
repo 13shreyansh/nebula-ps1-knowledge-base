@@ -1803,3 +1803,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Fault injection: a monolithic `TypeError` aborts immediately, decomposition is never called, and no final output exists. The existing missing-CSV candidate still raises a recoverable validation `RuntimeError`, is recorded as failed, and cannot displace the safe monolithic result.
 - Release replay: 187/187 regressions pass in 10.120 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true. No portal interaction occurred.
 - Boundary: `RuntimeError` and `ValueError` can still originate from defects as well as expected solver refusal. Their complete type/message and retained audit reduce concealment, but typed domain-specific exceptions would be stronger.
+
+### E191: Public C incumbent remains byte-exact and inherits a tied objective proof
+
+- Timestamp: 2026-09-19 13:01:55 +08.
+- First real replay: the protected C incumbent and monolithic reconstruction both score `62.7` and have exact hash `30247f57…`; decomposition is correctly skipped because the public input has one component. Tie priority preserves the incumbent bytes, but the portfolio initially reported the selected result as unproved because proof was attached only to the monolithic candidate record.
+- Correction: a full-instance lower bound proves the objective value, not one schedule identity. After every candidate independently passes feasibility and scoring gates, any candidate at the same objective as a full-instance proved candidate is also optimal. The report now names every `selected_optimality_proof_policy` at the selected score.
+- Corrected replay: selected policy remains `initial_incumbent`, selected score remains C=`62.7`, proof source is `monolithic`, global optimality is true, and all three published CSVs are byte-for-byte identical to `deliverables/public/C`.
+- Independent replay: primary and raw-CSV scorers both return `62.7`; selected hash is unchanged; no decomposition, portal call, package replacement, or official-score change occurs.
+- Boundary: proof transfer is only across fully gated candidates at exactly equal primary objective. It does not transfer schedule-specific secondary properties, reference-validator confirmation, or organizer-only semantics.

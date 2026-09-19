@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.103
+version: 0.8.104
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -756,3 +756,4 @@ When sources conflict:
 | `0.8.101` | 2026-09-19 | Added an incumbent-preserving monolithic/decomposed portfolio with independent candidate gates, deterministic tie protection, visible policy failures, one-component skip, and atomic publication. |
 | `0.8.102` | 2026-09-19 | Unmocked portfolio runs preserve a proved B=`349` tie, rescue heterogeneous C=`11432` after monolithic failure, and replace valid unproved C=`234780` with proved C=`145920`. |
 | `0.8.103` | 2026-09-19 | Candidate portfolios now recover only explicit solver/validation failures; injected programmer errors abort before decomposition or publication instead of being silently masked. |
+| `0.8.104` | 2026-09-19 | A real public C portfolio replay preserves exact official bytes, skips one-component decomposition, and correctly transfers the tied monolithic full-instance objective proof to the selected incumbent. |

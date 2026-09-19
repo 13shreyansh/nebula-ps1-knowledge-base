@@ -648,7 +648,12 @@ class PublicFixtureTests(unittest.TestCase):
                 "selected_objective_score": evaluation.objective_score,
                 "selected_submission_hash": evaluation.submission_hash,
                 "verification_skipped_primary_proven": False,
-                "verification_telemetry": None,
+                "verification_telemetry": {
+                    "primary_score_proven_optimal": True,
+                    "primary_bound_scope": "full_instance",
+                    "objective_score": evaluation.objective_score,
+                    "best_bound": evaluation.objective_score,
+                },
             }
 
         def fake_malformed(*args: object, **kwargs: object) -> dict[str, object]:
@@ -705,7 +710,12 @@ class PublicFixtureTests(unittest.TestCase):
                 "selected_objective_score": evaluation.objective_score,
                 "selected_submission_hash": evaluation.submission_hash,
                 "verification_skipped_primary_proven": False,
-                "verification_telemetry": None,
+                "verification_telemetry": {
+                    "primary_score_proven_optimal": True,
+                    "primary_bound_scope": "full_instance",
+                    "objective_score": evaluation.objective_score,
+                    "best_bound": evaluation.objective_score,
+                },
             }
 
         with tempfile.TemporaryDirectory() as temporary:
@@ -729,6 +739,11 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(report["component_count"], 1)
             self.assertEqual(report["selected_policy"], "initial_incumbent")
             self.assertEqual(report["selected_objective_score"], 62.7)
+            self.assertTrue(report["selected_global_optimality_proved"])
+            self.assertEqual(
+                report["selected_optimality_proof_policies"],
+                ["monolithic"],
+            )
             skipped = next(
                 item for item in report["attempts"] if item["policy"] == "decomposed"
             )

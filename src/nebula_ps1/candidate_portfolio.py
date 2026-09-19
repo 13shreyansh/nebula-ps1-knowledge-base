@@ -271,6 +271,12 @@ def solve_candidate_portfolio(
         key=lambda item: (item[3].objective_score, item[0]),
     )
     del priority
+    selected_optimality_proof_policies = [
+        policy
+        for _, policy, _, evaluation, proved in candidates
+        if proved and evaluation.objective_score == selected.objective_score
+    ]
+    selected_proved = bool(selected_optimality_proof_policies)
     report: dict[str, object] = {
         "scenario": scenario,
         "dataset_hash": instance.dataset_hash,
@@ -284,6 +290,7 @@ def solve_candidate_portfolio(
         "selected_objective_score": selected.objective_score,
         "selected_submission_hash": selected.submission_hash,
         "selected_global_optimality_proved": selected_proved,
+        "selected_optimality_proof_policies": selected_optimality_proof_policies,
         "reference_validator_confirmed": False,
         "publication_status": "staged",
     }
