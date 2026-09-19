@@ -1325,3 +1325,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Replay: A=`280.0` in 15.140 seconds, B=`400.0` in 15.162, C=`280.0` in 39.090. Every score, selected stage, strict-conflict count, and submission hash is identical to baseline; aggregate elapsed time falls 461.662→69.392 seconds, or 6.65×.
 - Regression and boundary: the stored before/after comparison re-evaluates all optimized outputs with both scorers and requires at least 5× recorded improvement per scenario. All 114 tests and all 30 local readiness checks pass. This is one local seed and does not establish universal runtime behavior.
 - Official protection: no portal interaction or attempt was used.
+
+### E140: Incremental closure decisions match under full and week-local screening
+
+- Timestamp: 2026-09-19 10:34:39 +08
+- Source: all 192 activity-week occurrences in the preserved failed A-001 artifact, whose conflicts are already independently pinned.
+- Protocol: replay forward, reverse, and SHA-256-derived occurrence orders under standard and strict buffer-overlap policies. After each candidate, compare complete accumulated screening with screening of every accumulated row in only the candidate week; accept only conflict-free candidates.
+- Result: 1,152/1,152 conflict tuples match. Standard replays reject 4, 6, and 6 candidates; strict replays reject 5, 6, and 6. This includes both clean and conflicting branches while preserving the clean-provisional invariant required by structural-hint construction.
+- Regression status: all 115 tests pass in 16.965 seconds.
+- Boundary: this proves equivalence of the implemented screen on these incremental states, not hidden-validator semantics or universal runtime gains.
+- Official protection: no portal interaction or attempt was used.

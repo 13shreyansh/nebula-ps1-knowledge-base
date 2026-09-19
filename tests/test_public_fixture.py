@@ -8,6 +8,7 @@ import json
 import shutil
 import tempfile
 import zipfile
+from collections import defaultdict
 from dataclasses import replace
 from datetime import date
 from pathlib import Path
@@ -2477,6 +2478,76 @@ class PublicFixtureTests(unittest.TestCase):
             direct_collision,
             {"PLAT:BET:S16:EB", "SEC:BET:S16_S17:EB"},
         )
+
+    def test_incremental_closure_acceptance_equals_affected_week_screen(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            with zipfile.ZipFile(
+                ROOT / "deliverables" / "validator" / "A.zip"
+            ) as archive:
+                archive.extractall(temp_dir)
+            access, occupancy, _ = load_submission(temp_dir)
+
+        access_by_occurrence = {
+            (row.activity_id, row.week): row for row in access
+        }
+        self.assertEqual(len(access_by_occurrence), len(access))
+        occupancy_by_occurrence = defaultdict(list)
+        for row in occupancy:
+            occupancy_by_occurrence[(row.activity_id, row.week)].append(row)
+
+        occurrences = sorted(access_by_occurrence)
+        orders = (
+            occurrences,
+            list(reversed(occurrences)),
+            sorted(
+                occurrences,
+                key=lambda item: hashlib.sha256(
+                    f"{item[0]}:{item[1]}".encode()
+                ).hexdigest(),
+            ),
+        )
+        for forbid_buffer_overlap in (False, True):
+            for order_index, order in enumerate(orders):
+                with self.subTest(
+                    forbid_buffer_overlap=forbid_buffer_overlap,
+                    order=order_index,
+                ):
+                    provisional_access = []
+                    provisional_occupancy = []
+                    rejected = 0
+                    for occurrence in order:
+                        candidate_access = access_by_occurrence[occurrence]
+                        candidate_occupancy = occupancy_by_occurrence[occurrence]
+                        week = candidate_access.week
+                        full_conflicts = screen_closures(
+                            self.instance,
+                            [*provisional_access, candidate_access],
+                            [*provisional_occupancy, *candidate_occupancy],
+                            forbid_buffer_overlap=forbid_buffer_overlap,
+                        )
+                        week_conflicts = screen_closures(
+                            self.instance,
+                            [
+                                *(row for row in provisional_access if row.week == week),
+                                candidate_access,
+                            ],
+                            [
+                                *(
+                                    row
+                                    for row in provisional_occupancy
+                                    if row.week == week
+                                ),
+                                *candidate_occupancy,
+                            ],
+                            forbid_buffer_overlap=forbid_buffer_overlap,
+                        )
+                        self.assertEqual(full_conflicts, week_conflicts)
+                        if full_conflicts:
+                            rejected += 1
+                            continue
+                        provisional_access.append(candidate_access)
+                        provisional_occupancy.extend(candidate_occupancy)
+                    self.assertGreater(rejected, 0)
 
     def test_official_a001_violation_oracle_is_reproduced_exactly(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

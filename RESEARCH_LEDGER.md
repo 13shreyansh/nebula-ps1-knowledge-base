@@ -954,6 +954,15 @@ Confidence labels:
 - **Boundary:** One generated fixture and one seed establish a real scale defect and exact replay, not universal speed-up or hidden-instance transfer. Per-step differential testing remains the next semantic falsification.
 - **Confidence:** High in this replay; medium in general performance transfer.
 
+### `R115` Incremental full and week-local closure decisions are equivalent
+
+- **Status:** Confirmed for 1,152 realistic incremental decisions.
+- **Method:** Replay all 192 occurrences from the failed public A-001 artifact in forward, reverse, and hashed orders under both published and strict buffer-overlap policies. Retain a candidate only when the accumulated schedule is clean, matching the structural-hint invariant.
+- **Result:** Full accumulated screening and complete affected-week screening return identical conflict tuples for every decision. The six replays include 33 rejected candidates, so the comparison exercises both acceptance and conflict paths.
+- **Interpretation:** This directly supports the semantic premise behind `R114`: with a previously clean schedule, adding one week-local occurrence cannot create a conflict outside its week.
+- **Boundary:** The activity orders and topology come from one public artifact; this is differential local evidence, not an official validator result.
+- **Confidence:** Very high in the week decomposition implemented by the closure checker.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
