@@ -1095,6 +1095,49 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertFalse(report["portal_used"])
         self.assertTrue(all(report["coupling_observation_counts"].values()))
 
+    def test_decomposition_overconnection_audit_is_pinned(self) -> None:
+        report = json.loads(
+            (
+                ROOT / "artifacts" / "decomposition-overconnection-audit.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            report["coupling_inventory_version"],
+            DECOMPOSITION_COUPLING_INVENTORY_VERSION,
+        )
+        self.assertEqual(report["dataset_count"], 56)
+        self.assertEqual(report["policy_case_count"], 336)
+        self.assertEqual(report["activity_pair_checks_with_repetition"], 3_160_962)
+        self.assertEqual(report["activity_slots_across_policy_cases"], 23_328)
+        self.assertEqual(report["full_graph_components_total"], 1_312)
+        self.assertEqual(report["full_graph_component_reduction"], 22_016)
+        self.assertEqual(
+            sum(report["pair_reason_cardinality_counts"].values()),
+            report["activity_pair_checks_with_repetition"],
+        )
+        self.assertEqual(
+            set(report["per_reason"]), set(DECOMPOSITION_COUPLING_INVENTORY)
+        )
+        self.assertEqual(
+            report["per_reason"]["resource_or_closure"][
+                "marginal_component_increase_when_removed"
+            ],
+            10_998,
+        )
+        self.assertEqual(
+            report["per_reason"]["strict_buffer_overlap"][
+                "marginal_component_increase_when_removed"
+            ],
+            0,
+        )
+        self.assertGreater(
+            report["per_reason"]["strict_buffer_overlap"][
+                "exclusive_edge_occurrences"
+            ],
+            0,
+        )
+        self.assertFalse(report["portal_used"])
+
     def test_each_decomposition_edge_reason_has_a_mutation_killing_witness(self) -> None:
         witness_specs = {
             "predecessor": (

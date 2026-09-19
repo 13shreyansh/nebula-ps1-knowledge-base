@@ -1,0 +1,97 @@
+{
+  "activity_pair_checks_with_repetition": 3160962,
+  "activity_slots_across_policy_cases": 23328,
+  "coupling_inventory_version": "2026-09-19.v1",
+  "dataset_count": 56,
+  "full_graph_component_reduction": 22016,
+  "full_graph_components_total": 1312,
+  "pair_reason_cardinality_counts": {
+    "0": 2140888,
+    "1": 702784,
+    "2": 306521,
+    "3": 9359,
+    "4": 1250,
+    "5": 160
+  },
+  "per_reason": {
+    "predecessor": {
+      "edge_occurrences": 1680,
+      "exclusive_edge_occurrences": 140,
+      "marginal_component_increase_when_removed": 54,
+      "policy_cases_with_marginal_effect": 42,
+      "standalone_component_reduction": 1680
+    },
+    "resource_or_closure": {
+      "edge_occurrences": 512442,
+      "exclusive_edge_occurrences": 330582,
+      "marginal_component_increase_when_removed": 10998,
+      "policy_cases_with_marginal_effect": 210,
+      "standalone_component_reduction": 21384
+    },
+    "same_contract": {
+      "edge_occurrences": 4746,
+      "exclusive_edge_occurrences": 2184,
+      "marginal_component_increase_when_removed": 84,
+      "policy_cases_with_marginal_effect": 40,
+      "standalone_component_reduction": 2634
+    },
+    "scenario_c_live_all_line_window": {
+      "edge_occurrences": 281048,
+      "exclusive_edge_occurrences": 135042,
+      "marginal_component_increase_when_removed": 14,
+      "policy_cases_with_marginal_effect": 2,
+      "standalone_component_reduction": 6606
+    },
+    "scenario_c_same_line_window": {
+      "edge_occurrences": 534136,
+      "exclusive_edge_occurrences": 234474,
+      "marginal_component_increase_when_removed": 16,
+      "policy_cases_with_marginal_effect": 8,
+      "standalone_component_reduction": 7426
+    },
+    "strict_buffer_overlap": {
+      "edge_occurrences": 15651,
+      "exclusive_edge_occurrences": 362,
+      "marginal_component_increase_when_removed": 0,
+      "policy_cases_with_marginal_effect": 0,
+      "standalone_component_reduction": 3048
+    }
+  },
+  "policy_case_count": 336,
+  "portal_used": false,
+  "reason_signature_counts": {
+    "predecessor": 140,
+    "predecessor+resource_or_closure": 104,
+    "predecessor+resource_or_closure+same_contract": 356,
+    "predecessor+resource_or_closure+same_contract+scenario_c_same_line_window": 178,
+    "predecessor+resource_or_closure+same_contract+scenario_c_same_line_window+strict_buffer_overlap": 160,
+    "predecessor+resource_or_closure+same_contract+strict_buffer_overlap": 320,
+    "predecessor+resource_or_closure+scenario_c_live_all_line_window+scenario_c_same_line_window": 44,
+    "predecessor+resource_or_closure+scenario_c_same_line_window": 8,
+    "predecessor+same_contract": 276,
+    "predecessor+same_contract+scenario_c_same_line_window": 66,
+    "predecessor+scenario_c_same_line_window": 28,
+    "resource_or_closure": 330582,
+    "resource_or_closure+same_contract": 538,
+    "resource_or_closure+same_contract+scenario_c_same_line_window": 269,
+    "resource_or_closure+same_contract+scenario_c_same_line_window+strict_buffer_overlap": 25,
+    "resource_or_closure+same_contract+strict_buffer_overlap": 50,
+    "resource_or_closure+scenario_c_live_all_line_window": 6282,
+    "resource_or_closure+scenario_c_live_all_line_window+scenario_c_same_line_window": 4343,
+    "resource_or_closure+scenario_c_live_all_line_window+scenario_c_same_line_window+strict_buffer_overlap": 683,
+    "resource_or_closure+scenario_c_same_line_window": 154666,
+    "resource_or_closure+scenario_c_same_line_window+strict_buffer_overlap": 4156,
+    "resource_or_closure+strict_buffer_overlap": 9678,
+    "same_contract": 2184,
+    "same_contract+scenario_c_same_line_window": 288,
+    "same_contract+scenario_c_same_line_window+strict_buffer_overlap": 12,
+    "same_contract+strict_buffer_overlap": 24,
+    "scenario_c_live_all_line_window": 135042,
+    "scenario_c_live_all_line_window+scenario_c_same_line_window": 134555,
+    "scenario_c_live_all_line_window+scenario_c_same_line_window+strict_buffer_overlap": 99,
+    "scenario_c_same_line_window": 234474,
+    "scenario_c_same_line_window+strict_buffer_overlap": 82,
+    "strict_buffer_overlap": 362
+  },
+  "scope": "encoded local graph-conservatism diagnostic; counts do not prove an edge safe to remove"
+}

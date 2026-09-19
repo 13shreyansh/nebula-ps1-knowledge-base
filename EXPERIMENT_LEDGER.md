@@ -1869,8 +1869,19 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 
 ### E198: Decomposition over-connection measurement precommit
 
-- Timestamp: 2026-09-19 13:17:02 +08.
+- Timestamp: 2026-09-19 13:15:52 +08.
 - Question: does the safe graph connect activities so conservatively that valid decomposition opportunities disappear, even though no coupled pair crosses a component boundary?
 - Frozen measurement: across every complete fixture, the released public input, all three scenarios, and both closure policies, record pair-reason overlap signatures, exclusive edges, the component reduction achieved by each reason alone, and the marginal component increase when each reason is removed from the otherwise complete graph.
 - Interpretation boundary: a zero marginal count can result from transitive redundancy or correlated fixtures; it does not prove that an edge is unnecessary or safe to remove. No graph rule will change from this diagnostic alone.
 - Integrity: the script uses no scores, target outputs, protected hashes, seeds, or portal feedback. The protocol and code are committed before any result is observed.
+
+### E199: Conservatism is large, but no graph edge is safely removable
+
+- Timestamp: 2026-09-19 13:16:36 +08.
+- Environment failure retained: the first unchanged run under `/usr/bin/python3` failed before measurement because OR-Tools is absent. The project `.venv` run completed in 3.6 seconds; this is not counted as an algorithm failure or success.
+- Corpus result: 56 datasets, 336 scenario/policy cases, 23,328 activity slots, and 3,160,962 pair checks. The empty graph would have 23,328 singleton components; the complete graph has 1,312 components, a reduction of 22,016.
+- Overlap: 702,784 interacting pairs have one reason, 306,521 have two, 9,359 have three, 1,250 have four, and 160 have five. Resource/closure is the dominant independent connector: removing it increases total component count by 10,998 across 210 policy cases.
+- Sparse marginal effects: removing predecessor, same-contract, same-line C-window, or Live all-line C-window edges increases total component count by 54, 84, 16, and 14 respectively. Strict-buffer removal changes no component in this corpus despite 362 exclusive strict-buffer pair edges, because other paths reconnect their endpoints.
+- Falsification boundary: zero corpus-level marginal effect is not removal evidence. E196's controlled strict-buffer-only witness splits when that edge is deleted, proving a plausible hidden input can depend on it. The same-line and Live window edges encode global two-week decisions even where current resource paths happen to make them redundant.
+- Decision: retain all six edge families. Use the measurement to explain runtime and routing limits, not to weaken feasibility. No score, release package, portal state, or attempt counter changed.
+- Release replay: 192/192 regressions pass in 10.823 seconds; all 19 isolated portable-validator checks pass with unchanged archive hash `495d4ef7…`; all 30 final-package readiness checks are true.
