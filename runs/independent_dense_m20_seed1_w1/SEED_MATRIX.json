@@ -1,0 +1,54 @@
+{
+  "data": "fixtures/independent_dense_m20",
+  "dataset_hash": "51177bef3a23a307c8710e1dfbb5452a9e2f867d2f773e5fa043e712cb15dacf",
+  "failures": 3,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "production_c": true,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "A",
+    "B",
+    "C"
+  ],
+  "requested_seeds": [
+    1
+  ],
+  "runs": [
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "A",
+      "seed": 1,
+      "status": "FAILURE",
+      "wall_seconds": 5.905971416999819
+    },
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "B",
+      "seed": 1,
+      "status": "FAILURE",
+      "wall_seconds": 14.035676707993844
+    },
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "scenario": "C",
+      "seed": 1,
+      "status": "FAILURE",
+      "wall_seconds": 12.317972208998981
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 0.0,
+  "successes": 0
+}
