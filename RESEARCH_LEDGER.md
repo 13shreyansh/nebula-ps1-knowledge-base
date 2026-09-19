@@ -877,6 +877,15 @@ Confidence labels:
 - **Correction:** Use coefficient `7`. On the retained irregular C incumbent with three excess nights, the predictor now reproduces evaluated C=`31.0` exactly. Every idle/ECLO retained, branching, constrained, and scale audit preserves its scores and hashes.
 - **Confidence:** Very high.
 
+### `R106` Shared production arithmetic needs an O(contracts) point-score path
+
+- **Status:** Implemented after rejecting the first performance-regressing refactor.
+- **Motivation:** The active evaluator, solver, and two compaction predictors duplicated contract weights, activity nudges, and B/C unit costs. An unused per-activity cost helper also preserved the superseded pre-A-002 scoring shape and could be reused accidentally.
+- **Correction:** `objective.py` is now the single production definition for official constants, contract-completion cost curves, and point delay scores. The evaluator, solver, flexible solver, and both predictors consume it. The raw-CSV independent scorer intentionally keeps separate arithmetic.
+- **Rejected implementation:** The first shared point scorer rebuilt every contract's full horizon vector for each candidate. Semantics passed, but 59-gap runtime rose from about 1.50 to 6.93 seconds and ranked 120-activity ECLO runtime from 0.25 to 1.27 seconds.
+- **Accepted implementation:** Compute only the requested contract/week cost for prediction. Rerun timings return to about 1.54 seconds for 59 gaps and 0.25 seconds for ranked 120-activity ECLO; scores, hashes, candidate counts, and mismatch counts remain unchanged.
+- **Confidence:** Very high in arithmetic equivalence; high in restored measured performance.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

@@ -11,6 +11,7 @@ from ortools.sat.python import cp_model
 from .closure import screen_closures
 from .evaluate import AccessRow, OccupancyRow, evaluate_submission, load_submission
 from .instance import Instance
+from .objective import ECLO_COST_TENTHS, EXCESS_COST_TENTHS
 from .solver import SolveTelemetry, _add_sample_hints, _contract_costs
 from .topology import activity_footprint, affects_interchange_cross_line, split_sector_location
 
@@ -624,16 +625,16 @@ def solve_flexible_supply_relaxation(
     primary_terms: list[cp_model.LinearExpr] = []
     if scenario in {"A", "C"}:
         primary_terms.extend(scaled_delay.values())
-    primary_terms.extend(70 * term for term in excess_terms)
+    primary_terms.extend(EXCESS_COST_TENTHS * term for term in excess_terms)
     if scenario in {"B", "C"}:
-        primary_terms.extend(50 * term for term in eclo.values())
+        primary_terms.extend(ECLO_COST_TENTHS * term for term in eclo.values())
     max_primary = (
         sum(
             max(_contract_costs(instance, contract_number))
             for contract_number in sorted(instance.projects)
         )
-        + 70 * len(excess_terms)
-        + 50 * len(eclo)
+        + EXCESS_COST_TENTHS * len(excess_terms)
+        + ECLO_COST_TENTHS * len(eclo)
     )
     primary_score = model.new_int_var(0, max_primary, "primary_score_tenths")
     model.add(primary_score == sum(primary_terms))

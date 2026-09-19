@@ -11,6 +11,7 @@ from ortools.sat.python import cp_model
 
 from .evaluate import load_submission
 from .instance import Instance
+from .objective import contract_costs_tenths as _contract_costs
 from .topology import activity_footprint
 
 
@@ -48,42 +49,6 @@ class SolveTelemetry:
 
     def as_json(self) -> str:
         return json.dumps(asdict(self), indent=2, sort_keys=True)
-
-
-def _activity_costs(instance: Instance, activity_id: str) -> list[int]:
-    activity = instance.activities[activity_id]
-    project = instance.projects[activity.contract_number]
-    weight_tenths = {
-        1: {1: 1300, 2: 1200, 3: 1000},
-        2: {1: 130, 2: 120, 3: 100},
-        3: {1: 13, 2: 12, 3: 10},
-    }[project.contract_priority][activity.activity_priority]
-    return [
-        max(0, (instance.completion_date(week) - project.planned_completion_date).days)
-        * weight_tenths
-        for week in range(1, instance.horizon_weeks + 1)
-    ]
-
-
-def _contract_costs(instance: Instance, contract_number: str) -> list[int]:
-    """Return official contract-completion costs in score tenths by week."""
-
-    project = instance.projects[contract_number]
-    weight_tenths = {
-        1: {1: 1300, 2: 1200, 3: 1000},
-        2: {1: 130, 2: 120, 3: 100},
-        3: {1: 13, 2: 12, 3: 10},
-    }
-    combined_weight = sum(
-        weight_tenths[project.contract_priority][activity.activity_priority]
-        for activity in instance.activities.values()
-        if activity.contract_number == contract_number
-    )
-    return [
-        max(0, (instance.completion_date(week) - project.planned_completion_date).days)
-        * combined_weight
-        for week in range(1, instance.horizon_weeks + 1)
-    ]
 
 
 def _add_sample_hints(

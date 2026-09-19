@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.53
+version: 0.8.54
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -692,3 +692,4 @@ When sources conflict:
 | `0.8.51` | 2026-09-19 | Added a one-command local pre-upload audit covering archive structure and hashes, both scorers, hard feasibility, strict closures, official run IDs, and official scores. |
 | `0.8.52` | 2026-09-19 | Rechecked the organizer's upstream specification; `main` remains the locally verified commit `966c976` with no pending rule update. |
 | `0.8.53` | 2026-09-19 | Corrected the idle-normalization predictor's stale Scenario C excess coefficient from `20` to the confirmed `7`; full candidate validation had prevented score corruption, while the fix restores trusted pruning. |
+| `0.8.54` | 2026-09-19 | Centralized production scoring constants and contract-delay arithmetic, removed the dead per-activity scorer, retained the independent scorer, and rejected an initially correct but 4–5× slower implementation. |

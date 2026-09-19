@@ -7,6 +7,7 @@ from pathlib import Path
 from .closure import screen_closures
 from .evaluate import Evaluation, evaluate_submission, load_submission
 from .instance import Instance
+from .objective import ECLO_COST, EXCESS_COST, delay_score_from_completion_weeks
 
 
 def _write(
@@ -104,20 +105,13 @@ def _predicted_objective(
         for row in access
     ]
     completion_by_contract = _completion_by_contract(instance, shifted)
-    contract_weight = {1: 100.0, 2: 10.0, 3: 1.0}
-    activity_nudge = {1: 0.3, 2: 0.2, 3: 0.0}
-    delay_score = 0.0
-    for contract, project in instance.projects.items():
-        completion = instance.completion_date(completion_by_contract[contract])
-        delay_days = max(0, (completion - project.planned_completion_date).days)
-        for activity in instance.activities.values():
-            if activity.contract_number == contract:
-                delay_score += (
-                    delay_days
-                    * contract_weight[project.contract_priority]
-                    * (1.0 + activity_nudge[activity.activity_priority])
-                )
-    return round(delay_score + 7.0 * excess_total + 5.0 * eclo_total, 10)
+    delay_score = delay_score_from_completion_weeks(
+        instance, completion_by_contract
+    )
+    return round(
+        delay_score + EXCESS_COST * excess_total + ECLO_COST * eclo_total,
+        10,
+    )
 
 
 def best_idle_week_compaction_sequence(

@@ -1235,3 +1235,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Replay: retained, 59-gap scale, 120-activity scale, 256-case multiline, and 768-case constrained audits preserve all scores and mismatch counts after the correction.
 - Regression status: all 107 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E131: Centralize production scoring without accepting a runtime regression
+
+- Timestamp: 2026-09-19 09:53:31 +08
+- Change: move official production weights, nudges, excess/ECLO unit costs, contract cost curves, and point delay scoring into `objective.py`; keep the independent raw-CSV scorer separate. Remove the unused activity-completion helper that encoded the obsolete scoring shape.
+- Rejected path: the first point-score implementation generated a full horizon cost vector per contract and candidate. It preserved all semantic results but slowed the 59-gap audit from about 1.50 to 6.93 seconds, ranked ECLO from 0.25 to 1.27 seconds, and final positive-scale post-processing from 0.39 to 1.45 seconds.
+- Correction: point scoring now calculates only the requested contract/week value. Measured runtime returns to 1.54 seconds, 0.25 seconds, and 0.39 seconds respectively.
+- Verification: all 108 tests pass; every public contract cost curve matches the compatibility alias and the official A delay equals the independent scorer. Full replay preserves 256/256 unconstrained and 768/768 constrained branching matches, zero retained-corpus promotions/hash changes, and final readiness for A/B/C.
+- Official protection: no portal interaction or attempt was used.

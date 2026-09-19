@@ -15,6 +15,7 @@ from .evaluate import (
     load_submission,
 )
 from .instance import Instance
+from .objective import ECLO_COST, delay_score_from_completion_weeks
 from .topology import affects_interchange_cross_line, split_sector_location
 
 
@@ -203,21 +204,10 @@ def _predicted_objective(
     for current_activity, week in completion_by_activity.items():
         contract = instance.activities[current_activity].contract_number
         completion_by_contract[contract] = max(completion_by_contract[contract], week)
-    contract_weight = {1: 100.0, 2: 10.0, 3: 1.0}
-    activity_nudge = {1: 0.3, 2: 0.2, 3: 0.0}
-    delay_score = 0.0
-    for contract, project in instance.projects.items():
-        completion = instance.completion_date(completion_by_contract[contract])
-        delay_days = max(0, (completion - project.planned_completion_date).days)
-        for current_activity in instance.activities.values():
-            if current_activity.contract_number != contract:
-                continue
-            delay_score += (
-                delay_days
-                * contract_weight[project.contract_priority]
-                * (1.0 + activity_nudge[current_activity.activity_priority])
-            )
-    return round(delay_score + 5.0 * eclo_total, 10)
+    delay_score = delay_score_from_completion_weeks(
+        instance, completion_by_contract
+    )
+    return round(delay_score + ECLO_COST * eclo_total, 10)
 
 
 def best_single_lane_eclo_compaction(

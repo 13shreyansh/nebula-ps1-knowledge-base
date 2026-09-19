@@ -28,6 +28,16 @@ from nebula_ps1.idle_compact import (
     best_idle_week_compaction_sequence,
 )
 from nebula_ps1.instance import load_instance
+from nebula_ps1.objective import (
+    ACTIVITY_NUDGE,
+    CONTRACT_WEIGHT,
+    ECLO_COST,
+    ECLO_COST_TENTHS,
+    EXCESS_COST,
+    EXCESS_COST_TENTHS,
+    contract_costs_tenths,
+    delay_score_from_completion_weeks,
+)
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from nebula_ps1.postprocess import best_checked_c_postprocessing_sequence
 from nebula_ps1.prune import prune_submission
@@ -2168,6 +2178,34 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertAlmostEqual(evaluation.objective_score, 137.9)
         self.assertAlmostEqual(audit.objective_score, 137.9)
         self.assertEqual(_contract_costs(self.instance, "C006")[29], 170.8 * 10)
+
+    def test_shared_production_objective_matches_independent_score(self) -> None:
+        self.assertEqual(CONTRACT_WEIGHT, {1: 100.0, 2: 10.0, 3: 1.0})
+        self.assertEqual(ACTIVITY_NUDGE, {1: 0.3, 2: 0.2, 3: 0.0})
+        self.assertEqual((EXCESS_COST, ECLO_COST), (7.0, 5.0))
+        self.assertEqual(
+            (EXCESS_COST_TENTHS, ECLO_COST_TENTHS), (70, 50)
+        )
+        source = ROOT / "deliverables" / "public" / "A"
+        evaluation = evaluate_submission(self.instance, source, "A")
+        independent = independently_score(PACK / "01_data", source)
+        access, _, _ = load_submission(source)
+        completion_by_contract: dict[str, int] = {}
+        for row in access:
+            contract = self.instance.activities[row.activity_id].contract_number
+            completion_by_contract[contract] = max(
+                completion_by_contract.get(contract, 0), row.week
+            )
+        shared_delay = delay_score_from_completion_weeks(
+            self.instance, completion_by_contract
+        )
+        self.assertEqual(shared_delay, evaluation.priority_weighted_score)
+        self.assertEqual(shared_delay, independent.priority_weighted_delay)
+        for contract in self.instance.projects:
+            self.assertEqual(
+                contract_costs_tenths(self.instance, contract),
+                _contract_costs(self.instance, contract),
+            )
 
     def test_generated_work_footprints_match_all_public_occupancy_keys(self) -> None:
         access, occupancy, _ = load_submission(PACK / "03_submission_sample")

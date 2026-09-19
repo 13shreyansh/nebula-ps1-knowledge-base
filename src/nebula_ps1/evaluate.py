@@ -9,6 +9,7 @@ from datetime import date
 from pathlib import Path
 
 from .instance import InputError, Instance
+from .objective import ACTIVITY_NUDGE, CONTRACT_WEIGHT, ECLO_COST, EXCESS_COST
 from .topology import activity_footprint, affects_interchange_cross_line, split_sector_location
 from .closure import screen_closures
 
@@ -375,8 +376,6 @@ def evaluate_submission(
                 f"found {row.simulated_completion_date.isoformat()}/{row.overrun_days}"
             )
 
-    contract_weight = {1: 100.0, 2: 10.0, 3: 1.0}
-    activity_nudge = {1: 0.3, 2: 0.2, 3: 0.0}
     priority_overrun: dict[int, int] = {1: 0, 2: 0, 3: 0}
     priority_weighted_score = 0.0
     for contract_number, days in contract_overrun_days.items():
@@ -386,16 +385,20 @@ def evaluate_submission(
             if activity.contract_number == contract_number:
                 priority_weighted_score += (
                     days
-                    * contract_weight[project.contract_priority]
-                    * (1.0 + activity_nudge[activity.activity_priority])
+                    * CONTRACT_WEIGHT[project.contract_priority]
+                    * (1.0 + ACTIVITY_NUDGE[activity.activity_priority])
                 )
     eclo_total = len(eclo_rows)
     if selected_scenario == "A":
         objective = priority_weighted_score
     elif selected_scenario == "B":
-        objective = 7.0 * excess_total + 5.0 * eclo_total
+        objective = EXCESS_COST * excess_total + ECLO_COST * eclo_total
     elif selected_scenario == "C":
-        objective = priority_weighted_score + 7.0 * excess_total + 5.0 * eclo_total
+        objective = (
+            priority_weighted_score
+            + EXCESS_COST * excess_total
+            + ECLO_COST * eclo_total
+        )
     else:
         objective = float("nan")
 
