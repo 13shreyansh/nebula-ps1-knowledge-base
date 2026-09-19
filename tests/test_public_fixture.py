@@ -22,7 +22,11 @@ from nebula_ps1.eclo_compact import (
     best_single_lane_eclo_compaction,
 )
 from nebula_ps1.evaluate import _legal_possession_mix, evaluate_submission, load_submission
-from nebula_ps1.flexible_solver import _group_limit, solve_flexible_supply_relaxation
+from nebula_ps1.flexible_solver import (
+    _group_limit,
+    _write_submission_rows,
+    solve_flexible_supply_relaxation,
+)
 from nebula_ps1.independent_score import independently_score
 from nebula_ps1.idle_compact import (
     _predicted_objective as predict_idle_compaction_objective,
@@ -1704,6 +1708,106 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(evaluation.hard_violations, ())
             self.assertEqual(evaluation.objective_score, 0.0)
             self.assertEqual(independent.objective_score, 0.0)
+
+    def test_checked_complete_hint_recovers_dense_scale_failure(self) -> None:
+        data = ROOT / "fixtures" / "independent_dense_m20"
+        instance = load_instance(data)
+        failed = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m20_seed1_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
+        recovered = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m20_hint_candidate_seed1_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(failed["dataset_hash"], recovered["dataset_hash"])
+        self.assertEqual(failed["policy"], recovered["policy"])
+        self.assertEqual(failed["successes"], 0)
+        self.assertEqual(failed["failures"], 3)
+        self.assertEqual(recovered["successes"], 3)
+        self.assertEqual(recovered["failures"], 0)
+
+        oracle_access, _, _ = load_submission(
+            ROOT / "fixtures" / "independent_dense_m20_oracle"
+        )
+        oracle_keys = {
+            (row.activity_id, row.week, row.eclo, row.access_night)
+            for row in oracle_access
+        }
+        for row in recovered["runs"]:
+            scenario = row["scenario"]
+            with self.subTest(scenario=scenario):
+                self.assertEqual(row["score"], 0.0)
+                self.assertEqual(row["strict_conflicts"], 0)
+                submission = (
+                    ROOT
+                    / "runs"
+                    / "independent_dense_m20_hint_candidate_seed1_w1"
+                    / f"{scenario.lower()}_seed_1"
+                )
+                evaluation = evaluate_submission(instance, submission, scenario)
+                independent = independently_score(data, submission)
+                access, _, _ = load_submission(submission)
+                candidate_keys = {
+                    (item.activity_id, item.week, item.eclo, item.access_night)
+                    for item in access
+                }
+                self.assertEqual(evaluation.hard_violations, ())
+                self.assertEqual(evaluation.objective_score, 0.0)
+                self.assertEqual(independent.objective_score, 0.0)
+                self.assertNotEqual(candidate_keys, oracle_keys)
+
+    def test_invalid_complete_structural_hint_is_not_promoted(self) -> None:
+        data = ROOT / "fixtures" / "independent_dense_v1"
+        instance = load_instance(data)
+
+        def corrupt_structural_candidate(
+            checked_instance,
+            output_dir,
+            scenario,
+            access_rows,
+            occupancy_rows,
+        ) -> None:
+            rows = occupancy_rows
+            if Path(output_dir).name.startswith("nebula-structural-hint-"):
+                rows = occupancy_rows[:-1]
+            _write_submission_rows(
+                checked_instance,
+                output_dir,
+                scenario,
+                access_rows,
+                rows,
+            )
+
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "nebula_ps1.flexible_solver._write_submission_rows",
+            side_effect=corrupt_structural_candidate,
+        ):
+            output = Path(temporary) / "candidate"
+            telemetry = solve_flexible_supply_relaxation(
+                instance,
+                output,
+                "A",
+                time_limit_seconds=1e-9,
+                workers=1,
+                closure_round_limit=1,
+                separator_mode="direct_heuristic",
+            )
+            self.assertTrue(telemetry.structural_hint_complete)
+            self.assertTrue(telemetry.structural_hint_checked)
+            self.assertFalse(telemetry.structural_hint_feasible)
+            self.assertIsNone(telemetry.structural_hint_objective_score)
+            self.assertFalse(
+                any((output / name).exists() for name in SUBMISSION_FILES)
+            )
 
     def test_partial_public_structural_hint_is_dropped(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

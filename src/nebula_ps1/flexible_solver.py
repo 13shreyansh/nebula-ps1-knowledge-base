@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import math
+import tempfile
 import time
 from collections import defaultdict
 from pathlib import Path
@@ -29,6 +30,97 @@ def _group_limit(
     if scenario == "C":
         return min(candidates, supply + 1)
     return min(candidates, supply)
+
+
+def _write_submission_rows(
+    instance: Instance,
+    output_dir: str | Path,
+    scenario: str,
+    access_rows: list[AccessRow],
+    occupancy_rows: list[OccupancyRow],
+) -> None:
+    output_root = Path(output_dir)
+    output_root.mkdir(parents=True, exist_ok=True)
+    with (output_root / "SCHEDULE_ACCESS.csv").open(
+        "w", newline="", encoding="utf-8"
+    ) as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=("activity_id", "access_seq", "week", "eclo", "access_night"),
+            lineterminator="\n",
+        )
+        writer.writeheader()
+        writer.writerows(
+            {
+                "activity_id": row.activity_id,
+                "access_seq": row.access_seq,
+                "week": row.week,
+                "eclo": row.eclo,
+                "access_night": row.access_night,
+            }
+            for row in access_rows
+        )
+    with (output_root / "SCHEDULE_OCCUPANCY.csv").open(
+        "w", newline="", encoding="utf-8"
+    ) as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=("activity_id", "week", "location_id", "co_share_group"),
+            lineterminator="\n",
+        )
+        writer.writeheader()
+        writer.writerows(
+            {
+                "activity_id": row.activity_id,
+                "week": row.week,
+                "location_id": row.location_id,
+                "co_share_group": row.co_share_group,
+            }
+            for row in occupancy_rows
+        )
+
+    completion_by_activity = {
+        activity_id: max(
+            row.week for row in access_rows if row.activity_id == activity_id
+        )
+        for activity_id in sorted(instance.activities)
+    }
+    activities_by_contract: dict[str, list[str]] = defaultdict(list)
+    for activity_id, activity in sorted(instance.activities.items()):
+        activities_by_contract[activity.contract_number].append(activity_id)
+    results_output: list[dict[str, object]] = []
+    for contract_number in sorted(instance.projects):
+        project = instance.projects[contract_number]
+        contract_week = max(
+            completion_by_activity[activity_id]
+            for activity_id in activities_by_contract[contract_number]
+        )
+        completion_date = instance.completion_date(contract_week)
+        results_output.append(
+            {
+                "scenario": scenario,
+                "contract_number": contract_number,
+                "simulated_completion_date": completion_date.isoformat(),
+                "overrun_days": max(
+                    0, (completion_date - project.planned_completion_date).days
+                ),
+            }
+        )
+    with (output_root / "RESULTS.csv").open(
+        "w", newline="", encoding="utf-8"
+    ) as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=(
+                "scenario",
+                "contract_number",
+                "simulated_completion_date",
+                "overrun_days",
+            ),
+            lineterminator="\n",
+        )
+        writer.writeheader()
+        writer.writerows(results_output)
 
 
 def solve_flexible_supply_relaxation(
@@ -330,6 +422,8 @@ def solve_flexible_supply_relaxation(
     structural_hint_activity_count = 0
     structural_hint_access_count = 0
     structural_hint_complete = False
+    structural_hint_access_rows: list[AccessRow] | None = None
+    structural_hint_occupancy_rows: list[OccupancyRow] | None = None
     if structural_hints_used:
         # Supply a deterministic, feasibility-oriented packing hint for
         # interchangeable C/PC work on identical footprints. It is never a
@@ -639,6 +733,15 @@ def solve_flexible_supply_relaxation(
             and structural_hint_access_count
             == sum(activity.total_accesses for activity in instance.activities.values())
         )
+        if structural_hint_complete:
+            structural_hint_access_rows = [
+                AccessRow(activity_id, sequence, week, 0, 1)
+                for activity_id in sorted(hinted_weeks)
+                for sequence, week in enumerate(
+                    sorted(hinted_weeks[activity_id]), start=1
+                )
+            ]
+            structural_hint_occupancy_rows = list(provisional_occupancy)
         if not structural_hint_complete and scenario == "A":
             model.clear_hints()
             structural_hints_used = False
@@ -760,6 +863,9 @@ def solve_flexible_supply_relaxation(
     safe_objective_tenths: int | None = None
     safe_proven_optimal = False
     safe_tie_break_proven = False
+    structural_hint_checked = False
+    structural_hint_feasible = False
+    structural_hint_objective_score: float | None = None
     closure_rounds = 0
     solve_rounds = 0
     total_conflicts = 0
@@ -768,6 +874,40 @@ def solve_flexible_supply_relaxation(
     active_round_limit = effective_round_limit
     maximum_round_limit_used = 0.0
     unknown_retries = 0
+
+    if (
+        structural_hint_access_rows is not None
+        and structural_hint_occupancy_rows is not None
+    ):
+        structural_hint_checked = True
+        with tempfile.TemporaryDirectory(
+            prefix="nebula-structural-hint-"
+        ) as structural_hint_dir:
+            _write_submission_rows(
+                instance,
+                structural_hint_dir,
+                scenario,
+                structural_hint_access_rows,
+                structural_hint_occupancy_rows,
+            )
+            structural_evaluation = evaluate_submission(
+                instance, structural_hint_dir, scenario
+            )
+        structural_conflicts = screen_closures(
+            instance,
+            structural_hint_access_rows,
+            structural_hint_occupancy_rows,
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+        if structural_evaluation.internally_feasible and not structural_conflicts:
+            structural_hint_feasible = True
+            structural_hint_objective_score = structural_evaluation.objective_score
+            safe_access_rows = structural_hint_access_rows
+            safe_occupancy_rows = structural_hint_occupancy_rows
+            safe_objective_tenths = int(
+                round(structural_evaluation.objective_score * 10)
+            )
+            model.add(primary_score <= safe_objective_tenths - 1)
 
     if hint_root is not None:
         hint_evaluation = evaluate_submission(instance, hint_root, scenario)
@@ -926,84 +1066,13 @@ def solve_flexible_supply_relaxation(
     # require zero closure conflicts before selection.
     output_available = safe_access_rows is not None or had_solution
     if output_available:
-        access_output: list[dict[str, object]] = []
-        occupancy_output: list[dict[str, object]] = []
-        for row in final_access_rows:
-            access_output.append(
-                {
-                    "activity_id": row.activity_id,
-                    "access_seq": row.access_seq,
-                    "week": row.week,
-                    "eclo": row.eclo,
-                    "access_night": row.access_night,
-                }
-            )
-        for row in final_occupancy_rows:
-            occupancy_output.append(
-                {
-                    "activity_id": row.activity_id,
-                    "week": row.week,
-                    "location_id": row.location_id,
-                    "co_share_group": row.co_share_group,
-                }
-            )
-
-        with (output_root / "SCHEDULE_ACCESS.csv").open(
-            "w", newline="", encoding="utf-8"
-        ) as handle:
-            writer = csv.DictWriter(
-                handle,
-                fieldnames=("activity_id", "access_seq", "week", "eclo", "access_night"),
-                lineterminator="\n",
-            )
-            writer.writeheader()
-            writer.writerows(access_output)
-        with (output_root / "SCHEDULE_OCCUPANCY.csv").open(
-            "w", newline="", encoding="utf-8"
-        ) as handle:
-            writer = csv.DictWriter(
-                handle,
-                fieldnames=("activity_id", "week", "location_id", "co_share_group"),
-                lineterminator="\n",
-            )
-            writer.writeheader()
-            writer.writerows(occupancy_output)
-
-        completion_by_activity = {
-            activity_id: max(
-                row.week for row in final_access_rows if row.activity_id == activity_id
-            )
-            for activity_id in sorted(instance.activities)
-        }
-        results_output: list[dict[str, object]] = []
-        for contract_number in sorted(instance.projects):
-            project = instance.projects[contract_number]
-            contract_week = max(
-                completion_by_activity[activity_id]
-                for activity_id in activities_by_contract[contract_number]
-            )
-            completion_date = instance.completion_date(contract_week)
-            results_output.append(
-                {
-                    "scenario": scenario,
-                    "contract_number": contract_number,
-                    "simulated_completion_date": completion_date.isoformat(),
-                    "overrun_days": max(0, (completion_date - project.planned_completion_date).days),
-                }
-            )
-        with (output_root / "RESULTS.csv").open("w", newline="", encoding="utf-8") as handle:
-            writer = csv.DictWriter(
-                handle,
-                fieldnames=(
-                    "scenario",
-                    "contract_number",
-                    "simulated_completion_date",
-                    "overrun_days",
-                ),
-                lineterminator="\n",
-            )
-            writer.writeheader()
-            writer.writerows(results_output)
+        _write_submission_rows(
+            instance,
+            output_root,
+            scenario,
+            final_access_rows,
+            final_occupancy_rows,
+        )
 
     if safe_objective_tenths is not None:
         objective = safe_objective_tenths / 10.0
@@ -1087,6 +1156,9 @@ def solve_flexible_supply_relaxation(
         structural_hint_activity_count=structural_hint_activity_count,
         structural_hint_access_count=structural_hint_access_count,
         structural_hint_complete=structural_hint_complete,
+        structural_hint_checked=structural_hint_checked,
+        structural_hint_feasible=structural_hint_feasible,
+        structural_hint_objective_score=structural_hint_objective_score,
     )
     (output_root / "TELEMETRY.json").write_text(telemetry.as_json() + "\n", encoding="utf-8")
     return telemetry

@@ -46,6 +46,9 @@ class SolveTelemetry:
     structural_hint_activity_count: int = 0
     structural_hint_access_count: int = 0
     structural_hint_complete: bool = False
+    structural_hint_checked: bool = False
+    structural_hint_feasible: bool = False
+    structural_hint_objective_score: float | None = None
 
     def as_json(self) -> str:
         return json.dumps(asdict(self), indent=2, sort_keys=True)

@@ -1365,3 +1365,16 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Scaling boundary: compared with the cached 360-activity replay, elapsed time grows 4.44× for A, 3.65× for B, 2.45× for C, and 2.94× overall when activities double. This modular fixture does not cover dense cross-module coupling.
 - Regression status: all 116 tests pass in 13.348 seconds, including independent re-evaluation of the oracle and all three generated submissions.
 - Official protection: no portal interaction or attempt was used.
+
+### E144: Checked complete-hint promotion recovers the dense scale failure
+
+- Timestamp: 2026-09-19 10:48:00 +08
+- Frozen failure: `independent_dense_m20`, hash `51177bef3a23a307c8710e1dfbb5452a9e2f867d2f773e5fa043e712cb15dacf`, has 164 activities sharing two bottleneck corridors over 47 weeks. Its independent A oracle is hard-feasible and dual-scored at `0.0`. Under the unchanged fixed policy, A/B/C failed 0/3 after 5.906/14.036/12.318 seconds; every direct and fallback stage returned `UNKNOWN` and no output was promoted.
+- Diagnosis: every direct stage reported a complete 164-activity structural hint. The failure was delivery: CP-SAT did not emit the already constructed assignment within the short budget.
+- Correction: canonicalize each complete hint's sequences, serialize it in a temporary directory, run the full evaluator and selected closure screen, and install it only as a checked incumbent. CP-SAT then searches strictly below its measured score.
+- Replay: A/B/C succeed 3/3 at `0.0`, zero strict conflicts, in 1.070/12.321/2.596 seconds. A and B validate their complete hint in about 0.03 seconds; later sound verification reports matching zero bounds. Every final is independently scored.
+- Anti-copy evidence: candidate access sets differ from the independently generated oracle by swapping `DXLIVE` and `DYLIVE` between weeks 41 and 42 while retaining score zero.
+- Fault injection: delete one occupancy row only during temporary structural-candidate serialization, use a near-zero solve budget, and verify `complete=true`, `checked=true`, `feasible=false`, score absent, and no submission CSV emitted.
+- Integrity gates: all 118 tests pass in 9.371 seconds and all 30 local readiness checks remain true. The original 0/3 run and input/oracle were committed before implementation.
+- Boundary: B's 12.321-second end-to-end time remains unexplained by its 0.033-second hint and 0.460-second verification; profile before optimizing.
+- Official protection: no portal interaction or attempt was used.

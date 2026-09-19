@@ -981,6 +981,15 @@ Confidence labels:
 - **Boundary:** The fixture repeats independent modules and tests scale, not new topology or coupling. Its exact score scaling is not evidence for arbitrary hidden instances.
 - **Confidence:** High in fail-safe behavior and measured scale; low in extrapolation beyond modular structure.
 
+### `R118` A complete checked constructor output is an incumbent, not merely a solver hint
+
+- **Status:** Confirmed after a precommitted dense failure and fault injection.
+- **Finding:** The structural constructor placed all 164 dense activities, but CP-SAT returned `UNKNOWN` before emitting the same assignment; the fixed-budget portfolio failed 0/3 despite an available schedule.
+- **Correction:** When the constructor is complete, rebuild chronological `access_seq`, serialize all rows temporarily, and require the full evaluator plus the requested closure policy. Only a fully checked candidate becomes a protected incumbent; incomplete or invalid constructions remain hints only.
+- **Evidence:** The unchanged dense holdout recovers A/B/C=`0.0`, dual-scored with zero strict conflicts. The candidate is not copied from the independent oracle: both Live activities exchange weeks 41/42. Removing one occupancy row during temporary serialization sets `structural_hint_feasible=false` and emits no submission.
+- **Boundary:** This improves feasible-incumbent delivery, not the constructor's completeness. Positive-score hints still require solver search for improvement, and local full-gate correctness remains bounded by implemented-rule coverage.
+- **Confidence:** High after retained-suite, malformed-output, fault-injection, independent-oracle, and readiness checks.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

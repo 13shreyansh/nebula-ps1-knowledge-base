@@ -1,0 +1,63 @@
+{
+  "data": "fixtures/independent_dense_m20",
+  "dataset_hash": "51177bef3a23a307c8710e1dfbb5452a9e2f867d2f773e5fa043e712cb15dacf",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "production_c": true,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "A",
+    "B",
+    "C"
+  ],
+  "requested_seeds": [
+    1
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "A",
+      "score": 0.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "a524ccfd55264bcefb13dda0e189c51eaad533e91a2333d364d944450a415f91",
+      "wall_seconds": 1.070413583991467
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 0.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "c6a153f4a3c671a793a10ee4c4550739ad3d18e203ed2b7afbdbfe8c5abbad04",
+      "wall_seconds": 12.321170458002598
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "C",
+      "score": 0.0,
+      "seed": 1,
+      "selected_stage": "scenario_c_fallback",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "a3cd3733e19bc7b10ee40669f2f665ae2c9178890e171784dc9b7b2ff5331468",
+      "wall_seconds": 2.5964364999963436
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 3
+}
