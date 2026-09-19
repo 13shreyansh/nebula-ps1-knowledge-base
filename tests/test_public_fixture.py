@@ -159,6 +159,23 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(len(components), 1)
         self.assertEqual(set(components[0]), set(instance.activities))
 
+    def test_nonlive_scale_fixture_has_thirty_two_independent_components(self) -> None:
+        data = ROOT / "fixtures" / "independent_nonlive_scale16_v1"
+        instance = load_instance(data)
+        self.assertEqual(
+            instance.dataset_hash,
+            "7cdbc1984ff3e8192b0fa53f9f118c1546457f080604772fb02c8640eb210001",
+        )
+        self.assertEqual(len(instance.activities), 64)
+        self.assertEqual(len(instance.lines), 32)
+        components = independent_activity_components(
+            instance,
+            "C",
+            forbid_buffer_overlap=True,
+        )
+        self.assertEqual(len(components), 32)
+        self.assertTrue(all(len(component) == 2 for component in components))
+
     def test_decomposed_solver_matches_monolithic_exact_two_line_result(self) -> None:
         data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
         monolithic = (

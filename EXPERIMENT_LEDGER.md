@@ -1632,3 +1632,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Independent monolithic check: a separate full four-activity run proves score/bound `9120.0` and emits the exact same submission hash `75d7d88…` and byte-identical CSVs.
 - Boundary protections: the Live-interchange scale fixture now partitions into one component. Boundary regressions cover contract/workfront, predecessor, same-line C window, Live all-line C window, resource/closure, and strict-buffer dependency reasons.
 - Interpretation: the corrected method passes one genuine decomposition control, but remains experimental and non-default. No official score or portal state changed.
+
+### E172: Non-Live 32-component scale precommit
+
+- Timestamp: 2026-09-19 12:21:13 +08.
+- Precommit scope: deterministic replication of the existing non-Live multipass input into 16 identifier-disjoint copies, plus structural/hash assertions. No solver output, answer key, score expectation, or target-derived assertion is included.
+- Structure: dataset hash `7cdbc198…`, 64 activities, 32 lines, and 32 two-activity components under strict Scenario C. There are no Live crossover activities, so the all-line Live dependency that invalidated E170 does not join the components.
+- Falsification target: corrected decomposition must solve and prove every component, merge all CSVs without loss or duplication, reproduce the additive score under both scorers, remain strict-clean, and agree with a separate monolithic exact solve. Failure will be retained rather than repaired by redesigning the input.
+- Measurement boundary: repeated copies test scaling and bookkeeping, not heterogeneous topology generalization. Single-run wall time is secondary to proof and output agreement.

@@ -33,7 +33,7 @@ def write(path: Path, fields: list[str], rows: list[dict[str, str]]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Replicate the frozen Live-interchange input into disjoint components."
+        description="Replicate an input fixture into identifier-disjoint copies."
     )
     parser.add_argument("--source", required=True)
     parser.add_argument("--output", required=True)
