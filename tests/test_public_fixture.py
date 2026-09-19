@@ -26,6 +26,7 @@ from nebula_ps1.independent_score import independently_score
 from nebula_ps1.idle_compact import best_idle_week_compaction_sequence
 from nebula_ps1.instance import load_instance
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
+from nebula_ps1.postprocess import best_checked_c_postprocessing_sequence
 from nebula_ps1.prune import prune_submission
 from nebula_ps1.solver import SolveTelemetry, _contract_costs
 from nebula_ps1.staged import (
@@ -663,6 +664,65 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report["eclo_compaction"]["selected_score"], 10.0)
         self.assertEqual(final.objective_score, 10.0)
 
+    def test_generic_staged_c_postprocesses_verification_winner(self) -> None:
+        data = ROOT / "fixtures" / "independent_postselection_compaction_v1"
+        heuristic = (
+            ROOT / "fixtures" / "independent_postselection_compaction_v1_heuristic_c"
+        )
+        verification = ROOT / "fixtures" / "independent_eclo_multipass_v1_source_c"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            _copy_submission(heuristic if calls == 1 else verification, Path(output_dir))
+            evaluation = evaluate_submission(instance, output_dir, scenario)
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=evaluation.objective_score,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=kwargs["workers"],
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation",
+            side_effect=fake_solve,
+        ):
+            output = Path(temp_dir) / "submission"
+            report = solve_staged_scenario(
+                instance,
+                output,
+                "C",
+                audit_output_dir=Path(temp_dir) / "audit",
+                local_repair_time_limit_seconds=0.0,
+                heuristic_attempts=1,
+                fallback_attempts=1,
+                workers=1,
+                forbid_buffer_overlap=True,
+            )
+            final = evaluate_submission(instance, output, "C")
+            independent = independently_score(data, output)
+        self.assertEqual(calls, 2)
+        self.assertEqual(report["idle_week_compaction"]["selected_score"], 25480.0)
+        self.assertIsNone(report["eclo_compaction"]["selected_score"])
+        self.assertTrue(report["postselection_compaction_promoted"])
+        self.assertEqual(report["postselection_compaction"]["source_score"], 23660.0)
+        self.assertEqual(report["postselection_compaction"]["selected_score"], 22760.0)
+        self.assertEqual(report["selected_stage"], "postselection_eclo_compaction")
+        self.assertEqual(final.objective_score, 22760.0)
+        self.assertEqual(independent.objective_score, 22760.0)
+
     def test_staged_c_portfolio_promotes_checked_eclo_compaction_before_verification(
         self,
     ) -> None:
@@ -783,6 +843,92 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report["scenario_c_eclo_compaction"]["selected_score"], 10.0)
         self.assertEqual(report["selected_stage"], "scenario_c_eclo_compaction")
         self.assertEqual(final.objective_score, 10.0)
+
+    def test_staged_c_portfolio_postprocesses_final_selection(self) -> None:
+        data = ROOT / "fixtures" / "independent_postselection_compaction_v1"
+        heuristic = (
+            ROOT / "fixtures" / "independent_postselection_compaction_v1_heuristic_c"
+        )
+        verification = ROOT / "fixtures" / "independent_eclo_multipass_v1_source_c"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_staged(instance, output_dir, scenario, **kwargs):
+            self.assertEqual(scenario, "A")
+            relabel_submission_scenario(instance, heuristic, Path(output_dir), "A")
+            return {"selected_objective_score": 26390.0}
+
+        def fake_c_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            _copy_submission(heuristic if calls == 1 else verification, Path(output_dir))
+            evaluation = evaluate_submission(instance, output_dir, scenario)
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=evaluation.objective_score,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=kwargs["workers"],
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged_c.solve_staged_scenario", side_effect=fake_staged
+        ), patch(
+            "nebula_ps1.staged_c.solve_flexible_supply_relaxation",
+            side_effect=fake_c_solve,
+        ):
+            output = Path(temp_dir) / "submission"
+            report = solve_staged_c_portfolio(
+                instance,
+                output,
+                audit_output_dir=Path(temp_dir) / "audit",
+                a_local_repair_time_limit_seconds=0.0,
+                c_heuristic_attempts=1,
+                workers=1,
+                forbid_buffer_overlap=True,
+            )
+            final = evaluate_submission(instance, output, "C")
+            independent = independently_score(data, output)
+        self.assertEqual(calls, 2)
+        self.assertTrue(report["scenario_c_postselection_compaction_promoted"])
+        self.assertEqual(
+            report["scenario_c_postselection_compaction"]["source_score"],
+            23660.0,
+        )
+        self.assertEqual(
+            report["scenario_c_postselection_compaction"]["selected_score"],
+            22760.0,
+        )
+        self.assertEqual(
+            report["selected_stage"],
+            "scenario_c_postselection_eclo_compaction",
+        )
+        self.assertEqual(final.objective_score, 22760.0)
+        self.assertEqual(independent.objective_score, 22760.0)
+
+    def test_final_postprocessor_preserves_official_c_hash(self) -> None:
+        source = ROOT / "deliverables" / "public" / "C"
+        expected = evaluate_submission(self.instance, source, "C")
+        with tempfile.TemporaryDirectory() as temporary:
+            selected_dir, selected, report = best_checked_c_postprocessing_sequence(
+                self.instance,
+                source,
+                Path(temporary),
+                forbid_buffer_overlap=True,
+            )
+        self.assertEqual(selected_dir, source)
+        self.assertFalse(report["strict_improvement"])
+        self.assertEqual(selected.objective_score, 62.7)
+        self.assertEqual(selected.submission_hash, expected.submission_hash)
 
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))

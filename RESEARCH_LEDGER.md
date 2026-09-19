@@ -780,6 +780,16 @@ Confidence labels:
 - **Limitation:** This finite audit fixes one line, two activities, six rows, and an eight-week horizon. It does not prove greedy completeness for larger branching normalization graphs.
 - **Confidence:** High for the enumerated state space; medium for transfer to larger multi-line schedules.
 
+### `R095` Final solver winners require the same checked post-processing
+
+- **Status:** A frozen counterexample disproved the assumption that pre-verification compaction is sufficient; the correction is integrated into both production controllers.
+- **Failure:** The heuristic branch normalizes from C=`26,390` to `25,480` but remains non-serialized because two different-line activities share week 7. Verification then selects a distinct strict-clean C=`23,660` serialization. The prior pipeline copied it immediately, never applying the compactor that could lower it to `22,760`.
+- **Correction:** After verification, targeted cost repair, expanded repair, and any strict hedge have selected the final incumbent, a shared fail-closed function reruns checked idle normalization and repeated ECLO compaction. It promotes only a strict score decrease.
+- **Evidence:** Both production controllers are exercised on the frozen branch. They finish at dual-scored C=`22,760`, zero strict conflicts, from a C=`23,660` final-selection source. The early post-processor still cannot improve the deliberately non-serialized heuristic beyond `25,480`.
+- **Integrity:** The input and invalid/valid fixture corrections were committed before the production change. The final gate has no expected-score or identifier branch, writes complete artifacts, and does not touch A or B.
+- **Limitation:** The post-processor remains deliberately narrow; it does not replace general solver search for non-serialized selections.
+- **Confidence:** High in the identified pipeline gap, shared implementation, and fail-closed promotion boundary.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

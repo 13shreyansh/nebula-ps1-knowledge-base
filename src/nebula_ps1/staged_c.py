@@ -11,6 +11,7 @@ from .flexible_solver import solve_flexible_supply_relaxation
 from .idle_compact import best_idle_week_compaction_sequence
 from .instance import Instance
 from .portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
+from .postprocess import best_checked_c_postprocessing_sequence
 from .prune import prune_submission
 from .staged import (
     _run_strict_score_preserving_hedge,
@@ -165,6 +166,12 @@ def solve_staged_c_portfolio(
             ),
             "scenario_c_idle_week_compaction_used_as_seed": direct_report.get(
                 "idle_week_compaction_used_as_seed", False
+            ),
+            "scenario_c_postselection_compaction": direct_report.get(
+                "postselection_compaction"
+            ),
+            "scenario_c_postselection_compaction_promoted": direct_report.get(
+                "postselection_compaction_promoted", False
             ),
         }
         (audit_output / "STAGED_C.json").write_text(
@@ -464,6 +471,24 @@ def solve_staged_c_portfolio(
         )
         if strict_hedge_promoted:
             selected_stage = "scenario_c_strict_score_preserving_hedge"
+
+    postselected_dir, postselected, postselection_compaction_report = (
+        best_checked_c_postprocessing_sequence(
+            instance,
+            selected_dir,
+            stages / "scenario_c_postselection_compaction",
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+    )
+    postselection_compaction_promoted = False
+    if _candidate_is_better(postselected, selected):
+        selected_dir = postselected_dir
+        selected = postselected
+        selected_stage = (
+            "scenario_c_postselection_"
+            + str(postselection_compaction_report["selected_stage"])
+        )
+        postselection_compaction_promoted = True
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, "C")
@@ -508,6 +533,10 @@ def solve_staged_c_portfolio(
         "scenario_c_idle_week_compaction_used_as_seed": idle_week_compaction_used_as_seed,
         "scenario_c_eclo_compaction": eclo_compaction_report,
         "scenario_c_eclo_compaction_promoted": eclo_compaction_promoted,
+        "scenario_c_postselection_compaction": postselection_compaction_report,
+        "scenario_c_postselection_compaction_promoted": (
+            postselection_compaction_promoted
+        ),
         "scenario_c_verification_telemetry": asdict(verification_telemetry),
         "scenario_c_verification_prune": asdict(verification_prune),
         "scenario_c_cost_repair_activities": cost_repair_activities,

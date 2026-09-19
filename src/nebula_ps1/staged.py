@@ -11,6 +11,7 @@ from .flexible_solver import solve_flexible_supply_relaxation
 from .idle_compact import best_idle_week_compaction_sequence
 from .instance import Instance
 from .portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
+from .postprocess import best_checked_c_postprocessing_sequence
 from .prune import prune_submission
 from .solver import SolveTelemetry
 
@@ -786,6 +787,26 @@ def solve_staged_scenario(
         )
         if strict_hedge_promoted:
             selected_stage = "strict_score_preserving_hedge"
+
+    postselection_compaction_report: dict[str, object] | None = None
+    postselection_compaction_promoted = False
+    if scenario == "C":
+        postselected_dir, postselected, postselection_compaction_report = (
+            best_checked_c_postprocessing_sequence(
+                instance,
+                selected_dir,
+                audit_output / "postselection_compaction",
+                forbid_buffer_overlap=forbid_buffer_overlap,
+            )
+        )
+        if _candidate_is_better(postselected, selected):
+            selected_dir = postselected_dir
+            selected = postselected
+            selected_stage = (
+                "postselection_"
+                + str(postselection_compaction_report["selected_stage"])
+            )
+            postselection_compaction_promoted = True
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, scenario)
@@ -839,6 +860,8 @@ def solve_staged_scenario(
         "idle_week_compaction_used_as_seed": idle_week_compaction_used_as_seed,
         "eclo_compaction": eclo_compaction_report,
         "eclo_compaction_promoted": eclo_compaction_promoted,
+        "postselection_compaction": postselection_compaction_report,
+        "postselection_compaction_promoted": postselection_compaction_promoted,
         "verification_telemetry": asdict(verification) if verification is not None else None,
         "verification_round_time_limit_seconds": (
             verification_round_time_limit_seconds

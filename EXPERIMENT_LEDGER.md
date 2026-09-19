@@ -1115,3 +1115,21 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Fail-safe correction: the initial idle ranker could trust a non-improving prediction without materializing a candidate. It now checks the first gap, disables early stopping after any mismatch, and evaluates all later gaps if prediction becomes untrusted.
 - Retained replay: all six internal gaps across 19 retained C incumbents are serialized and checked. Prediction mismatches and promotions are both zero; the official C artifact has no gap and remains unchanged.
 - Regression status: 93 tests pass, including both production controllers. No official portal attempt was used.
+
+### E118: Leading and tied idle gaps survive exhaustive bounded search
+
+- Timestamp: 2026-09-19 09:19:29 +08
+- Leading case: a precommitted source delayed by an empty week 1 falls from C=`27,300` to `23,660`; two checked ECLO promotions then reach dual-scored, strict-clean `18,220`.
+- Frozen tie failure: deleting leading week 1 or internal week 5 both lowers C=`2,730` to `1,820`. The old numeric tie-break chose week 1 and blocked ECLO; internal-first ordering makes the occupied interval contiguous and reaches checked C=`920`.
+- Exhaustive audit: all 16 three-plus-three-row schedules over the eight-week fixture enumerate every valid non-worsening normalization state and run exhaustive per-round ECLO from every state. Production matches the best composed score in 16/16 cases; both scorers agree.
+- Retained replay: nine removable weeks occur across eight of 19 retained C schedules. One ranked candidate is checked per affected schedule; prediction mismatches and promotions are zero.
+- Regression status: 95 tests pass. Official scores, files, and frozen portal quotas are unchanged.
+
+### E119: Final-selection post-processing closes a verification-stage gap
+
+- Timestamp: 2026-09-19 09:26:42 +08
+- Precommit protocol: the 13-week, four-activity fixture and its deliberately non-serialized heuristic source were committed before production code changed. Two failed fixture revisions are preserved: an illegal PM co-share and a same-line closure conflict. The corrected source overlaps only different lines and is dual-scored, standard-clean, and strict-clean at C=`26,390`.
+- Preserved failure: pre-verification normalization lowers the heuristic to `25,480`, but an unavoidable cross-line overlap keeps ECLO inapplicable. Verification returns a distinct serialization at C=`23,660`; the old controller selects and copies it without post-processing.
+- Correction: a shared final Scenario C gate runs checked non-worsening idle normalization and repeated ECLO compaction after all solver, repair, and strict-hedge selection. Only a strict fully checked decrease replaces the final incumbent.
+- Result: both generic and A-to-C production controllers take the selected C=`23,660` artifact to dual-scored C=`22,760`, hash `c6ff70af…`, with zero strict conflicts. The official public C artifact is already structurally inapplicable and remains unchanged.
+- Regression status: 98 tests pass, including an exact-hash no-op check on the official C artifact. No official attempt was used.
