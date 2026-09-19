@@ -1536,3 +1536,23 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Controlled comparison: same hint, seed 1, one worker, five-second bridge-safe solve, and score `<21` cutoff. Capped model uses 455 variables/661 constraints; a patched nonbinding budget uses 665/946. Both prove the checked B=`21` incumbent as full-instance optimal and emit hard-feasible, strict-clean, dual-scored files.
 - Timing boundary: observed 0.0075 versus 0.0103 seconds once; no general speed claim. The fixture is implementation-derived, small, and regular.
 - Integrity gates: all 151 regressions pass in 9.312 seconds and all 30 final-readiness checks remain true. No protected artifact or portal quota changed.
+
+### E161: Protected B resume preserves exact bytes without fresh search
+
+- Timestamp: 2026-09-19 11:57:08 +08.
+- Interface: `solve-staged --initial-submission PATH --heuristic-attempts 0` validates and protects an existing incumbent before any solver stage. Zero attempts without an initial submission remain an error.
+- Replay: public data, protected B-001, seed 11, one worker, two-second verification, no local repair. No heuristic or fallback runs. Verification returns `scenario_b_checked_workload_lower_bound_incumbent`, score/bound `30.0`, zero variables/constraints/solve rounds, in 0.0129 seconds.
+- Preservation: final `RESULTS.csv`, `SCHEDULE_ACCESS.csv`, and `SCHEDULE_OCCUPANCY.csv` match B-001 byte-for-byte; submission hash remains `0b38e83c…`; both scorers agree and strict conflicts remain zero.
+- Failure injection: extracted A-001 is rejected by the initial-incumbent full gate before a patched solver can run. The five known closure failures cannot become a resume floor.
+- Integrity gates: all 153 regressions pass in 9.638 seconds and all 30 final-readiness checks remain true. No portal interaction or attempt occurred.
+- Boundary: no numerical score improvement; this is state-preservation and safe iterative-search infrastructure.
+
+### E162: A/C resume preserves incumbents across proof and timeout outcomes
+
+- Timestamp: 2026-09-19 11:58:45 +08.
+- Policy: protected initial submission, zero heuristic attempts, no local repair, one worker, seed 12, three-second verification, standard confirmed closure policy.
+- A result: A-002 remains selected at `137.9`, strict-clean and byte-identical. Verification spends 3.010 seconds in a 19,842-variable/39,154-constraint model, returns `FEASIBLE_SAFE_INCUMBENT`, bound `130.9`, and does not claim primary optimality.
+- C result: C-001 remains selected at `62.7`, strict-clean and byte-identical. Verification uses 23,200 variables/45,492 constraints and proves score/bound `62.7` in 0.329 seconds with full-instance scope.
+- Interpretation: the separate public certificate proves A=`137.9`, but resume telemetry reports only what its own solver established. Numerical equality does not collapse evidence provenance.
+- Regression: retained outputs are re-read with both scorers, compared byte-for-byte to protected A/C, and checked for exact status/bound/proof fields.
+- Official protection: no portal interaction or attempt occurred; official hashes and quotas remain unchanged.

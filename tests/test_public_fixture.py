@@ -3894,6 +3894,8 @@ class PublicFixtureTests(unittest.TestCase):
             "B",
             "--heuristic-attempts",
             "7",
+            "--initial-submission",
+            "trusted-incumbent",
             "--fallback-time-limit",
             "17",
             "--local-repair-time-limit",
@@ -3908,6 +3910,10 @@ class PublicFixtureTests(unittest.TestCase):
         ) as solve:
             cli_main()
         self.assertEqual(solve.call_args.kwargs["heuristic_attempts"], 7)
+        self.assertEqual(
+            solve.call_args.kwargs["initial_submission_dir"],
+            "trusted-incumbent",
+        )
         self.assertEqual(solve.call_args.kwargs["local_repair_time_limit_seconds"], 16.0)
         self.assertEqual(solve.call_args.kwargs["fallback_time_limit_seconds"], 17.0)
         self.assertEqual(solve.call_args.kwargs["fallback_attempts"], 4)
@@ -4901,6 +4907,124 @@ class PublicFixtureTests(unittest.TestCase):
                     "B",
                     fallback_attempts=0,
                 )
+
+    def test_staged_resume_protects_checked_b_incumbent(self) -> None:
+        source = ROOT / "deliverables" / "public" / "B"
+        source_evaluation = evaluate_submission(self.instance, source, "B")
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            report = solve_staged_scenario(
+                self.instance,
+                root / "submission",
+                "B",
+                audit_output_dir=root / "audit",
+                initial_submission_dir=source,
+                heuristic_attempts=0,
+                fallback_attempts=1,
+                local_repair_time_limit_seconds=0.0,
+                verification_time_limit_seconds=2.0,
+                workers=1,
+                seed=11,
+            )
+            final = evaluate_submission(self.instance, root / "submission", "B")
+            independent = independently_score(
+                PACK / "01_data", root / "submission"
+            )
+            for name in SUBMISSION_FILES:
+                self.assertEqual(
+                    (root / "submission" / name).read_bytes(),
+                    (source / name).read_bytes(),
+                )
+        self.assertEqual(report["selected_stage"], "initial_incumbent")
+        self.assertEqual(report["selected_objective_score"], 30.0)
+        self.assertEqual(report["selected_submission_hash"], source_evaluation.submission_hash)
+        self.assertTrue(report["initial_incumbent"]["provided"])
+        self.assertEqual(report["initial_incumbent"]["selected_policy_conflicts"], 0)
+        self.assertEqual(report["heuristic_attempts"], [])
+        self.assertIsNone(report["heuristic_telemetry"])
+        self.assertIsNone(report["bridge_safe_fallback_telemetry"])
+        self.assertEqual(
+            report["verification_telemetry"]["formulation"],
+            "scenario_b_checked_workload_lower_bound_incumbent",
+        )
+        self.assertTrue(
+            report["verification_telemetry"]["primary_score_proven_optimal"]
+        )
+        self.assertEqual(final.hard_violations, ())
+        self.assertEqual(final.objective_score, 30.0)
+        self.assertEqual(independent.objective_score, 30.0)
+
+    def test_staged_resume_rejects_invalid_initial_before_solver(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation",
+            side_effect=AssertionError("solver ran before initial-incumbent gate"),
+        ):
+            invalid = Path(temporary) / "invalid"
+            invalid.mkdir()
+            with zipfile.ZipFile(ROOT / "deliverables" / "validator" / "A.zip") as archive:
+                archive.extractall(invalid)
+            with self.assertRaisesRegex(
+                ValueError, "initial submission failed the full selected-policy gate"
+            ):
+                solve_staged_scenario(
+                    self.instance,
+                    Path(temporary) / "submission",
+                    "A",
+                    audit_output_dir=Path(temporary) / "audit",
+                    initial_submission_dir=invalid,
+                    heuristic_attempts=0,
+                )
+
+    def test_retained_public_resume_preserves_a_and_c_incumbents(self) -> None:
+        cases = {
+            "A": (
+                ROOT / "runs" / "public_a_resume_official_a002_seed12_w1",
+                ROOT / "runs" / "public_a_resume_official_a002_seed12_w1.report.json",
+                137.9,
+                "FEASIBLE_SAFE_INCUMBENT",
+                130.9,
+                False,
+            ),
+            "C": (
+                ROOT / "runs" / "public_c_resume_official_c001_seed12_w1",
+                ROOT / "runs" / "public_c_resume_official_c001_seed12_w1.report.json",
+                62.7,
+                "PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+                62.7,
+                True,
+            ),
+        }
+        for scenario, (
+            submission,
+            report_path,
+            score,
+            status,
+            bound,
+            proven,
+        ) in cases.items():
+            with self.subTest(scenario=scenario):
+                protected = ROOT / "deliverables" / "public" / scenario
+                report = json.loads(report_path.read_text(encoding="utf-8"))
+                evaluation = evaluate_submission(self.instance, submission, scenario)
+                independent = independently_score(PACK / "01_data", submission)
+                for name in SUBMISSION_FILES:
+                    self.assertEqual(
+                        (submission / name).read_bytes(),
+                        (protected / name).read_bytes(),
+                    )
+                self.assertEqual(report["selected_stage"], "initial_incumbent")
+                self.assertEqual(report["selected_objective_score"], score)
+                self.assertEqual(report["heuristic_attempts"], [])
+                self.assertIsNone(report["bridge_safe_fallback_telemetry"])
+                self.assertEqual(report["verification_telemetry"]["status"], status)
+                self.assertEqual(report["verification_telemetry"]["best_bound"], bound)
+                self.assertEqual(
+                    report["verification_telemetry"]["primary_score_proven_optimal"],
+                    proven,
+                )
+                self.assertEqual(evaluation.hard_violations, ())
+                self.assertEqual(evaluation.objective_score, score)
+                self.assertEqual(independent.objective_score, score)
 
     def test_staged_solver_uses_sound_fallback_after_heuristic_failure(self) -> None:
         def telemetry(

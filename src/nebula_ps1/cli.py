@@ -114,6 +114,13 @@ def main() -> None:
     staged_parser.add_argument("--data", required=True)
     staged_parser.add_argument("--output", required=True)
     staged_parser.add_argument("--audit-output")
+    staged_parser.add_argument(
+        "--initial-submission",
+        help=(
+            "fully checked incumbent to protect and improve; permits "
+            "--heuristic-attempts 0"
+        ),
+    )
     staged_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
     staged_parser.add_argument("--heuristic-time-limit", type=float, default=120.0)
     staged_parser.add_argument("--local-repair-time-limit", type=float, default=30.0)
@@ -267,6 +274,7 @@ def main() -> None:
             args.output,
             args.scenario,
             audit_output_dir=args.audit_output,
+            initial_submission_dir=args.initial_submission,
             heuristic_time_limit_seconds=args.heuristic_time_limit,
             local_repair_time_limit_seconds=args.local_repair_time_limit,
             fallback_time_limit_seconds=args.fallback_time_limit,

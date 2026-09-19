@@ -1140,6 +1140,26 @@ Confidence labels:
 - **Boundary:** The case was designed after the rule and has one week, one footprint, no ECLO, and regular bridge structure. It tests implementation and soundness pressure, not generalization.
 - **Confidence:** Very high in cap application and proof preservation on the target; high in algebraic global safety; medium-low in large-instance performance benefit.
 
+### `R135` Self-improvement must resume from a protected incumbent
+
+- **Status:** Implemented and verified on protected public B, with fail-before-solve invalid-input testing.
+- **Risk:** Reconstructing from scratch on every iteration wastes the score budget and can return a different or worse schedule even though a validated incumbent already exists. A self-improvement loop must treat the incumbent as the starting safety floor, not merely as a post hoc comparison file.
+- **Policy:** `solve-staged --initial-submission` first requires exactly the three submission files, runs the full evaluator and selected closure policy, and copies the accepted bytes into the audit tree. Zero heuristic attempts are allowed only when such an incumbent exists. Fresh heuristic candidates may replace it only at a strictly lower checked objective; equal scores preserve the initial bytes. Invalid incumbents abort before any solver call.
+- **Public B replay:** Starting from protected B-001 with `--heuristic-attempts 0` runs no heuristic or fallback. Bridge-safe verification reuses the workload lower-bound shortcut, reports full-instance score/bound `30.0` with zero model variables, and preserves every CSV byte and submission hash `0b38e83c…`. The official strict-clean status remains true.
+- **Adversarial check:** Historical A-001 is extracted and offered as an initial A incumbent while the solver call is patched to raise. The full gate rejects its five closure violations first, proving an invalid resume cannot reach optimization or output selection.
+- **Boundary:** Resume currently applies to the generic staged A/B/C controller, not the specialized staged-C portfolio. A/C positive incumbents may still require expensive verification, and local acceptance remains subject to the known official-semantic boundary.
+- **Confidence:** Very high in B byte preservation and invalid-incumbent refusal; high in the generic selection invariant; medium in A/C resume performance.
+
+### `R136` Resume must distinguish preserved incumbents from newly proved optima
+
+- **Status:** Confirmed on short-budget public A/C replays.
+- **Scenario C:** Starting from protected C-001, zero fresh heuristics, one worker, and a three-second verification budget, the bridge-safe model proves score/bound `62.7` in 0.329 seconds. The initial bytes remain selected because no strictly lower candidate exists.
+- **Scenario A:** The analogous model preserves A-002=`137.9` but ends `FEASIBLE_SAFE_INCUMBENT` after 3.010 seconds with bound `130.9`; `primary_score_proven_optimal=false`. The exact external raw-CSV certificate still proves `137.9`, but the resume controller correctly does not import that unrelated proof into its telemetry.
+- **Invariant:** In both cases no heuristic or fallback runs, both scorers agree, strict conflicts are zero, and every final CSV is byte-identical to the protected source. An inconclusive search cannot erase, worsen, or relabel the incumbent as newly optimal.
+- **Relevance:** This separation is essential for trustworthy self-improvement. “Best retained result,” “solver-proved optimum,” and “independently certified optimum” remain distinct states even when the numerical score is the same.
+- **Boundary:** Single seeds and short budgets; A's solver proof gap remains open inside the resume path even though the separate public certificate closes it externally.
+- **Confidence:** Very high in preservation and telemetry honesty; high in C proof; medium in A resume search efficiency.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

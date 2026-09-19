@@ -301,6 +301,7 @@ def solve_staged_scenario(
     scenario: str,
     *,
     audit_output_dir: str | Path | None = None,
+    initial_submission_dir: str | Path | None = None,
     heuristic_time_limit_seconds: float = 120.0,
     local_repair_time_limit_seconds: float = 30.0,
     fallback_time_limit_seconds: float = 120.0,
@@ -317,8 +318,12 @@ def solve_staged_scenario(
 
     if scenario not in {"A", "B", "C"}:
         raise ValueError("scenario must be A, B, or C")
-    if heuristic_attempts < 1:
-        raise ValueError("heuristic_attempts must be positive")
+    if heuristic_attempts < 0:
+        raise ValueError("heuristic_attempts must be nonnegative")
+    if heuristic_attempts == 0 and initial_submission_dir is None:
+        raise ValueError(
+            "heuristic_attempts may be zero only with an initial submission"
+        )
     if fallback_attempts < 1:
         raise ValueError("fallback_attempts must be positive")
     output = Path(output_dir)
@@ -333,6 +338,39 @@ def solve_staged_scenario(
         raise ValueError(f"staged audit directory must be empty: {audit_output}")
     output.mkdir(parents=True, exist_ok=True)
     audit_output.mkdir(parents=True, exist_ok=True)
+
+    initial_incumbent_dir: Path | None = None
+    initial_incumbent: Evaluation | None = None
+    initial_incumbent_conflicts: tuple[object, ...] = ()
+    if initial_submission_dir is not None:
+        source = Path(initial_submission_dir)
+        missing = [name for name in SUBMISSION_FILES if not (source / name).is_file()]
+        if missing:
+            raise ValueError(f"initial submission is missing files: {missing}")
+        checked = evaluate_submission(instance, source, scenario)
+        checked_access, checked_occupancy, _ = load_submission(source)
+        initial_incumbent_conflicts = tuple(
+            screen_closures(
+                instance,
+                checked_access,
+                checked_occupancy,
+                forbid_buffer_overlap=forbid_buffer_overlap,
+            )
+        )
+        if not checked.internally_feasible or initial_incumbent_conflicts:
+            details = list(checked.hard_violations)
+            details.extend(
+                conflict.describe() for conflict in initial_incumbent_conflicts
+            )
+            raise ValueError(
+                "initial submission failed the full selected-policy gate: "
+                + "; ".join(details)
+            )
+        initial_incumbent_dir = audit_output / "initial_incumbent"
+        _copy_submission(source, initial_incumbent_dir)
+        initial_incumbent = evaluate_submission(
+            instance, initial_incumbent_dir, scenario
+        )
 
     heuristic_raw: Path | None = None
     heuristic_pruned: Path | None = None
@@ -408,7 +446,21 @@ def solve_staged_scenario(
     fallback_prune = None
     fallback_attempt_telemetry: list[dict[str, object]] = []
     selected_fallback_attempt: int | None = None
-    if heuristic is not None and heuristic_raw is not None and heuristic_pruned is not None:
+    if initial_incumbent is not None and initial_incumbent_dir is not None:
+        incumbent_stage = "initial_incumbent"
+        improvement_stage = "initial_incumbent_bridge_safe_improvement"
+        incumbent_dir = initial_incumbent_dir
+        if (
+            heuristic is not None
+            and heuristic_raw is not None
+            and heuristic_pruned is not None
+            and best_heuristic_evaluation is not None
+            and _candidate_is_better(best_heuristic_evaluation, initial_incumbent)
+        ):
+            incumbent_stage = "heuristic_incumbent"
+            improvement_stage = "bridge_safe_improvement"
+            incumbent_dir = heuristic_pruned
+    elif heuristic is not None and heuristic_raw is not None and heuristic_pruned is not None:
         incumbent_stage = "heuristic_incumbent"
         improvement_stage = "bridge_safe_improvement"
         incumbent_dir = heuristic_pruned
@@ -852,6 +904,16 @@ def solve_staged_scenario(
         "selection_rule": (
             "strictly lower fully checked objective; an equal-score candidate may replace "
             "the incumbent only as a standard-feasible, strict-clean final hedge"
+        ),
+        "initial_incumbent": (
+            {
+                "provided": True,
+                "objective_score": initial_incumbent.objective_score,
+                "submission_hash": initial_incumbent.submission_hash,
+                "selected_policy_conflicts": len(initial_incumbent_conflicts),
+            }
+            if initial_incumbent is not None
+            else {"provided": False}
         ),
         "heuristic_telemetry": asdict(heuristic) if heuristic is not None else None,
         "heuristic_attempts": attempt_telemetry,
