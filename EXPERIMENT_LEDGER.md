@@ -1263,3 +1263,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: 14/14 files match; the README SHA-256 is `e7d8f9457e62a1732fc7986cea57ad5fbd595e7cabe2e8b789e673c8335bd253`.
 - Boundary: public-repository equality does not reveal portal-only notices or invoke the official validator.
 - Official protection: no portal interaction or attempt was used.
+
+### E134: Fourteen boundary mutations exercise the core hard constraints
+
+- Timestamp: 2026-09-19 10:08:29 +08
+- Method: clone the protected public A/B/C CSVs into isolated temporary directories, change one boundary condition at a time, and run the full evaluator. The protected sources are never edited.
+- Legal mix: merge accepted boundary groups into `5C` and `PC + 4C`; both are rejected with the exact mix counts.
+- Capacity: split one possession into extra local groups. A rejects supply + 1; C does not capacity-reject supply + 1 but rejects supply + 2; B records three soft excess groups without a capacity hard failure.
+- Other boundaries: a one-half-unit workload deficit, predecessor overlap, workfront overflow, out-of-range access-night index, Scenario A ECLO, pre-start placement, horizon overflow, and Scenario B deadline overrun each trigger the intended diagnostic.
+- Correlated-risk note: this validates our evaluator against direct mutations and published thresholds, not against an unused official run. Some capacity mutations deliberately retain unrelated closure conflicts, so the assertions inspect rule-specific diagnostics rather than claiming whole-submission feasibility.
+- Regression status: all 109 tests pass.
+- Official protection: no portal interaction or attempt was used.

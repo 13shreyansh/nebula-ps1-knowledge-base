@@ -903,6 +903,14 @@ Confidence labels:
 - **Boundary:** The comparison cannot observe portal-only notices, validator code, runtime limits, or unpublished changes.
 - **Confidence:** Very high for public repository bytes; none for portal-only state.
 
+### `R109` Core hard-constraint thresholds survive boundary mutation
+
+- **Status:** Confirmed locally with 14 complete-submission mutations derived from the officially accepted A/B/C artifacts.
+- **Accepted edges:** The protected schedules already exercise legal `PC + 3C`, legal `4C`, exact workload, zero-lag predecessor separation, and nominal capacity. Scenario C's one-extra-group mutation is not tagged as a capacity breach; the next group is. Scenario B counts three added groups as soft excess without a capacity hard failure; Scenario A rejects one.
+- **Rejected edges:** `5C`, `PC + 4C`, half a workload unit missing, successor starting in its predecessor's completion week, workfront overflow, out-of-range allocation index, Scenario A ECLO, pre-start work, week 31, and Scenario B late completion each trigger the intended hard-rule diagnostic.
+- **Boundary:** Some group-splitting mutations also create closure conflicts. The assertions isolate the capacity and legal-mix diagnostics; they do not misreport those mutated submissions as globally feasible.
+- **Confidence:** High in the local evaluator's thresholds and their agreement with the published rules; official hidden-validator equivalence remains unproved.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
