@@ -1,0 +1,2397 @@
+{
+  "activity_pairs_checked_with_repetition": 3160962,
+  "coupling_inventory_version": "2026-09-19.v1",
+  "coupling_observation_counts": {
+    "directional_closure": 512442,
+    "predecessor": 1680,
+    "same_contract": 4746,
+    "scenario_c_live_all_line_window": 281048,
+    "scenario_c_same_line_window": 534136,
+    "shared_location_group_supply": 479526,
+    "strict_buffer_overlap": 15651
+  },
+  "dataset_count": 56,
+  "datasets": [
+    {
+      "activities": 7,
+      "dataset": "fixtures/independent_coupled_b_deadline_n4_v1",
+      "dataset_hash": "0c1a9a807ce48173037875e0e6e283fb800380a7f088ee179ef9627b99a8b608",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          7
+        ],
+        "A/strict=true": [
+          7
+        ],
+        "B/strict=false": [
+          7
+        ],
+        "B/strict=true": [
+          7
+        ],
+        "C/strict=false": [
+          7
+        ],
+        "C/strict=true": [
+          7
+        ]
+      }
+    },
+    {
+      "activities": 3,
+      "dataset": "fixtures/independent_coupled_b_deadline_v1",
+      "dataset_hash": "cf9aba4cc7f8dbc7ef7774a0c9f50d4fbca13e5185735b9c9ee904028d06b4c2",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          3
+        ],
+        "A/strict=true": [
+          3
+        ],
+        "B/strict=false": [
+          3
+        ],
+        "B/strict=true": [
+          3
+        ],
+        "C/strict=false": [
+          3
+        ],
+        "C/strict=true": [
+          3
+        ]
+      }
+    },
+    {
+      "activities": 102,
+      "dataset": "fixtures/independent_coupled_tradeoff_v1",
+      "dataset_hash": "2beb69ebb55f9d4dad7ed053e4aa57cda9d0342ff98c6776427ebd9d1c2dd59f",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          102
+        ],
+        "A/strict=true": [
+          102
+        ],
+        "B/strict=false": [
+          102
+        ],
+        "B/strict=true": [
+          102
+        ],
+        "C/strict=false": [
+          102
+        ],
+        "C/strict=true": [
+          102
+        ]
+      }
+    },
+    {
+      "activities": 106,
+      "dataset": "fixtures/independent_dense_holdout_v1",
+      "dataset_hash": "68ee1017ac7bf59bfc50519a7e3cdc15540c6d22a262a6b899eaab51f7242481",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          106
+        ],
+        "A/strict=true": [
+          106
+        ],
+        "B/strict=false": [
+          106
+        ],
+        "B/strict=true": [
+          106
+        ],
+        "C/strict=false": [
+          106
+        ],
+        "C/strict=true": [
+          106
+        ]
+      }
+    },
+    {
+      "activities": 164,
+      "dataset": "fixtures/independent_dense_m20",
+      "dataset_hash": "51177bef3a23a307c8710e1dfbb5452a9e2f867d2f773e5fa043e712cb15dacf",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          164
+        ],
+        "A/strict=true": [
+          164
+        ],
+        "B/strict=false": [
+          164
+        ],
+        "B/strict=true": [
+          164
+        ],
+        "C/strict=false": [
+          164
+        ],
+        "C/strict=true": [
+          164
+        ]
+      }
+    },
+    {
+      "activities": 324,
+      "dataset": "fixtures/independent_dense_m40",
+      "dataset_hash": "b5e18c49654dd6c074d63ec322fe24c10e71aaecc35a93df1b371ad5285dae49",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          324
+        ],
+        "A/strict=true": [
+          324
+        ],
+        "B/strict=false": [
+          324
+        ],
+        "B/strict=true": [
+          324
+        ],
+        "C/strict=false": [
+          324
+        ],
+        "C/strict=true": [
+          324
+        ]
+      }
+    },
+    {
+      "activities": 325,
+      "dataset": "fixtures/independent_dense_m40_tradeoff",
+      "dataset_hash": "d01e89da12a8ef549e474e0d7e6ce5b232a79369561e8974e9a3f97a61e63034",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          324,
+          1
+        ],
+        "A/strict=true": [
+          324,
+          1
+        ],
+        "B/strict=false": [
+          324,
+          1
+        ],
+        "B/strict=true": [
+          324,
+          1
+        ],
+        "C/strict=false": [
+          325
+        ],
+        "C/strict=true": [
+          325
+        ]
+      }
+    },
+    {
+      "activities": 84,
+      "dataset": "fixtures/independent_dense_v1",
+      "dataset_hash": "dbd77d40ece7bcecf730ec7bdc68239485d230ee523a571928e623fcc5f1c823",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          84
+        ],
+        "A/strict=true": [
+          84
+        ],
+        "B/strict=false": [
+          84
+        ],
+        "B/strict=true": [
+          84
+        ],
+        "C/strict=false": [
+          84
+        ],
+        "C/strict=true": [
+          84
+        ]
+      }
+    },
+    {
+      "activities": 120,
+      "dataset": "fixtures/independent_eclo_compaction_scale_v1",
+      "dataset_hash": "9b8dd3824421989e5aae11044d8a5c40699a3a705accf2bb8bd7de8086bc6431",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          120
+        ],
+        "A/strict=true": [
+          120
+        ],
+        "B/strict=false": [
+          120
+        ],
+        "B/strict=true": [
+          120
+        ],
+        "C/strict=false": [
+          120
+        ],
+        "C/strict=true": [
+          120
+        ]
+      }
+    },
+    {
+      "activities": 6,
+      "dataset": "fixtures/independent_eclo_contract_aggregation_v1",
+      "dataset_hash": "8167da5960f185f65bf717ac1fdb1b33400b6db20878a129d6f229e2d4a36259",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          6
+        ],
+        "A/strict=true": [
+          6
+        ],
+        "B/strict=false": [
+          6
+        ],
+        "B/strict=true": [
+          6
+        ],
+        "C/strict=false": [
+          6
+        ],
+        "C/strict=true": [
+          6
+        ]
+      }
+    },
+    {
+      "activities": 4,
+      "dataset": "fixtures/independent_eclo_long_access_v1",
+      "dataset_hash": "06660e467be28c897c74d57088ed5360fcb3471aa2d847b6950174f536b9a1cb",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2,
+          2
+        ],
+        "A/strict=true": [
+          2,
+          2
+        ],
+        "B/strict=false": [
+          2,
+          2
+        ],
+        "B/strict=true": [
+          2,
+          2
+        ],
+        "C/strict=false": [
+          2,
+          2
+        ],
+        "C/strict=true": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "activities": 4,
+      "dataset": "fixtures/independent_eclo_multipass_v1",
+      "dataset_hash": "71da72ce6966516d9ff1188c745b3729e1987b52425e1fb005bfaaac3378e8cd",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2,
+          2
+        ],
+        "A/strict=true": [
+          2,
+          2
+        ],
+        "B/strict=false": [
+          2,
+          2
+        ],
+        "B/strict=true": [
+          2,
+          2
+        ],
+        "C/strict=false": [
+          2,
+          2
+        ],
+        "C/strict=true": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "activities": 3,
+      "dataset": "fixtures/independent_footprint_dependency_v1",
+      "dataset_hash": "bff7db75338331b9957deda68d00f8798fdff2f3799aca03611e3323c1fbab6f",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          3
+        ],
+        "A/strict=true": [
+          3
+        ],
+        "B/strict=false": [
+          3
+        ],
+        "B/strict=true": [
+          3
+        ],
+        "C/strict=false": [
+          3
+        ],
+        "C/strict=true": [
+          3
+        ]
+      }
+    },
+    {
+      "activities": 42,
+      "dataset": "fixtures/independent_heterogeneous_b_v1",
+      "dataset_hash": "9f457c848f337da76b54d88887b2c9eaef8d718a79f41fc08e606fe281770be4",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          13,
+          7,
+          7,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "A/strict=true": [
+          13,
+          7,
+          7,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "B/strict=false": [
+          13,
+          7,
+          7,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "B/strict=true": [
+          13,
+          7,
+          7,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "C/strict=false": [
+          13,
+          8,
+          7,
+          5,
+          5,
+          4
+        ],
+        "C/strict=true": [
+          13,
+          8,
+          7,
+          5,
+          5,
+          4
+        ]
+      }
+    },
+    {
+      "activities": 42,
+      "dataset": "fixtures/independent_heterogeneous_b_v1_permuted_s23",
+      "dataset_hash": "2aad7853acbd3dfc945d8b8600bcf3d44e7776c95b7c760f9e949080e6dc71f5",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          13,
+          7,
+          7,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "A/strict=true": [
+          13,
+          7,
+          7,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "B/strict=false": [
+          13,
+          7,
+          7,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "B/strict=true": [
+          13,
+          7,
+          7,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "C/strict=false": [
+          13,
+          8,
+          7,
+          5,
+          5,
+          4
+        ],
+        "C/strict=true": [
+          13,
+          8,
+          7,
+          5,
+          5,
+          4
+        ]
+      }
+    },
+    {
+      "activities": 28,
+      "dataset": "fixtures/independent_heterogeneous_nonlive_v1",
+      "dataset_hash": "84a00bdbd9d4d51b24928cdbc3858e27ecded025961777f16dec2497215b81a7",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          7,
+          6,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "A/strict=true": [
+          7,
+          6,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "B/strict=false": [
+          7,
+          6,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "B/strict=true": [
+          7,
+          6,
+          5,
+          3,
+          2,
+          2,
+          2,
+          1
+        ],
+        "C/strict=false": [
+          8,
+          6,
+          5,
+          3,
+          2,
+          2,
+          2
+        ],
+        "C/strict=true": [
+          8,
+          6,
+          5,
+          3,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "activities": 60,
+      "dataset": "fixtures/independent_idle_compaction_scale_v1",
+      "dataset_hash": "a00c0618aba8b559fbdb03d8adf3ed7de23bd0e378a623cf7c966f1320532c84",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          60
+        ],
+        "A/strict=true": [
+          60
+        ],
+        "B/strict=false": [
+          60
+        ],
+        "B/strict=true": [
+          60
+        ],
+        "C/strict=false": [
+          60
+        ],
+        "C/strict=true": [
+          60
+        ]
+      }
+    },
+    {
+      "activities": 2,
+      "dataset": "fixtures/independent_idle_tie_v1",
+      "dataset_hash": "60efa1c7b3e23b4c33949a29334b17a3445c768a5291ec48c0d75f66abb488e9",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2
+        ],
+        "A/strict=true": [
+          2
+        ],
+        "B/strict=false": [
+          2
+        ],
+        "B/strict=true": [
+          2
+        ],
+        "C/strict=false": [
+          2
+        ],
+        "C/strict=true": [
+          2
+        ]
+      }
+    },
+    {
+      "activities": 2,
+      "dataset": "fixtures/independent_idle_unlock_v1",
+      "dataset_hash": "4949748995b83d5db1700476f176812fbbb3b679acf31f218206b42d750b878c",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2
+        ],
+        "A/strict=true": [
+          2
+        ],
+        "B/strict=false": [
+          2
+        ],
+        "B/strict=true": [
+          2
+        ],
+        "C/strict=false": [
+          2
+        ],
+        "C/strict=true": [
+          2
+        ]
+      }
+    },
+    {
+      "activities": 4,
+      "dataset": "fixtures/independent_idle_week_v1",
+      "dataset_hash": "b97377374407c80a91b4fa8f3f16dce00ca0204b3a0b88a6cc28cc30287bbc85",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2,
+          2
+        ],
+        "A/strict=true": [
+          2,
+          2
+        ],
+        "B/strict=false": [
+          2,
+          2
+        ],
+        "B/strict=true": [
+          2,
+          2
+        ],
+        "C/strict=false": [
+          2,
+          2
+        ],
+        "C/strict=true": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "activities": 6,
+      "dataset": "fixtures/independent_interchange_holdout_v1",
+      "dataset_hash": "29d70f7b051763c8c44c2b9bb5bb14624f3440960b7fc588f692fc56badb04ff",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          6
+        ],
+        "A/strict=true": [
+          6
+        ],
+        "B/strict=false": [
+          6
+        ],
+        "B/strict=true": [
+          6
+        ],
+        "C/strict=false": [
+          6
+        ],
+        "C/strict=true": [
+          6
+        ]
+      }
+    },
+    {
+      "activities": 6,
+      "dataset": "fixtures/independent_interchange_holdout_v1_permuted_s19",
+      "dataset_hash": "2a5f1ad8c6bb575784e0b231365dca5e71f058150b142311a2e9bbb726ed123d",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          6
+        ],
+        "A/strict=true": [
+          6
+        ],
+        "B/strict=false": [
+          6
+        ],
+        "B/strict=true": [
+          6
+        ],
+        "C/strict=false": [
+          6
+        ],
+        "C/strict=true": [
+          6
+        ]
+      }
+    },
+    {
+      "activities": 48,
+      "dataset": "fixtures/independent_interchange_scale8_v1",
+      "dataset_hash": "742ecb974811c5486dc31a7df30238228e84c73f9a63fb976ef2b600b9ec64be",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "A/strict=true": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "B/strict=false": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "B/strict=true": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "C/strict=false": [
+          48
+        ],
+        "C/strict=true": [
+          48
+        ]
+      }
+    },
+    {
+      "activities": 8,
+      "dataset": "fixtures/independent_irregular_coupled_b_v1",
+      "dataset_hash": "2ceb2a7c769ea594e36d5b42a622626e9e512b03b5dea87179e6b77ab2a422da",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          7,
+          1
+        ],
+        "A/strict=true": [
+          7,
+          1
+        ],
+        "B/strict=false": [
+          7,
+          1
+        ],
+        "B/strict=true": [
+          7,
+          1
+        ],
+        "C/strict=false": [
+          8
+        ],
+        "C/strict=true": [
+          8
+        ]
+      }
+    },
+    {
+      "activities": 106,
+      "dataset": "fixtures/independent_irregular_partial_v1",
+      "dataset_hash": "1b3e96d407ebea08d44af862da6f20d5695c2ec14e605ef555874dfa2306066d",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          106
+        ],
+        "A/strict=true": [
+          106
+        ],
+        "B/strict=false": [
+          106
+        ],
+        "B/strict=true": [
+          106
+        ],
+        "C/strict=false": [
+          106
+        ],
+        "C/strict=true": [
+          106
+        ]
+      }
+    },
+    {
+      "activities": 106,
+      "dataset": "fixtures/independent_irregular_partial_v1_renamed",
+      "dataset_hash": "baaf099eeb469ec74074bb11e116861fe569c6594caad619fee24a03bf3d5233",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          106
+        ],
+        "A/strict=true": [
+          106
+        ],
+        "B/strict=false": [
+          106
+        ],
+        "B/strict=true": [
+          106
+        ],
+        "C/strict=false": [
+          106
+        ],
+        "C/strict=true": [
+          106
+        ]
+      }
+    },
+    {
+      "activities": 106,
+      "dataset": "fixtures/independent_irregular_partial_v1_renamed_s2",
+      "dataset_hash": "c2f9fc4e4fc0d1f16e3acbe5486555ec73888b373a0354fef4026f252e95e8be",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          106
+        ],
+        "A/strict=true": [
+          106
+        ],
+        "B/strict=false": [
+          106
+        ],
+        "B/strict=true": [
+          106
+        ],
+        "C/strict=false": [
+          106
+        ],
+        "C/strict=true": [
+          106
+        ]
+      }
+    },
+    {
+      "activities": 106,
+      "dataset": "fixtures/independent_irregular_partial_v1_renamed_s3",
+      "dataset_hash": "b254b9ff508add4c777c96d20da017b19f9f47e856890feb9d42da9931570d49",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          106
+        ],
+        "A/strict=true": [
+          106
+        ],
+        "B/strict=false": [
+          106
+        ],
+        "B/strict=true": [
+          106
+        ],
+        "C/strict=false": [
+          106
+        ],
+        "C/strict=true": [
+          106
+        ]
+      }
+    },
+    {
+      "activities": 4,
+      "dataset": "fixtures/independent_leading_idle_v1",
+      "dataset_hash": "b97377374407c80a91b4fa8f3f16dce00ca0204b3a0b88a6cc28cc30287bbc85",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2,
+          2
+        ],
+        "A/strict=true": [
+          2,
+          2
+        ],
+        "B/strict=false": [
+          2,
+          2
+        ],
+        "B/strict=true": [
+          2,
+          2
+        ],
+        "C/strict=false": [
+          2,
+          2
+        ],
+        "C/strict=true": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "activities": 2,
+      "dataset": "fixtures/independent_multi_bridge_congestion_v1",
+      "dataset_hash": "07d5fb97a92c194da5ff70bfec984f3b4dc44c1d701502fc08eabcb0d54aa105",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2
+        ],
+        "A/strict=true": [
+          2
+        ],
+        "B/strict=false": [
+          2
+        ],
+        "B/strict=true": [
+          2
+        ],
+        "C/strict=false": [
+          2
+        ],
+        "C/strict=true": [
+          2
+        ]
+      }
+    },
+    {
+      "activities": 8,
+      "dataset": "fixtures/independent_multi_bridge_scale_v1",
+      "dataset_hash": "8a3be5829570b659a574cbad29e4b42712d2e3787376c2605f0b0cd8714ee58e",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          8
+        ],
+        "A/strict=true": [
+          8
+        ],
+        "B/strict=false": [
+          8
+        ],
+        "B/strict=true": [
+          8
+        ],
+        "C/strict=false": [
+          8
+        ],
+        "C/strict=true": [
+          8
+        ]
+      }
+    },
+    {
+      "activities": 4,
+      "dataset": "fixtures/independent_multi_bridge_v1",
+      "dataset_hash": "68379defb1fb02785c1d4aa9ab88747faa395b5c888f6f1245d40df5d1b391e7",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          4
+        ],
+        "A/strict=true": [
+          4
+        ],
+        "B/strict=false": [
+          4
+        ],
+        "B/strict=true": [
+          4
+        ],
+        "C/strict=false": [
+          4
+        ],
+        "C/strict=true": [
+          4
+        ]
+      }
+    },
+    {
+      "activities": 72,
+      "dataset": "fixtures/independent_multimodule_tradeoff_v1",
+      "dataset_hash": "3220b2c715aaf57df46d10570ed0de9b6b79a1900e26d6df9c342e760ab9a293",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          45,
+          9,
+          9,
+          9
+        ],
+        "A/strict=true": [
+          45,
+          9,
+          9,
+          9
+        ],
+        "B/strict=false": [
+          45,
+          9,
+          9,
+          9
+        ],
+        "B/strict=true": [
+          45,
+          9,
+          9,
+          9
+        ],
+        "C/strict=false": [
+          72
+        ],
+        "C/strict=true": [
+          72
+        ]
+      }
+    },
+    {
+      "activities": 64,
+      "dataset": "fixtures/independent_nonlive_scale16_v1",
+      "dataset_hash": "7cdbc1984ff3e8192b0fa53f9f118c1546457f080604772fb02c8640eb210001",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "A/strict=true": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "B/strict=false": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "B/strict=true": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "C/strict=false": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "C/strict=true": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "activities": 5,
+      "dataset": "fixtures/independent_post_contract_precedence_v1",
+      "dataset_hash": "ab66356785225b6b5ff03d5d9495c125ae8bc88c5067cfc774a039f3bc697996",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          5
+        ],
+        "A/strict=true": [
+          5
+        ],
+        "B/strict=false": [
+          5
+        ],
+        "B/strict=true": [
+          5
+        ],
+        "C/strict=false": [
+          5
+        ],
+        "C/strict=true": [
+          5
+        ]
+      }
+    },
+    {
+      "activities": 4,
+      "dataset": "fixtures/independent_post_precedence_contract_v1",
+      "dataset_hash": "e5f513a65637232af1d6263763c5f4e437772dee505c7c611464ec188ed9d267",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          4
+        ],
+        "A/strict=true": [
+          4
+        ],
+        "B/strict=false": [
+          4
+        ],
+        "B/strict=true": [
+          4
+        ],
+        "C/strict=false": [
+          4
+        ],
+        "C/strict=true": [
+          4
+        ]
+      }
+    },
+    {
+      "activities": 4,
+      "dataset": "fixtures/independent_postselection_compaction_v1",
+      "dataset_hash": "86feaecbbc8a0f1388c44b6191ec75e9183812361b8b08bd4d9d391feec8e431",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2,
+          2
+        ],
+        "A/strict=true": [
+          2,
+          2
+        ],
+        "B/strict=false": [
+          2,
+          2
+        ],
+        "B/strict=true": [
+          2,
+          2
+        ],
+        "C/strict=false": [
+          2,
+          2
+        ],
+        "C/strict=true": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "activities": 2,
+      "dataset": "fixtures/independent_predecessor_tradeoff_v1",
+      "dataset_hash": "145752d013356aaf41be761d89c621a9fad136304b2a6284e3e5328b3e68b022",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          2
+        ],
+        "A/strict=true": [
+          2
+        ],
+        "B/strict=false": [
+          2
+        ],
+        "B/strict=true": [
+          2
+        ],
+        "C/strict=false": [
+          2
+        ],
+        "C/strict=true": [
+          2
+        ]
+      }
+    },
+    {
+      "activities": 180,
+      "dataset": "fixtures/independent_scaled_m20",
+      "dataset_hash": "3abfdf7654084890d556ad8bb456183cff215d83767dc35a342604342d25cb44",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "A/strict=true": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=false": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=true": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "C/strict=false": [
+          180
+        ],
+        "C/strict=true": [
+          180
+        ]
+      }
+    },
+    {
+      "activities": 36,
+      "dataset": "fixtures/independent_scaled_m4",
+      "dataset_hash": "d73310ef04eedbbd06514b4d78aceba77c56b6f3230be8fd4693170e8cbec7e5",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "A/strict=true": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=false": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=true": [
+          9,
+          9,
+          9,
+          9
+        ],
+        "C/strict=false": [
+          36
+        ],
+        "C/strict=true": [
+          36
+        ]
+      }
+    },
+    {
+      "activities": 360,
+      "dataset": "fixtures/independent_scaled_m40",
+      "dataset_hash": "52caa8f38fc6ee7851fbe038ca6d0e3e8dd40a3b5deabfcbadb2492803fda4f2",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "A/strict=true": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=false": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=true": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "C/strict=false": [
+          360
+        ],
+        "C/strict=true": [
+          360
+        ]
+      }
+    },
+    {
+      "activities": 72,
+      "dataset": "fixtures/independent_scaled_m8",
+      "dataset_hash": "4f28846aabe8ba18a9f2c146e441929641782b50a2728789c7cae459937defc2",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "A/strict=true": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=false": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=true": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "C/strict=false": [
+          72
+        ],
+        "C/strict=true": [
+          72
+        ]
+      }
+    },
+    {
+      "activities": 720,
+      "dataset": "fixtures/independent_scaled_m80",
+      "dataset_hash": "d006732ff7e879edcbaace50b04058da23045197380ed86ff2b0d031cc4b6fbf",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "A/strict=true": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=false": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "B/strict=true": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          9
+        ],
+        "C/strict=false": [
+          720
+        ],
+        "C/strict=true": [
+          720
+        ]
+      }
+    },
+    {
+      "activities": 9,
+      "dataset": "fixtures/independent_synthetic_v1",
+      "dataset_hash": "f7a05acc08b952b7ee40d3e9bcdb85fa6e1d203268aee6b40ff37fb687c94267",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          9
+        ],
+        "A/strict=true": [
+          9
+        ],
+        "B/strict=false": [
+          9
+        ],
+        "B/strict=true": [
+          9
+        ],
+        "C/strict=false": [
+          9
+        ],
+        "C/strict=true": [
+          9
+        ]
+      }
+    },
+    {
+      "activities": 10,
+      "dataset": "fixtures/independent_three_line_v1",
+      "dataset_hash": "71e1e417e3ede8385a5d957368f7b963fa65b89f703c859438bded342654e0da",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          10
+        ],
+        "A/strict=true": [
+          10
+        ],
+        "B/strict=false": [
+          10
+        ],
+        "B/strict=true": [
+          10
+        ],
+        "C/strict=false": [
+          10
+        ],
+        "C/strict=true": [
+          10
+        ]
+      }
+    },
+    {
+      "activities": 107,
+      "dataset": "fixtures/independent_tradeoff_holdout_v1",
+      "dataset_hash": "dab65a1834fbe1bf0745ffdf86d4d6bfb31c74fd765d72a37be10713844a8b73",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          107
+        ],
+        "A/strict=true": [
+          107
+        ],
+        "B/strict=false": [
+          107
+        ],
+        "B/strict=true": [
+          107
+        ],
+        "C/strict=false": [
+          107
+        ],
+        "C/strict=true": [
+          107
+        ]
+      }
+    },
+    {
+      "activities": 5,
+      "dataset": "fixtures/prefix_005",
+      "dataset_hash": "774a6d2f18e6377d7a39e339fdf186999311bd17e123c1c7df78747da934a95b",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          5
+        ],
+        "A/strict=true": [
+          5
+        ],
+        "B/strict=false": [
+          5
+        ],
+        "B/strict=true": [
+          5
+        ],
+        "C/strict=false": [
+          5
+        ],
+        "C/strict=true": [
+          5
+        ]
+      }
+    },
+    {
+      "activities": 10,
+      "dataset": "fixtures/prefix_010",
+      "dataset_hash": "c34b373dd733c4d9af6e2f8950c43f8c6321e59687832bc40baf944a64eb3270",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          10
+        ],
+        "A/strict=true": [
+          10
+        ],
+        "B/strict=false": [
+          10
+        ],
+        "B/strict=true": [
+          10
+        ],
+        "C/strict=false": [
+          10
+        ],
+        "C/strict=true": [
+          10
+        ]
+      }
+    },
+    {
+      "activities": 20,
+      "dataset": "fixtures/prefix_020",
+      "dataset_hash": "df297f6e8ff51062d650a9f9b6ad80a5ea108258953e5701fcc9174510f7b2b1",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          20
+        ],
+        "A/strict=true": [
+          20
+        ],
+        "B/strict=false": [
+          20
+        ],
+        "B/strict=true": [
+          20
+        ],
+        "C/strict=false": [
+          20
+        ],
+        "C/strict=true": [
+          20
+        ]
+      }
+    },
+    {
+      "activities": 40,
+      "dataset": "fixtures/prefix_040",
+      "dataset_hash": "022e322188b8cdad29a937527c06327582c784b7080ee78f4fbabe73af254b30",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          40
+        ],
+        "A/strict=true": [
+          40
+        ],
+        "B/strict=false": [
+          40
+        ],
+        "B/strict=true": [
+          40
+        ],
+        "C/strict=false": [
+          40
+        ],
+        "C/strict=true": [
+          40
+        ]
+      }
+    },
+    {
+      "activities": 50,
+      "dataset": "fixtures/prefix_050",
+      "dataset_hash": "572b91be68e48d7b8b69a28f6b1ecbfc5f3e2fbaaf3b522b3b0f11598fcbffb5",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          50
+        ],
+        "A/strict=true": [
+          50
+        ],
+        "B/strict=false": [
+          50
+        ],
+        "B/strict=true": [
+          50
+        ],
+        "C/strict=false": [
+          50
+        ],
+        "C/strict=true": [
+          50
+        ]
+      }
+    },
+    {
+      "activities": 1,
+      "dataset": "fixtures/single_a001",
+      "dataset_hash": "932b9ee34bcda1bd6b9f94ec0e76a2c17b12dfb75c9fbacde06c1e523c152f07",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          1
+        ],
+        "A/strict=true": [
+          1
+        ],
+        "B/strict=false": [
+          1
+        ],
+        "B/strict=true": [
+          1
+        ],
+        "C/strict=false": [
+          1
+        ],
+        "C/strict=true": [
+          1
+        ]
+      }
+    },
+    {
+      "activities": 54,
+      "dataset": "fixtures/structural_demand_seed_20260920",
+      "dataset_hash": "b894fa5b4b570c22da3e17a57dc06dbb07279bdac8e79521d167b6eaee7bd7b0",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          54
+        ],
+        "A/strict=true": [
+          54
+        ],
+        "B/strict=false": [
+          54
+        ],
+        "B/strict=true": [
+          54
+        ],
+        "C/strict=false": [
+          54
+        ],
+        "C/strict=true": [
+          54
+        ]
+      }
+    },
+    {
+      "activities": 54,
+      "dataset": "fixtures/structural_seed_20260919",
+      "dataset_hash": "c9cc5779a332946c0c2323a18ca69e138ed04af577c1f2f56df3e2ad63ebebee",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          54
+        ],
+        "A/strict=true": [
+          54
+        ],
+        "B/strict=false": [
+          54
+        ],
+        "B/strict=true": [
+          54
+        ],
+        "C/strict=false": [
+          54
+        ],
+        "C/strict=true": [
+          54
+        ]
+      }
+    },
+    {
+      "activities": 13,
+      "dataset": "fixtures/targeted_b_excess_budget_v1",
+      "dataset_hash": "2656297d4f3a88d05292fded20b58edc413158e8db294b098ac60d4af89bdb57",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          13
+        ],
+        "A/strict=true": [
+          13
+        ],
+        "B/strict=false": [
+          13
+        ],
+        "B/strict=true": [
+          13
+        ],
+        "C/strict=false": [
+          13
+        ],
+        "C/strict=true": [
+          13
+        ]
+      }
+    },
+    {
+      "activities": 54,
+      "dataset": "current-problem-statement/PS1/01_data",
+      "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+      "policy_component_sizes": {
+        "A/strict=false": [
+          54
+        ],
+        "A/strict=true": [
+          54
+        ],
+        "B/strict=false": [
+          54
+        ],
+        "B/strict=true": [
+          54
+        ],
+        "C/strict=false": [
+          54
+        ],
+        "C/strict=true": [
+          54
+        ]
+      }
+    }
+  ],
+  "policy_case_count": 336,
+  "portal_used": false,
+  "scope": "encoded local coupling audit; not organizer-validator equivalence",
+  "violation_count": 0,
+  "violations": []
+}

@@ -1838,3 +1838,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Independent coupling derivation: same contract, direct predecessor, shared work location, directional work-versus-blocked closure, strict buffer intersection, same-line Scenario C window, and Live all-line Scenario C window. Do not call `_activity_interaction_reasons` when deciding whether a pair must remain connected.
 - Recorded outputs: dataset hash/activity count, component-size vectors for six policies, coupling observation counts, repeated pair-check count, and every boundary violation. The script exits nonzero if any coupled pair crosses components and records `portal_used=false`.
 - Precommit boundary: script and protocol are committed before corpus counts or pass/fail are observed. A failure will be retained; fixtures, rules, and filtering will not be changed to make it pass.
+
+### E195: Full corpus finds zero encoded decomposition boundary violations
+
+- Timestamp: 2026-09-19 13:08:28 +08.
+- Frozen execution: 56 complete input datasets including the public data, six scenario/policy combinations each, 336 policy cases, and 3,160,962 activity-pair checks with repetition.
+- Observed coupling counts: 512,442 directional closure; 1,680 predecessor; 4,746 same-contract; 281,048 Live all-line C-window; 534,136 same-line C-window; 479,526 shared-location group/supply; and 15,651 strict-buffer interactions.
+- Result: zero coupled pairs cross a computed component boundary. The machine-readable artifact records every dataset hash, activity count, six component-size vectors, observation totals, empty violation list, inventory version, and `portal_used=false`.
+- Drift guard: a regression recomputes the set of fixture directories containing all eight input files and requires exact equality with the artifact's dataset set. Fixture additions therefore require an explicit audit rerun rather than silently falling outside coverage.
+- Release replay: 190/190 regressions pass in 10.265 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true.
+- Boundary: millions of checks increase structural coverage but do not create semantic independence from reused topology/closure helpers or prove undisclosed organizer constraints.

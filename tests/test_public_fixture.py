@@ -53,7 +53,7 @@ from nebula_ps1.idle_compact import (
     _predicted_objective as predict_idle_compaction_objective,
     best_idle_week_compaction_sequence,
 )
-from nebula_ps1.instance import load_instance
+from nebula_ps1.instance import FILES, load_instance
 from nebula_ps1.objective import (
     ACTIVITY_NUDGE,
     CONTRACT_WEIGHT,
@@ -1071,6 +1071,29 @@ class PublicFixtureTests(unittest.TestCase):
             generated["coupling_edge_reasons"],
             sorted(DECOMPOSITION_COUPLING_INVENTORY),
         )
+
+    def test_decomposition_corpus_audit_covers_current_complete_inputs(self) -> None:
+        report = json.loads(
+            (ROOT / "artifacts" / "decomposition-coupling-corpus-audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        required = set(FILES.values())
+        expected = {
+            str(path.relative_to(ROOT))
+            for path in (ROOT / "fixtures").iterdir()
+            if path.is_dir() and required <= {child.name for child in path.iterdir()}
+        }
+        expected.add("current-problem-statement/PS1/01_data")
+        recorded = {item["dataset"] for item in report["datasets"]}
+        self.assertEqual(recorded, expected)
+        self.assertEqual(report["dataset_count"], 56)
+        self.assertEqual(report["policy_case_count"], 336)
+        self.assertEqual(report["activity_pairs_checked_with_repetition"], 3_160_962)
+        self.assertEqual(report["violation_count"], 0)
+        self.assertEqual(report["violations"], [])
+        self.assertFalse(report["portal_used"])
+        self.assertTrue(all(report["coupling_observation_counts"].values()))
 
     def test_interchange_holdout_c_is_exact_and_policy_stable(self) -> None:
         data = ROOT / "fixtures" / "independent_interchange_holdout_v1"
