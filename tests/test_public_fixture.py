@@ -304,6 +304,29 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertFalse((data / "RESULTS.csv").exists())
 
+    def test_permuted_heterogeneous_b_fixture_is_frozen_before_solving(self) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_b_v1_permuted_s23"
+        instance = load_instance(data)
+        self.assertEqual(
+            instance.dataset_hash,
+            "2aad7853acbd3dfc945d8b8600bcf3d44e7776c95b7c760f9e949080e6dc71f5",
+        )
+        self.assertEqual(
+            (len(instance.activities), len(instance.projects), len(instance.lines)),
+            (42, 40, 7),
+        )
+        self.assertEqual(_scenario_b_workload_deadline_deficits(instance), ())
+        components = independent_activity_components(
+            instance,
+            "B",
+            forbid_buffer_overlap=True,
+        )
+        self.assertEqual(
+            sorted(map(len, components), reverse=True),
+            [13, 7, 7, 5, 3, 2, 2, 2, 1],
+        )
+        self.assertFalse((data / "RESULTS.csv").exists())
+
     def test_decomposition_recognizes_checked_zero_floor_proof_provenance(self) -> None:
         telemetry = {
             "primary_score_proven_optimal": True,
@@ -795,6 +818,12 @@ class PublicFixtureTests(unittest.TestCase):
             / "independent_heterogeneous_nonlive_v1_a_decomposed_seed1_w1"
         )
         audit = submission.with_name(f"{submission.name}_audit")
+        monolithic = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_nonlive_v1_a_monolithic_seed1_w1"
+        )
+        monolithic_audit = monolithic.with_name(f"{monolithic.name}_audit")
         b_audit = (
             ROOT
             / "runs"
@@ -807,6 +836,12 @@ class PublicFixtureTests(unittest.TestCase):
         report = json.loads(
             (audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
         )
+        monolithic_report = json.loads(
+            (monolithic_audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        monolithic_evaluation = evaluate_submission(instance, monolithic, "A")
+        monolithic_independent = independently_score(data, monolithic)
+        monolithic_access, monolithic_occupancy, _ = load_submission(monolithic)
         failure = json.loads(
             (
                 b_audit
@@ -839,6 +874,34 @@ class PublicFixtureTests(unittest.TestCase):
                 for component in report["components"]
             ),
             16850.4,
+        )
+        self.assertEqual(monolithic_evaluation.objective_score, 16850.4)
+        self.assertEqual(monolithic_independent.objective_score, 16850.4)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                monolithic_access,
+                monolithic_occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertTrue(
+            monolithic_report["verification_telemetry"][
+                "primary_score_proven_optimal"
+            ]
+        )
+        self.assertEqual(
+            monolithic_report["verification_telemetry"]["best_bound"],
+            16850.4,
+        )
+        self.assertLess(
+            report["outer_wall_time_seconds"],
+            monolithic_report["outer_wall_time_seconds"],
+        )
+        self.assertNotEqual(
+            evaluation.submission_hash,
+            monolithic_evaluation.submission_hash,
         )
         for activity_id in ("MPAMX1", "MPAMX2"):
             activity = instance.activities[activity_id]

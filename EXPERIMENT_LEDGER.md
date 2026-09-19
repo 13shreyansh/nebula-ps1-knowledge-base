@@ -1702,3 +1702,18 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Monolithic control: the same one-worker 3/2/5/10-second policy independently proves B=`349` with a different valid schedule in 0.456 seconds, while decomposition takes 5.162 seconds. The direct heuristic itself is infeasible, but bridge-safe fallback and verification prove the optimum.
 - Decision: preserve decomposition for cases where it improves score/proof or isolates failures, but do not make it the default for B. The observed monolithic speed advantage is a single-host result, yet it decisively falsifies any blanket decomposition-speed claim on this input.
 - Official boundary: this is synthetic exactness, not an official score change. No portal interaction occurred.
+
+### E180: Heterogeneous A monolithic control matches the additive proof
+
+- Timestamp: 2026-09-19 12:39:38 +08.
+- Control: the same frozen 28-activity input and one-worker 3/2/5/10-second policy are solved monolithically under strict A. It produces a different valid schedule, and both scorers return A=`16850.4` with zero strict conflicts.
+- Proof: full-instance verification reports bound/score `16850.4` and primary optimality. This independently matches the eight-component additive proof.
+- Timing: stored outer wall times are 0.280 seconds decomposed and 0.937 seconds monolithic. This one-host, one-order result is modest evidence that decomposition can help A, not a universal ratio.
+- Routing implication: component count alone is insufficient. On frozen evidence, decomposition helps or rescues A/C but hurts B. Keep it selective or as a validated parallel candidate; do not displace a valid monolithic incumbent based only on structure.
+
+### E181: Heterogeneous B identifier/order permutation precommit
+
+- Timestamp: 2026-09-19 12:40:40 +08.
+- Transform: the existing generic metamorphic tool bijectively permutes all line, station, sector, contract, and activity identifiers and shuffles every raw table with seed 23. Dates, constraints, types, priorities, supplies, and buffer rules are unchanged.
+- Frozen invariants: dataset hash `2aad7853…`, 42 activities, 40 contracts, seven lines, zero simple B workload-deadline deficits, and nine strict-B components sized 13/7/7/5/3/2/2/2/1.
+- Falsification target: the unchanged monolithic B policy must retain feasible/proved score `349` despite lexical and row-order changes. The transformed input is committed before its solver output; a different score, failure, or lost proof will be preserved.

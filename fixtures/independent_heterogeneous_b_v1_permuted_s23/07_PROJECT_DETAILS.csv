@@ -1,0 +1,41 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+K527,ICB Irregular coupled IC23,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,C,1
+K509,SYN Independent synthetic K104,2039-05-28,Synthetic,SYN Non-live (Consist),2,2040-06-17,2040-03-04,1,C,2
+K539,ICB Irregular coupled IPC4,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,PC,1
+K520,SYN Independent synthetic K102,2039-05-28,Synthetic,SYN Non-live (Consist),2,2040-06-17,2040-02-05,1,PC,2
+K521,CAP B excess budget GPC3,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,PC,1
+K526,SYN Independent synthetic K108,2039-05-28,Synthetic,SYN Non-live (Others),1,2040-06-17,2040-02-05,1,C,2
+K534,CBD Coupled deadline BC5,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,C,1
+K517,ICB Irregular coupled IPM6,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-29,1,PM,1
+K538,ICB Irregular coupled IPC3,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,PC,1
+K531,CBD Coupled deadline BPC2,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,PC,1
+K523,SYN Independent synthetic K103,2039-05-28,Synthetic,SYN Live,1,2040-06-17,2040-02-12,1,PM,1
+K524,SYN Independent synthetic K101,2039-05-28,Synthetic,SYN Non-live (Others),3,2040-06-17,2040-01-15,1,C,2
+K536,CAP B excess budget GC34,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,C,1
+K505,CBD Coupled deadline BPC1,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,PC,1
+K529,PCP Successor and contract peer,2039-05-28,PostPrecedenceContractTradeoff,PCP Non-live (Others),1,2040-06-17,2040-02-12,1,C,1
+K518,CBD Coupled deadline BC7,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,C,1
+K540,CAP B excess budget GPC2,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,PC,1
+K503,CAP B excess budget GPC1,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,PC,1
+K507,CBD Coupled deadline BPC4,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,PC,1
+K512,ICB Irregular coupled IPC1,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,PC,1
+K532,CAP B excess budget GC45,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,C,1
+K522,CAP B excess budget GC56,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,C,1
+K506,CAP B excess budget GC67,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,C,1
+K537,PCP ECLO cost contributor,2039-05-28,PostPrecedenceContractTradeoff,PCP Non-live (Others),1,2040-06-17,2040-01-29,1,PM,1
+K528,CBD Coupled deadline BC6,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,C,1
+K508,ICB Irregular coupled IC12,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,C,1
+K513,ICB Irregular coupled IPC2,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,PC,1
+K530,CAP B excess budget GC12,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,C,1
+K533,CAP B excess budget GPC5,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,PC,1
+K504,CAP B excess budget GC23,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,C,1
+K511,PCP Footprint competitor,2039-05-28,PostPrecedenceContractTradeoff,PCP Non-live (Others),3,2040-06-17,2040-03-11,1,C,1
+K501,SYN Independent synthetic K107,2039-05-28,Synthetic,SYN Non-live (Others),2,2040-06-17,2040-04-08,1,PM,1
+K514,SYN Independent synthetic K106,2039-05-28,Synthetic,SYN Non-live (Others),3,2040-06-17,2040-04-01,1,C,2
+K510,ICB Irregular coupled IC34,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,C,1
+K515,CBD Coupled deadline BPC3,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,PC,1
+K535,CAP B excess budget GPC7,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,PC,1
+K516,CAP B excess budget GPC4,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,PC,1
+K525,CAP B excess budget GPC6,2039-05-27,BudgetCap,CAP Non-live (Consist),3,2040-01-08,2040-01-08,1,PC,1
+K519,PCP Predecessor of final contract peer,2039-05-28,PostPrecedenceContractTradeoff,PCP Non-live (Others),3,2040-06-17,2040-03-11,1,C,1
+K502,SYN Independent synthetic K105,2039-05-28,Synthetic,SYN Live,1,2040-06-17,2040-03-18,1,PC,2
