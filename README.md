@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.38
+version: 0.8.39
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -672,3 +672,4 @@ When sources conflict:
 | `0.8.36` | 2026-09-19 | Generalized checked ECLO compaction beyond three-row activities; a precommitted four-access two-line holdout improved from `32,760` to `27,320` with ranked/exhaustive agreement. |
 | `0.8.37` | 2026-09-19 | Swept serialized activities from three through seven accesses; ranked and exhaustive compaction matched at every length with dual scoring and zero prediction mismatches. |
 | `0.8.38` | 2026-09-19 | Added checked idle-week normalization before ECLO compaction, including an equal-score seed that unlocks a frozen C=`910` schedule to C=`10` without promoting the intermediate. |
+| `0.8.39` | 2026-09-19 | Extended checked idle-week normalization to leading empty weeks; a precommitted delayed source now composes from C=`27,300` through `23,660` to strict-clean C=`18,220`. |

@@ -128,7 +128,7 @@ def best_idle_week_compaction_sequence(
     forbid_buffer_overlap: bool = False,
     allow_equal: bool = False,
 ) -> tuple[Path | None, Evaluation | None, dict[str, object]]:
-    """Delete globally idle internal weeks through checked strict improvements."""
+    """Delete globally idle weeks before the last occupied week through checks."""
 
     source = Path(source_dir)
     root = Path(candidates_dir)
@@ -144,12 +144,9 @@ def best_idle_week_compaction_sequence(
     while True:
         access, _, _ = load_submission(current_dir)
         occupied = sorted({row.week for row in access})
+        occupied_set = set(occupied)
         gaps = (
-            [
-                week
-                for week in range(occupied[0], occupied[-1])
-                if week not in set(occupied)
-            ]
+            [week for week in range(1, occupied[-1]) if week not in occupied_set]
             if occupied
             else []
         )
@@ -235,7 +232,7 @@ def best_idle_week_compaction_sequence(
                 break
         if round_best_dir is None or round_best is None:
             round_record["reason"] = (
-                "no internal idle week"
+                "no removable idle week"
                 if not gaps
                 else "no checked idle-week shift improved the source"
             )

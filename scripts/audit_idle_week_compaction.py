@@ -18,6 +18,8 @@ DATA = ROOT / "fixtures" / "independent_idle_week_v1"
 SOURCE = ROOT / "fixtures" / "independent_idle_week_v1_source_c"
 UNLOCK_DATA = ROOT / "fixtures" / "independent_idle_unlock_v1"
 UNLOCK_SOURCE = ROOT / "fixtures" / "independent_idle_unlock_v1_source_c"
+LEADING_DATA = ROOT / "fixtures" / "independent_leading_idle_v1"
+LEADING_SOURCE = ROOT / "fixtures" / "independent_leading_idle_v1_source_c"
 
 
 def main() -> None:
@@ -109,6 +111,40 @@ def main() -> None:
         unlock_independent_score = independently_score(
             UNLOCK_DATA, unlock_final_dir
         ).objective_score
+
+        leading_instance = load_instance(LEADING_DATA)
+        leading_source = evaluate_submission(leading_instance, LEADING_SOURCE, "C")
+        leading_idle_dir, leading_idle, leading_idle_report = (
+            best_idle_week_compaction_sequence(
+                leading_instance,
+                LEADING_SOURCE,
+                scratch / "leading_idle",
+                forbid_buffer_overlap=True,
+                allow_equal=True,
+            )
+        )
+        if leading_idle_dir is None or leading_idle is None:
+            raise RuntimeError("leading idle week was not removed")
+        leading_final_dir, leading_final, leading_eclo_report = (
+            best_serialized_eclo_compaction_sequence(
+                leading_instance,
+                leading_idle_dir,
+                scratch / "leading_eclo",
+                forbid_buffer_overlap=True,
+            )
+        )
+        if leading_final_dir is None or leading_final is None:
+            raise RuntimeError("leading idle normalization did not unlock ECLO")
+        leading_access, leading_occupancy, _ = load_submission(leading_final_dir)
+        leading_strict_conflicts = screen_closures(
+            leading_instance,
+            leading_access,
+            leading_occupancy,
+            forbid_buffer_overlap=True,
+        )
+        leading_independent_score = independently_score(
+            LEADING_DATA, leading_final_dir
+        ).objective_score
     payload = {
         "dataset_hash": instance.dataset_hash,
         "source_score": source.objective_score,
@@ -147,6 +183,19 @@ def main() -> None:
             "final_independent_score": unlock_independent_score,
             "final_strict_conflicts": len(unlock_strict_conflicts),
             "eclo_promotions": unlock_eclo_report["promotions"],
+        },
+        "leading_idle": {
+            "dataset_hash": leading_instance.dataset_hash,
+            "source_score": leading_source.objective_score,
+            "source_submission_hash": leading_source.submission_hash,
+            "idle_score": leading_idle.objective_score,
+            "idle_submission_hash": leading_idle.submission_hash,
+            "idle_report": leading_idle_report,
+            "final_score": leading_final.objective_score,
+            "final_submission_hash": leading_final.submission_hash,
+            "final_independent_score": leading_independent_score,
+            "final_strict_conflicts": len(leading_strict_conflicts),
+            "eclo_promotions": leading_eclo_report["promotions"],
         },
     }
     output = ROOT / "runs" / "idle_week_compaction_audit.json"

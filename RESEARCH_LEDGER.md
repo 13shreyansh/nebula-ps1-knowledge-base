@@ -747,9 +747,19 @@ Confidence labels:
 - **Status:** Confirmed on two precommitted idle-week holdouts and integrated before ECLO compaction in both production controllers.
 - **Finding:** Deleting a globally empty week preserves access rows, ECLO flags, possession groups, workload, and relative order while shifting later work left. On the delayed holdout it strictly improves C=`26,390` to `23,660`, after which ECLO reaches `18,220`. On the counterexample, deleting week 4 leaves C=`910` unchanged but makes the schedule contiguous; ECLO then reaches strict-clean C=`10`.
 - **Selection rule:** A fully checked equal-score normalization may be used only as an internal ECLO seed. It is not promoted by itself. The protected incumbent changes only when the composed final artifact is strictly better and fully checked.
-- **Predictor hardening:** The ranker always serializes at least the first gap. Any predicted-versus-serialized mismatch disables early stopping and forces evaluation of all remaining gaps. Six gaps across 19 retained C incumbents were materially checked with zero mismatches and zero promotions.
-- **Limitation:** Only globally empty internal weeks are removed. Local idle capacity and partial left shifts remain solver responsibilities.
+- **Predictor hardening:** The ranker always serializes at least the first gap on every affected schedule. Any predicted-versus-serialized mismatch disables early stopping and forces evaluation of all remaining gaps.
+- **Limitation:** Only globally empty weeks before the last occupied week are removed. Local idle capacity and partial left shifts remain solver responsibilities.
 - **Confidence:** High in the two compound cases, retained-corpus no-regression result, and fail-safe selection boundary.
+
+### `R092` Leading idle time is a removable checked normalization
+
+- **Status:** Confirmed on a precommitted leading-idle holdout and audited against all 19 retained Scenario C incumbents.
+- **Finding:** A source delayed by a globally empty week 1 scores C=`27,300`. Removing that week produces the exact previously audited C=`23,660` state; two checked ECLO promotions then reach C=`18,220`.
+- **Evidence:** The main and independent scorers agree at `18,220`; the strict closure screen reports zero conflicts. The intermediate hash equals the independently frozen gap-free source hash, so the transformation restores a known state rather than exploiting score-only coincidence.
+- **No-regression audit:** The generalized operator sees nine removable weeks across eight retained schedules, serializes one best-ranked candidate for each affected schedule, reports zero prediction mismatches, and promotes none.
+- **Integrity:** The delayed source was committed before the operator was widened. Candidate acceptance still depends on complete-file validation, and the official incumbents and portal quotas remain unchanged.
+- **Limitation:** The evidence covers global empty-week deletion, not left-shifting one activity into capacity that is only locally idle.
+- **Confidence:** High in leading-gap detection, composition, and incumbent preservation.
 
 ## Current method candidates
 

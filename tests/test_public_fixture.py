@@ -1100,8 +1100,8 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(audit["eclo_promotions"], 2)
         self.assertEqual(audit["retained_case_count"], 19)
         self.assertEqual(audit["retained_promoted_count"], 0)
-        self.assertEqual(audit["retained_total_initial_gaps"], 6)
-        self.assertEqual(audit["retained_total_candidates_checked"], 6)
+        self.assertEqual(audit["retained_total_initial_gaps"], 9)
+        self.assertEqual(audit["retained_total_candidates_checked"], 8)
         unlock = audit["equal_score_unlock"]
         self.assertEqual(unlock["source_score"], 910.0)
         self.assertEqual(unlock["idle_score"], 910.0)
@@ -1110,6 +1110,14 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(unlock["final_independent_score"], 10.0)
         self.assertEqual(unlock["final_strict_conflicts"], 0)
         self.assertEqual(unlock["eclo_promotions"], 1)
+        leading = audit["leading_idle"]
+        self.assertEqual(leading["source_score"], 27300.0)
+        self.assertEqual(leading["idle_score"], 23660.0)
+        self.assertTrue(leading["idle_report"]["strict_improvement"])
+        self.assertEqual(leading["final_score"], 18220.0)
+        self.assertEqual(leading["final_independent_score"], 18220.0)
+        self.assertEqual(leading["final_strict_conflicts"], 0)
+        self.assertEqual(leading["eclo_promotions"], 2)
 
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"

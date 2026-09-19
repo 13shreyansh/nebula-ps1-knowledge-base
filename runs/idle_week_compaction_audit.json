@@ -1,7 +1,7 @@
 {
   "dataset_hash": "b97377374407c80a91b4fa8f3f16dce00ca0204b3a0b88a6cc28cc30287bbc85",
   "eclo_promotions": 2,
-  "elapsed_seconds": 0.226213,
+  "elapsed_seconds": 0.231835,
   "equal_score_unlock": {
     "dataset_hash": "4949748995b83d5db1700476f176812fbbb3b679acf31f218206b42d750b878c",
     "eclo_promotions": 1,
@@ -13,7 +13,7 @@
       "allow_equal": true,
       "candidates_checked": 1,
       "promotions": 1,
-      "reason": "no internal idle week",
+      "reason": "no removable idle week",
       "rounds": [
         {
           "candidates_checked": 1,
@@ -26,7 +26,7 @@
         {
           "candidates_checked": 0,
           "gap_count": 0,
-          "reason": "no internal idle week",
+          "reason": "no removable idle week",
           "selected_gap_week": null,
           "selected_score": null,
           "source_score": 910.0
@@ -51,7 +51,7 @@
     "allow_equal": false,
     "candidates_checked": 1,
     "promotions": 1,
-    "reason": "no internal idle week",
+    "reason": "no removable idle week",
     "rounds": [
       {
         "candidates_checked": 1,
@@ -64,7 +64,7 @@
       {
         "candidates_checked": 0,
         "gap_count": 0,
-        "reason": "no internal idle week",
+        "reason": "no removable idle week",
         "selected_gap_week": null,
         "selected_score": null,
         "source_score": 23660.0
@@ -79,6 +79,48 @@
   },
   "idle_score": 23660.0,
   "idle_submission_hash": "46fef54e61ea734ce931032d3b2ecdf0819dbdcd7cbc25e7345bcc4759c67d4c",
+  "leading_idle": {
+    "dataset_hash": "b97377374407c80a91b4fa8f3f16dce00ca0204b3a0b88a6cc28cc30287bbc85",
+    "eclo_promotions": 2,
+    "final_independent_score": 18220.0,
+    "final_score": 18220.0,
+    "final_strict_conflicts": 0,
+    "final_submission_hash": "126952457188299ce1498e68a386131814b5e28403b14b04d651897c46f569d0",
+    "idle_report": {
+      "allow_equal": true,
+      "candidates_checked": 1,
+      "promotions": 1,
+      "reason": "no removable idle week",
+      "rounds": [
+        {
+          "candidates_checked": 1,
+          "gap_count": 1,
+          "reason": "",
+          "selected_gap_week": 1,
+          "selected_score": 23660.0,
+          "source_score": 27300.0
+        },
+        {
+          "candidates_checked": 0,
+          "gap_count": 0,
+          "reason": "no removable idle week",
+          "selected_gap_week": null,
+          "selected_score": null,
+          "source_score": 23660.0
+        }
+      ],
+      "score_prediction_mismatches": 0,
+      "score_prediction_untrusted": false,
+      "selected_score": 23660.0,
+      "selected_submission_hash": "46fef54e61ea734ce931032d3b2ecdf0819dbdcd7cbc25e7345bcc4759c67d4c",
+      "source_score": 27300.0,
+      "strict_improvement": true
+    },
+    "idle_score": 23660.0,
+    "idle_submission_hash": "46fef54e61ea734ce931032d3b2ecdf0819dbdcd7cbc25e7345bcc4759c67d4c",
+    "source_score": 27300.0,
+    "source_submission_hash": "9e05eaf02a51d55621b6e7d155c199dfa22b1f86809b83aa82f04706d29b45c8"
+  },
   "retained_case_count": 19,
   "retained_cases": [
     {
@@ -228,6 +270,15 @@
     {
       "candidates_checked": 1,
       "case": "independent_footprint_dependency_C",
+      "initial_gap_count": 2,
+      "promotions": 0,
+      "score_prediction_mismatches": 0,
+      "selected_score": null,
+      "source_score": 0.0
+    },
+    {
+      "candidates_checked": 1,
+      "case": "independent_post_precedence_contract_C",
       "initial_gap_count": 1,
       "promotions": 0,
       "score_prediction_mismatches": 0,
@@ -235,18 +286,9 @@
       "source_score": 0.0
     },
     {
-      "candidates_checked": 0,
-      "case": "independent_post_precedence_contract_C",
-      "initial_gap_count": 0,
-      "promotions": 0,
-      "score_prediction_mismatches": 0,
-      "selected_score": null,
-      "source_score": 0.0
-    },
-    {
-      "candidates_checked": 0,
+      "candidates_checked": 1,
       "case": "independent_post_contract_precedence_C",
-      "initial_gap_count": 0,
+      "initial_gap_count": 1,
       "promotions": 0,
       "score_prediction_mismatches": 0,
       "selected_score": null,
@@ -254,8 +296,8 @@
     }
   ],
   "retained_promoted_count": 0,
-  "retained_total_candidates_checked": 6,
-  "retained_total_initial_gaps": 6,
+  "retained_total_candidates_checked": 8,
+  "retained_total_initial_gaps": 9,
   "source_independent_score": 26390.0,
   "source_score": 26390.0,
   "source_submission_hash": "4b377ce528f2f9441f2ad7744231189b70e3a51cfc59ec80b9e74304e4478c32"
