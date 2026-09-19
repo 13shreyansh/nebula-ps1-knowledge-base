@@ -1589,3 +1589,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Precommit: transform the already frozen input with seed 19 using the existing generic renamer. Line, station, sector, contract, and activity identifiers are bijectively permuted; every input table's row order is independently shuffled. Dataset hash is `2a5f1ad8…`.
 - Invariants before solving: three lines, six activities, and two topology-derived Live crossover activities remain. No answer key or output exists.
 - Falsification target: if the earlier exact success depends on lexical identifiers, input row order, or public-like naming, the unchanged production recipe may return a different score, fail feasibility, or lose the proof. The transformed input is committed before that result is observed.
+
+### E167: Permuted interchange holdout preserves the exact result
+
+- Timestamp: 2026-09-19 12:09:30 +08.
+- Recipe: unchanged strict five-seed, one-worker 3/2/5/10-second staged policy on precommitted dataset `2a5f1ad8…`; no oracle or sample hint.
+- Result: all five heuristic attempts return C=`207.4`. Full verification proves score/bound `207.4` with 528 variables, 1,445 constraints, and full-instance scope in 0.018 seconds. Output hash `9a7b7e41…` differs from the source fixture as identifier changes require.
+- Cross-check: both scorers agree on delay `197.4`, excess `0`, ECLO `2`, total `207.4`; the strict closure screen is clean.
+- Interpretation: no observed dependence on lexical identifiers or CSV row order for this case. This is metamorphic generalization evidence, not an official score change or broad distributional guarantee.

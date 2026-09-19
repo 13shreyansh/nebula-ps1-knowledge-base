@@ -1179,6 +1179,14 @@ Confidence labels:
 - **Interpretation:** The portfolio handles one non-public, topology-derived Live interaction without an oracle hint or public identifiers. This is evidence against direct public-topology memorization, not evidence that all topology regimes generalize.
 - **Confidence:** Very high in this fixture's local optimum and policy equivalence; medium-low in broader hidden-topology generalization; low in portal-only semantics.
 
+### `R139` Interchange result is invariant to identifier and row-order permutation
+
+- **Status:** Passed after transformed-input commit `d72d62a`.
+- **Falsification:** The generic renamer bijectively changes every line, station, sector, contract, and activity identifier and independently shuffles all eight input tables. The topology and rules remain isomorphic, but lexical and iteration order change.
+- **Result:** All five heuristic seeds still reach C=`207.4`; strict full-instance verification proves bound `207.4`. Both scorers reproduce delay `197.4`, zero excess, and two ECLO rows, with no strict conflicts.
+- **Evidence boundary:** Output hashes differ because identifiers differ, as required. Equal score and proof refute this one ordering/identifier shortcut; they do not rule out dependence on other generator regularities or larger-scale search order.
+- **Confidence:** Very high in this metamorphic invariance; medium-low in general hidden-instance robustness.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
