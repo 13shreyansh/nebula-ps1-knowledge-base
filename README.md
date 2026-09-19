@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.89
+version: 0.8.90
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -742,3 +742,4 @@ When sources conflict:
 | `0.8.87` | 2026-09-19 | Permuted every identifier and input-row order in the Live-interchange holdout before solving; five seeds and exact verification preserve C=`207.4`. |
 | `0.8.88` | 2026-09-19 | Scaled the precommitted Live-interchange regime to 48 activities; fast construction fails, while the sound verifier recovers and proves C=`1659.2`. |
 | `0.8.89` | 2026-09-19 | Rejected a location-only decomposition proof after finding the global Live-interchange C-window dependency; corrected the graph and matched a separate monolithic C=`9120` proof on a genuine two-component control. |
+| `0.8.90` | 2026-09-19 | On a precommitted 64-activity non-Live scale holdout, corrected decomposition proves C=`145920` in 1.89 seconds; the same-budget monolith returns unproved C=`234780`, and even a 30-second monolithic replay cannot prove the decomposed incumbent. |

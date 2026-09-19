@@ -176,6 +176,18 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(len(components), 32)
         self.assertTrue(all(len(component) == 2 for component in components))
 
+    def test_public_instance_is_one_component_under_every_policy(self) -> None:
+        for scenario in "ABC":
+            for strict in (False, True):
+                with self.subTest(scenario=scenario, strict=strict):
+                    components = independent_activity_components(
+                        self.instance,
+                        scenario,
+                        forbid_buffer_overlap=strict,
+                    )
+                    self.assertEqual(len(components), 1)
+                    self.assertEqual(set(components[0]), set(self.instance.activities))
+
     def test_decomposed_solver_matches_monolithic_exact_two_line_result(self) -> None:
         data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
         monolithic = (
@@ -445,6 +457,83 @@ class PublicFixtureTests(unittest.TestCase):
             report["verification_telemetry"]["primary_bound_scope"],
             "full_instance",
         )
+
+    def test_nonlive_scale_decomposition_proves_better_than_same_budget_monolith(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_nonlive_scale16_v1"
+        submission = (
+            ROOT
+            / "runs"
+            / "independent_nonlive_scale16_v1_c_decomposed_seed1_w1"
+        )
+        audit = submission.with_name(f"{submission.name}_audit")
+        monolithic_audit = (
+            ROOT
+            / "runs"
+            / "independent_nonlive_scale16_v1_c_monolithic_seed1_w1_audit"
+        )
+        resumed = (
+            ROOT
+            / "runs"
+            / "independent_nonlive_scale16_v1_c_monolithic_resume_seed2_w1"
+        )
+        resumed_audit = resumed.with_name(f"{resumed.name}_audit")
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, submission, "C")
+        independent = independently_score(data, submission)
+        access, occupancy, _ = load_submission(submission)
+        report = json.loads(
+            (audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        monolithic = json.loads(
+            (monolithic_audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        resumed_report = json.loads(
+            (resumed_audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 145920.0)
+        self.assertEqual(independent.objective_score, 145920.0)
+        self.assertEqual(evaluation.priority_weighted_score, 145600.0)
+        self.assertEqual(evaluation.excess_access_nights_total, 0)
+        self.assertEqual(evaluation.eclo_nights_total, 64)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertEqual(report["component_count"], 32)
+        self.assertTrue(report["global_optimality_proved_by_additivity"])
+        self.assertTrue(
+            all(
+                component["selected_objective_score"] == 4560.0
+                and component["verification_telemetry"][
+                    "primary_score_proven_optimal"
+                ]
+                and component["verification_telemetry"]["primary_bound_scope"]
+                == "full_instance"
+                and component["verification_telemetry"]["best_bound"] == 4560.0
+                for component in report["components"]
+            )
+        )
+        self.assertGreater(monolithic["selected_objective_score"], 145920.0)
+        self.assertFalse(
+            monolithic["verification_telemetry"]["primary_score_proven_optimal"]
+        )
+        self.assertEqual(resumed_report["selected_objective_score"], 145920.0)
+        self.assertFalse(
+            resumed_report["verification_telemetry"]["primary_score_proven_optimal"]
+        )
+        for name in SUBMISSION_FILES:
+            self.assertEqual(
+                (submission / name).read_bytes(),
+                (resumed / name).read_bytes(),
+            )
 
     def test_independent_synthetic_oracle_is_valid_without_public_identifiers(self) -> None:
         synthetic_root = ROOT / "fixtures" / "independent_synthetic_v1"

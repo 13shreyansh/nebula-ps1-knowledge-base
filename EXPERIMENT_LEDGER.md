@@ -1640,3 +1640,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Structure: dataset hash `7cdbc198…`, 64 activities, 32 lines, and 32 two-activity components under strict Scenario C. There are no Live crossover activities, so the all-line Live dependency that invalidated E170 does not join the components.
 - Falsification target: corrected decomposition must solve and prove every component, merge all CSVs without loss or duplication, reproduce the additive score under both scorers, remain strict-clean, and agree with a separate monolithic exact solve. Failure will be retained rather than repaired by redesigning the input.
 - Measurement boundary: repeated copies test scaling and bookkeeping, not heterogeneous topology generalization. Single-run wall time is secondary to proof and output agreement.
+
+### E173: Corrected decomposition proves the 64-activity scale optimum
+
+- Timestamp: 2026-09-19 12:24:00 +08.
+- Frozen input: commit `7f7a5c6`, dataset hash `7cdbc198…`, 64 activities, 32 two-activity components, one worker, strict buffers, seed 1, and 3/2/5/10-second stage limits with one heuristic and one fallback attempt.
+- Decomposed result: every component independently proves C=`4560`; the merged schedule is hard-feasible, strict-clean, and dual-scored at delay `145600` + zero excess + 64 ECLO rows × 5 = C=`145920`. All 32 component bounds equal their selected scores, so the corrected additive proof is complete. Outer wall time is 1.890 seconds.
+- Same-budget monolith: returns a valid but unproved C=`234780` in 17.812 seconds. Its full-instance verifier stops after 10 seconds with bound `36834.7`; this is not a proof of the worse incumbent and is not selected over the decomposed result.
+- Stronger challenge: a separate monolithic resume starts from the checked decomposed incumbent, disables fresh heuristics, and runs verification for 30 seconds. It preserves the exact C=`145920` bytes but still cannot prove them after 1,430,184 branches. This failure does not weaken the additive proof; it shows why exploiting genuine separability matters.
+- Public boundary: all A/B/C public-data policy combinations form one 54-activity component, so decomposition cannot improve the already protected public scores. It is a general-instance robustness/runtime gain, not an official numerical score change.
+- Limitations: the scale input repeats one motif; observed 1.89/17.81-second timing is a single-host comparison with unequal total theoretical solver allowances and must not be generalized as a universal speedup. No portal interaction occurred.

@@ -1,0 +1,3 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+R11MX2,R11KMX2,Synthetic,SEC:R11MPX:R11MPX1_R11MPX2:EB,SEC:R11MPX:R11MPX1_R11MPX2:EB,3,2035-01-01,,1
+R11MX1,R11KMX1,Synthetic,SEC:R11MPX:R11MPX1_R11MPX2:EB,SEC:R11MPX:R11MPX1_R11MPX2:EB,3,2035-01-01,,1
