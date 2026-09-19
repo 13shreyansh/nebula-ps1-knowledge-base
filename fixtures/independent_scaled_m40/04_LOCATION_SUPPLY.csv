@@ -1,0 +1,2237 @@
+location_id,location_kind,line_code,bound,supply_capacity
+SEC:LSX:J1A_J1B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J1A_J1B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J1B_N1C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J1B_N1C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N1C_N1D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N1C_N1D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N1D_N1G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N1D_N1G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N1G1_N1G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N1G1_N1G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N1G2_N1G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N1G2_N1G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N1G3_J2A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N1G3_J2A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J2A_J2B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J2A_J2B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J2B_N2C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J2B_N2C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N2C_N2D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N2C_N2D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N2D_N2G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N2D_N2G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N2G1_N2G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N2G1_N2G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N2G2_N2G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N2G2_N2G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N2G3_J3A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N2G3_J3A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J3A_J3B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J3A_J3B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J3B_N3C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J3B_N3C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N3C_N3D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N3C_N3D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N3D_N3G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N3D_N3G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N3G1_N3G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N3G1_N3G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N3G2_N3G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N3G2_N3G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N3G3_J4A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N3G3_J4A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J4A_J4B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J4A_J4B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J4B_N4C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J4B_N4C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N4C_N4D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N4C_N4D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N4D_N4G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N4D_N4G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N4G1_N4G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N4G1_N4G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N4G2_N4G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N4G2_N4G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N4G3_J5A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N4G3_J5A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J5A_J5B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J5A_J5B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J5B_N5C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J5B_N5C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N5C_N5D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N5C_N5D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N5D_N5G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N5D_N5G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N5G1_N5G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N5G1_N5G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N5G2_N5G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N5G2_N5G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N5G3_J6A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N5G3_J6A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J6A_J6B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J6A_J6B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J6B_N6C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J6B_N6C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N6C_N6D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N6C_N6D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N6D_N6G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N6D_N6G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N6G1_N6G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N6G1_N6G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N6G2_N6G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N6G2_N6G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N6G3_J7A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N6G3_J7A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J7A_J7B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J7A_J7B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J7B_N7C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J7B_N7C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N7C_N7D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N7C_N7D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N7D_N7G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N7D_N7G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N7G1_N7G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N7G1_N7G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N7G2_N7G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N7G2_N7G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N7G3_J8A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N7G3_J8A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J8A_J8B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J8A_J8B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J8B_N8C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J8B_N8C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N8C_N8D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N8C_N8D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N8D_N8G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N8D_N8G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N8G1_N8G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N8G1_N8G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N8G2_N8G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N8G2_N8G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N8G3_J9A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N8G3_J9A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J9A_J9B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J9A_J9B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J9B_N9C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J9B_N9C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N9C_N9D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N9C_N9D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N9D_N9G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N9D_N9G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N9G1_N9G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N9G1_N9G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N9G2_N9G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N9G2_N9G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N9G3_J10A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N9G3_J10A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J10A_J10B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J10A_J10B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J10B_N10C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J10B_N10C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N10C_N10D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N10C_N10D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N10D_N10G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N10D_N10G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N10G1_N10G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N10G1_N10G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N10G2_N10G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N10G2_N10G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N10G3_J11A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N10G3_J11A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J11A_J11B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J11A_J11B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J11B_N11C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J11B_N11C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N11C_N11D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N11C_N11D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N11D_N11G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N11D_N11G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N11G1_N11G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N11G1_N11G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N11G2_N11G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N11G2_N11G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N11G3_J12A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N11G3_J12A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J12A_J12B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J12A_J12B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J12B_N12C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J12B_N12C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N12C_N12D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N12C_N12D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N12D_N12G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N12D_N12G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N12G1_N12G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N12G1_N12G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N12G2_N12G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N12G2_N12G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N12G3_J13A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N12G3_J13A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J13A_J13B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J13A_J13B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J13B_N13C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J13B_N13C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N13C_N13D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N13C_N13D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N13D_N13G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N13D_N13G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N13G1_N13G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N13G1_N13G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N13G2_N13G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N13G2_N13G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N13G3_J14A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N13G3_J14A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J14A_J14B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J14A_J14B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J14B_N14C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J14B_N14C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N14C_N14D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N14C_N14D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N14D_N14G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N14D_N14G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N14G1_N14G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N14G1_N14G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N14G2_N14G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N14G2_N14G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N14G3_J15A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N14G3_J15A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J15A_J15B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J15A_J15B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J15B_N15C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J15B_N15C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N15C_N15D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N15C_N15D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N15D_N15G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N15D_N15G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N15G1_N15G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N15G1_N15G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N15G2_N15G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N15G2_N15G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N15G3_J16A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N15G3_J16A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J16A_J16B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J16A_J16B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J16B_N16C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J16B_N16C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N16C_N16D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N16C_N16D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N16D_N16G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N16D_N16G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N16G1_N16G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N16G1_N16G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N16G2_N16G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N16G2_N16G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N16G3_J17A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N16G3_J17A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J17A_J17B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J17A_J17B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J17B_N17C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J17B_N17C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N17C_N17D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N17C_N17D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N17D_N17G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N17D_N17G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N17G1_N17G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N17G1_N17G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N17G2_N17G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N17G2_N17G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N17G3_J18A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N17G3_J18A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J18A_J18B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J18A_J18B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J18B_N18C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J18B_N18C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N18C_N18D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N18C_N18D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N18D_N18G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N18D_N18G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N18G1_N18G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N18G1_N18G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N18G2_N18G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N18G2_N18G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N18G3_J19A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N18G3_J19A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J19A_J19B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J19A_J19B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J19B_N19C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J19B_N19C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N19C_N19D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N19C_N19D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N19D_N19G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N19D_N19G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N19G1_N19G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N19G1_N19G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N19G2_N19G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N19G2_N19G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N19G3_J20A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N19G3_J20A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J20A_J20B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J20A_J20B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J20B_N20C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J20B_N20C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N20C_N20D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N20C_N20D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N20D_N20G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N20D_N20G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N20G1_N20G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N20G1_N20G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N20G2_N20G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N20G2_N20G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N20G3_J21A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N20G3_J21A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J21A_J21B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J21A_J21B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J21B_N21C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J21B_N21C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N21C_N21D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N21C_N21D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N21D_N21G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N21D_N21G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N21G1_N21G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N21G1_N21G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N21G2_N21G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N21G2_N21G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N21G3_J22A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N21G3_J22A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J22A_J22B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J22A_J22B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J22B_N22C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J22B_N22C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N22C_N22D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N22C_N22D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N22D_N22G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N22D_N22G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N22G1_N22G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N22G1_N22G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N22G2_N22G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N22G2_N22G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N22G3_J23A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N22G3_J23A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J23A_J23B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J23A_J23B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J23B_N23C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J23B_N23C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N23C_N23D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N23C_N23D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N23D_N23G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N23D_N23G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N23G1_N23G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N23G1_N23G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N23G2_N23G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N23G2_N23G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N23G3_J24A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N23G3_J24A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J24A_J24B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J24A_J24B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J24B_N24C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J24B_N24C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N24C_N24D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N24C_N24D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N24D_N24G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N24D_N24G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N24G1_N24G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N24G1_N24G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N24G2_N24G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N24G2_N24G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N24G3_J25A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N24G3_J25A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J25A_J25B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J25A_J25B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J25B_N25C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J25B_N25C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N25C_N25D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N25C_N25D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N25D_N25G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N25D_N25G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N25G1_N25G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N25G1_N25G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N25G2_N25G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N25G2_N25G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N25G3_J26A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N25G3_J26A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J26A_J26B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J26A_J26B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J26B_N26C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J26B_N26C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N26C_N26D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N26C_N26D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N26D_N26G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N26D_N26G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N26G1_N26G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N26G1_N26G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N26G2_N26G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N26G2_N26G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N26G3_J27A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N26G3_J27A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J27A_J27B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J27A_J27B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J27B_N27C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J27B_N27C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N27C_N27D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N27C_N27D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N27D_N27G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N27D_N27G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N27G1_N27G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N27G1_N27G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N27G2_N27G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N27G2_N27G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N27G3_J28A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N27G3_J28A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J28A_J28B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J28A_J28B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J28B_N28C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J28B_N28C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N28C_N28D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N28C_N28D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N28D_N28G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N28D_N28G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N28G1_N28G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N28G1_N28G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N28G2_N28G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N28G2_N28G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N28G3_J29A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N28G3_J29A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J29A_J29B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J29A_J29B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J29B_N29C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J29B_N29C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N29C_N29D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N29C_N29D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N29D_N29G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N29D_N29G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N29G1_N29G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N29G1_N29G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N29G2_N29G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N29G2_N29G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N29G3_J30A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N29G3_J30A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J30A_J30B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J30A_J30B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J30B_N30C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J30B_N30C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N30C_N30D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N30C_N30D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N30D_N30G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N30D_N30G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N30G1_N30G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N30G1_N30G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N30G2_N30G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N30G2_N30G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N30G3_J31A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N30G3_J31A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J31A_J31B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J31A_J31B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J31B_N31C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J31B_N31C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N31C_N31D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N31C_N31D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N31D_N31G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N31D_N31G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N31G1_N31G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N31G1_N31G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N31G2_N31G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N31G2_N31G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N31G3_J32A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N31G3_J32A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J32A_J32B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J32A_J32B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J32B_N32C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J32B_N32C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N32C_N32D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N32C_N32D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N32D_N32G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N32D_N32G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N32G1_N32G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N32G1_N32G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N32G2_N32G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N32G2_N32G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N32G3_J33A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N32G3_J33A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J33A_J33B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J33A_J33B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J33B_N33C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J33B_N33C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N33C_N33D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N33C_N33D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N33D_N33G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N33D_N33G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N33G1_N33G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N33G1_N33G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N33G2_N33G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N33G2_N33G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N33G3_J34A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N33G3_J34A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J34A_J34B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J34A_J34B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J34B_N34C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J34B_N34C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N34C_N34D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N34C_N34D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N34D_N34G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N34D_N34G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N34G1_N34G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N34G1_N34G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N34G2_N34G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N34G2_N34G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N34G3_J35A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N34G3_J35A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J35A_J35B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J35A_J35B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J35B_N35C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J35B_N35C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N35C_N35D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N35C_N35D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N35D_N35G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N35D_N35G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N35G1_N35G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N35G1_N35G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N35G2_N35G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N35G2_N35G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N35G3_J36A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N35G3_J36A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J36A_J36B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J36A_J36B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J36B_N36C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J36B_N36C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N36C_N36D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N36C_N36D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N36D_N36G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N36D_N36G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N36G1_N36G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N36G1_N36G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N36G2_N36G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N36G2_N36G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N36G3_J37A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N36G3_J37A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J37A_J37B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J37A_J37B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J37B_N37C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J37B_N37C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N37C_N37D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N37C_N37D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N37D_N37G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N37D_N37G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N37G1_N37G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N37G1_N37G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N37G2_N37G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N37G2_N37G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N37G3_J38A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N37G3_J38A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J38A_J38B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J38A_J38B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J38B_N38C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J38B_N38C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N38C_N38D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N38C_N38D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N38D_N38G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N38D_N38G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N38G1_N38G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N38G1_N38G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N38G2_N38G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N38G2_N38G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N38G3_J39A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N38G3_J39A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J39A_J39B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J39A_J39B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J39B_N39C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J39B_N39C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N39C_N39D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N39C_N39D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N39D_N39G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N39D_N39G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N39G1_N39G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N39G1_N39G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N39G2_N39G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N39G2_N39G3:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N39G3_J40A:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N39G3_J40A:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J40A_J40B:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J40A_J40B:WB,tunnel sector,LSX,WB,1
+SEC:LSX:J40B_N40C:EB,tunnel sector,LSX,EB,1
+SEC:LSX:J40B_N40C:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N40C_N40D:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N40C_N40D:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N40D_N40G1:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N40D_N40G1:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N40G1_N40G2:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N40G1_N40G2:WB,tunnel sector,LSX,WB,1
+SEC:LSX:N40G2_N40G3:EB,tunnel sector,LSX,EB,1
+SEC:LSX:N40G2_N40G3:WB,tunnel sector,LSX,WB,1
+SEC:LSY:J1A_J1B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J1A_J1B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J1B_S1C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J1B_S1C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S1C_S1D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S1C_S1D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S1D_S1G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S1D_S1G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S1G1_S1G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S1G1_S1G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S1G2_S1G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S1G2_S1G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S1G3_J2A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S1G3_J2A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J2A_J2B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J2A_J2B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J2B_S2C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J2B_S2C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S2C_S2D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S2C_S2D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S2D_S2G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S2D_S2G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S2G1_S2G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S2G1_S2G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S2G2_S2G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S2G2_S2G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S2G3_J3A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S2G3_J3A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J3A_J3B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J3A_J3B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J3B_S3C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J3B_S3C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S3C_S3D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S3C_S3D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S3D_S3G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S3D_S3G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S3G1_S3G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S3G1_S3G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S3G2_S3G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S3G2_S3G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S3G3_J4A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S3G3_J4A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J4A_J4B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J4A_J4B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J4B_S4C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J4B_S4C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S4C_S4D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S4C_S4D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S4D_S4G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S4D_S4G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S4G1_S4G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S4G1_S4G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S4G2_S4G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S4G2_S4G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S4G3_J5A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S4G3_J5A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J5A_J5B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J5A_J5B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J5B_S5C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J5B_S5C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S5C_S5D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S5C_S5D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S5D_S5G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S5D_S5G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S5G1_S5G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S5G1_S5G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S5G2_S5G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S5G2_S5G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S5G3_J6A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S5G3_J6A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J6A_J6B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J6A_J6B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J6B_S6C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J6B_S6C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S6C_S6D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S6C_S6D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S6D_S6G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S6D_S6G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S6G1_S6G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S6G1_S6G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S6G2_S6G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S6G2_S6G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S6G3_J7A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S6G3_J7A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J7A_J7B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J7A_J7B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J7B_S7C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J7B_S7C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S7C_S7D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S7C_S7D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S7D_S7G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S7D_S7G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S7G1_S7G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S7G1_S7G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S7G2_S7G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S7G2_S7G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S7G3_J8A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S7G3_J8A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J8A_J8B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J8A_J8B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J8B_S8C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J8B_S8C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S8C_S8D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S8C_S8D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S8D_S8G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S8D_S8G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S8G1_S8G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S8G1_S8G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S8G2_S8G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S8G2_S8G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S8G3_J9A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S8G3_J9A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J9A_J9B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J9A_J9B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J9B_S9C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J9B_S9C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S9C_S9D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S9C_S9D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S9D_S9G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S9D_S9G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S9G1_S9G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S9G1_S9G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S9G2_S9G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S9G2_S9G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S9G3_J10A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S9G3_J10A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J10A_J10B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J10A_J10B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J10B_S10C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J10B_S10C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S10C_S10D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S10C_S10D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S10D_S10G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S10D_S10G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S10G1_S10G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S10G1_S10G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S10G2_S10G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S10G2_S10G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S10G3_J11A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S10G3_J11A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J11A_J11B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J11A_J11B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J11B_S11C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J11B_S11C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S11C_S11D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S11C_S11D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S11D_S11G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S11D_S11G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S11G1_S11G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S11G1_S11G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S11G2_S11G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S11G2_S11G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S11G3_J12A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S11G3_J12A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J12A_J12B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J12A_J12B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J12B_S12C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J12B_S12C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S12C_S12D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S12C_S12D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S12D_S12G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S12D_S12G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S12G1_S12G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S12G1_S12G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S12G2_S12G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S12G2_S12G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S12G3_J13A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S12G3_J13A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J13A_J13B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J13A_J13B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J13B_S13C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J13B_S13C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S13C_S13D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S13C_S13D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S13D_S13G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S13D_S13G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S13G1_S13G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S13G1_S13G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S13G2_S13G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S13G2_S13G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S13G3_J14A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S13G3_J14A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J14A_J14B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J14A_J14B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J14B_S14C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J14B_S14C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S14C_S14D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S14C_S14D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S14D_S14G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S14D_S14G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S14G1_S14G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S14G1_S14G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S14G2_S14G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S14G2_S14G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S14G3_J15A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S14G3_J15A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J15A_J15B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J15A_J15B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J15B_S15C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J15B_S15C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S15C_S15D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S15C_S15D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S15D_S15G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S15D_S15G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S15G1_S15G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S15G1_S15G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S15G2_S15G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S15G2_S15G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S15G3_J16A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S15G3_J16A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J16A_J16B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J16A_J16B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J16B_S16C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J16B_S16C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S16C_S16D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S16C_S16D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S16D_S16G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S16D_S16G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S16G1_S16G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S16G1_S16G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S16G2_S16G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S16G2_S16G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S16G3_J17A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S16G3_J17A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J17A_J17B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J17A_J17B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J17B_S17C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J17B_S17C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S17C_S17D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S17C_S17D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S17D_S17G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S17D_S17G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S17G1_S17G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S17G1_S17G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S17G2_S17G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S17G2_S17G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S17G3_J18A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S17G3_J18A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J18A_J18B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J18A_J18B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J18B_S18C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J18B_S18C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S18C_S18D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S18C_S18D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S18D_S18G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S18D_S18G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S18G1_S18G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S18G1_S18G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S18G2_S18G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S18G2_S18G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S18G3_J19A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S18G3_J19A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J19A_J19B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J19A_J19B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J19B_S19C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J19B_S19C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S19C_S19D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S19C_S19D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S19D_S19G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S19D_S19G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S19G1_S19G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S19G1_S19G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S19G2_S19G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S19G2_S19G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S19G3_J20A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S19G3_J20A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J20A_J20B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J20A_J20B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J20B_S20C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J20B_S20C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S20C_S20D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S20C_S20D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S20D_S20G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S20D_S20G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S20G1_S20G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S20G1_S20G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S20G2_S20G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S20G2_S20G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S20G3_J21A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S20G3_J21A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J21A_J21B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J21A_J21B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J21B_S21C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J21B_S21C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S21C_S21D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S21C_S21D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S21D_S21G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S21D_S21G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S21G1_S21G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S21G1_S21G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S21G2_S21G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S21G2_S21G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S21G3_J22A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S21G3_J22A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J22A_J22B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J22A_J22B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J22B_S22C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J22B_S22C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S22C_S22D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S22C_S22D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S22D_S22G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S22D_S22G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S22G1_S22G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S22G1_S22G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S22G2_S22G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S22G2_S22G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S22G3_J23A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S22G3_J23A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J23A_J23B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J23A_J23B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J23B_S23C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J23B_S23C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S23C_S23D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S23C_S23D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S23D_S23G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S23D_S23G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S23G1_S23G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S23G1_S23G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S23G2_S23G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S23G2_S23G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S23G3_J24A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S23G3_J24A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J24A_J24B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J24A_J24B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J24B_S24C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J24B_S24C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S24C_S24D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S24C_S24D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S24D_S24G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S24D_S24G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S24G1_S24G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S24G1_S24G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S24G2_S24G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S24G2_S24G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S24G3_J25A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S24G3_J25A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J25A_J25B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J25A_J25B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J25B_S25C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J25B_S25C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S25C_S25D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S25C_S25D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S25D_S25G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S25D_S25G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S25G1_S25G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S25G1_S25G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S25G2_S25G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S25G2_S25G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S25G3_J26A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S25G3_J26A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J26A_J26B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J26A_J26B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J26B_S26C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J26B_S26C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S26C_S26D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S26C_S26D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S26D_S26G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S26D_S26G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S26G1_S26G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S26G1_S26G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S26G2_S26G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S26G2_S26G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S26G3_J27A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S26G3_J27A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J27A_J27B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J27A_J27B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J27B_S27C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J27B_S27C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S27C_S27D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S27C_S27D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S27D_S27G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S27D_S27G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S27G1_S27G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S27G1_S27G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S27G2_S27G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S27G2_S27G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S27G3_J28A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S27G3_J28A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J28A_J28B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J28A_J28B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J28B_S28C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J28B_S28C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S28C_S28D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S28C_S28D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S28D_S28G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S28D_S28G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S28G1_S28G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S28G1_S28G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S28G2_S28G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S28G2_S28G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S28G3_J29A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S28G3_J29A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J29A_J29B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J29A_J29B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J29B_S29C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J29B_S29C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S29C_S29D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S29C_S29D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S29D_S29G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S29D_S29G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S29G1_S29G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S29G1_S29G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S29G2_S29G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S29G2_S29G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S29G3_J30A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S29G3_J30A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J30A_J30B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J30A_J30B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J30B_S30C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J30B_S30C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S30C_S30D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S30C_S30D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S30D_S30G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S30D_S30G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S30G1_S30G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S30G1_S30G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S30G2_S30G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S30G2_S30G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S30G3_J31A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S30G3_J31A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J31A_J31B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J31A_J31B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J31B_S31C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J31B_S31C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S31C_S31D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S31C_S31D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S31D_S31G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S31D_S31G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S31G1_S31G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S31G1_S31G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S31G2_S31G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S31G2_S31G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S31G3_J32A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S31G3_J32A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J32A_J32B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J32A_J32B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J32B_S32C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J32B_S32C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S32C_S32D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S32C_S32D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S32D_S32G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S32D_S32G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S32G1_S32G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S32G1_S32G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S32G2_S32G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S32G2_S32G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S32G3_J33A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S32G3_J33A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J33A_J33B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J33A_J33B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J33B_S33C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J33B_S33C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S33C_S33D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S33C_S33D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S33D_S33G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S33D_S33G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S33G1_S33G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S33G1_S33G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S33G2_S33G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S33G2_S33G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S33G3_J34A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S33G3_J34A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J34A_J34B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J34A_J34B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J34B_S34C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J34B_S34C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S34C_S34D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S34C_S34D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S34D_S34G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S34D_S34G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S34G1_S34G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S34G1_S34G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S34G2_S34G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S34G2_S34G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S34G3_J35A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S34G3_J35A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J35A_J35B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J35A_J35B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J35B_S35C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J35B_S35C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S35C_S35D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S35C_S35D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S35D_S35G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S35D_S35G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S35G1_S35G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S35G1_S35G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S35G2_S35G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S35G2_S35G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S35G3_J36A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S35G3_J36A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J36A_J36B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J36A_J36B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J36B_S36C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J36B_S36C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S36C_S36D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S36C_S36D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S36D_S36G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S36D_S36G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S36G1_S36G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S36G1_S36G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S36G2_S36G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S36G2_S36G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S36G3_J37A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S36G3_J37A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J37A_J37B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J37A_J37B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J37B_S37C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J37B_S37C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S37C_S37D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S37C_S37D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S37D_S37G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S37D_S37G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S37G1_S37G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S37G1_S37G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S37G2_S37G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S37G2_S37G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S37G3_J38A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S37G3_J38A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J38A_J38B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J38A_J38B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J38B_S38C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J38B_S38C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S38C_S38D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S38C_S38D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S38D_S38G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S38D_S38G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S38G1_S38G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S38G1_S38G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S38G2_S38G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S38G2_S38G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S38G3_J39A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S38G3_J39A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J39A_J39B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J39A_J39B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J39B_S39C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J39B_S39C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S39C_S39D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S39C_S39D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S39D_S39G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S39D_S39G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S39G1_S39G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S39G1_S39G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S39G2_S39G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S39G2_S39G3:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S39G3_J40A:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S39G3_J40A:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J40A_J40B:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J40A_J40B:WB,tunnel sector,LSY,WB,1
+SEC:LSY:J40B_S40C:EB,tunnel sector,LSY,EB,1
+SEC:LSY:J40B_S40C:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S40C_S40D:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S40C_S40D:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S40D_S40G1:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S40D_S40G1:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S40G1_S40G2:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S40G1_S40G2:WB,tunnel sector,LSY,WB,1
+SEC:LSY:S40G2_S40G3:EB,tunnel sector,LSY,EB,1
+SEC:LSY:S40G2_S40G3:WB,tunnel sector,LSY,WB,1
+PLAT:LSX:J1A:EB,platform,LSX,EB,1
+PLAT:LSX:J1A:WB,platform,LSX,WB,1
+PLAT:LSX:J1B:EB,platform,LSX,EB,1
+PLAT:LSX:J1B:WB,platform,LSX,WB,1
+PLAT:LSX:N1C:EB,platform,LSX,EB,1
+PLAT:LSX:N1C:WB,platform,LSX,WB,1
+PLAT:LSX:N1D:EB,platform,LSX,EB,1
+PLAT:LSX:N1D:WB,platform,LSX,WB,1
+PLAT:LSX:N1G1:EB,platform,LSX,EB,1
+PLAT:LSX:N1G1:WB,platform,LSX,WB,1
+PLAT:LSX:N1G2:EB,platform,LSX,EB,1
+PLAT:LSX:N1G2:WB,platform,LSX,WB,1
+PLAT:LSX:N1G3:EB,platform,LSX,EB,1
+PLAT:LSX:N1G3:WB,platform,LSX,WB,1
+PLAT:LSX:J2A:EB,platform,LSX,EB,1
+PLAT:LSX:J2A:WB,platform,LSX,WB,1
+PLAT:LSX:J2B:EB,platform,LSX,EB,1
+PLAT:LSX:J2B:WB,platform,LSX,WB,1
+PLAT:LSX:N2C:EB,platform,LSX,EB,1
+PLAT:LSX:N2C:WB,platform,LSX,WB,1
+PLAT:LSX:N2D:EB,platform,LSX,EB,1
+PLAT:LSX:N2D:WB,platform,LSX,WB,1
+PLAT:LSX:N2G1:EB,platform,LSX,EB,1
+PLAT:LSX:N2G1:WB,platform,LSX,WB,1
+PLAT:LSX:N2G2:EB,platform,LSX,EB,1
+PLAT:LSX:N2G2:WB,platform,LSX,WB,1
+PLAT:LSX:N2G3:EB,platform,LSX,EB,1
+PLAT:LSX:N2G3:WB,platform,LSX,WB,1
+PLAT:LSX:J3A:EB,platform,LSX,EB,1
+PLAT:LSX:J3A:WB,platform,LSX,WB,1
+PLAT:LSX:J3B:EB,platform,LSX,EB,1
+PLAT:LSX:J3B:WB,platform,LSX,WB,1
+PLAT:LSX:N3C:EB,platform,LSX,EB,1
+PLAT:LSX:N3C:WB,platform,LSX,WB,1
+PLAT:LSX:N3D:EB,platform,LSX,EB,1
+PLAT:LSX:N3D:WB,platform,LSX,WB,1
+PLAT:LSX:N3G1:EB,platform,LSX,EB,1
+PLAT:LSX:N3G1:WB,platform,LSX,WB,1
+PLAT:LSX:N3G2:EB,platform,LSX,EB,1
+PLAT:LSX:N3G2:WB,platform,LSX,WB,1
+PLAT:LSX:N3G3:EB,platform,LSX,EB,1
+PLAT:LSX:N3G3:WB,platform,LSX,WB,1
+PLAT:LSX:J4A:EB,platform,LSX,EB,1
+PLAT:LSX:J4A:WB,platform,LSX,WB,1
+PLAT:LSX:J4B:EB,platform,LSX,EB,1
+PLAT:LSX:J4B:WB,platform,LSX,WB,1
+PLAT:LSX:N4C:EB,platform,LSX,EB,1
+PLAT:LSX:N4C:WB,platform,LSX,WB,1
+PLAT:LSX:N4D:EB,platform,LSX,EB,1
+PLAT:LSX:N4D:WB,platform,LSX,WB,1
+PLAT:LSX:N4G1:EB,platform,LSX,EB,1
+PLAT:LSX:N4G1:WB,platform,LSX,WB,1
+PLAT:LSX:N4G2:EB,platform,LSX,EB,1
+PLAT:LSX:N4G2:WB,platform,LSX,WB,1
+PLAT:LSX:N4G3:EB,platform,LSX,EB,1
+PLAT:LSX:N4G3:WB,platform,LSX,WB,1
+PLAT:LSX:J5A:EB,platform,LSX,EB,1
+PLAT:LSX:J5A:WB,platform,LSX,WB,1
+PLAT:LSX:J5B:EB,platform,LSX,EB,1
+PLAT:LSX:J5B:WB,platform,LSX,WB,1
+PLAT:LSX:N5C:EB,platform,LSX,EB,1
+PLAT:LSX:N5C:WB,platform,LSX,WB,1
+PLAT:LSX:N5D:EB,platform,LSX,EB,1
+PLAT:LSX:N5D:WB,platform,LSX,WB,1
+PLAT:LSX:N5G1:EB,platform,LSX,EB,1
+PLAT:LSX:N5G1:WB,platform,LSX,WB,1
+PLAT:LSX:N5G2:EB,platform,LSX,EB,1
+PLAT:LSX:N5G2:WB,platform,LSX,WB,1
+PLAT:LSX:N5G3:EB,platform,LSX,EB,1
+PLAT:LSX:N5G3:WB,platform,LSX,WB,1
+PLAT:LSX:J6A:EB,platform,LSX,EB,1
+PLAT:LSX:J6A:WB,platform,LSX,WB,1
+PLAT:LSX:J6B:EB,platform,LSX,EB,1
+PLAT:LSX:J6B:WB,platform,LSX,WB,1
+PLAT:LSX:N6C:EB,platform,LSX,EB,1
+PLAT:LSX:N6C:WB,platform,LSX,WB,1
+PLAT:LSX:N6D:EB,platform,LSX,EB,1
+PLAT:LSX:N6D:WB,platform,LSX,WB,1
+PLAT:LSX:N6G1:EB,platform,LSX,EB,1
+PLAT:LSX:N6G1:WB,platform,LSX,WB,1
+PLAT:LSX:N6G2:EB,platform,LSX,EB,1
+PLAT:LSX:N6G2:WB,platform,LSX,WB,1
+PLAT:LSX:N6G3:EB,platform,LSX,EB,1
+PLAT:LSX:N6G3:WB,platform,LSX,WB,1
+PLAT:LSX:J7A:EB,platform,LSX,EB,1
+PLAT:LSX:J7A:WB,platform,LSX,WB,1
+PLAT:LSX:J7B:EB,platform,LSX,EB,1
+PLAT:LSX:J7B:WB,platform,LSX,WB,1
+PLAT:LSX:N7C:EB,platform,LSX,EB,1
+PLAT:LSX:N7C:WB,platform,LSX,WB,1
+PLAT:LSX:N7D:EB,platform,LSX,EB,1
+PLAT:LSX:N7D:WB,platform,LSX,WB,1
+PLAT:LSX:N7G1:EB,platform,LSX,EB,1
+PLAT:LSX:N7G1:WB,platform,LSX,WB,1
+PLAT:LSX:N7G2:EB,platform,LSX,EB,1
+PLAT:LSX:N7G2:WB,platform,LSX,WB,1
+PLAT:LSX:N7G3:EB,platform,LSX,EB,1
+PLAT:LSX:N7G3:WB,platform,LSX,WB,1
+PLAT:LSX:J8A:EB,platform,LSX,EB,1
+PLAT:LSX:J8A:WB,platform,LSX,WB,1
+PLAT:LSX:J8B:EB,platform,LSX,EB,1
+PLAT:LSX:J8B:WB,platform,LSX,WB,1
+PLAT:LSX:N8C:EB,platform,LSX,EB,1
+PLAT:LSX:N8C:WB,platform,LSX,WB,1
+PLAT:LSX:N8D:EB,platform,LSX,EB,1
+PLAT:LSX:N8D:WB,platform,LSX,WB,1
+PLAT:LSX:N8G1:EB,platform,LSX,EB,1
+PLAT:LSX:N8G1:WB,platform,LSX,WB,1
+PLAT:LSX:N8G2:EB,platform,LSX,EB,1
+PLAT:LSX:N8G2:WB,platform,LSX,WB,1
+PLAT:LSX:N8G3:EB,platform,LSX,EB,1
+PLAT:LSX:N8G3:WB,platform,LSX,WB,1
+PLAT:LSX:J9A:EB,platform,LSX,EB,1
+PLAT:LSX:J9A:WB,platform,LSX,WB,1
+PLAT:LSX:J9B:EB,platform,LSX,EB,1
+PLAT:LSX:J9B:WB,platform,LSX,WB,1
+PLAT:LSX:N9C:EB,platform,LSX,EB,1
+PLAT:LSX:N9C:WB,platform,LSX,WB,1
+PLAT:LSX:N9D:EB,platform,LSX,EB,1
+PLAT:LSX:N9D:WB,platform,LSX,WB,1
+PLAT:LSX:N9G1:EB,platform,LSX,EB,1
+PLAT:LSX:N9G1:WB,platform,LSX,WB,1
+PLAT:LSX:N9G2:EB,platform,LSX,EB,1
+PLAT:LSX:N9G2:WB,platform,LSX,WB,1
+PLAT:LSX:N9G3:EB,platform,LSX,EB,1
+PLAT:LSX:N9G3:WB,platform,LSX,WB,1
+PLAT:LSX:J10A:EB,platform,LSX,EB,1
+PLAT:LSX:J10A:WB,platform,LSX,WB,1
+PLAT:LSX:J10B:EB,platform,LSX,EB,1
+PLAT:LSX:J10B:WB,platform,LSX,WB,1
+PLAT:LSX:N10C:EB,platform,LSX,EB,1
+PLAT:LSX:N10C:WB,platform,LSX,WB,1
+PLAT:LSX:N10D:EB,platform,LSX,EB,1
+PLAT:LSX:N10D:WB,platform,LSX,WB,1
+PLAT:LSX:N10G1:EB,platform,LSX,EB,1
+PLAT:LSX:N10G1:WB,platform,LSX,WB,1
+PLAT:LSX:N10G2:EB,platform,LSX,EB,1
+PLAT:LSX:N10G2:WB,platform,LSX,WB,1
+PLAT:LSX:N10G3:EB,platform,LSX,EB,1
+PLAT:LSX:N10G3:WB,platform,LSX,WB,1
+PLAT:LSX:J11A:EB,platform,LSX,EB,1
+PLAT:LSX:J11A:WB,platform,LSX,WB,1
+PLAT:LSX:J11B:EB,platform,LSX,EB,1
+PLAT:LSX:J11B:WB,platform,LSX,WB,1
+PLAT:LSX:N11C:EB,platform,LSX,EB,1
+PLAT:LSX:N11C:WB,platform,LSX,WB,1
+PLAT:LSX:N11D:EB,platform,LSX,EB,1
+PLAT:LSX:N11D:WB,platform,LSX,WB,1
+PLAT:LSX:N11G1:EB,platform,LSX,EB,1
+PLAT:LSX:N11G1:WB,platform,LSX,WB,1
+PLAT:LSX:N11G2:EB,platform,LSX,EB,1
+PLAT:LSX:N11G2:WB,platform,LSX,WB,1
+PLAT:LSX:N11G3:EB,platform,LSX,EB,1
+PLAT:LSX:N11G3:WB,platform,LSX,WB,1
+PLAT:LSX:J12A:EB,platform,LSX,EB,1
+PLAT:LSX:J12A:WB,platform,LSX,WB,1
+PLAT:LSX:J12B:EB,platform,LSX,EB,1
+PLAT:LSX:J12B:WB,platform,LSX,WB,1
+PLAT:LSX:N12C:EB,platform,LSX,EB,1
+PLAT:LSX:N12C:WB,platform,LSX,WB,1
+PLAT:LSX:N12D:EB,platform,LSX,EB,1
+PLAT:LSX:N12D:WB,platform,LSX,WB,1
+PLAT:LSX:N12G1:EB,platform,LSX,EB,1
+PLAT:LSX:N12G1:WB,platform,LSX,WB,1
+PLAT:LSX:N12G2:EB,platform,LSX,EB,1
+PLAT:LSX:N12G2:WB,platform,LSX,WB,1
+PLAT:LSX:N12G3:EB,platform,LSX,EB,1
+PLAT:LSX:N12G3:WB,platform,LSX,WB,1
+PLAT:LSX:J13A:EB,platform,LSX,EB,1
+PLAT:LSX:J13A:WB,platform,LSX,WB,1
+PLAT:LSX:J13B:EB,platform,LSX,EB,1
+PLAT:LSX:J13B:WB,platform,LSX,WB,1
+PLAT:LSX:N13C:EB,platform,LSX,EB,1
+PLAT:LSX:N13C:WB,platform,LSX,WB,1
+PLAT:LSX:N13D:EB,platform,LSX,EB,1
+PLAT:LSX:N13D:WB,platform,LSX,WB,1
+PLAT:LSX:N13G1:EB,platform,LSX,EB,1
+PLAT:LSX:N13G1:WB,platform,LSX,WB,1
+PLAT:LSX:N13G2:EB,platform,LSX,EB,1
+PLAT:LSX:N13G2:WB,platform,LSX,WB,1
+PLAT:LSX:N13G3:EB,platform,LSX,EB,1
+PLAT:LSX:N13G3:WB,platform,LSX,WB,1
+PLAT:LSX:J14A:EB,platform,LSX,EB,1
+PLAT:LSX:J14A:WB,platform,LSX,WB,1
+PLAT:LSX:J14B:EB,platform,LSX,EB,1
+PLAT:LSX:J14B:WB,platform,LSX,WB,1
+PLAT:LSX:N14C:EB,platform,LSX,EB,1
+PLAT:LSX:N14C:WB,platform,LSX,WB,1
+PLAT:LSX:N14D:EB,platform,LSX,EB,1
+PLAT:LSX:N14D:WB,platform,LSX,WB,1
+PLAT:LSX:N14G1:EB,platform,LSX,EB,1
+PLAT:LSX:N14G1:WB,platform,LSX,WB,1
+PLAT:LSX:N14G2:EB,platform,LSX,EB,1
+PLAT:LSX:N14G2:WB,platform,LSX,WB,1
+PLAT:LSX:N14G3:EB,platform,LSX,EB,1
+PLAT:LSX:N14G3:WB,platform,LSX,WB,1
+PLAT:LSX:J15A:EB,platform,LSX,EB,1
+PLAT:LSX:J15A:WB,platform,LSX,WB,1
+PLAT:LSX:J15B:EB,platform,LSX,EB,1
+PLAT:LSX:J15B:WB,platform,LSX,WB,1
+PLAT:LSX:N15C:EB,platform,LSX,EB,1
+PLAT:LSX:N15C:WB,platform,LSX,WB,1
+PLAT:LSX:N15D:EB,platform,LSX,EB,1
+PLAT:LSX:N15D:WB,platform,LSX,WB,1
+PLAT:LSX:N15G1:EB,platform,LSX,EB,1
+PLAT:LSX:N15G1:WB,platform,LSX,WB,1
+PLAT:LSX:N15G2:EB,platform,LSX,EB,1
+PLAT:LSX:N15G2:WB,platform,LSX,WB,1
+PLAT:LSX:N15G3:EB,platform,LSX,EB,1
+PLAT:LSX:N15G3:WB,platform,LSX,WB,1
+PLAT:LSX:J16A:EB,platform,LSX,EB,1
+PLAT:LSX:J16A:WB,platform,LSX,WB,1
+PLAT:LSX:J16B:EB,platform,LSX,EB,1
+PLAT:LSX:J16B:WB,platform,LSX,WB,1
+PLAT:LSX:N16C:EB,platform,LSX,EB,1
+PLAT:LSX:N16C:WB,platform,LSX,WB,1
+PLAT:LSX:N16D:EB,platform,LSX,EB,1
+PLAT:LSX:N16D:WB,platform,LSX,WB,1
+PLAT:LSX:N16G1:EB,platform,LSX,EB,1
+PLAT:LSX:N16G1:WB,platform,LSX,WB,1
+PLAT:LSX:N16G2:EB,platform,LSX,EB,1
+PLAT:LSX:N16G2:WB,platform,LSX,WB,1
+PLAT:LSX:N16G3:EB,platform,LSX,EB,1
+PLAT:LSX:N16G3:WB,platform,LSX,WB,1
+PLAT:LSX:J17A:EB,platform,LSX,EB,1
+PLAT:LSX:J17A:WB,platform,LSX,WB,1
+PLAT:LSX:J17B:EB,platform,LSX,EB,1
+PLAT:LSX:J17B:WB,platform,LSX,WB,1
+PLAT:LSX:N17C:EB,platform,LSX,EB,1
+PLAT:LSX:N17C:WB,platform,LSX,WB,1
+PLAT:LSX:N17D:EB,platform,LSX,EB,1
+PLAT:LSX:N17D:WB,platform,LSX,WB,1
+PLAT:LSX:N17G1:EB,platform,LSX,EB,1
+PLAT:LSX:N17G1:WB,platform,LSX,WB,1
+PLAT:LSX:N17G2:EB,platform,LSX,EB,1
+PLAT:LSX:N17G2:WB,platform,LSX,WB,1
+PLAT:LSX:N17G3:EB,platform,LSX,EB,1
+PLAT:LSX:N17G3:WB,platform,LSX,WB,1
+PLAT:LSX:J18A:EB,platform,LSX,EB,1
+PLAT:LSX:J18A:WB,platform,LSX,WB,1
+PLAT:LSX:J18B:EB,platform,LSX,EB,1
+PLAT:LSX:J18B:WB,platform,LSX,WB,1
+PLAT:LSX:N18C:EB,platform,LSX,EB,1
+PLAT:LSX:N18C:WB,platform,LSX,WB,1
+PLAT:LSX:N18D:EB,platform,LSX,EB,1
+PLAT:LSX:N18D:WB,platform,LSX,WB,1
+PLAT:LSX:N18G1:EB,platform,LSX,EB,1
+PLAT:LSX:N18G1:WB,platform,LSX,WB,1
+PLAT:LSX:N18G2:EB,platform,LSX,EB,1
+PLAT:LSX:N18G2:WB,platform,LSX,WB,1
+PLAT:LSX:N18G3:EB,platform,LSX,EB,1
+PLAT:LSX:N18G3:WB,platform,LSX,WB,1
+PLAT:LSX:J19A:EB,platform,LSX,EB,1
+PLAT:LSX:J19A:WB,platform,LSX,WB,1
+PLAT:LSX:J19B:EB,platform,LSX,EB,1
+PLAT:LSX:J19B:WB,platform,LSX,WB,1
+PLAT:LSX:N19C:EB,platform,LSX,EB,1
+PLAT:LSX:N19C:WB,platform,LSX,WB,1
+PLAT:LSX:N19D:EB,platform,LSX,EB,1
+PLAT:LSX:N19D:WB,platform,LSX,WB,1
+PLAT:LSX:N19G1:EB,platform,LSX,EB,1
+PLAT:LSX:N19G1:WB,platform,LSX,WB,1
+PLAT:LSX:N19G2:EB,platform,LSX,EB,1
+PLAT:LSX:N19G2:WB,platform,LSX,WB,1
+PLAT:LSX:N19G3:EB,platform,LSX,EB,1
+PLAT:LSX:N19G3:WB,platform,LSX,WB,1
+PLAT:LSX:J20A:EB,platform,LSX,EB,1
+PLAT:LSX:J20A:WB,platform,LSX,WB,1
+PLAT:LSX:J20B:EB,platform,LSX,EB,1
+PLAT:LSX:J20B:WB,platform,LSX,WB,1
+PLAT:LSX:N20C:EB,platform,LSX,EB,1
+PLAT:LSX:N20C:WB,platform,LSX,WB,1
+PLAT:LSX:N20D:EB,platform,LSX,EB,1
+PLAT:LSX:N20D:WB,platform,LSX,WB,1
+PLAT:LSX:N20G1:EB,platform,LSX,EB,1
+PLAT:LSX:N20G1:WB,platform,LSX,WB,1
+PLAT:LSX:N20G2:EB,platform,LSX,EB,1
+PLAT:LSX:N20G2:WB,platform,LSX,WB,1
+PLAT:LSX:N20G3:EB,platform,LSX,EB,1
+PLAT:LSX:N20G3:WB,platform,LSX,WB,1
+PLAT:LSX:J21A:EB,platform,LSX,EB,1
+PLAT:LSX:J21A:WB,platform,LSX,WB,1
+PLAT:LSX:J21B:EB,platform,LSX,EB,1
+PLAT:LSX:J21B:WB,platform,LSX,WB,1
+PLAT:LSX:N21C:EB,platform,LSX,EB,1
+PLAT:LSX:N21C:WB,platform,LSX,WB,1
+PLAT:LSX:N21D:EB,platform,LSX,EB,1
+PLAT:LSX:N21D:WB,platform,LSX,WB,1
+PLAT:LSX:N21G1:EB,platform,LSX,EB,1
+PLAT:LSX:N21G1:WB,platform,LSX,WB,1
+PLAT:LSX:N21G2:EB,platform,LSX,EB,1
+PLAT:LSX:N21G2:WB,platform,LSX,WB,1
+PLAT:LSX:N21G3:EB,platform,LSX,EB,1
+PLAT:LSX:N21G3:WB,platform,LSX,WB,1
+PLAT:LSX:J22A:EB,platform,LSX,EB,1
+PLAT:LSX:J22A:WB,platform,LSX,WB,1
+PLAT:LSX:J22B:EB,platform,LSX,EB,1
+PLAT:LSX:J22B:WB,platform,LSX,WB,1
+PLAT:LSX:N22C:EB,platform,LSX,EB,1
+PLAT:LSX:N22C:WB,platform,LSX,WB,1
+PLAT:LSX:N22D:EB,platform,LSX,EB,1
+PLAT:LSX:N22D:WB,platform,LSX,WB,1
+PLAT:LSX:N22G1:EB,platform,LSX,EB,1
+PLAT:LSX:N22G1:WB,platform,LSX,WB,1
+PLAT:LSX:N22G2:EB,platform,LSX,EB,1
+PLAT:LSX:N22G2:WB,platform,LSX,WB,1
+PLAT:LSX:N22G3:EB,platform,LSX,EB,1
+PLAT:LSX:N22G3:WB,platform,LSX,WB,1
+PLAT:LSX:J23A:EB,platform,LSX,EB,1
+PLAT:LSX:J23A:WB,platform,LSX,WB,1
+PLAT:LSX:J23B:EB,platform,LSX,EB,1
+PLAT:LSX:J23B:WB,platform,LSX,WB,1
+PLAT:LSX:N23C:EB,platform,LSX,EB,1
+PLAT:LSX:N23C:WB,platform,LSX,WB,1
+PLAT:LSX:N23D:EB,platform,LSX,EB,1
+PLAT:LSX:N23D:WB,platform,LSX,WB,1
+PLAT:LSX:N23G1:EB,platform,LSX,EB,1
+PLAT:LSX:N23G1:WB,platform,LSX,WB,1
+PLAT:LSX:N23G2:EB,platform,LSX,EB,1
+PLAT:LSX:N23G2:WB,platform,LSX,WB,1
+PLAT:LSX:N23G3:EB,platform,LSX,EB,1
+PLAT:LSX:N23G3:WB,platform,LSX,WB,1
+PLAT:LSX:J24A:EB,platform,LSX,EB,1
+PLAT:LSX:J24A:WB,platform,LSX,WB,1
+PLAT:LSX:J24B:EB,platform,LSX,EB,1
+PLAT:LSX:J24B:WB,platform,LSX,WB,1
+PLAT:LSX:N24C:EB,platform,LSX,EB,1
+PLAT:LSX:N24C:WB,platform,LSX,WB,1
+PLAT:LSX:N24D:EB,platform,LSX,EB,1
+PLAT:LSX:N24D:WB,platform,LSX,WB,1
+PLAT:LSX:N24G1:EB,platform,LSX,EB,1
+PLAT:LSX:N24G1:WB,platform,LSX,WB,1
+PLAT:LSX:N24G2:EB,platform,LSX,EB,1
+PLAT:LSX:N24G2:WB,platform,LSX,WB,1
+PLAT:LSX:N24G3:EB,platform,LSX,EB,1
+PLAT:LSX:N24G3:WB,platform,LSX,WB,1
+PLAT:LSX:J25A:EB,platform,LSX,EB,1
+PLAT:LSX:J25A:WB,platform,LSX,WB,1
+PLAT:LSX:J25B:EB,platform,LSX,EB,1
+PLAT:LSX:J25B:WB,platform,LSX,WB,1
+PLAT:LSX:N25C:EB,platform,LSX,EB,1
+PLAT:LSX:N25C:WB,platform,LSX,WB,1
+PLAT:LSX:N25D:EB,platform,LSX,EB,1
+PLAT:LSX:N25D:WB,platform,LSX,WB,1
+PLAT:LSX:N25G1:EB,platform,LSX,EB,1
+PLAT:LSX:N25G1:WB,platform,LSX,WB,1
+PLAT:LSX:N25G2:EB,platform,LSX,EB,1
+PLAT:LSX:N25G2:WB,platform,LSX,WB,1
+PLAT:LSX:N25G3:EB,platform,LSX,EB,1
+PLAT:LSX:N25G3:WB,platform,LSX,WB,1
+PLAT:LSX:J26A:EB,platform,LSX,EB,1
+PLAT:LSX:J26A:WB,platform,LSX,WB,1
+PLAT:LSX:J26B:EB,platform,LSX,EB,1
+PLAT:LSX:J26B:WB,platform,LSX,WB,1
+PLAT:LSX:N26C:EB,platform,LSX,EB,1
+PLAT:LSX:N26C:WB,platform,LSX,WB,1
+PLAT:LSX:N26D:EB,platform,LSX,EB,1
+PLAT:LSX:N26D:WB,platform,LSX,WB,1
+PLAT:LSX:N26G1:EB,platform,LSX,EB,1
+PLAT:LSX:N26G1:WB,platform,LSX,WB,1
+PLAT:LSX:N26G2:EB,platform,LSX,EB,1
+PLAT:LSX:N26G2:WB,platform,LSX,WB,1
+PLAT:LSX:N26G3:EB,platform,LSX,EB,1
+PLAT:LSX:N26G3:WB,platform,LSX,WB,1
+PLAT:LSX:J27A:EB,platform,LSX,EB,1
+PLAT:LSX:J27A:WB,platform,LSX,WB,1
+PLAT:LSX:J27B:EB,platform,LSX,EB,1
+PLAT:LSX:J27B:WB,platform,LSX,WB,1
+PLAT:LSX:N27C:EB,platform,LSX,EB,1
+PLAT:LSX:N27C:WB,platform,LSX,WB,1
+PLAT:LSX:N27D:EB,platform,LSX,EB,1
+PLAT:LSX:N27D:WB,platform,LSX,WB,1
+PLAT:LSX:N27G1:EB,platform,LSX,EB,1
+PLAT:LSX:N27G1:WB,platform,LSX,WB,1
+PLAT:LSX:N27G2:EB,platform,LSX,EB,1
+PLAT:LSX:N27G2:WB,platform,LSX,WB,1
+PLAT:LSX:N27G3:EB,platform,LSX,EB,1
+PLAT:LSX:N27G3:WB,platform,LSX,WB,1
+PLAT:LSX:J28A:EB,platform,LSX,EB,1
+PLAT:LSX:J28A:WB,platform,LSX,WB,1
+PLAT:LSX:J28B:EB,platform,LSX,EB,1
+PLAT:LSX:J28B:WB,platform,LSX,WB,1
+PLAT:LSX:N28C:EB,platform,LSX,EB,1
+PLAT:LSX:N28C:WB,platform,LSX,WB,1
+PLAT:LSX:N28D:EB,platform,LSX,EB,1
+PLAT:LSX:N28D:WB,platform,LSX,WB,1
+PLAT:LSX:N28G1:EB,platform,LSX,EB,1
+PLAT:LSX:N28G1:WB,platform,LSX,WB,1
+PLAT:LSX:N28G2:EB,platform,LSX,EB,1
+PLAT:LSX:N28G2:WB,platform,LSX,WB,1
+PLAT:LSX:N28G3:EB,platform,LSX,EB,1
+PLAT:LSX:N28G3:WB,platform,LSX,WB,1
+PLAT:LSX:J29A:EB,platform,LSX,EB,1
+PLAT:LSX:J29A:WB,platform,LSX,WB,1
+PLAT:LSX:J29B:EB,platform,LSX,EB,1
+PLAT:LSX:J29B:WB,platform,LSX,WB,1
+PLAT:LSX:N29C:EB,platform,LSX,EB,1
+PLAT:LSX:N29C:WB,platform,LSX,WB,1
+PLAT:LSX:N29D:EB,platform,LSX,EB,1
+PLAT:LSX:N29D:WB,platform,LSX,WB,1
+PLAT:LSX:N29G1:EB,platform,LSX,EB,1
+PLAT:LSX:N29G1:WB,platform,LSX,WB,1
+PLAT:LSX:N29G2:EB,platform,LSX,EB,1
+PLAT:LSX:N29G2:WB,platform,LSX,WB,1
+PLAT:LSX:N29G3:EB,platform,LSX,EB,1
+PLAT:LSX:N29G3:WB,platform,LSX,WB,1
+PLAT:LSX:J30A:EB,platform,LSX,EB,1
+PLAT:LSX:J30A:WB,platform,LSX,WB,1
+PLAT:LSX:J30B:EB,platform,LSX,EB,1
+PLAT:LSX:J30B:WB,platform,LSX,WB,1
+PLAT:LSX:N30C:EB,platform,LSX,EB,1
+PLAT:LSX:N30C:WB,platform,LSX,WB,1
+PLAT:LSX:N30D:EB,platform,LSX,EB,1
+PLAT:LSX:N30D:WB,platform,LSX,WB,1
+PLAT:LSX:N30G1:EB,platform,LSX,EB,1
+PLAT:LSX:N30G1:WB,platform,LSX,WB,1
+PLAT:LSX:N30G2:EB,platform,LSX,EB,1
+PLAT:LSX:N30G2:WB,platform,LSX,WB,1
+PLAT:LSX:N30G3:EB,platform,LSX,EB,1
+PLAT:LSX:N30G3:WB,platform,LSX,WB,1
+PLAT:LSX:J31A:EB,platform,LSX,EB,1
+PLAT:LSX:J31A:WB,platform,LSX,WB,1
+PLAT:LSX:J31B:EB,platform,LSX,EB,1
+PLAT:LSX:J31B:WB,platform,LSX,WB,1
+PLAT:LSX:N31C:EB,platform,LSX,EB,1
+PLAT:LSX:N31C:WB,platform,LSX,WB,1
+PLAT:LSX:N31D:EB,platform,LSX,EB,1
+PLAT:LSX:N31D:WB,platform,LSX,WB,1
+PLAT:LSX:N31G1:EB,platform,LSX,EB,1
+PLAT:LSX:N31G1:WB,platform,LSX,WB,1
+PLAT:LSX:N31G2:EB,platform,LSX,EB,1
+PLAT:LSX:N31G2:WB,platform,LSX,WB,1
+PLAT:LSX:N31G3:EB,platform,LSX,EB,1
+PLAT:LSX:N31G3:WB,platform,LSX,WB,1
+PLAT:LSX:J32A:EB,platform,LSX,EB,1
+PLAT:LSX:J32A:WB,platform,LSX,WB,1
+PLAT:LSX:J32B:EB,platform,LSX,EB,1
+PLAT:LSX:J32B:WB,platform,LSX,WB,1
+PLAT:LSX:N32C:EB,platform,LSX,EB,1
+PLAT:LSX:N32C:WB,platform,LSX,WB,1
+PLAT:LSX:N32D:EB,platform,LSX,EB,1
+PLAT:LSX:N32D:WB,platform,LSX,WB,1
+PLAT:LSX:N32G1:EB,platform,LSX,EB,1
+PLAT:LSX:N32G1:WB,platform,LSX,WB,1
+PLAT:LSX:N32G2:EB,platform,LSX,EB,1
+PLAT:LSX:N32G2:WB,platform,LSX,WB,1
+PLAT:LSX:N32G3:EB,platform,LSX,EB,1
+PLAT:LSX:N32G3:WB,platform,LSX,WB,1
+PLAT:LSX:J33A:EB,platform,LSX,EB,1
+PLAT:LSX:J33A:WB,platform,LSX,WB,1
+PLAT:LSX:J33B:EB,platform,LSX,EB,1
+PLAT:LSX:J33B:WB,platform,LSX,WB,1
+PLAT:LSX:N33C:EB,platform,LSX,EB,1
+PLAT:LSX:N33C:WB,platform,LSX,WB,1
+PLAT:LSX:N33D:EB,platform,LSX,EB,1
+PLAT:LSX:N33D:WB,platform,LSX,WB,1
+PLAT:LSX:N33G1:EB,platform,LSX,EB,1
+PLAT:LSX:N33G1:WB,platform,LSX,WB,1
+PLAT:LSX:N33G2:EB,platform,LSX,EB,1
+PLAT:LSX:N33G2:WB,platform,LSX,WB,1
+PLAT:LSX:N33G3:EB,platform,LSX,EB,1
+PLAT:LSX:N33G3:WB,platform,LSX,WB,1
+PLAT:LSX:J34A:EB,platform,LSX,EB,1
+PLAT:LSX:J34A:WB,platform,LSX,WB,1
+PLAT:LSX:J34B:EB,platform,LSX,EB,1
+PLAT:LSX:J34B:WB,platform,LSX,WB,1
+PLAT:LSX:N34C:EB,platform,LSX,EB,1
+PLAT:LSX:N34C:WB,platform,LSX,WB,1
+PLAT:LSX:N34D:EB,platform,LSX,EB,1
+PLAT:LSX:N34D:WB,platform,LSX,WB,1
+PLAT:LSX:N34G1:EB,platform,LSX,EB,1
+PLAT:LSX:N34G1:WB,platform,LSX,WB,1
+PLAT:LSX:N34G2:EB,platform,LSX,EB,1
+PLAT:LSX:N34G2:WB,platform,LSX,WB,1
+PLAT:LSX:N34G3:EB,platform,LSX,EB,1
+PLAT:LSX:N34G3:WB,platform,LSX,WB,1
+PLAT:LSX:J35A:EB,platform,LSX,EB,1
+PLAT:LSX:J35A:WB,platform,LSX,WB,1
+PLAT:LSX:J35B:EB,platform,LSX,EB,1
+PLAT:LSX:J35B:WB,platform,LSX,WB,1
+PLAT:LSX:N35C:EB,platform,LSX,EB,1
+PLAT:LSX:N35C:WB,platform,LSX,WB,1
+PLAT:LSX:N35D:EB,platform,LSX,EB,1
+PLAT:LSX:N35D:WB,platform,LSX,WB,1
+PLAT:LSX:N35G1:EB,platform,LSX,EB,1
+PLAT:LSX:N35G1:WB,platform,LSX,WB,1
+PLAT:LSX:N35G2:EB,platform,LSX,EB,1
+PLAT:LSX:N35G2:WB,platform,LSX,WB,1
+PLAT:LSX:N35G3:EB,platform,LSX,EB,1
+PLAT:LSX:N35G3:WB,platform,LSX,WB,1
+PLAT:LSX:J36A:EB,platform,LSX,EB,1
+PLAT:LSX:J36A:WB,platform,LSX,WB,1
+PLAT:LSX:J36B:EB,platform,LSX,EB,1
+PLAT:LSX:J36B:WB,platform,LSX,WB,1
+PLAT:LSX:N36C:EB,platform,LSX,EB,1
+PLAT:LSX:N36C:WB,platform,LSX,WB,1
+PLAT:LSX:N36D:EB,platform,LSX,EB,1
+PLAT:LSX:N36D:WB,platform,LSX,WB,1
+PLAT:LSX:N36G1:EB,platform,LSX,EB,1
+PLAT:LSX:N36G1:WB,platform,LSX,WB,1
+PLAT:LSX:N36G2:EB,platform,LSX,EB,1
+PLAT:LSX:N36G2:WB,platform,LSX,WB,1
+PLAT:LSX:N36G3:EB,platform,LSX,EB,1
+PLAT:LSX:N36G3:WB,platform,LSX,WB,1
+PLAT:LSX:J37A:EB,platform,LSX,EB,1
+PLAT:LSX:J37A:WB,platform,LSX,WB,1
+PLAT:LSX:J37B:EB,platform,LSX,EB,1
+PLAT:LSX:J37B:WB,platform,LSX,WB,1
+PLAT:LSX:N37C:EB,platform,LSX,EB,1
+PLAT:LSX:N37C:WB,platform,LSX,WB,1
+PLAT:LSX:N37D:EB,platform,LSX,EB,1
+PLAT:LSX:N37D:WB,platform,LSX,WB,1
+PLAT:LSX:N37G1:EB,platform,LSX,EB,1
+PLAT:LSX:N37G1:WB,platform,LSX,WB,1
+PLAT:LSX:N37G2:EB,platform,LSX,EB,1
+PLAT:LSX:N37G2:WB,platform,LSX,WB,1
+PLAT:LSX:N37G3:EB,platform,LSX,EB,1
+PLAT:LSX:N37G3:WB,platform,LSX,WB,1
+PLAT:LSX:J38A:EB,platform,LSX,EB,1
+PLAT:LSX:J38A:WB,platform,LSX,WB,1
+PLAT:LSX:J38B:EB,platform,LSX,EB,1
+PLAT:LSX:J38B:WB,platform,LSX,WB,1
+PLAT:LSX:N38C:EB,platform,LSX,EB,1
+PLAT:LSX:N38C:WB,platform,LSX,WB,1
+PLAT:LSX:N38D:EB,platform,LSX,EB,1
+PLAT:LSX:N38D:WB,platform,LSX,WB,1
+PLAT:LSX:N38G1:EB,platform,LSX,EB,1
+PLAT:LSX:N38G1:WB,platform,LSX,WB,1
+PLAT:LSX:N38G2:EB,platform,LSX,EB,1
+PLAT:LSX:N38G2:WB,platform,LSX,WB,1
+PLAT:LSX:N38G3:EB,platform,LSX,EB,1
+PLAT:LSX:N38G3:WB,platform,LSX,WB,1
+PLAT:LSX:J39A:EB,platform,LSX,EB,1
+PLAT:LSX:J39A:WB,platform,LSX,WB,1
+PLAT:LSX:J39B:EB,platform,LSX,EB,1
+PLAT:LSX:J39B:WB,platform,LSX,WB,1
+PLAT:LSX:N39C:EB,platform,LSX,EB,1
+PLAT:LSX:N39C:WB,platform,LSX,WB,1
+PLAT:LSX:N39D:EB,platform,LSX,EB,1
+PLAT:LSX:N39D:WB,platform,LSX,WB,1
+PLAT:LSX:N39G1:EB,platform,LSX,EB,1
+PLAT:LSX:N39G1:WB,platform,LSX,WB,1
+PLAT:LSX:N39G2:EB,platform,LSX,EB,1
+PLAT:LSX:N39G2:WB,platform,LSX,WB,1
+PLAT:LSX:N39G3:EB,platform,LSX,EB,1
+PLAT:LSX:N39G3:WB,platform,LSX,WB,1
+PLAT:LSX:J40A:EB,platform,LSX,EB,1
+PLAT:LSX:J40A:WB,platform,LSX,WB,1
+PLAT:LSX:J40B:EB,platform,LSX,EB,1
+PLAT:LSX:J40B:WB,platform,LSX,WB,1
+PLAT:LSX:N40C:EB,platform,LSX,EB,1
+PLAT:LSX:N40C:WB,platform,LSX,WB,1
+PLAT:LSX:N40D:EB,platform,LSX,EB,1
+PLAT:LSX:N40D:WB,platform,LSX,WB,1
+PLAT:LSX:N40G1:EB,platform,LSX,EB,1
+PLAT:LSX:N40G1:WB,platform,LSX,WB,1
+PLAT:LSX:N40G2:EB,platform,LSX,EB,1
+PLAT:LSX:N40G2:WB,platform,LSX,WB,1
+PLAT:LSX:N40G3:EB,platform,LSX,EB,1
+PLAT:LSX:N40G3:WB,platform,LSX,WB,1
+PLAT:LSY:J1A:EB,platform,LSY,EB,1
+PLAT:LSY:J1A:WB,platform,LSY,WB,1
+PLAT:LSY:J1B:EB,platform,LSY,EB,1
+PLAT:LSY:J1B:WB,platform,LSY,WB,1
+PLAT:LSY:S1C:EB,platform,LSY,EB,1
+PLAT:LSY:S1C:WB,platform,LSY,WB,1
+PLAT:LSY:S1D:EB,platform,LSY,EB,1
+PLAT:LSY:S1D:WB,platform,LSY,WB,1
+PLAT:LSY:S1G1:EB,platform,LSY,EB,1
+PLAT:LSY:S1G1:WB,platform,LSY,WB,1
+PLAT:LSY:S1G2:EB,platform,LSY,EB,1
+PLAT:LSY:S1G2:WB,platform,LSY,WB,1
+PLAT:LSY:S1G3:EB,platform,LSY,EB,1
+PLAT:LSY:S1G3:WB,platform,LSY,WB,1
+PLAT:LSY:J2A:EB,platform,LSY,EB,1
+PLAT:LSY:J2A:WB,platform,LSY,WB,1
+PLAT:LSY:J2B:EB,platform,LSY,EB,1
+PLAT:LSY:J2B:WB,platform,LSY,WB,1
+PLAT:LSY:S2C:EB,platform,LSY,EB,1
+PLAT:LSY:S2C:WB,platform,LSY,WB,1
+PLAT:LSY:S2D:EB,platform,LSY,EB,1
+PLAT:LSY:S2D:WB,platform,LSY,WB,1
+PLAT:LSY:S2G1:EB,platform,LSY,EB,1
+PLAT:LSY:S2G1:WB,platform,LSY,WB,1
+PLAT:LSY:S2G2:EB,platform,LSY,EB,1
+PLAT:LSY:S2G2:WB,platform,LSY,WB,1
+PLAT:LSY:S2G3:EB,platform,LSY,EB,1
+PLAT:LSY:S2G3:WB,platform,LSY,WB,1
+PLAT:LSY:J3A:EB,platform,LSY,EB,1
+PLAT:LSY:J3A:WB,platform,LSY,WB,1
+PLAT:LSY:J3B:EB,platform,LSY,EB,1
+PLAT:LSY:J3B:WB,platform,LSY,WB,1
+PLAT:LSY:S3C:EB,platform,LSY,EB,1
+PLAT:LSY:S3C:WB,platform,LSY,WB,1
+PLAT:LSY:S3D:EB,platform,LSY,EB,1
+PLAT:LSY:S3D:WB,platform,LSY,WB,1
+PLAT:LSY:S3G1:EB,platform,LSY,EB,1
+PLAT:LSY:S3G1:WB,platform,LSY,WB,1
+PLAT:LSY:S3G2:EB,platform,LSY,EB,1
+PLAT:LSY:S3G2:WB,platform,LSY,WB,1
+PLAT:LSY:S3G3:EB,platform,LSY,EB,1
+PLAT:LSY:S3G3:WB,platform,LSY,WB,1
+PLAT:LSY:J4A:EB,platform,LSY,EB,1
+PLAT:LSY:J4A:WB,platform,LSY,WB,1
+PLAT:LSY:J4B:EB,platform,LSY,EB,1
+PLAT:LSY:J4B:WB,platform,LSY,WB,1
+PLAT:LSY:S4C:EB,platform,LSY,EB,1
+PLAT:LSY:S4C:WB,platform,LSY,WB,1
+PLAT:LSY:S4D:EB,platform,LSY,EB,1
+PLAT:LSY:S4D:WB,platform,LSY,WB,1
+PLAT:LSY:S4G1:EB,platform,LSY,EB,1
+PLAT:LSY:S4G1:WB,platform,LSY,WB,1
+PLAT:LSY:S4G2:EB,platform,LSY,EB,1
+PLAT:LSY:S4G2:WB,platform,LSY,WB,1
+PLAT:LSY:S4G3:EB,platform,LSY,EB,1
+PLAT:LSY:S4G3:WB,platform,LSY,WB,1
+PLAT:LSY:J5A:EB,platform,LSY,EB,1
+PLAT:LSY:J5A:WB,platform,LSY,WB,1
+PLAT:LSY:J5B:EB,platform,LSY,EB,1
+PLAT:LSY:J5B:WB,platform,LSY,WB,1
+PLAT:LSY:S5C:EB,platform,LSY,EB,1
+PLAT:LSY:S5C:WB,platform,LSY,WB,1
+PLAT:LSY:S5D:EB,platform,LSY,EB,1
+PLAT:LSY:S5D:WB,platform,LSY,WB,1
+PLAT:LSY:S5G1:EB,platform,LSY,EB,1
+PLAT:LSY:S5G1:WB,platform,LSY,WB,1
+PLAT:LSY:S5G2:EB,platform,LSY,EB,1
+PLAT:LSY:S5G2:WB,platform,LSY,WB,1
+PLAT:LSY:S5G3:EB,platform,LSY,EB,1
+PLAT:LSY:S5G3:WB,platform,LSY,WB,1
+PLAT:LSY:J6A:EB,platform,LSY,EB,1
+PLAT:LSY:J6A:WB,platform,LSY,WB,1
+PLAT:LSY:J6B:EB,platform,LSY,EB,1
+PLAT:LSY:J6B:WB,platform,LSY,WB,1
+PLAT:LSY:S6C:EB,platform,LSY,EB,1
+PLAT:LSY:S6C:WB,platform,LSY,WB,1
+PLAT:LSY:S6D:EB,platform,LSY,EB,1
+PLAT:LSY:S6D:WB,platform,LSY,WB,1
+PLAT:LSY:S6G1:EB,platform,LSY,EB,1
+PLAT:LSY:S6G1:WB,platform,LSY,WB,1
+PLAT:LSY:S6G2:EB,platform,LSY,EB,1
+PLAT:LSY:S6G2:WB,platform,LSY,WB,1
+PLAT:LSY:S6G3:EB,platform,LSY,EB,1
+PLAT:LSY:S6G3:WB,platform,LSY,WB,1
+PLAT:LSY:J7A:EB,platform,LSY,EB,1
+PLAT:LSY:J7A:WB,platform,LSY,WB,1
+PLAT:LSY:J7B:EB,platform,LSY,EB,1
+PLAT:LSY:J7B:WB,platform,LSY,WB,1
+PLAT:LSY:S7C:EB,platform,LSY,EB,1
+PLAT:LSY:S7C:WB,platform,LSY,WB,1
+PLAT:LSY:S7D:EB,platform,LSY,EB,1
+PLAT:LSY:S7D:WB,platform,LSY,WB,1
+PLAT:LSY:S7G1:EB,platform,LSY,EB,1
+PLAT:LSY:S7G1:WB,platform,LSY,WB,1
+PLAT:LSY:S7G2:EB,platform,LSY,EB,1
+PLAT:LSY:S7G2:WB,platform,LSY,WB,1
+PLAT:LSY:S7G3:EB,platform,LSY,EB,1
+PLAT:LSY:S7G3:WB,platform,LSY,WB,1
+PLAT:LSY:J8A:EB,platform,LSY,EB,1
+PLAT:LSY:J8A:WB,platform,LSY,WB,1
+PLAT:LSY:J8B:EB,platform,LSY,EB,1
+PLAT:LSY:J8B:WB,platform,LSY,WB,1
+PLAT:LSY:S8C:EB,platform,LSY,EB,1
+PLAT:LSY:S8C:WB,platform,LSY,WB,1
+PLAT:LSY:S8D:EB,platform,LSY,EB,1
+PLAT:LSY:S8D:WB,platform,LSY,WB,1
+PLAT:LSY:S8G1:EB,platform,LSY,EB,1
+PLAT:LSY:S8G1:WB,platform,LSY,WB,1
+PLAT:LSY:S8G2:EB,platform,LSY,EB,1
+PLAT:LSY:S8G2:WB,platform,LSY,WB,1
+PLAT:LSY:S8G3:EB,platform,LSY,EB,1
+PLAT:LSY:S8G3:WB,platform,LSY,WB,1
+PLAT:LSY:J9A:EB,platform,LSY,EB,1
+PLAT:LSY:J9A:WB,platform,LSY,WB,1
+PLAT:LSY:J9B:EB,platform,LSY,EB,1
+PLAT:LSY:J9B:WB,platform,LSY,WB,1
+PLAT:LSY:S9C:EB,platform,LSY,EB,1
+PLAT:LSY:S9C:WB,platform,LSY,WB,1
+PLAT:LSY:S9D:EB,platform,LSY,EB,1
+PLAT:LSY:S9D:WB,platform,LSY,WB,1
+PLAT:LSY:S9G1:EB,platform,LSY,EB,1
+PLAT:LSY:S9G1:WB,platform,LSY,WB,1
+PLAT:LSY:S9G2:EB,platform,LSY,EB,1
+PLAT:LSY:S9G2:WB,platform,LSY,WB,1
+PLAT:LSY:S9G3:EB,platform,LSY,EB,1
+PLAT:LSY:S9G3:WB,platform,LSY,WB,1
+PLAT:LSY:J10A:EB,platform,LSY,EB,1
+PLAT:LSY:J10A:WB,platform,LSY,WB,1
+PLAT:LSY:J10B:EB,platform,LSY,EB,1
+PLAT:LSY:J10B:WB,platform,LSY,WB,1
+PLAT:LSY:S10C:EB,platform,LSY,EB,1
+PLAT:LSY:S10C:WB,platform,LSY,WB,1
+PLAT:LSY:S10D:EB,platform,LSY,EB,1
+PLAT:LSY:S10D:WB,platform,LSY,WB,1
+PLAT:LSY:S10G1:EB,platform,LSY,EB,1
+PLAT:LSY:S10G1:WB,platform,LSY,WB,1
+PLAT:LSY:S10G2:EB,platform,LSY,EB,1
+PLAT:LSY:S10G2:WB,platform,LSY,WB,1
+PLAT:LSY:S10G3:EB,platform,LSY,EB,1
+PLAT:LSY:S10G3:WB,platform,LSY,WB,1
+PLAT:LSY:J11A:EB,platform,LSY,EB,1
+PLAT:LSY:J11A:WB,platform,LSY,WB,1
+PLAT:LSY:J11B:EB,platform,LSY,EB,1
+PLAT:LSY:J11B:WB,platform,LSY,WB,1
+PLAT:LSY:S11C:EB,platform,LSY,EB,1
+PLAT:LSY:S11C:WB,platform,LSY,WB,1
+PLAT:LSY:S11D:EB,platform,LSY,EB,1
+PLAT:LSY:S11D:WB,platform,LSY,WB,1
+PLAT:LSY:S11G1:EB,platform,LSY,EB,1
+PLAT:LSY:S11G1:WB,platform,LSY,WB,1
+PLAT:LSY:S11G2:EB,platform,LSY,EB,1
+PLAT:LSY:S11G2:WB,platform,LSY,WB,1
+PLAT:LSY:S11G3:EB,platform,LSY,EB,1
+PLAT:LSY:S11G3:WB,platform,LSY,WB,1
+PLAT:LSY:J12A:EB,platform,LSY,EB,1
+PLAT:LSY:J12A:WB,platform,LSY,WB,1
+PLAT:LSY:J12B:EB,platform,LSY,EB,1
+PLAT:LSY:J12B:WB,platform,LSY,WB,1
+PLAT:LSY:S12C:EB,platform,LSY,EB,1
+PLAT:LSY:S12C:WB,platform,LSY,WB,1
+PLAT:LSY:S12D:EB,platform,LSY,EB,1
+PLAT:LSY:S12D:WB,platform,LSY,WB,1
+PLAT:LSY:S12G1:EB,platform,LSY,EB,1
+PLAT:LSY:S12G1:WB,platform,LSY,WB,1
+PLAT:LSY:S12G2:EB,platform,LSY,EB,1
+PLAT:LSY:S12G2:WB,platform,LSY,WB,1
+PLAT:LSY:S12G3:EB,platform,LSY,EB,1
+PLAT:LSY:S12G3:WB,platform,LSY,WB,1
+PLAT:LSY:J13A:EB,platform,LSY,EB,1
+PLAT:LSY:J13A:WB,platform,LSY,WB,1
+PLAT:LSY:J13B:EB,platform,LSY,EB,1
+PLAT:LSY:J13B:WB,platform,LSY,WB,1
+PLAT:LSY:S13C:EB,platform,LSY,EB,1
+PLAT:LSY:S13C:WB,platform,LSY,WB,1
+PLAT:LSY:S13D:EB,platform,LSY,EB,1
+PLAT:LSY:S13D:WB,platform,LSY,WB,1
+PLAT:LSY:S13G1:EB,platform,LSY,EB,1
+PLAT:LSY:S13G1:WB,platform,LSY,WB,1
+PLAT:LSY:S13G2:EB,platform,LSY,EB,1
+PLAT:LSY:S13G2:WB,platform,LSY,WB,1
+PLAT:LSY:S13G3:EB,platform,LSY,EB,1
+PLAT:LSY:S13G3:WB,platform,LSY,WB,1
+PLAT:LSY:J14A:EB,platform,LSY,EB,1
+PLAT:LSY:J14A:WB,platform,LSY,WB,1
+PLAT:LSY:J14B:EB,platform,LSY,EB,1
+PLAT:LSY:J14B:WB,platform,LSY,WB,1
+PLAT:LSY:S14C:EB,platform,LSY,EB,1
+PLAT:LSY:S14C:WB,platform,LSY,WB,1
+PLAT:LSY:S14D:EB,platform,LSY,EB,1
+PLAT:LSY:S14D:WB,platform,LSY,WB,1
+PLAT:LSY:S14G1:EB,platform,LSY,EB,1
+PLAT:LSY:S14G1:WB,platform,LSY,WB,1
+PLAT:LSY:S14G2:EB,platform,LSY,EB,1
+PLAT:LSY:S14G2:WB,platform,LSY,WB,1
+PLAT:LSY:S14G3:EB,platform,LSY,EB,1
+PLAT:LSY:S14G3:WB,platform,LSY,WB,1
+PLAT:LSY:J15A:EB,platform,LSY,EB,1
+PLAT:LSY:J15A:WB,platform,LSY,WB,1
+PLAT:LSY:J15B:EB,platform,LSY,EB,1
+PLAT:LSY:J15B:WB,platform,LSY,WB,1
+PLAT:LSY:S15C:EB,platform,LSY,EB,1
+PLAT:LSY:S15C:WB,platform,LSY,WB,1
+PLAT:LSY:S15D:EB,platform,LSY,EB,1
+PLAT:LSY:S15D:WB,platform,LSY,WB,1
+PLAT:LSY:S15G1:EB,platform,LSY,EB,1
+PLAT:LSY:S15G1:WB,platform,LSY,WB,1
+PLAT:LSY:S15G2:EB,platform,LSY,EB,1
+PLAT:LSY:S15G2:WB,platform,LSY,WB,1
+PLAT:LSY:S15G3:EB,platform,LSY,EB,1
+PLAT:LSY:S15G3:WB,platform,LSY,WB,1
+PLAT:LSY:J16A:EB,platform,LSY,EB,1
+PLAT:LSY:J16A:WB,platform,LSY,WB,1
+PLAT:LSY:J16B:EB,platform,LSY,EB,1
+PLAT:LSY:J16B:WB,platform,LSY,WB,1
+PLAT:LSY:S16C:EB,platform,LSY,EB,1
+PLAT:LSY:S16C:WB,platform,LSY,WB,1
+PLAT:LSY:S16D:EB,platform,LSY,EB,1
+PLAT:LSY:S16D:WB,platform,LSY,WB,1
+PLAT:LSY:S16G1:EB,platform,LSY,EB,1
+PLAT:LSY:S16G1:WB,platform,LSY,WB,1
+PLAT:LSY:S16G2:EB,platform,LSY,EB,1
+PLAT:LSY:S16G2:WB,platform,LSY,WB,1
+PLAT:LSY:S16G3:EB,platform,LSY,EB,1
+PLAT:LSY:S16G3:WB,platform,LSY,WB,1
+PLAT:LSY:J17A:EB,platform,LSY,EB,1
+PLAT:LSY:J17A:WB,platform,LSY,WB,1
+PLAT:LSY:J17B:EB,platform,LSY,EB,1
+PLAT:LSY:J17B:WB,platform,LSY,WB,1
+PLAT:LSY:S17C:EB,platform,LSY,EB,1
+PLAT:LSY:S17C:WB,platform,LSY,WB,1
+PLAT:LSY:S17D:EB,platform,LSY,EB,1
+PLAT:LSY:S17D:WB,platform,LSY,WB,1
+PLAT:LSY:S17G1:EB,platform,LSY,EB,1
+PLAT:LSY:S17G1:WB,platform,LSY,WB,1
+PLAT:LSY:S17G2:EB,platform,LSY,EB,1
+PLAT:LSY:S17G2:WB,platform,LSY,WB,1
+PLAT:LSY:S17G3:EB,platform,LSY,EB,1
+PLAT:LSY:S17G3:WB,platform,LSY,WB,1
+PLAT:LSY:J18A:EB,platform,LSY,EB,1
+PLAT:LSY:J18A:WB,platform,LSY,WB,1
+PLAT:LSY:J18B:EB,platform,LSY,EB,1
+PLAT:LSY:J18B:WB,platform,LSY,WB,1
+PLAT:LSY:S18C:EB,platform,LSY,EB,1
+PLAT:LSY:S18C:WB,platform,LSY,WB,1
+PLAT:LSY:S18D:EB,platform,LSY,EB,1
+PLAT:LSY:S18D:WB,platform,LSY,WB,1
+PLAT:LSY:S18G1:EB,platform,LSY,EB,1
+PLAT:LSY:S18G1:WB,platform,LSY,WB,1
+PLAT:LSY:S18G2:EB,platform,LSY,EB,1
+PLAT:LSY:S18G2:WB,platform,LSY,WB,1
+PLAT:LSY:S18G3:EB,platform,LSY,EB,1
+PLAT:LSY:S18G3:WB,platform,LSY,WB,1
+PLAT:LSY:J19A:EB,platform,LSY,EB,1
+PLAT:LSY:J19A:WB,platform,LSY,WB,1
+PLAT:LSY:J19B:EB,platform,LSY,EB,1
+PLAT:LSY:J19B:WB,platform,LSY,WB,1
+PLAT:LSY:S19C:EB,platform,LSY,EB,1
+PLAT:LSY:S19C:WB,platform,LSY,WB,1
+PLAT:LSY:S19D:EB,platform,LSY,EB,1
+PLAT:LSY:S19D:WB,platform,LSY,WB,1
+PLAT:LSY:S19G1:EB,platform,LSY,EB,1
+PLAT:LSY:S19G1:WB,platform,LSY,WB,1
+PLAT:LSY:S19G2:EB,platform,LSY,EB,1
+PLAT:LSY:S19G2:WB,platform,LSY,WB,1
+PLAT:LSY:S19G3:EB,platform,LSY,EB,1
+PLAT:LSY:S19G3:WB,platform,LSY,WB,1
+PLAT:LSY:J20A:EB,platform,LSY,EB,1
+PLAT:LSY:J20A:WB,platform,LSY,WB,1
+PLAT:LSY:J20B:EB,platform,LSY,EB,1
+PLAT:LSY:J20B:WB,platform,LSY,WB,1
+PLAT:LSY:S20C:EB,platform,LSY,EB,1
+PLAT:LSY:S20C:WB,platform,LSY,WB,1
+PLAT:LSY:S20D:EB,platform,LSY,EB,1
+PLAT:LSY:S20D:WB,platform,LSY,WB,1
+PLAT:LSY:S20G1:EB,platform,LSY,EB,1
+PLAT:LSY:S20G1:WB,platform,LSY,WB,1
+PLAT:LSY:S20G2:EB,platform,LSY,EB,1
+PLAT:LSY:S20G2:WB,platform,LSY,WB,1
+PLAT:LSY:S20G3:EB,platform,LSY,EB,1
+PLAT:LSY:S20G3:WB,platform,LSY,WB,1
+PLAT:LSY:J21A:EB,platform,LSY,EB,1
+PLAT:LSY:J21A:WB,platform,LSY,WB,1
+PLAT:LSY:J21B:EB,platform,LSY,EB,1
+PLAT:LSY:J21B:WB,platform,LSY,WB,1
+PLAT:LSY:S21C:EB,platform,LSY,EB,1
+PLAT:LSY:S21C:WB,platform,LSY,WB,1
+PLAT:LSY:S21D:EB,platform,LSY,EB,1
+PLAT:LSY:S21D:WB,platform,LSY,WB,1
+PLAT:LSY:S21G1:EB,platform,LSY,EB,1
+PLAT:LSY:S21G1:WB,platform,LSY,WB,1
+PLAT:LSY:S21G2:EB,platform,LSY,EB,1
+PLAT:LSY:S21G2:WB,platform,LSY,WB,1
+PLAT:LSY:S21G3:EB,platform,LSY,EB,1
+PLAT:LSY:S21G3:WB,platform,LSY,WB,1
+PLAT:LSY:J22A:EB,platform,LSY,EB,1
+PLAT:LSY:J22A:WB,platform,LSY,WB,1
+PLAT:LSY:J22B:EB,platform,LSY,EB,1
+PLAT:LSY:J22B:WB,platform,LSY,WB,1
+PLAT:LSY:S22C:EB,platform,LSY,EB,1
+PLAT:LSY:S22C:WB,platform,LSY,WB,1
+PLAT:LSY:S22D:EB,platform,LSY,EB,1
+PLAT:LSY:S22D:WB,platform,LSY,WB,1
+PLAT:LSY:S22G1:EB,platform,LSY,EB,1
+PLAT:LSY:S22G1:WB,platform,LSY,WB,1
+PLAT:LSY:S22G2:EB,platform,LSY,EB,1
+PLAT:LSY:S22G2:WB,platform,LSY,WB,1
+PLAT:LSY:S22G3:EB,platform,LSY,EB,1
+PLAT:LSY:S22G3:WB,platform,LSY,WB,1
+PLAT:LSY:J23A:EB,platform,LSY,EB,1
+PLAT:LSY:J23A:WB,platform,LSY,WB,1
+PLAT:LSY:J23B:EB,platform,LSY,EB,1
+PLAT:LSY:J23B:WB,platform,LSY,WB,1
+PLAT:LSY:S23C:EB,platform,LSY,EB,1
+PLAT:LSY:S23C:WB,platform,LSY,WB,1
+PLAT:LSY:S23D:EB,platform,LSY,EB,1
+PLAT:LSY:S23D:WB,platform,LSY,WB,1
+PLAT:LSY:S23G1:EB,platform,LSY,EB,1
+PLAT:LSY:S23G1:WB,platform,LSY,WB,1
+PLAT:LSY:S23G2:EB,platform,LSY,EB,1
+PLAT:LSY:S23G2:WB,platform,LSY,WB,1
+PLAT:LSY:S23G3:EB,platform,LSY,EB,1
+PLAT:LSY:S23G3:WB,platform,LSY,WB,1
+PLAT:LSY:J24A:EB,platform,LSY,EB,1
+PLAT:LSY:J24A:WB,platform,LSY,WB,1
+PLAT:LSY:J24B:EB,platform,LSY,EB,1
+PLAT:LSY:J24B:WB,platform,LSY,WB,1
+PLAT:LSY:S24C:EB,platform,LSY,EB,1
+PLAT:LSY:S24C:WB,platform,LSY,WB,1
+PLAT:LSY:S24D:EB,platform,LSY,EB,1
+PLAT:LSY:S24D:WB,platform,LSY,WB,1
+PLAT:LSY:S24G1:EB,platform,LSY,EB,1
+PLAT:LSY:S24G1:WB,platform,LSY,WB,1
+PLAT:LSY:S24G2:EB,platform,LSY,EB,1
+PLAT:LSY:S24G2:WB,platform,LSY,WB,1
+PLAT:LSY:S24G3:EB,platform,LSY,EB,1
+PLAT:LSY:S24G3:WB,platform,LSY,WB,1
+PLAT:LSY:J25A:EB,platform,LSY,EB,1
+PLAT:LSY:J25A:WB,platform,LSY,WB,1
+PLAT:LSY:J25B:EB,platform,LSY,EB,1
+PLAT:LSY:J25B:WB,platform,LSY,WB,1
+PLAT:LSY:S25C:EB,platform,LSY,EB,1
+PLAT:LSY:S25C:WB,platform,LSY,WB,1
+PLAT:LSY:S25D:EB,platform,LSY,EB,1
+PLAT:LSY:S25D:WB,platform,LSY,WB,1
+PLAT:LSY:S25G1:EB,platform,LSY,EB,1
+PLAT:LSY:S25G1:WB,platform,LSY,WB,1
+PLAT:LSY:S25G2:EB,platform,LSY,EB,1
+PLAT:LSY:S25G2:WB,platform,LSY,WB,1
+PLAT:LSY:S25G3:EB,platform,LSY,EB,1
+PLAT:LSY:S25G3:WB,platform,LSY,WB,1
+PLAT:LSY:J26A:EB,platform,LSY,EB,1
+PLAT:LSY:J26A:WB,platform,LSY,WB,1
+PLAT:LSY:J26B:EB,platform,LSY,EB,1
+PLAT:LSY:J26B:WB,platform,LSY,WB,1
+PLAT:LSY:S26C:EB,platform,LSY,EB,1
+PLAT:LSY:S26C:WB,platform,LSY,WB,1
+PLAT:LSY:S26D:EB,platform,LSY,EB,1
+PLAT:LSY:S26D:WB,platform,LSY,WB,1
+PLAT:LSY:S26G1:EB,platform,LSY,EB,1
+PLAT:LSY:S26G1:WB,platform,LSY,WB,1
+PLAT:LSY:S26G2:EB,platform,LSY,EB,1
+PLAT:LSY:S26G2:WB,platform,LSY,WB,1
+PLAT:LSY:S26G3:EB,platform,LSY,EB,1
+PLAT:LSY:S26G3:WB,platform,LSY,WB,1
+PLAT:LSY:J27A:EB,platform,LSY,EB,1
+PLAT:LSY:J27A:WB,platform,LSY,WB,1
+PLAT:LSY:J27B:EB,platform,LSY,EB,1
+PLAT:LSY:J27B:WB,platform,LSY,WB,1
+PLAT:LSY:S27C:EB,platform,LSY,EB,1
+PLAT:LSY:S27C:WB,platform,LSY,WB,1
+PLAT:LSY:S27D:EB,platform,LSY,EB,1
+PLAT:LSY:S27D:WB,platform,LSY,WB,1
+PLAT:LSY:S27G1:EB,platform,LSY,EB,1
+PLAT:LSY:S27G1:WB,platform,LSY,WB,1
+PLAT:LSY:S27G2:EB,platform,LSY,EB,1
+PLAT:LSY:S27G2:WB,platform,LSY,WB,1
+PLAT:LSY:S27G3:EB,platform,LSY,EB,1
+PLAT:LSY:S27G3:WB,platform,LSY,WB,1
+PLAT:LSY:J28A:EB,platform,LSY,EB,1
+PLAT:LSY:J28A:WB,platform,LSY,WB,1
+PLAT:LSY:J28B:EB,platform,LSY,EB,1
+PLAT:LSY:J28B:WB,platform,LSY,WB,1
+PLAT:LSY:S28C:EB,platform,LSY,EB,1
+PLAT:LSY:S28C:WB,platform,LSY,WB,1
+PLAT:LSY:S28D:EB,platform,LSY,EB,1
+PLAT:LSY:S28D:WB,platform,LSY,WB,1
+PLAT:LSY:S28G1:EB,platform,LSY,EB,1
+PLAT:LSY:S28G1:WB,platform,LSY,WB,1
+PLAT:LSY:S28G2:EB,platform,LSY,EB,1
+PLAT:LSY:S28G2:WB,platform,LSY,WB,1
+PLAT:LSY:S28G3:EB,platform,LSY,EB,1
+PLAT:LSY:S28G3:WB,platform,LSY,WB,1
+PLAT:LSY:J29A:EB,platform,LSY,EB,1
+PLAT:LSY:J29A:WB,platform,LSY,WB,1
+PLAT:LSY:J29B:EB,platform,LSY,EB,1
+PLAT:LSY:J29B:WB,platform,LSY,WB,1
+PLAT:LSY:S29C:EB,platform,LSY,EB,1
+PLAT:LSY:S29C:WB,platform,LSY,WB,1
+PLAT:LSY:S29D:EB,platform,LSY,EB,1
+PLAT:LSY:S29D:WB,platform,LSY,WB,1
+PLAT:LSY:S29G1:EB,platform,LSY,EB,1
+PLAT:LSY:S29G1:WB,platform,LSY,WB,1
+PLAT:LSY:S29G2:EB,platform,LSY,EB,1
+PLAT:LSY:S29G2:WB,platform,LSY,WB,1
+PLAT:LSY:S29G3:EB,platform,LSY,EB,1
+PLAT:LSY:S29G3:WB,platform,LSY,WB,1
+PLAT:LSY:J30A:EB,platform,LSY,EB,1
+PLAT:LSY:J30A:WB,platform,LSY,WB,1
+PLAT:LSY:J30B:EB,platform,LSY,EB,1
+PLAT:LSY:J30B:WB,platform,LSY,WB,1
+PLAT:LSY:S30C:EB,platform,LSY,EB,1
+PLAT:LSY:S30C:WB,platform,LSY,WB,1
+PLAT:LSY:S30D:EB,platform,LSY,EB,1
+PLAT:LSY:S30D:WB,platform,LSY,WB,1
+PLAT:LSY:S30G1:EB,platform,LSY,EB,1
+PLAT:LSY:S30G1:WB,platform,LSY,WB,1
+PLAT:LSY:S30G2:EB,platform,LSY,EB,1
+PLAT:LSY:S30G2:WB,platform,LSY,WB,1
+PLAT:LSY:S30G3:EB,platform,LSY,EB,1
+PLAT:LSY:S30G3:WB,platform,LSY,WB,1
+PLAT:LSY:J31A:EB,platform,LSY,EB,1
+PLAT:LSY:J31A:WB,platform,LSY,WB,1
+PLAT:LSY:J31B:EB,platform,LSY,EB,1
+PLAT:LSY:J31B:WB,platform,LSY,WB,1
+PLAT:LSY:S31C:EB,platform,LSY,EB,1
+PLAT:LSY:S31C:WB,platform,LSY,WB,1
+PLAT:LSY:S31D:EB,platform,LSY,EB,1
+PLAT:LSY:S31D:WB,platform,LSY,WB,1
+PLAT:LSY:S31G1:EB,platform,LSY,EB,1
+PLAT:LSY:S31G1:WB,platform,LSY,WB,1
+PLAT:LSY:S31G2:EB,platform,LSY,EB,1
+PLAT:LSY:S31G2:WB,platform,LSY,WB,1
+PLAT:LSY:S31G3:EB,platform,LSY,EB,1
+PLAT:LSY:S31G3:WB,platform,LSY,WB,1
+PLAT:LSY:J32A:EB,platform,LSY,EB,1
+PLAT:LSY:J32A:WB,platform,LSY,WB,1
+PLAT:LSY:J32B:EB,platform,LSY,EB,1
+PLAT:LSY:J32B:WB,platform,LSY,WB,1
+PLAT:LSY:S32C:EB,platform,LSY,EB,1
+PLAT:LSY:S32C:WB,platform,LSY,WB,1
+PLAT:LSY:S32D:EB,platform,LSY,EB,1
+PLAT:LSY:S32D:WB,platform,LSY,WB,1
+PLAT:LSY:S32G1:EB,platform,LSY,EB,1
+PLAT:LSY:S32G1:WB,platform,LSY,WB,1
+PLAT:LSY:S32G2:EB,platform,LSY,EB,1
+PLAT:LSY:S32G2:WB,platform,LSY,WB,1
+PLAT:LSY:S32G3:EB,platform,LSY,EB,1
+PLAT:LSY:S32G3:WB,platform,LSY,WB,1
+PLAT:LSY:J33A:EB,platform,LSY,EB,1
+PLAT:LSY:J33A:WB,platform,LSY,WB,1
+PLAT:LSY:J33B:EB,platform,LSY,EB,1
+PLAT:LSY:J33B:WB,platform,LSY,WB,1
+PLAT:LSY:S33C:EB,platform,LSY,EB,1
+PLAT:LSY:S33C:WB,platform,LSY,WB,1
+PLAT:LSY:S33D:EB,platform,LSY,EB,1
+PLAT:LSY:S33D:WB,platform,LSY,WB,1
+PLAT:LSY:S33G1:EB,platform,LSY,EB,1
+PLAT:LSY:S33G1:WB,platform,LSY,WB,1
+PLAT:LSY:S33G2:EB,platform,LSY,EB,1
+PLAT:LSY:S33G2:WB,platform,LSY,WB,1
+PLAT:LSY:S33G3:EB,platform,LSY,EB,1
+PLAT:LSY:S33G3:WB,platform,LSY,WB,1
+PLAT:LSY:J34A:EB,platform,LSY,EB,1
+PLAT:LSY:J34A:WB,platform,LSY,WB,1
+PLAT:LSY:J34B:EB,platform,LSY,EB,1
+PLAT:LSY:J34B:WB,platform,LSY,WB,1
+PLAT:LSY:S34C:EB,platform,LSY,EB,1
+PLAT:LSY:S34C:WB,platform,LSY,WB,1
+PLAT:LSY:S34D:EB,platform,LSY,EB,1
+PLAT:LSY:S34D:WB,platform,LSY,WB,1
+PLAT:LSY:S34G1:EB,platform,LSY,EB,1
+PLAT:LSY:S34G1:WB,platform,LSY,WB,1
+PLAT:LSY:S34G2:EB,platform,LSY,EB,1
+PLAT:LSY:S34G2:WB,platform,LSY,WB,1
+PLAT:LSY:S34G3:EB,platform,LSY,EB,1
+PLAT:LSY:S34G3:WB,platform,LSY,WB,1
+PLAT:LSY:J35A:EB,platform,LSY,EB,1
+PLAT:LSY:J35A:WB,platform,LSY,WB,1
+PLAT:LSY:J35B:EB,platform,LSY,EB,1
+PLAT:LSY:J35B:WB,platform,LSY,WB,1
+PLAT:LSY:S35C:EB,platform,LSY,EB,1
+PLAT:LSY:S35C:WB,platform,LSY,WB,1
+PLAT:LSY:S35D:EB,platform,LSY,EB,1
+PLAT:LSY:S35D:WB,platform,LSY,WB,1
+PLAT:LSY:S35G1:EB,platform,LSY,EB,1
+PLAT:LSY:S35G1:WB,platform,LSY,WB,1
+PLAT:LSY:S35G2:EB,platform,LSY,EB,1
+PLAT:LSY:S35G2:WB,platform,LSY,WB,1
+PLAT:LSY:S35G3:EB,platform,LSY,EB,1
+PLAT:LSY:S35G3:WB,platform,LSY,WB,1
+PLAT:LSY:J36A:EB,platform,LSY,EB,1
+PLAT:LSY:J36A:WB,platform,LSY,WB,1
+PLAT:LSY:J36B:EB,platform,LSY,EB,1
+PLAT:LSY:J36B:WB,platform,LSY,WB,1
+PLAT:LSY:S36C:EB,platform,LSY,EB,1
+PLAT:LSY:S36C:WB,platform,LSY,WB,1
+PLAT:LSY:S36D:EB,platform,LSY,EB,1
+PLAT:LSY:S36D:WB,platform,LSY,WB,1
+PLAT:LSY:S36G1:EB,platform,LSY,EB,1
+PLAT:LSY:S36G1:WB,platform,LSY,WB,1
+PLAT:LSY:S36G2:EB,platform,LSY,EB,1
+PLAT:LSY:S36G2:WB,platform,LSY,WB,1
+PLAT:LSY:S36G3:EB,platform,LSY,EB,1
+PLAT:LSY:S36G3:WB,platform,LSY,WB,1
+PLAT:LSY:J37A:EB,platform,LSY,EB,1
+PLAT:LSY:J37A:WB,platform,LSY,WB,1
+PLAT:LSY:J37B:EB,platform,LSY,EB,1
+PLAT:LSY:J37B:WB,platform,LSY,WB,1
+PLAT:LSY:S37C:EB,platform,LSY,EB,1
+PLAT:LSY:S37C:WB,platform,LSY,WB,1
+PLAT:LSY:S37D:EB,platform,LSY,EB,1
+PLAT:LSY:S37D:WB,platform,LSY,WB,1
+PLAT:LSY:S37G1:EB,platform,LSY,EB,1
+PLAT:LSY:S37G1:WB,platform,LSY,WB,1
+PLAT:LSY:S37G2:EB,platform,LSY,EB,1
+PLAT:LSY:S37G2:WB,platform,LSY,WB,1
+PLAT:LSY:S37G3:EB,platform,LSY,EB,1
+PLAT:LSY:S37G3:WB,platform,LSY,WB,1
+PLAT:LSY:J38A:EB,platform,LSY,EB,1
+PLAT:LSY:J38A:WB,platform,LSY,WB,1
+PLAT:LSY:J38B:EB,platform,LSY,EB,1
+PLAT:LSY:J38B:WB,platform,LSY,WB,1
+PLAT:LSY:S38C:EB,platform,LSY,EB,1
+PLAT:LSY:S38C:WB,platform,LSY,WB,1
+PLAT:LSY:S38D:EB,platform,LSY,EB,1
+PLAT:LSY:S38D:WB,platform,LSY,WB,1
+PLAT:LSY:S38G1:EB,platform,LSY,EB,1
+PLAT:LSY:S38G1:WB,platform,LSY,WB,1
+PLAT:LSY:S38G2:EB,platform,LSY,EB,1
+PLAT:LSY:S38G2:WB,platform,LSY,WB,1
+PLAT:LSY:S38G3:EB,platform,LSY,EB,1
+PLAT:LSY:S38G3:WB,platform,LSY,WB,1
+PLAT:LSY:J39A:EB,platform,LSY,EB,1
+PLAT:LSY:J39A:WB,platform,LSY,WB,1
+PLAT:LSY:J39B:EB,platform,LSY,EB,1
+PLAT:LSY:J39B:WB,platform,LSY,WB,1
+PLAT:LSY:S39C:EB,platform,LSY,EB,1
+PLAT:LSY:S39C:WB,platform,LSY,WB,1
+PLAT:LSY:S39D:EB,platform,LSY,EB,1
+PLAT:LSY:S39D:WB,platform,LSY,WB,1
+PLAT:LSY:S39G1:EB,platform,LSY,EB,1
+PLAT:LSY:S39G1:WB,platform,LSY,WB,1
+PLAT:LSY:S39G2:EB,platform,LSY,EB,1
+PLAT:LSY:S39G2:WB,platform,LSY,WB,1
+PLAT:LSY:S39G3:EB,platform,LSY,EB,1
+PLAT:LSY:S39G3:WB,platform,LSY,WB,1
+PLAT:LSY:J40A:EB,platform,LSY,EB,1
+PLAT:LSY:J40A:WB,platform,LSY,WB,1
+PLAT:LSY:J40B:EB,platform,LSY,EB,1
+PLAT:LSY:J40B:WB,platform,LSY,WB,1
+PLAT:LSY:S40C:EB,platform,LSY,EB,1
+PLAT:LSY:S40C:WB,platform,LSY,WB,1
+PLAT:LSY:S40D:EB,platform,LSY,EB,1
+PLAT:LSY:S40D:WB,platform,LSY,WB,1
+PLAT:LSY:S40G1:EB,platform,LSY,EB,1
+PLAT:LSY:S40G1:WB,platform,LSY,WB,1
+PLAT:LSY:S40G2:EB,platform,LSY,EB,1
+PLAT:LSY:S40G2:WB,platform,LSY,WB,1
+PLAT:LSY:S40G3:EB,platform,LSY,EB,1
+PLAT:LSY:S40G3:WB,platform,LSY,WB,1
