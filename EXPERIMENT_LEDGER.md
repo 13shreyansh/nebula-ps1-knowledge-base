@@ -1755,3 +1755,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - End-to-end injection: forcing the publication helper to fail after a fully validated C=`9120` merge leaves no output and retains the explicit staged report. Normal publication reports `published`.
 - Release replay: 182/182 regressions pass in 9.704 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true. No portal interaction occurred.
 - Boundary: same-parent rename gives atomic visibility on the tested local filesystem. Sudden power loss durability is not proved because directories/files are not explicitly `fsync`ed; this is sufficient to prevent partial human upload under ordinary process and copy failures, not a transactional-storage guarantee.
+
+### E186: Fixed nominal stage-allowance decomposition benchmark precommit
+
+- Timestamp: 2026-09-19 12:50:36 +08.
+- Motivation: E173 gave every one of 32 components the full 3/2/5/10-second stage limits, so its compute allowance was not comparable with one monolithic run. The score/proof was legitimate, but any efficiency inference was weak.
+- Frozen protocol: run one-worker, seed-1, strict-buffer monolithic solving with 3/2/5/10-second stage limits. Run decomposition with every stage limit divided by the precomputed component count. Use one heuristic and fallback attempt, 1,000 closure rounds, unchanged solver code, and no portal feedback.
+- Declared limitation: this equalizes summed nominal stage limits, not measured CPU time. Stages can exit early or be skipped, model construction has overhead, and wall-clock timers are not additive compute accounting.
+- Test order fixed before outcomes: (1) 64-activity/32-component C scale case, (2) 28-activity/7-component heterogeneous C case, and (3) 42-activity/9-component heterogeneous B counter-control. Preserve failures and do not change inputs or budgets after observation.
+- Decision rule: compare hard-valid, strict-clean, dual-scored primary objectives and explicit proof state before wall time. No protected official incumbent is eligible for replacement from this benchmark.
