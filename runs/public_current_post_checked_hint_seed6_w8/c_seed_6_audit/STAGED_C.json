@@ -1,0 +1,1076 @@
+{
+  "fallback_objective_score": 137.9,
+  "fallback_prune": {
+    "final_access_rows": 192,
+    "final_score": 137.9,
+    "final_submission_hash": "6b3d3a5d6f23e400839a4028281620f595c7f7a573370e1009d886d8e89bc4d6",
+    "initial_access_rows": 192,
+    "initial_score": 137.9,
+    "initial_submission_hash": "6b3d3a5d6f23e400839a4028281620f595c7f7a573370e1009d886d8e89bc4d6",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "C",
+    "strict_buffer_overlap_checked": false
+  },
+  "heuristic_best_objective_score": 62.7,
+  "reference_validator_confirmed": false,
+  "scenario": "C",
+  "scenario_a_staged_report": {
+    "bridge_safe_cost_repair_activities": [],
+    "bridge_safe_cost_repair_prune": null,
+    "bridge_safe_cost_repair_telemetry": null,
+    "bridge_safe_expanded_cost_repair_activities": [],
+    "bridge_safe_expanded_cost_repair_prune": null,
+    "bridge_safe_expanded_cost_repair_telemetry": null,
+    "bridge_safe_fallback_attempts": [],
+    "bridge_safe_fallback_prune": null,
+    "bridge_safe_fallback_selected_attempt": null,
+    "bridge_safe_fallback_telemetry": null,
+    "bridge_safe_local_repair_activities": [],
+    "bridge_safe_local_repair_prune": null,
+    "bridge_safe_local_repair_telemetry": null,
+    "bridge_safe_repair_hint_source_attempt": null,
+    "eclo_compaction": null,
+    "eclo_compaction_promoted": false,
+    "heuristic_attempts": [
+      {
+        "best_bound": null,
+        "branches": 147138,
+        "closure_rounds": 19,
+        "conflicts": 0,
+        "deterministic_time_seconds": 49.710946057752025,
+        "formulation": "scenario_a_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+        "interleave_search": false,
+        "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+        "max_deterministic_time_per_solve": null,
+        "maximum_round_time_seconds": 1.0,
+        "model_constraints": 38313,
+        "model_variables": 19500,
+        "objective_score": 137.9,
+        "primary_bound_scope": "full_instance",
+        "primary_score_proven_optimal": false,
+        "remaining_closure_conflicts": 0,
+        "round_time_limit_seconds": 1.0,
+        "seed": 6,
+        "solve_rounds": 20,
+        "status": "HEURISTIC_SAFE_INCUMBENT",
+        "structural_hint_access_count": 108,
+        "structural_hint_activity_count": 35,
+        "structural_hint_checked": false,
+        "structural_hint_complete": false,
+        "structural_hint_feasible": false,
+        "structural_hint_objective_score": null,
+        "structural_hints_used": false,
+        "tie_break_proven_optimal": false,
+        "time_limit_seconds": 30.0,
+        "unknown_retries": 0,
+        "wall_time_seconds": 12.238968125006068,
+        "workers": 8
+      }
+    ],
+    "heuristic_prune": {
+      "final_access_rows": 192,
+      "final_score": 137.9,
+      "final_submission_hash": "4ad7eea391aead09299ac5d38851fdfaa1a893c7eea03f493969b524ef007225",
+      "initial_access_rows": 192,
+      "initial_score": 137.9,
+      "initial_submission_hash": "4ad7eea391aead09299ac5d38851fdfaa1a893c7eea03f493969b524ef007225",
+      "reference_validator_confirmed": false,
+      "removed_accesses": [],
+      "scenario": "A",
+      "strict_buffer_overlap_checked": false
+    },
+    "heuristic_selected_attempt": 1,
+    "heuristic_telemetry": {
+      "best_bound": null,
+      "branches": 147138,
+      "closure_rounds": 19,
+      "conflicts": 0,
+      "deterministic_time_seconds": 49.710946057752025,
+      "formulation": "scenario_a_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+      "interleave_search": false,
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "max_deterministic_time_per_solve": null,
+      "maximum_round_time_seconds": 1.0,
+      "model_constraints": 38313,
+      "model_variables": 19500,
+      "objective_score": 137.9,
+      "primary_bound_scope": "full_instance",
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 0,
+      "round_time_limit_seconds": 1.0,
+      "seed": 6,
+      "solve_rounds": 20,
+      "status": "HEURISTIC_SAFE_INCUMBENT",
+      "structural_hint_access_count": 108,
+      "structural_hint_activity_count": 35,
+      "structural_hint_checked": false,
+      "structural_hint_complete": false,
+      "structural_hint_feasible": false,
+      "structural_hint_objective_score": null,
+      "structural_hints_used": false,
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 30.0,
+      "unknown_retries": 0,
+      "wall_time_seconds": 12.238968125006068,
+      "workers": 8
+    },
+    "idle_week_compaction": null,
+    "idle_week_compaction_promoted": false,
+    "idle_week_compaction_used_as_seed": false,
+    "postselection_compaction": null,
+    "postselection_compaction_promoted": false,
+    "reference_validator_confirmed": false,
+    "scenario": "A",
+    "selected_objective_score": 137.9,
+    "selected_stage": "heuristic_incumbent",
+    "selected_submission_hash": "4ad7eea391aead09299ac5d38851fdfaa1a893c7eea03f493969b524ef007225",
+    "selection_rule": "strictly lower fully checked objective; an equal-score candidate may replace the incumbent only as a standard-feasible, strict-clean final hedge",
+    "strict_buffer_overlap_checked": false,
+    "strict_buffer_overlap_clean": false,
+    "strict_hedge_activities": [
+      "A001",
+      "A002",
+      "A003",
+      "A004",
+      "A006",
+      "A007",
+      "A008",
+      "A009",
+      "A011",
+      "A012",
+      "A013",
+      "A014",
+      "A017",
+      "A019",
+      "A020",
+      "A040",
+      "A041",
+      "A042",
+      "A043",
+      "A046",
+      "A047",
+      "A048",
+      "A049",
+      "A050",
+      "A051",
+      "A054",
+      "A055",
+      "A056",
+      "A057"
+    ],
+    "strict_hedge_conflicts_after": [
+      {
+        "first_activities": [
+          "A003",
+          "A019"
+        ],
+        "locations": [
+          "SEC:BET:S14_H01:EB"
+        ],
+        "second_activities": [
+          "A048"
+        ],
+        "week": 12
+      },
+      {
+        "first_activities": [
+          "A007",
+          "A017",
+          "A040",
+          "A041",
+          "A057"
+        ],
+        "locations": [
+          "SEC:BET:S16_S17:EB"
+        ],
+        "second_activities": [
+          "A008"
+        ],
+        "week": 20
+      }
+    ],
+    "strict_hedge_conflicts_before": [
+      {
+        "first_activities": [
+          "A003",
+          "A019"
+        ],
+        "locations": [
+          "SEC:BET:S14_H01:EB"
+        ],
+        "second_activities": [
+          "A048"
+        ],
+        "week": 12
+      },
+      {
+        "first_activities": [
+          "A007",
+          "A017",
+          "A040",
+          "A041",
+          "A057"
+        ],
+        "locations": [
+          "SEC:BET:S16_S17:EB"
+        ],
+        "second_activities": [
+          "A008"
+        ],
+        "week": 20
+      }
+    ],
+    "strict_hedge_promoted": false,
+    "strict_hedge_prune": null,
+    "strict_hedge_telemetry": {
+      "best_bound": null,
+      "branches": 78556,
+      "closure_rounds": 25,
+      "conflicts": 0,
+      "deterministic_time_seconds": 23.417879109547382,
+      "formulation": "scenario_a_iterative_bridge_safe_strict_buffer_closure_relaxation_partially_frozen_access",
+      "interleave_search": false,
+      "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective. The reported bound and optimality status apply only to the frozen-access neighborhood.",
+      "max_deterministic_time_per_solve": null,
+      "maximum_round_time_seconds": 5.0,
+      "model_constraints": 105863,
+      "model_variables": 41227,
+      "objective_score": 137.9,
+      "primary_bound_scope": "frozen_access_neighborhood",
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 16,
+      "round_time_limit_seconds": 5.0,
+      "seed": 8,
+      "solve_rounds": 26,
+      "status": "UNKNOWN",
+      "structural_hint_access_count": 0,
+      "structural_hint_activity_count": 0,
+      "structural_hint_checked": false,
+      "structural_hint_complete": false,
+      "structural_hint_feasible": false,
+      "structural_hint_objective_score": null,
+      "structural_hints_used": false,
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 10.0,
+      "unknown_retries": 0,
+      "wall_time_seconds": 10.0189044590079,
+      "workers": 8
+    },
+    "submission_files": [
+      "SCHEDULE_ACCESS.csv",
+      "SCHEDULE_OCCUPANCY.csv",
+      "RESULTS.csv"
+    ],
+    "verification_prune": {
+      "final_access_rows": 192,
+      "final_score": 137.9,
+      "final_submission_hash": "4ad7eea391aead09299ac5d38851fdfaa1a893c7eea03f493969b524ef007225",
+      "initial_access_rows": 192,
+      "initial_score": 137.9,
+      "initial_submission_hash": "4ad7eea391aead09299ac5d38851fdfaa1a893c7eea03f493969b524ef007225",
+      "reference_validator_confirmed": false,
+      "removed_accesses": [],
+      "scenario": "A",
+      "strict_buffer_overlap_checked": false
+    },
+    "verification_round_time_limit_seconds": null,
+    "verification_telemetry": {
+      "best_bound": null,
+      "branches": 96142,
+      "closure_rounds": 29,
+      "conflicts": 0,
+      "deterministic_time_seconds": 16.162383238337583,
+      "formulation": "scenario_a_iterative_bridge_safe_sample_consistent_closure_relaxation",
+      "interleave_search": false,
+      "limitation": "Closure and buffer conflicts use the rule set that reproduced official A-001 and accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed. The row-count tie-breaker cannot alter the official penalty objective.",
+      "max_deterministic_time_per_solve": null,
+      "maximum_round_time_seconds": 1.0,
+      "model_constraints": 75103,
+      "model_variables": 31778,
+      "objective_score": 137.9,
+      "primary_bound_scope": "full_instance",
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 0,
+      "round_time_limit_seconds": 1.0,
+      "seed": 6,
+      "solve_rounds": 30,
+      "status": "FEASIBLE_SAFE_INCUMBENT",
+      "structural_hint_access_count": 0,
+      "structural_hint_activity_count": 0,
+      "structural_hint_checked": false,
+      "structural_hint_complete": false,
+      "structural_hint_feasible": false,
+      "structural_hint_objective_score": null,
+      "structural_hints_used": false,
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 10.0,
+      "unknown_retries": 0,
+      "wall_time_seconds": 10.015268290997483,
+      "workers": 8
+    }
+  },
+  "scenario_c_cost_repair_activities": [
+    "A001",
+    "A002",
+    "A003",
+    "A006",
+    "A007",
+    "A008",
+    "A011",
+    "A012",
+    "A013",
+    "A017",
+    "A019",
+    "A020",
+    "A021",
+    "A023",
+    "A031",
+    "A035",
+    "A036",
+    "A037",
+    "A038",
+    "A039",
+    "A040",
+    "A041",
+    "A042",
+    "A043",
+    "A046",
+    "A048",
+    "A049",
+    "A050",
+    "A055",
+    "A056",
+    "A057",
+    "A058",
+    "A059",
+    "A060",
+    "A061",
+    "A063",
+    "A064",
+    "A065",
+    "A066",
+    "A069",
+    "A070",
+    "A071",
+    "A073"
+  ],
+  "scenario_c_cost_repair_prune": {
+    "final_access_rows": 190,
+    "final_score": 62.7,
+    "final_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+    "initial_access_rows": 190,
+    "initial_score": 62.7,
+    "initial_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "C",
+    "strict_buffer_overlap_checked": false
+  },
+  "scenario_c_cost_repair_telemetry": {
+    "best_bound": 62.7,
+    "branches": 17367,
+    "closure_rounds": 0,
+    "conflicts": 46,
+    "deterministic_time_seconds": 0.3928517555616952,
+    "formulation": "scenario_c_iterative_bridge_safe_sample_consistent_closure_relaxation_partially_frozen_access",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the rule set that reproduced official A-001 and accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed. The row-count tie-breaker cannot alter the official penalty objective. The reported bound and optimality status apply only to the frozen-access neighborhood.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 5.0,
+    "model_constraints": 46333,
+    "model_variables": 23200,
+    "objective_score": 62.7,
+    "primary_bound_scope": "frozen_access_neighborhood",
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 5.0,
+    "seed": 6,
+    "solve_rounds": 1,
+    "status": "PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.3198145829956047,
+    "workers": 8
+  },
+  "scenario_c_eclo_compaction": {
+    "applicable": false,
+    "candidates_checked": 0,
+    "candidates_pruned_by_exact_score_order": 0,
+    "candidates_skipped_existing_eclo_window": 0,
+    "duplicate_candidates_skipped": 0,
+    "feasible_candidates": 0,
+    "improving_candidates": 0,
+    "promotions": 0,
+    "reason": "source is not a one-activity-per-week serialization",
+    "rounds": [
+      {
+        "applicable": false,
+        "candidates_checked": 0,
+        "candidates_pruned_by_exact_score_order": 0,
+        "candidates_skipped_existing_eclo_window": 0,
+        "duplicate_candidates_skipped": 0,
+        "exhaustive": false,
+        "feasible_candidates": 0,
+        "improving_candidates": 0,
+        "reason": "source is not a one-activity-per-week serialization",
+        "score_prediction_mismatches": 0,
+        "selected_activity": null,
+        "selected_eclo_weeks": null,
+        "selected_removed_week": null,
+        "selected_score": null,
+        "selected_submission_hash": null,
+        "source_score": 62.7,
+        "strict_buffer_overlap_required": false,
+        "unique_candidates_ranked": 0
+      }
+    ],
+    "score_prediction_mismatches": 0,
+    "selected_score": null,
+    "selected_submission_hash": null,
+    "source_score": 62.7
+  },
+  "scenario_c_eclo_compaction_promoted": false,
+  "scenario_c_expanded_cost_repair_activities": [
+    "A001",
+    "A002",
+    "A003",
+    "A004",
+    "A006",
+    "A007",
+    "A008",
+    "A011",
+    "A012",
+    "A013",
+    "A017",
+    "A019",
+    "A020",
+    "A021",
+    "A023",
+    "A031",
+    "A035",
+    "A036",
+    "A037",
+    "A038",
+    "A039",
+    "A040",
+    "A041",
+    "A042",
+    "A043",
+    "A046",
+    "A047",
+    "A048",
+    "A049",
+    "A050",
+    "A051",
+    "A055",
+    "A056",
+    "A057",
+    "A058",
+    "A059",
+    "A060",
+    "A061",
+    "A063",
+    "A064",
+    "A065",
+    "A066",
+    "A069",
+    "A070",
+    "A071",
+    "A073"
+  ],
+  "scenario_c_expanded_cost_repair_prune": {
+    "final_access_rows": 190,
+    "final_score": 62.7,
+    "final_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+    "initial_access_rows": 190,
+    "initial_score": 62.7,
+    "initial_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "C",
+    "strict_buffer_overlap_checked": false
+  },
+  "scenario_c_expanded_cost_repair_telemetry": {
+    "best_bound": 62.7,
+    "branches": 17716,
+    "closure_rounds": 0,
+    "conflicts": 0,
+    "deterministic_time_seconds": 0.4102314063880515,
+    "formulation": "scenario_c_iterative_bridge_safe_sample_consistent_closure_relaxation_partially_frozen_access",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the rule set that reproduced official A-001 and accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed. The row-count tie-breaker cannot alter the official penalty objective. The reported bound and optimality status apply only to the frozen-access neighborhood.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 5.0,
+    "model_constraints": 46138,
+    "model_variables": 23200,
+    "objective_score": 62.7,
+    "primary_bound_scope": "frozen_access_neighborhood",
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 5.0,
+    "seed": 7,
+    "solve_rounds": 1,
+    "status": "PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.33120412500284147,
+    "workers": 8
+  },
+  "scenario_c_heuristic_attempts": [
+    {
+      "attempt": 1,
+      "prune": {
+        "final_access_rows": 190,
+        "final_score": 62.7,
+        "final_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+        "initial_access_rows": 190,
+        "initial_score": 62.7,
+        "initial_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+        "reference_validator_confirmed": false,
+        "removed_accesses": [],
+        "scenario": "C",
+        "strict_buffer_overlap_checked": false
+      },
+      "telemetry": {
+        "best_bound": null,
+        "branches": 50178,
+        "closure_rounds": 12,
+        "conflicts": 0,
+        "deterministic_time_seconds": 159.92519112638237,
+        "formulation": "scenario_c_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+        "interleave_search": false,
+        "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+        "max_deterministic_time_per_solve": null,
+        "maximum_round_time_seconds": 3.0,
+        "model_constraints": 46859,
+        "model_variables": 23594,
+        "objective_score": 62.7,
+        "primary_bound_scope": "full_instance",
+        "primary_score_proven_optimal": false,
+        "remaining_closure_conflicts": 0,
+        "round_time_limit_seconds": 3.0,
+        "seed": 6,
+        "solve_rounds": 13,
+        "status": "HEURISTIC_SAFE_INCUMBENT",
+        "structural_hint_access_count": 108,
+        "structural_hint_activity_count": 35,
+        "structural_hint_checked": false,
+        "structural_hint_complete": false,
+        "structural_hint_feasible": false,
+        "structural_hint_objective_score": null,
+        "structural_hints_used": true,
+        "tie_break_proven_optimal": false,
+        "time_limit_seconds": 30.0,
+        "unknown_retries": 0,
+        "wall_time_seconds": 29.858179291986744,
+        "workers": 8
+      }
+    }
+  ],
+  "scenario_c_heuristic_selected_attempt": 1,
+  "scenario_c_idle_week_compaction": {
+    "allow_equal": true,
+    "candidates_checked": 2,
+    "promotions": 0,
+    "reason": "no checked idle-week shift improved the source",
+    "rounds": [
+      {
+        "candidates_checked": 2,
+        "gap_count": 2,
+        "reason": "no checked idle-week shift improved the source",
+        "selected_gap_week": null,
+        "selected_score": null,
+        "source_score": 62.7
+      }
+    ],
+    "score_prediction_mismatches": 0,
+    "score_prediction_untrusted": false,
+    "selected_score": null,
+    "selected_submission_hash": null,
+    "source_score": 62.7,
+    "strict_improvement": false
+  },
+  "scenario_c_idle_week_compaction_promoted": false,
+  "scenario_c_idle_week_compaction_used_as_seed": false,
+  "scenario_c_postselection_compaction": {
+    "eclo_compaction": {
+      "applicable": false,
+      "candidates_checked": 0,
+      "candidates_pruned_by_exact_score_order": 0,
+      "candidates_skipped_existing_eclo_window": 0,
+      "duplicate_candidates_skipped": 0,
+      "feasible_candidates": 0,
+      "improving_candidates": 0,
+      "promotions": 0,
+      "reason": "source is not a one-activity-per-week serialization",
+      "rounds": [
+        {
+          "applicable": false,
+          "candidates_checked": 0,
+          "candidates_pruned_by_exact_score_order": 0,
+          "candidates_skipped_existing_eclo_window": 0,
+          "duplicate_candidates_skipped": 0,
+          "exhaustive": false,
+          "feasible_candidates": 0,
+          "improving_candidates": 0,
+          "reason": "source is not a one-activity-per-week serialization",
+          "score_prediction_mismatches": 0,
+          "selected_activity": null,
+          "selected_eclo_weeks": null,
+          "selected_removed_week": null,
+          "selected_score": null,
+          "selected_submission_hash": null,
+          "source_score": 62.7,
+          "strict_buffer_overlap_required": false,
+          "unique_candidates_ranked": 0
+        }
+      ],
+      "score_prediction_mismatches": 0,
+      "selected_score": null,
+      "selected_submission_hash": null,
+      "source_score": 62.7
+    },
+    "eclo_compaction_promoted": false,
+    "idle_week_compaction": {
+      "allow_equal": true,
+      "candidates_checked": 2,
+      "promotions": 0,
+      "reason": "no checked idle-week shift improved the source",
+      "rounds": [
+        {
+          "candidates_checked": 2,
+          "gap_count": 2,
+          "reason": "no checked idle-week shift improved the source",
+          "selected_gap_week": null,
+          "selected_score": null,
+          "source_score": 62.7
+        }
+      ],
+      "score_prediction_mismatches": 0,
+      "score_prediction_untrusted": false,
+      "selected_score": null,
+      "selected_submission_hash": null,
+      "source_score": 62.7,
+      "strict_improvement": false
+    },
+    "idle_week_compaction_promoted": false,
+    "idle_week_compaction_used_as_seed": false,
+    "selected_score": 62.7,
+    "selected_stage": null,
+    "selected_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+    "source_score": 62.7,
+    "strict_improvement": false
+  },
+  "scenario_c_postselection_compaction_promoted": false,
+  "scenario_c_strict_hedge_activities": [
+    "A001",
+    "A002",
+    "A003",
+    "A004",
+    "A006",
+    "A007",
+    "A008",
+    "A009",
+    "A011",
+    "A012",
+    "A013",
+    "A014",
+    "A017",
+    "A019",
+    "A020",
+    "A021",
+    "A023",
+    "A025",
+    "A035",
+    "A036",
+    "A037",
+    "A038",
+    "A039",
+    "A040",
+    "A041",
+    "A042",
+    "A043",
+    "A046",
+    "A047",
+    "A048",
+    "A049",
+    "A050",
+    "A051",
+    "A054",
+    "A055",
+    "A056",
+    "A057",
+    "A058",
+    "A059",
+    "A060",
+    "A061",
+    "A063",
+    "A064",
+    "A075"
+  ],
+  "scenario_c_strict_hedge_conflicts_after": [
+    {
+      "first_activities": [
+        "A003",
+        "A007",
+        "A057",
+        "A060"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008",
+        "A038"
+      ],
+      "week": 17
+    },
+    {
+      "first_activities": [
+        "A003",
+        "A007",
+        "A017"
+      ],
+      "locations": [
+        "SEC:BET:S14_H01:EB"
+      ],
+      "second_activities": [
+        "A048"
+      ],
+      "week": 18
+    },
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S14_H01:EB"
+      ],
+      "second_activities": [
+        "A048"
+      ],
+      "week": 20
+    },
+    {
+      "first_activities": [
+        "A001",
+        "A007",
+        "A008",
+        "A011",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S14_H01:EB"
+      ],
+      "second_activities": [
+        "A048"
+      ],
+      "week": 21
+    },
+    {
+      "first_activities": [
+        "A004"
+      ],
+      "locations": [
+        "SEC:ALP:H01_H02:EB"
+      ],
+      "second_activities": [
+        "A047"
+      ],
+      "week": 21
+    },
+    {
+      "first_activities": [
+        "A006",
+        "A023"
+      ],
+      "locations": [
+        "SEC:ALP:H02_S05:WB"
+      ],
+      "second_activities": [
+        "A013",
+        "A046"
+      ],
+      "week": 21
+    },
+    {
+      "first_activities": [
+        "A008"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A041"
+      ],
+      "week": 26
+    },
+    {
+      "first_activities": [
+        "A049"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:WB"
+      ],
+      "second_activities": [
+        "A051"
+      ],
+      "week": 26
+    },
+    {
+      "first_activities": [
+        "A021"
+      ],
+      "locations": [
+        "SEC:BET:S13_S14:WB"
+      ],
+      "second_activities": [
+        "A075"
+      ],
+      "week": 28
+    }
+  ],
+  "scenario_c_strict_hedge_conflicts_before": [
+    {
+      "first_activities": [
+        "A003",
+        "A007",
+        "A057",
+        "A060"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008",
+        "A038"
+      ],
+      "week": 17
+    },
+    {
+      "first_activities": [
+        "A003",
+        "A007",
+        "A017"
+      ],
+      "locations": [
+        "SEC:BET:S14_H01:EB"
+      ],
+      "second_activities": [
+        "A048"
+      ],
+      "week": 18
+    },
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S14_H01:EB"
+      ],
+      "second_activities": [
+        "A048"
+      ],
+      "week": 20
+    },
+    {
+      "first_activities": [
+        "A001",
+        "A007",
+        "A008",
+        "A011",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S14_H01:EB"
+      ],
+      "second_activities": [
+        "A048"
+      ],
+      "week": 21
+    },
+    {
+      "first_activities": [
+        "A004"
+      ],
+      "locations": [
+        "SEC:ALP:H01_H02:EB"
+      ],
+      "second_activities": [
+        "A047"
+      ],
+      "week": 21
+    },
+    {
+      "first_activities": [
+        "A006",
+        "A023"
+      ],
+      "locations": [
+        "SEC:ALP:H02_S05:WB"
+      ],
+      "second_activities": [
+        "A013",
+        "A046"
+      ],
+      "week": 21
+    },
+    {
+      "first_activities": [
+        "A008"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A041"
+      ],
+      "week": 26
+    },
+    {
+      "first_activities": [
+        "A049"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:WB"
+      ],
+      "second_activities": [
+        "A051"
+      ],
+      "week": 26
+    },
+    {
+      "first_activities": [
+        "A021"
+      ],
+      "locations": [
+        "SEC:BET:S13_S14:WB"
+      ],
+      "second_activities": [
+        "A075"
+      ],
+      "week": 28
+    }
+  ],
+  "scenario_c_strict_hedge_promoted": false,
+  "scenario_c_strict_hedge_prune": null,
+  "scenario_c_strict_hedge_telemetry": {
+    "best_bound": null,
+    "branches": 21074,
+    "closure_rounds": 6,
+    "conflicts": 0,
+    "deterministic_time_seconds": 42.04502572541172,
+    "formulation": "scenario_c_iterative_bridge_safe_strict_buffer_closure_relaxation_partially_frozen_access",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective. The reported bound and optimality status apply only to the frozen-access neighborhood.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 5.0,
+    "model_constraints": 96100,
+    "model_variables": 39769,
+    "objective_score": 62.7,
+    "primary_bound_scope": "frozen_access_neighborhood",
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 23,
+    "round_time_limit_seconds": 5.0,
+    "seed": 8,
+    "solve_rounds": 8,
+    "status": "UNKNOWN",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 1,
+    "wall_time_seconds": 10.022541875005118,
+    "workers": 8
+  },
+  "scenario_c_verification_prune": {
+    "final_access_rows": 190,
+    "final_score": 62.7,
+    "final_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+    "initial_access_rows": 190,
+    "initial_score": 62.7,
+    "initial_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "C",
+    "strict_buffer_overlap_checked": false
+  },
+  "scenario_c_verification_telemetry": {
+    "best_bound": 62.7,
+    "branches": 19353,
+    "closure_rounds": 0,
+    "conflicts": 48,
+    "deterministic_time_seconds": 0.4317832089993831,
+    "formulation": "scenario_c_iterative_bridge_safe_sample_consistent_closure_relaxation",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the rule set that reproduced official A-001 and accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed. The row-count tie-breaker cannot alter the official penalty objective.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 3.0,
+    "model_constraints": 45492,
+    "model_variables": 23200,
+    "objective_score": 62.7,
+    "primary_bound_scope": "full_instance",
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 3.0,
+    "seed": 6,
+    "solve_rounds": 1,
+    "status": "PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.34291425000992604,
+    "workers": 8
+  },
+  "selected_objective_score": 62.7,
+  "selected_stage": "scenario_c_heuristic",
+  "selected_submission_hash": "49e9d87527bf7fff8a08991b8c955061e73f282b53e4729253053be7286b5ba1",
+  "selection_rule": "strictly lower fully checked C objective; an equal-score candidate may replace the incumbent only as a standard-feasible, strict-clean final hedge",
+  "strict_buffer_overlap_checked": false,
+  "strict_buffer_overlap_clean": false,
+  "submission_files": [
+    "SCHEDULE_ACCESS.csv",
+    "SCHEDULE_OCCUPANCY.csv",
+    "RESULTS.csv"
+  ],
+  "verified_objective_score": 62.7
+}

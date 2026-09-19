@@ -4774,6 +4774,50 @@ class PublicFixtureTests(unittest.TestCase):
                     manifest["scenarios"][scenario]["submission_hash"],
                 )
 
+    def test_current_public_replay_matches_scores_without_replacing_incumbents(
+        self,
+    ) -> None:
+        matrix = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "public_current_post_checked_hint_seed6_w8"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
+        manifest = json.loads(
+            (ROOT / "deliverables" / "public" / "MANIFEST.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(matrix["dataset_hash"], self.instance.dataset_hash)
+        self.assertEqual(matrix["successes"], 3)
+        self.assertEqual(matrix["failures"], 0)
+        expected_strict = {"A": 4, "B": 0, "C": 9}
+        for row in matrix["runs"]:
+            scenario = row["scenario"]
+            with self.subTest(scenario=scenario):
+                official = manifest["scenarios"][scenario]
+                submission = (
+                    ROOT
+                    / "runs"
+                    / "public_current_post_checked_hint_seed6_w8"
+                    / f"{scenario.lower()}_seed_6"
+                )
+                evaluation = evaluate_submission(
+                    self.instance, submission, scenario
+                )
+                independent = independently_score(PACK / "01_data", submission)
+                self.assertEqual(row["status"], "SUCCESS")
+                self.assertEqual(evaluation.hard_violations, ())
+                self.assertEqual(row["score"], official["official_score"])
+                self.assertEqual(evaluation.objective_score, row["score"])
+                self.assertEqual(independent.objective_score, row["score"])
+                self.assertEqual(row["strict_conflicts"], expected_strict[scenario])
+                self.assertNotEqual(
+                    row["submission_hash"], official["submission_hash"]
+                )
+
 
 if __name__ == "__main__":
     unittest.main()

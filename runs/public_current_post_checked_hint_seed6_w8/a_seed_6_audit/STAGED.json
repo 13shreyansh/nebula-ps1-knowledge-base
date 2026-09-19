@@ -1,0 +1,345 @@
+{
+  "bridge_safe_cost_repair_activities": [],
+  "bridge_safe_cost_repair_prune": null,
+  "bridge_safe_cost_repair_telemetry": null,
+  "bridge_safe_expanded_cost_repair_activities": [],
+  "bridge_safe_expanded_cost_repair_prune": null,
+  "bridge_safe_expanded_cost_repair_telemetry": null,
+  "bridge_safe_fallback_attempts": [],
+  "bridge_safe_fallback_prune": null,
+  "bridge_safe_fallback_selected_attempt": null,
+  "bridge_safe_fallback_telemetry": null,
+  "bridge_safe_local_repair_activities": [],
+  "bridge_safe_local_repair_prune": null,
+  "bridge_safe_local_repair_telemetry": null,
+  "bridge_safe_repair_hint_source_attempt": null,
+  "eclo_compaction": null,
+  "eclo_compaction_promoted": false,
+  "heuristic_attempts": [
+    {
+      "best_bound": null,
+      "branches": 152326,
+      "closure_rounds": 20,
+      "conflicts": 0,
+      "deterministic_time_seconds": 50.31893429089443,
+      "formulation": "scenario_a_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+      "interleave_search": false,
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "max_deterministic_time_per_solve": null,
+      "maximum_round_time_seconds": 1.0,
+      "model_constraints": 38361,
+      "model_variables": 19514,
+      "objective_score": 137.9,
+      "primary_bound_scope": "full_instance",
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 0,
+      "round_time_limit_seconds": 1.0,
+      "seed": 6,
+      "solve_rounds": 21,
+      "status": "HEURISTIC_SAFE_INCUMBENT",
+      "structural_hint_access_count": 108,
+      "structural_hint_activity_count": 35,
+      "structural_hint_checked": false,
+      "structural_hint_complete": false,
+      "structural_hint_feasible": false,
+      "structural_hint_objective_score": null,
+      "structural_hints_used": false,
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 30.0,
+      "unknown_retries": 0,
+      "wall_time_seconds": 12.095815041990136,
+      "workers": 8
+    }
+  ],
+  "heuristic_prune": {
+    "final_access_rows": 192,
+    "final_score": 137.9,
+    "final_submission_hash": "e952613a3b1fef77c8f3ee205a6f4a18b762f047ae57f1abd4b6ff1f58c9c80d",
+    "initial_access_rows": 192,
+    "initial_score": 137.9,
+    "initial_submission_hash": "e952613a3b1fef77c8f3ee205a6f4a18b762f047ae57f1abd4b6ff1f58c9c80d",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "A",
+    "strict_buffer_overlap_checked": false
+  },
+  "heuristic_selected_attempt": 1,
+  "heuristic_telemetry": {
+    "best_bound": null,
+    "branches": 152326,
+    "closure_rounds": 20,
+    "conflicts": 0,
+    "deterministic_time_seconds": 50.31893429089443,
+    "formulation": "scenario_a_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+    "interleave_search": false,
+    "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 1.0,
+    "model_constraints": 38361,
+    "model_variables": 19514,
+    "objective_score": 137.9,
+    "primary_bound_scope": "full_instance",
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 1.0,
+    "seed": 6,
+    "solve_rounds": 21,
+    "status": "HEURISTIC_SAFE_INCUMBENT",
+    "structural_hint_access_count": 108,
+    "structural_hint_activity_count": 35,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 30.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 12.095815041990136,
+    "workers": 8
+  },
+  "idle_week_compaction": null,
+  "idle_week_compaction_promoted": false,
+  "idle_week_compaction_used_as_seed": false,
+  "postselection_compaction": null,
+  "postselection_compaction_promoted": false,
+  "reference_validator_confirmed": false,
+  "scenario": "A",
+  "selected_objective_score": 137.9,
+  "selected_stage": "heuristic_incumbent",
+  "selected_submission_hash": "e952613a3b1fef77c8f3ee205a6f4a18b762f047ae57f1abd4b6ff1f58c9c80d",
+  "selection_rule": "strictly lower fully checked objective; an equal-score candidate may replace the incumbent only as a standard-feasible, strict-clean final hedge",
+  "strict_buffer_overlap_checked": false,
+  "strict_buffer_overlap_clean": false,
+  "strict_hedge_activities": [
+    "A001",
+    "A002",
+    "A003",
+    "A004",
+    "A006",
+    "A007",
+    "A008",
+    "A009",
+    "A011",
+    "A012",
+    "A013",
+    "A014",
+    "A017",
+    "A019",
+    "A020",
+    "A040",
+    "A041",
+    "A042",
+    "A043",
+    "A046",
+    "A054",
+    "A055",
+    "A056",
+    "A057",
+    "A065",
+    "A066",
+    "A069",
+    "A070",
+    "A071"
+  ],
+  "strict_hedge_conflicts_after": [
+    {
+      "first_activities": [
+        "A046"
+      ],
+      "locations": [
+        "SEC:ALP:H02_S05:WB"
+      ],
+      "second_activities": [
+        "A069"
+      ],
+      "week": 9
+    },
+    {
+      "first_activities": [
+        "A046"
+      ],
+      "locations": [
+        "SEC:ALP:H02_S05:WB"
+      ],
+      "second_activities": [
+        "A069"
+      ],
+      "week": 10
+    },
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008"
+      ],
+      "week": 18
+    },
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008"
+      ],
+      "week": 20
+    }
+  ],
+  "strict_hedge_conflicts_before": [
+    {
+      "first_activities": [
+        "A046"
+      ],
+      "locations": [
+        "SEC:ALP:H02_S05:WB"
+      ],
+      "second_activities": [
+        "A069"
+      ],
+      "week": 9
+    },
+    {
+      "first_activities": [
+        "A046"
+      ],
+      "locations": [
+        "SEC:ALP:H02_S05:WB"
+      ],
+      "second_activities": [
+        "A069"
+      ],
+      "week": 10
+    },
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008"
+      ],
+      "week": 18
+    },
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008"
+      ],
+      "week": 20
+    }
+  ],
+  "strict_hedge_promoted": false,
+  "strict_hedge_prune": null,
+  "strict_hedge_telemetry": {
+    "best_bound": null,
+    "branches": 66738,
+    "closure_rounds": 19,
+    "conflicts": 0,
+    "deterministic_time_seconds": 27.579666962155624,
+    "formulation": "scenario_a_iterative_bridge_safe_strict_buffer_closure_relaxation_partially_frozen_access",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective. The reported bound and optimality status apply only to the frozen-access neighborhood.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 5.0,
+    "model_constraints": 102445,
+    "model_variables": 40067,
+    "objective_score": 137.9,
+    "primary_bound_scope": "frozen_access_neighborhood",
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 4,
+    "round_time_limit_seconds": 5.0,
+    "seed": 8,
+    "solve_rounds": 20,
+    "status": "UNKNOWN",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 10.01301104099548,
+    "workers": 8
+  },
+  "submission_files": [
+    "SCHEDULE_ACCESS.csv",
+    "SCHEDULE_OCCUPANCY.csv",
+    "RESULTS.csv"
+  ],
+  "verification_prune": {
+    "final_access_rows": 192,
+    "final_score": 137.9,
+    "final_submission_hash": "e952613a3b1fef77c8f3ee205a6f4a18b762f047ae57f1abd4b6ff1f58c9c80d",
+    "initial_access_rows": 192,
+    "initial_score": 137.9,
+    "initial_submission_hash": "e952613a3b1fef77c8f3ee205a6f4a18b762f047ae57f1abd4b6ff1f58c9c80d",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "A",
+    "strict_buffer_overlap_checked": false
+  },
+  "verification_round_time_limit_seconds": null,
+  "verification_telemetry": {
+    "best_bound": null,
+    "branches": 82998,
+    "closure_rounds": 23,
+    "conflicts": 0,
+    "deterministic_time_seconds": 17.63194006146803,
+    "formulation": "scenario_a_iterative_bridge_safe_sample_consistent_closure_relaxation",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the rule set that reproduced official A-001 and accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed. The row-count tie-breaker cannot alter the official penalty objective.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 1.0,
+    "model_constraints": 87074,
+    "model_variables": 35741,
+    "objective_score": 137.9,
+    "primary_bound_scope": "full_instance",
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 1.0,
+    "seed": 6,
+    "solve_rounds": 26,
+    "status": "FEASIBLE_SAFE_INCUMBENT",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 2,
+    "wall_time_seconds": 10.022198042002856,
+    "workers": 8
+  }
+}

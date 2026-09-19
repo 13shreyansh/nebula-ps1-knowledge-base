@@ -1007,6 +1007,14 @@ Confidence labels:
 - **Interpretation:** Incumbent selection is score- and validity-based. Output-byte identity is required for protected official artifacts and controlled regression comparisons, not for independently reconstructed synthetic optima.
 - **Confidence:** High in current positive-score safety; medium in transfer beyond tested structural regimes.
 
+### `R121` A reconstructed optimum is evidence, not automatic release promotion
+
+- **Status:** Confirmed on a fresh current-code public replay.
+- **Result:** Seed 6 locally reconstructs A=`137.9`, B=`30.0`, and C=`62.7`; both scorers agree and the full evaluator reports no confirmed hard violation.
+- **Promotion rule:** The audit-only strict-buffer screen reports A=`4`, B=`0`, C=`9` conflicts. Because the protected official artifacts have the same scores, zero strict conflicts, and official-validator confirmation, the fresh hashes are regression evidence only and cannot replace them.
+- **Boundary:** The stricter screen is not a confirmed official hard rule. Its conflicts do not invalidate the fresh replay under the published rules, but equal-score artifact selection should preserve the stronger hedge when available.
+- **Confidence:** Very high in non-replacement and score equality; high in local feasibility; no new official validation claim.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

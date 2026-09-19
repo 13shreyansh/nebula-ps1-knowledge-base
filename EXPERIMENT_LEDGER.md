@@ -1398,3 +1398,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Integrity interpretation: score, feasibility, and strict-policy results are preserved; byte identity is not claimed across a deliberate incumbent-source change. Protected official A/B/C bytes remain untouched.
 - Regression status: all 119 tests pass in 7.634 seconds and re-evaluate the six fresh outputs.
 - Official protection: no portal interaction or attempt was used.
+
+### E147: Current controller reconstructs the public optima without displacing cleaner artifacts
+
+- Timestamp: 2026-09-19 10:56:07 +08.
+- Policy: public input, seed 6, eight workers, 30/10/30/10-second heuristic/repair/fallback/verification limits, one attempt per stage, production C, and the published-rule closure policy.
+- Result: A=`137.9` in 32.666 seconds, B=`30.0` in 22.567, and C=`62.7` in 74.875; 3/3 succeed, the full evaluator has zero hard violations, and both scorers reproduce every score.
+- Selection: A uses `heuristic_incumbent`, B `strict_score_preserving_hedge`, and C `scenario_c_heuristic`. New hashes are `e952613a…`, `6dc4db90…`, and `49e9d875…`.
+- Adversarial boundary: the separate strict-buffer audit reports A=`4`, B=`0`, C=`9` conflicts. This optional hedge is not a confirmed official hard rule, but the protected official files are equal-score, strict-clean, and official-validator-confirmed. The new files are therefore retained only as current-code replay evidence.
+- Integrity gates: all 120 tests pass in 7.880 seconds, including dual rescoring, dataset-hash equality, exact score equality, and explicit non-replacement assertions.
+- Official protection: no portal interaction or attempt was used; remaining quotas stay A=`3/5`, B=`4/5`, C=`4/5`.
