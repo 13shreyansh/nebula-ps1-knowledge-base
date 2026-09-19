@@ -178,6 +178,7 @@ def _predicted_objective(
     activity_id: str,
     removed_week: int,
     eclo_weeks: frozenset[int],
+    excess_units_by_activity: dict[str, int],
 ) -> float:
     """Return the exact C objective if this serialized transform is feasible."""
 
@@ -196,12 +197,7 @@ def _predicted_objective(
         completion_by_activity[row.activity_id] = max(
             completion_by_activity[row.activity_id], week_map[row.week]
         )
-        excess_total += sum(
-            max(0, 1 - instance.locations[location_id].supply_capacity)
-            for location_id in activity_footprint(
-                instance, instance.activities[row.activity_id]
-            )
-        )
+        excess_total += excess_units_by_activity[row.activity_id]
         eclo_total += int(
             (row.activity_id == activity_id and row.week in eclo_weeks)
             or (row.activity_id != activity_id and row.eclo == 1)
@@ -285,6 +281,13 @@ def best_single_lane_eclo_compaction(
     by_activity: dict[str, list[AccessRow]] = defaultdict(list)
     for row in access:
         by_activity[row.activity_id].append(row)
+    excess_units_by_activity = {
+        activity_id: sum(
+            max(0, 1 - instance.locations[location_id].supply_capacity)
+            for location_id in activity_footprint(instance, instance.activities[activity_id])
+        )
+        for activity_id in by_activity
+    }
     existing_eclo_lines = {
         line
         for row in access
@@ -335,6 +338,7 @@ def best_single_lane_eclo_compaction(
                             activity_id,
                             removed.week,
                             eclo_weeks,
+                            excess_units_by_activity,
                         ),
                         activity_id,
                         removed.week,
