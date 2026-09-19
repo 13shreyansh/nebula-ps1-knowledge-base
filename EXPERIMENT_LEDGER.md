@@ -1735,3 +1735,23 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Interpretation: feasibility, score correctness, and optimality proof are separate claims. A valid merged schedule must not inherit a global proof from the remaining component, and an input-level impossibility must be rejected before partial solver artifacts imply progress.
 - Release replay: all 179 regressions pass in 9.779 seconds; the isolated portable-validator suite passes 19 cases with unchanged archive hash `495d4ef7…`; all 30 final-package readiness checks remain true for A-002/B-001/C-001.
 - Boundary: these are retained local regressions under encoded rules. They do not change the protected official scores or consume a portal attempt.
+
+### E184: A failed merged gate cannot publish an upload-facing candidate
+
+- Timestamp: 2026-09-19 12:46:57 +08.
+- Attack: during the full two-component C control, replace the independent raw-CSV score with an otherwise identical result whose objective is one point higher.
+- Before correction: decomposition merged directly into the requested output path and only then compared scorers. A disagreement raised, but the upload-facing directory could retain three apparently complete CSVs.
+- Correction: component outputs now merge into `audit/merged_candidate`. Full feasibility, strict closure, dual-score agreement, score additivity, and proof aggregation run there. Only a successful candidate is copied to the requested output.
+- Falsification result: the injected mismatch raises `decomposed merge failed independent score agreement`; the staged candidate remains available for diagnosis, no `DECOMPOSED.json` proof report is written, and the requested output path does not exist. The unchanged control still publishes byte-identical exact C=`9120` files.
+- Release replay: 180/180 regressions pass in 10.229 seconds, 19 isolated-validator cases pass with archive hash `495d4ef7…`, and all 30 package-readiness checks are true. No portal interaction occurred.
+- Remaining boundary: a low-level I/O failure during the final three-file copy could still leave a partial output directory. The candidate is already fully validated at that point, but publication is not yet an atomic directory rename.
+
+### E185: Final decomposed publication is atomic and crash state is explicit
+
+- Timestamp: 2026-09-19 12:49:00 +08.
+- Correction: copy the three validated CSVs into a uniquely named hidden directory beside the requested output, verify exact filenames and bytes, then expose the complete directory with one same-parent rename. An existing empty destination is removed only after staging succeeds.
+- Report state: `DECOMPOSED.json` is first written with `publication_status=staged`. It is atomically replaced with `publication_status=published` only after the output-directory rename succeeds.
+- Fault injection: the second of three publication copies raises `OSError`. The partial hidden directory is removed, the pre-existing empty destination remains empty, no complete-looking output is exposed, and the report stays `staged`. A clean retry into that same destination produces all three byte-identical files.
+- End-to-end injection: forcing the publication helper to fail after a fully validated C=`9120` merge leaves no output and retains the explicit staged report. Normal publication reports `published`.
+- Release replay: 182/182 regressions pass in 9.704 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true. No portal interaction occurred.
+- Boundary: same-parent rename gives atomic visibility on the tested local filesystem. Sudden power loss durability is not proved because directories/files are not explicitly `fsync`ed; this is sufficient to prevent partial human upload under ordinary process and copy failures, not a transactional-storage guarantee.

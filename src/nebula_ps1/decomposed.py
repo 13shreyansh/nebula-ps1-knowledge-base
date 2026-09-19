@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 import shutil
+import tempfile
 from pathlib import Path
 
 from .closure import _blocked_locations, _buffer_locations, screen_closures
@@ -222,6 +223,32 @@ def _merge_submissions(sources: list[Path], output: Path) -> None:
         _write(output / name, fields, rows)
 
 
+def _publish_submission_atomically(source: Path, destination: Path) -> None:
+    """Copy a checked candidate off-path, then expose all three files at once."""
+
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(
+        tempfile.mkdtemp(
+            prefix=f".{destination.name}.publishing-",
+            dir=destination.parent,
+        )
+    )
+    try:
+        for name in SUBMISSION_FILES:
+            shutil.copy2(source / name, temporary / name)
+        if sorted(path.name for path in temporary.iterdir()) != sorted(SUBMISSION_FILES):
+            raise RuntimeError("atomic publication staging has unexpected files")
+        for name in SUBMISSION_FILES:
+            if (source / name).read_bytes() != (temporary / name).read_bytes():
+                raise RuntimeError(f"atomic publication byte mismatch for {name}")
+        if destination.exists():
+            destination.rmdir()
+        temporary.replace(destination)
+    except BaseException:
+        shutil.rmtree(temporary, ignore_errors=True)
+        raise
+
+
 def _primary_proof_telemetry(
     staged_report: dict[str, object],
 ) -> dict[str, object] | None:
@@ -294,10 +321,12 @@ def solve_decomposed_scenario(
         if audit_output_dir is not None
         else output.with_name(f"{output.name}_audit")
     )
-    if output.exists() and any(output.iterdir()):
-        raise ValueError(f"decomposed output directory must be empty: {output}")
-    if audit.exists() and any(audit.iterdir()):
-        raise ValueError(f"decomposed audit directory must be empty: {audit}")
+    if output.exists():
+        if not output.is_dir() or any(output.iterdir()):
+            raise ValueError(f"decomposed output directory must be empty: {output}")
+    if audit.exists():
+        if not audit.is_dir() or any(audit.iterdir()):
+            raise ValueError(f"decomposed audit directory must be empty: {audit}")
     instance = load_instance(data_root)
     if scenario == "B":
         workload_deficits = _scenario_b_workload_deadline_deficits(instance)
@@ -358,10 +387,11 @@ def solve_decomposed_scenario(
         )
         component_outputs.append(component_output)
 
-    _merge_submissions(component_outputs, output)
-    evaluation = evaluate_submission(instance, output, scenario)
-    independent = independently_score(data_root, output)
-    access, occupancy, _ = load_submission(output)
+    merged_candidate = audit / "merged_candidate"
+    _merge_submissions(component_outputs, merged_candidate)
+    evaluation = evaluate_submission(instance, merged_candidate, scenario)
+    independent = independently_score(data_root, merged_candidate)
+    access, occupancy, _ = load_submission(merged_candidate)
     conflicts = screen_closures(
         instance,
         access,
@@ -408,9 +438,22 @@ def solve_decomposed_scenario(
         "selected_policy_conflicts": len(conflicts),
         "global_optimality_proved_by_additivity": globally_proven,
         "reference_validator_confirmed": False,
+        "publication_status": "staged",
     }
     (audit / "DECOMPOSED.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    _publish_submission_atomically(merged_candidate, output)
+    if sorted(path.name for path in output.iterdir()) != sorted(SUBMISSION_FILES):
+        raise RuntimeError(
+            "decomposed published submission contains files beyond the three CSVs"
+        )
+    report["publication_status"] = "published"
+    report_temporary = audit / ".DECOMPOSED.json.tmp"
+    report_temporary.write_text(
+        json.dumps(report, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    report_temporary.replace(audit / "DECOMPOSED.json")
     return report

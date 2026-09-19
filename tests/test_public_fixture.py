@@ -26,6 +26,7 @@ from nebula_ps1.eclo_compact import (
 )
 from nebula_ps1.decomposed import (
     _activity_interaction_reasons,
+    _publish_submission_atomically,
     _primary_proof_telemetry,
     independent_activity_components,
     solve_decomposed_scenario,
@@ -448,6 +449,114 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(evaluation.objective_score, 9120.0)
             self.assertEqual(independent.objective_score, 9120.0)
 
+    def test_decomposition_score_disagreement_never_reaches_output(self) -> None:
+        data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
+        real_independently_score = independently_score
+
+        def disagree(*args: object, **kwargs: object) -> IndependentScore:
+            score = real_independently_score(*args, **kwargs)
+            return replace(score, objective_score=score.objective_score + 1.0)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            output = root / "submission"
+            audit = root / "audit"
+            with patch(
+                "nebula_ps1.decomposed.independently_score",
+                side_effect=disagree,
+            ):
+                with self.assertRaisesRegex(
+                    RuntimeError,
+                    "decomposed merge failed independent score agreement",
+                ):
+                    solve_decomposed_scenario(
+                        data,
+                        output,
+                        "C",
+                        audit_output_dir=audit,
+                        heuristic_time_limit_seconds=3.0,
+                        local_repair_time_limit_seconds=2.0,
+                        fallback_time_limit_seconds=5.0,
+                        verification_time_limit_seconds=10.0,
+                        workers=1,
+                        seed=1,
+                        heuristic_attempts=1,
+                        fallback_attempts=1,
+                        closure_round_limit=1000,
+                        forbid_buffer_overlap=True,
+                    )
+            self.assertFalse(output.exists())
+            self.assertTrue((audit / "merged_candidate").is_dir())
+            self.assertFalse((audit / "DECOMPOSED.json").exists())
+
+    def test_atomic_decomposition_publication_cleans_partial_copy(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "source"
+            source.mkdir()
+            for index, name in enumerate(SUBMISSION_FILES, start=1):
+                (source / name).write_text(f"file-{index}\n", encoding="utf-8")
+            destination = root / "submission"
+            destination.mkdir()
+            real_copy = shutil.copy2
+            calls = 0
+
+            def fail_second_copy(*args: object, **kwargs: object) -> object:
+                nonlocal calls
+                calls += 1
+                if calls == 2:
+                    raise OSError("injected publication failure")
+                return real_copy(*args, **kwargs)
+
+            with patch(
+                "nebula_ps1.decomposed.shutil.copy2",
+                side_effect=fail_second_copy,
+            ):
+                with self.assertRaisesRegex(OSError, "injected publication failure"):
+                    _publish_submission_atomically(source, destination)
+            self.assertTrue(destination.is_dir())
+            self.assertEqual(list(destination.iterdir()), [])
+            self.assertEqual(
+                list(root.glob(".submission.publishing-*")),
+                [],
+            )
+            _publish_submission_atomically(source, destination)
+            self.assertEqual(
+                {name: (destination / name).read_bytes() for name in SUBMISSION_FILES},
+                {name: (source / name).read_bytes() for name in SUBMISSION_FILES},
+            )
+
+    def test_decomposition_publication_failure_stays_explicitly_staged(self) -> None:
+        data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            output = root / "submission"
+            audit = root / "audit"
+            with patch(
+                "nebula_ps1.decomposed._publish_submission_atomically",
+                side_effect=OSError("injected publication failure"),
+            ):
+                with self.assertRaisesRegex(OSError, "injected publication failure"):
+                    solve_decomposed_scenario(
+                        data,
+                        output,
+                        "C",
+                        audit_output_dir=audit,
+                        heuristic_time_limit_seconds=3.0,
+                        local_repair_time_limit_seconds=2.0,
+                        fallback_time_limit_seconds=5.0,
+                        verification_time_limit_seconds=10.0,
+                        workers=1,
+                        seed=1,
+                        heuristic_attempts=1,
+                        fallback_attempts=1,
+                        closure_round_limit=1000,
+                        forbid_buffer_overlap=True,
+                    )
+            self.assertFalse(output.exists())
+            report = json.loads((audit / "DECOMPOSED.json").read_text())
+            self.assertEqual(report["publication_status"], "staged")
+
     def test_decomposed_solver_matches_monolithic_exact_two_line_result(self) -> None:
         data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
         monolithic = (
@@ -482,6 +591,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report["independent_objective_score"], 9120.0)
         self.assertTrue(report["global_optimality_proved_by_additivity"])
         self.assertEqual(report["selected_policy_conflicts"], 0)
+        self.assertEqual(report["publication_status"], "published")
         self.assertEqual(evaluation.hard_violations, ())
         self.assertEqual(evaluation.objective_score, 9120.0)
         self.assertEqual(independent.objective_score, 9120.0)
