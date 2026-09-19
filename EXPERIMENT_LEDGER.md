@@ -1313,3 +1313,15 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Integrity: tests match rule-specific messages, preventing a different incidental violation from masquerading as coverage. The protected source is unchanged.
 - Regression status: all 113 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E139: Week-local screening preserves a 360-activity replay
+
+- Timestamp: 2026-09-19 10:31:32 +08
+- Frozen-before-change fixture: `independent_scaled_m40`, dataset hash `52caa8f38fc6ee7851fbe038ca6d0e3e8dd40a3b5deabfcbadb2492803fda4f2`, with 360 activities, 320 contracts, 2,236 locations, 640 oracle access rows, and 2,240 oracle occupancy rows. The oracle is hard-feasible at A=`280.0`.
+- Fixed policy: seed 1, one worker, one two-second heuristic attempt, one-second local repair, one three-second fallback, two-second verification, 500 closure rounds, production-C enabled.
+- Baseline: A=`280.0` in 110.705 seconds, B=`400.0` in 118.942, C=`280.0` in 232.015; all succeed with zero strict conflicts.
+- Diagnosis: solver telemetry consumed only about 0.6–1.6 seconds per solve. Structural-hint construction repeatedly screened the complete growing multiweek schedule even though closure conflicts occur within one week.
+- Correction: maintain provisional access and occupancy indexes by week and screen the complete affected-week state for each new candidate. Existing accepted weeks remain unchanged and already clean.
+- Replay: A=`280.0` in 15.140 seconds, B=`400.0` in 15.162, C=`280.0` in 39.090. Every score, selected stage, strict-conflict count, and submission hash is identical to baseline; aggregate elapsed time falls 461.662→69.392 seconds, or 6.65×.
+- Regression and boundary: the stored before/after comparison re-evaluates all optimized outputs with both scorers and requires at least 5× recorded improvement per scenario. All 114 tests and all 30 local readiness checks pass. This is one local seed and does not establish universal runtime behavior.
+- Official protection: no portal interaction or attempt was used.

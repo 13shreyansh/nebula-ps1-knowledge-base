@@ -945,6 +945,15 @@ Confidence labels:
 - **Boundary:** CSV parser failures and unknown activity handling have separate tests. This is local evaluator evidence, not an official validator run.
 - **Confidence:** High in the covered anti-exploit gates.
 
+### `R114` Structural-hint closure screening is week-local
+
+- **Status:** Confirmed on a precommitted 360-activity, 320-contract independent holdout.
+- **Finding:** Re-screening the complete accumulated schedule for every candidate structural-hint row caused most elapsed time. Closure conflicts are week-local; an accepted provisional schedule cannot gain a conflict in another week when a row is added only to week `w`.
+- **Correction:** Index accepted access and occupancy rows by week, then screen the complete existing-plus-candidate state only for `w`. This changes preprocessing scope, not the model or validation gate.
+- **Evidence:** With identical input hash, one-worker policy, and budgets, A/B/C preserve scores `280/400/280`, stages, submission hashes, and zero strict conflicts. Recorded runtimes improve `110.705→15.140`, `118.942→15.162`, and `232.015→39.090` seconds, or 5.94–7.84×.
+- **Boundary:** One generated fixture and one seed establish a real scale defect and exact replay, not universal speed-up or hidden-instance transfer. Per-step differential testing remains the next semantic falsification.
+- **Confidence:** High in this replay; medium in general performance transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
