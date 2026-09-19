@@ -1,0 +1,7 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+HLA,KLA,InterchangeHoldout,SEC:LIA:H1_H2:EB,SEC:LIA:H1_H2:EB,3,2037-01-05,,1
+HLB,KLB,InterchangeHoldout,SEC:LIB:H1_H2:WB,SEC:LIB:H1_H2:WB,1,2037-01-05,,2
+HLC,KLC,InterchangeHoldout,SEC:LIC:H1_H2:EB,SEC:LIC:H1_H2:EB,2,2037-01-05,,3
+OPA,KPA,InterchangeHoldout,SEC:LIA:A1_H1:WB,SEC:LIA:A1_H1:WB,2,2037-01-19,,2
+OPB,KPB,InterchangeHoldout,SEC:LIB:H2_B4:EB,SEC:LIB:H2_B4:EB,2,2037-01-12,,1
+SCC,KCC,InterchangeHoldout,SEC:LIC:H2_C4:WB,SEC:LIC:H2_C4:WB,1,2037-01-12,HLC,2

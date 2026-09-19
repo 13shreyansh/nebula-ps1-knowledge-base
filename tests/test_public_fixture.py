@@ -61,6 +61,7 @@ from nebula_ps1.staged import (
 from nebula_ps1.staged_c import solve_staged_c_portfolio
 from nebula_ps1.submission import relabel_submission_scenario
 from nebula_ps1.topology import (
+    affects_interchange_cross_line,
     activity_footprint,
     interchange_cross_line_locations,
     split_sector_location,
@@ -78,6 +79,32 @@ class PublicFixtureTests(unittest.TestCase):
 
     def test_instance_counts_are_loaded_from_schema(self) -> None:
         self.assertEqual(len(self.instance.lines), 2)
+
+    def test_interchange_holdout_is_structurally_frozen_without_answer_key(self) -> None:
+        data = ROOT / "fixtures" / "independent_interchange_holdout_v1"
+        instance = load_instance(data)
+        self.assertEqual(
+            instance.dataset_hash,
+            "29d70f7b051763c8c44c2b9bb5bb14624f3440960b7fc588f692fc56badb04ff",
+        )
+        self.assertEqual(len(instance.lines), 3)
+        self.assertEqual(len(instance.activities), 6)
+        self.assertEqual(
+            {
+                instance.projects[activity.contract_number].access_type
+                for activity in instance.activities.values()
+            },
+            {"PM", "PC", "C"},
+        )
+        live = [
+            activity
+            for activity in instance.activities.values()
+            if instance.projects[activity.contract_number].nature_of_activity == "Live"
+        ]
+        self.assertEqual(len(live), 2)
+        self.assertTrue(all(affects_interchange_cross_line(instance, item) for item in live))
+        self.assertEqual(instance.activities["SCC"].predecessor_activity_id, "HLC")
+        self.assertFalse((data / "RESULTS.csv").exists())
 
     def test_independent_synthetic_oracle_is_valid_without_public_identifiers(self) -> None:
         synthetic_root = ROOT / "fixtures" / "independent_synthetic_v1"

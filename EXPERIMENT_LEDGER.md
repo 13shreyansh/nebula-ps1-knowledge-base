@@ -1565,3 +1565,10 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Positive control: protected B-001 remains accepted at `30.0`; the report records the independent components and the existing byte-preservation and full lower-bound proof tests still pass.
 - Integrity gates: all 156 regressions pass in 9.830 seconds. Portable-validator isolation passes 19 focused tests under system Python 3.9 and reproduces all protected scores; the 30-check final readiness audit remains fully green. No portal interaction or attempt occurred.
 - Boundary: this is an integrity improvement, not a numerical score improvement, and both local scorers can still share a mistaken interpretation of an unreleased organiser rule.
+
+### E164: Three-line interchange holdout precommit
+
+- Timestamp: 2026-09-19 12:05:33 +08.
+- Precommit scope: input generator, eight raw input tables, structural regression, and dataset hash `29d70f7b…` only. No answer key, production output, target score, or solver-derived assertion exists at this point.
+- Structure: three lines share the H1-H2 interchange bridge; two Live activities trigger topology-derived cross-line effects. Six activities span PC/C/PM, both bounds, tight and loose deadlines, asymmetric maximum-access limits, one predecessor, Live one-sector buffers, and mixed supply capacities.
+- Purpose: falsify public-topology memorization and test strict closure, delay/ECLO trade-offs, mixed possession types, and predecessor handling on a non-public topology. Any subsequent result must be recorded after this commit and dual-scored; failure remains evidence rather than a reason to redesign the input.

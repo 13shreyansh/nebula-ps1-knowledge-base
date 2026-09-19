@@ -1,0 +1,13 @@
+station_id,line_code,seq,is_interchange
+A1,LIA,1,0
+H1,LIA,2,1
+H2,LIA,3,1
+A4,LIA,4,0
+B1,LIB,1,0
+H1,LIB,2,1
+H2,LIB,3,1
+B4,LIB,4,0
+C1,LIC,1,0
+H1,LIC,2,1
+H2,LIC,3,1
+C4,LIC,4,0

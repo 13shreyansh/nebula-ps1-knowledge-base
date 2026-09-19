@@ -1,0 +1,43 @@
+location_id,location_kind,line_code,bound,supply_capacity
+SEC:LIA:A1_H1:EB,tunnel sector,LIA,EB,2
+SEC:LIA:A1_H1:WB,tunnel sector,LIA,WB,2
+SEC:LIA:H1_H2:EB,tunnel sector,LIA,EB,1
+SEC:LIA:H1_H2:WB,tunnel sector,LIA,WB,1
+SEC:LIA:H2_A4:EB,tunnel sector,LIA,EB,2
+SEC:LIA:H2_A4:WB,tunnel sector,LIA,WB,2
+PLAT:LIA:A1:EB,platform,LIA,EB,2
+PLAT:LIA:A1:WB,platform,LIA,WB,2
+PLAT:LIA:H1:EB,platform,LIA,EB,1
+PLAT:LIA:H1:WB,platform,LIA,WB,1
+PLAT:LIA:H2:EB,platform,LIA,EB,1
+PLAT:LIA:H2:WB,platform,LIA,WB,1
+PLAT:LIA:A4:EB,platform,LIA,EB,2
+PLAT:LIA:A4:WB,platform,LIA,WB,2
+SEC:LIB:B1_H1:EB,tunnel sector,LIB,EB,2
+SEC:LIB:B1_H1:WB,tunnel sector,LIB,WB,2
+SEC:LIB:H1_H2:EB,tunnel sector,LIB,EB,1
+SEC:LIB:H1_H2:WB,tunnel sector,LIB,WB,1
+SEC:LIB:H2_B4:EB,tunnel sector,LIB,EB,2
+SEC:LIB:H2_B4:WB,tunnel sector,LIB,WB,2
+PLAT:LIB:B1:EB,platform,LIB,EB,2
+PLAT:LIB:B1:WB,platform,LIB,WB,2
+PLAT:LIB:H1:EB,platform,LIB,EB,1
+PLAT:LIB:H1:WB,platform,LIB,WB,1
+PLAT:LIB:H2:EB,platform,LIB,EB,1
+PLAT:LIB:H2:WB,platform,LIB,WB,1
+PLAT:LIB:B4:EB,platform,LIB,EB,2
+PLAT:LIB:B4:WB,platform,LIB,WB,2
+SEC:LIC:C1_H1:EB,tunnel sector,LIC,EB,2
+SEC:LIC:C1_H1:WB,tunnel sector,LIC,WB,2
+SEC:LIC:H1_H2:EB,tunnel sector,LIC,EB,1
+SEC:LIC:H1_H2:WB,tunnel sector,LIC,WB,1
+SEC:LIC:H2_C4:EB,tunnel sector,LIC,EB,2
+SEC:LIC:H2_C4:WB,tunnel sector,LIC,WB,2
+PLAT:LIC:C1:EB,platform,LIC,EB,2
+PLAT:LIC:C1:WB,platform,LIC,WB,2
+PLAT:LIC:H1:EB,platform,LIC,EB,1
+PLAT:LIC:H1:WB,platform,LIC,WB,1
+PLAT:LIC:H2:EB,platform,LIC,EB,1
+PLAT:LIC:H2:WB,platform,LIC,WB,1
+PLAT:LIC:C4:EB,platform,LIC,EB,2
+PLAT:LIC:C4:WB,platform,LIC,WB,2
