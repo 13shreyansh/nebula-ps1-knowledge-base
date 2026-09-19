@@ -16,6 +16,21 @@ from .solver import SolveTelemetry, _add_sample_hints, _contract_costs
 from .topology import activity_footprint, affects_interchange_cross_line, split_sector_location
 
 
+def _group_limit(
+    scenario: str,
+    separator_mode: str,
+    candidates: int,
+    supply: int,
+) -> int:
+    if scenario == "B":
+        if separator_mode == "direct_heuristic":
+            return min(candidates, supply + 1)
+        return candidates
+    if scenario == "C":
+        return min(candidates, supply + 1)
+    return min(candidates, supply)
+
+
 def solve_flexible_supply_relaxation(
     instance: Instance,
     output_dir: str | Path,
@@ -242,18 +257,10 @@ def solve_flexible_supply_relaxation(
     def group_limit(location_id: str, week: int) -> int:
         candidates = len(candidates_by_location_week[(location_id, week)])
         supply = instance.locations[location_id].supply_capacity
-        if scenario == "B":
-            if separator_mode == "direct_heuristic":
-                # B permits arbitrary paid excess, but exposing one symmetric
-                # group label per candidate can dominate candidate generation.
-                # Start near nominal supply; the bridge-safe fallback remains
-                # unrestricted, so this cannot certify infeasibility or remove
-                # a protected incumbent.
-                return min(candidates, supply + 1)
-            return candidates
-        if scenario == "C":
-            return min(candidates, supply + 1)
-        return min(candidates, supply)
+        # B's direct heuristic starts near nominal supply to control symmetry.
+        # The bridge-safe fallback remains unrestricted and is the only B path
+        # allowed to certify infeasibility or a protected incumbent.
+        return _group_limit(scenario, separator_mode, candidates, supply)
 
     member: dict[tuple[str, int, str, int], cp_model.IntVar] = {}
     used: dict[tuple[str, int, int], cp_model.IntVar] = {}

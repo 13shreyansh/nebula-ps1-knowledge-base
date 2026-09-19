@@ -21,7 +21,7 @@ from nebula_ps1.eclo_compact import (
     best_single_lane_eclo_compaction,
 )
 from nebula_ps1.evaluate import _legal_possession_mix, evaluate_submission, load_submission
-from nebula_ps1.flexible_solver import solve_flexible_supply_relaxation
+from nebula_ps1.flexible_solver import _group_limit, solve_flexible_supply_relaxation
 from nebula_ps1.independent_score import independently_score
 from nebula_ps1.idle_compact import (
     _predicted_objective as predict_idle_compaction_objective,
@@ -3158,6 +3158,27 @@ class PublicFixtureTests(unittest.TestCase):
                         _legal_possession_mix(access_types),
                         solver_accepts,
                         (pm, pc, coworkers),
+                    )
+
+    def test_scenario_group_limits_match_capacity_policy_exhaustively(self) -> None:
+        for supply in range(6):
+            for candidates in range(11):
+                with self.subTest(supply=supply, candidates=candidates):
+                    self.assertEqual(
+                        _group_limit("A", "bridge_safe", candidates, supply),
+                        min(candidates, supply),
+                    )
+                    self.assertEqual(
+                        _group_limit("C", "bridge_safe", candidates, supply),
+                        min(candidates, supply + 1),
+                    )
+                    self.assertEqual(
+                        _group_limit("B", "bridge_safe", candidates, supply),
+                        candidates,
+                    )
+                    self.assertEqual(
+                        _group_limit("B", "direct_heuristic", candidates, supply),
+                        min(candidates, supply + 1),
                     )
 
     def test_missing_access_is_rejected_instead_of_scoring_well(self) -> None:
