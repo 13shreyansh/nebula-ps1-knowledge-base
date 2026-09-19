@@ -1,0 +1,2 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+IRRIPM6,IRRKIPM6,IrregularCoupled,SEC:IRRLIB:IRRI6_IRRI7:EB,SEC:IRRLIB:IRRI6_IRRI7:EB,3,2040-01-16,,3

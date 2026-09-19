@@ -1,0 +1,6 @@
+activity_id,access_seq,week,eclo,access_night
+FPDCOMP,1,9,0,1
+FPDDIRECT,1,2,0,1
+FPDDIRECT,2,3,0,1
+FPDDIRECT,3,4,0,1
+FPDFOLLOW,1,10,0,1

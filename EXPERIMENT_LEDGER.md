@@ -1668,3 +1668,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Merged validation: delay `11368` + two excess access-nights × 7 + ten ECLO rows × 5 = `11432`; both scorers agree, all 28 activities are represented by 63 access and 249 occupancy rows, hard violations and strict conflicts are zero.
 - Same-budget monolith: the direct heuristic retains 14 conflicts, local repair 6, and fallback 16. It raises rather than emitting a submission. This is a fail-closed comparison, not evidence that its infeasible internal objective `5611.4` beats the proven feasible result.
 - Boundary: heterogeneous structure improves confidence in the implemented decomposition, but all source motifs were previously known and organiser-only semantics remain untested. No official score, protected byte, or portal counter changed.
+
+### E176: Heterogeneous A proves; B is intentionally infeasible
+
+- Timestamp: 2026-09-19 12:31:27 +08.
+- Scenario A: eight components prove scores `4012.4`, `0`, `91`, `7`, `6370`, `6370`, `0`, and `0`. The merged hard-feasible, strict-clean result is A=`16850.4`; both scorers agree, additive proof is complete, and outer wall time is 0.280 seconds.
+- Scenario B refusal: the fifth component contains `MPAMX1` and `MPAMX2`. Each needs three accesses, permits one access per week, and has planned completion in week 1. B makes that planned date a hard deadline, so each can host at most one of three accesses. Direct and bridge-safe formulations both return `INFEASIBLE`; no submission or decomposition report is emitted.
+- Interpretation: the B failure is a valid input-level contradiction inherited from the precommitted C-oriented source, not a scheduling-quality regression. It also demonstrates fail-closed behavior after four earlier components had already been solved.
+- Next boundary: B decomposition still needs a separate precommitted B-feasible heterogeneous fixture. Reusing or weakening the current B deadline to make this test pass would invalidate the holdout.

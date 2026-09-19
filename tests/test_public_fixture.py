@@ -694,6 +694,79 @@ class PublicFixtureTests(unittest.TestCase):
             0,
         )
 
+    def test_heterogeneous_decomposition_proves_a_and_refuses_infeasible_b(self) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_nonlive_v1"
+        submission = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_nonlive_v1_a_decomposed_seed1_w1"
+        )
+        audit = submission.with_name(f"{submission.name}_audit")
+        b_audit = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_nonlive_v1_b_decomposed_seed1_w1_expected_infeasible_audit"
+        )
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, submission, "A")
+        independent = independently_score(data, submission)
+        access, occupancy, _ = load_submission(submission)
+        report = json.loads(
+            (audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        failure = json.loads(
+            (
+                b_audit
+                / "component_005"
+                / "audit"
+                / "STAGED_FAILURES.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 16850.4)
+        self.assertEqual(independent.objective_score, 16850.4)
+        self.assertEqual(evaluation.priority_weighted_score, 16850.4)
+        self.assertEqual(evaluation.excess_access_nights_total, 0)
+        self.assertEqual(evaluation.eclo_nights_total, 0)
+        self.assertEqual((evaluation.access_rows, evaluation.occupancy_rows), (68, 266))
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertEqual(report["component_count"], 8)
+        self.assertTrue(report["global_optimality_proved_by_additivity"])
+        self.assertEqual(
+            sum(
+                component["selected_objective_score"]
+                for component in report["components"]
+            ),
+            16850.4,
+        )
+        for activity_id in ("MPAMX1", "MPAMX2"):
+            activity = instance.activities[activity_id]
+            project = instance.projects[activity.contract_number]
+            last_week = instance.last_week_completing_by(
+                project.planned_completion_date
+            )
+            self.assertLess(
+                last_week * project.number_of_maximum_access_per_week,
+                activity.total_accesses,
+            )
+        self.assertTrue((b_audit / "EXPECTED_INFEASIBLE.md").exists())
+        self.assertEqual(
+            failure["heuristic_attempts"][0]["status"],
+            "INFEASIBLE",
+        )
+        self.assertEqual(
+            failure["bridge_safe_fallback_attempts"][0]["telemetry"]["status"],
+            "INFEASIBLE",
+        )
+
     def test_independent_synthetic_oracle_is_valid_without_public_identifiers(self) -> None:
         synthetic_root = ROOT / "fixtures" / "independent_synthetic_v1"
         oracle = ROOT / "fixtures" / "independent_synthetic_v1_oracle"

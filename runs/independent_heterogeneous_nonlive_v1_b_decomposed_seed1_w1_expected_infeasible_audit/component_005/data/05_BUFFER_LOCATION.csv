@@ -1,0 +1,13 @@
+nature_of_works,up_to_buffer_sectors,opposite_bound_required
+FPD Non-live (Others),0,0
+IRR Non-live (Consist),0,0
+PRD Live,2,1
+FPD Non-live (Consist),1,0
+MPA Non-live (Others),0,0
+AGG Non-live (Others),0,0
+PCP Non-live (Others),0,0
+PCP Live,2,1
+PCP Non-live (Consist),1,0
+FPD Live,2,1
+PRD Non-live (Consist),1,0
+PRD Non-live (Others),0,0
