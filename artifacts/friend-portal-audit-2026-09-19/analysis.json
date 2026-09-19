@@ -1,0 +1,5213 @@
+{
+  "A": {
+    "count": 54,
+    "exact_geometry_matches": 36,
+    "base_first_four_matches": 47,
+    "live_platform_first_four_matches": 52,
+    "by_week": {
+      "15": 4,
+      "16": 6,
+      "17": 4,
+      "18": 2,
+      "19": 5,
+      "20": 2,
+      "21": 7,
+      "23": 4,
+      "24": 6,
+      "25": 7,
+      "27": 7
+    },
+    "multi_activity_closure_components": 11,
+    "cross_line_records": 7,
+    "records_with_work_footprint_overlap": 41,
+    "records_with_only_closure_extension_overlap": 13,
+    "blocking_activities": {
+      "A074": 7,
+      "A075": 5,
+      "A041": 3,
+      "A008": 3,
+      "A046": 3,
+      "A001": 3,
+      "A017": 3,
+      "A011": 3,
+      "A071": 3,
+      "A040": 2,
+      "A009": 2,
+      "A038": 2,
+      "A059": 2,
+      "A042": 2,
+      "A023": 2,
+      "A070": 2,
+      "A003": 1,
+      "A047": 1,
+      "A012": 1,
+      "A064": 1,
+      "A054": 1,
+      "A019": 1,
+      "A056": 1,
+      "A043": 1,
+      "A002": 1,
+      "A039": 1,
+      "A035": 1,
+      "A069": 1
+    },
+    "records": [
+      {
+        "week": 15,
+        "intruder": "A041",
+        "component": [
+          "A003",
+          "A007",
+          "A040"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A003",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A040",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 15,
+        "intruder": "A003",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 15,
+        "intruder": "A040",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 15,
+        "intruder": "A057",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A009",
+        "component": [
+          "A047"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A047",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:EB",
+              "PLAT:ALP:S06:EB",
+              "SEC:ALP:S05_S06:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A047",
+        "component": [
+          "A009"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:H02_S05:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:H02_S05:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A009",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:EB",
+              "PLAT:ALP:S06:EB",
+              "SEC:ALP:S05_S06:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:H02_S05:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:H02_S05:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A064",
+        "component": [
+          "A012"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:WB",
+          "SEC:BET:S15_S16:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:WB",
+          "SEC:BET:S15_S16:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A012",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S15_S16:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:WB",
+          "SEC:BET:S15_S16:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A012",
+        "component": [
+          "A064"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A064",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A038",
+        "component": [
+          "A008"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A008",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB",
+              "PLAT:BET:S18:EB",
+              "SEC:BET:S17_S18:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A008",
+        "component": [
+          "A038"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A038",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB",
+              "PLAT:BET:S18:EB",
+              "SEC:BET:S17_S18:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 17,
+        "intruder": "A009",
+        "component": [
+          "A054"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A054",
+            "nature": "Non-live (Others)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 17,
+        "intruder": "A054",
+        "component": [
+          "A009"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:EB",
+          "SEC:ALP:H02_S05:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:EB",
+          "SEC:ALP:H02_S05:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A009",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:H02_S05:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:EB",
+          "SEC:ALP:H02_S05:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 17,
+        "intruder": "A059",
+        "component": [
+          "A046"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A046",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S06:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S06_S07:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 17,
+        "intruder": "A046",
+        "component": [
+          "A059"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S06:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S06:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A059",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S06:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S06:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A038",
+        "component": [
+          "A007",
+          "A019",
+          "A040"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A019",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A019",
+        "component": [
+          "A038"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A038",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A056",
+        "component": [
+          "A046"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:H02_S05:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:H02_S05:WB",
+          "SEC:ALP:S05_S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A046",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:WB",
+              "PLAT:ALP:S06:WB",
+              "SEC:ALP:S05_S06:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:H02_S05:WB",
+              "SEC:ALP:S06_S07:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:H02_S05:WB",
+          "SEC:ALP:S05_S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A059",
+        "component": [
+          "A046"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A046",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S06:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S06_S07:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A046",
+        "component": [
+          "A056",
+          "A059"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A056",
+            "nature": "Non-live (Others)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:WB",
+              "PLAT:ALP:S06:WB",
+              "SEC:ALP:S05_S06:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A059",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S06:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A008",
+        "component": [
+          "A007",
+          "A017",
+          "A043"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A043",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S17_S18:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A043",
+        "component": [
+          "A008"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A008",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 20,
+        "intruder": "A039",
+        "component": [
+          "A002"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S11:WB",
+          "PLAT:BET:S12:WB",
+          "PLAT:BET:S13:WB",
+          "SEC:BET:S11_S12:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S11:WB",
+          "PLAT:BET:S12:WB",
+          "PLAT:BET:S13:WB",
+          "SEC:BET:S11_S12:WB",
+          "SEC:BET:S12_S13:WB",
+          "SEC:BET:S13_S14:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A002",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S11:WB",
+              "PLAT:BET:S12:WB",
+              "PLAT:BET:S13:WB",
+              "SEC:BET:S11_S12:WB",
+              "SEC:BET:S12_S13:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S13_S14:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S11:WB",
+          "PLAT:BET:S12:WB",
+          "PLAT:BET:S13:WB",
+          "SEC:BET:S11_S12:WB",
+          "SEC:BET:S12_S13:WB",
+          "SEC:BET:S13_S14:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 20,
+        "intruder": "A002",
+        "component": [
+          "A039"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S11:WB",
+          "PLAT:BET:S12:WB",
+          "PLAT:BET:S13:WB",
+          "SEC:BET:S11_S12:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S11:WB",
+          "PLAT:BET:S12:WB",
+          "PLAT:BET:S13:WB",
+          "SEC:BET:S11_S12:WB",
+          "SEC:BET:S12_S13:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A039",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S11:WB",
+              "PLAT:BET:S12:WB",
+              "PLAT:BET:S13:WB",
+              "SEC:BET:S11_S12:WB",
+              "SEC:BET:S12_S13:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S11:WB",
+          "PLAT:BET:S12:WB",
+          "PLAT:BET:S13:WB",
+          "SEC:BET:S11_S12:WB",
+          "SEC:BET:S12_S13:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A001",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A009",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "predicted_locations": [
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "SEC:ALP:S05_S06:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A011",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A013",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "predicted_locations": [
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "SEC:ALP:S05_S06:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A017",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:H01:EB",
+              "PLAT:BET:H02:EB",
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:H01_H02:EB",
+              "SEC:BET:H02_S15:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A023",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A057",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:H02:EB",
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:H02_S15:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 23,
+        "intruder": "A017",
+        "component": [
+          "A001"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A001",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 23,
+        "intruder": "A042",
+        "component": [
+          "A001"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A001",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "PLAT:BET:S17:EB",
+              "SEC:BET:S15_S16:EB",
+              "SEC:BET:S16_S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S17_S18:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 23,
+        "intruder": "A057",
+        "component": [
+          "A001"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A001",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 23,
+        "intruder": "A001",
+        "component": [
+          "A017",
+          "A036",
+          "A042"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A017",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A042",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "PLAT:BET:S17:EB",
+              "SEC:BET:S15_S16:EB",
+              "SEC:BET:S16_S17:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 24,
+        "intruder": "A070",
+        "component": [
+          "A023"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A023",
+            "nature": "Non-live (Consist)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S04_H01:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 24,
+        "intruder": "A023",
+        "component": [
+          "A070"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A070",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 24,
+        "intruder": "A017",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 24,
+        "intruder": "A042",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "PLAT:BET:S17:EB",
+              "SEC:BET:S15_S16:EB",
+              "SEC:BET:S16_S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S17_S18:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 24,
+        "intruder": "A057",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 24,
+        "intruder": "A011",
+        "component": [
+          "A017",
+          "A036",
+          "A042"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A017",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A042",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "PLAT:BET:S17:EB",
+              "SEC:BET:S15_S16:EB",
+              "SEC:BET:S16_S17:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 25,
+        "intruder": "A070",
+        "component": [
+          "A035"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A035",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 25,
+        "intruder": "A035",
+        "component": [
+          "A070"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S02_S03:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S02_S03:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A070",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S02_S03:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S02_S03:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 25,
+        "intruder": "A017",
+        "component": [
+          "A008",
+          "A071"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A071",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 25,
+        "intruder": "A040",
+        "component": [
+          "A008",
+          "A071"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A071",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 25,
+        "intruder": "A042",
+        "component": [
+          "A008",
+          "A071"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A008",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB",
+              "PLAT:BET:S18:EB",
+              "SEC:BET:S17_S18:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          },
+          {
+            "activity": "A071",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "PLAT:BET:S17:EB",
+              "SEC:BET:S15_S16:EB",
+              "SEC:BET:S16_S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S17_S18:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 25,
+        "intruder": "A008",
+        "component": [
+          "A017",
+          "A036",
+          "A040"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "PLAT:BET:S18:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "predicted_locations": [],
+        "exact_geometry_match": false,
+        "sources": [],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [],
+        "live_platform_first_four_match": false
+      },
+      {
+        "week": 25,
+        "intruder": "A071",
+        "component": [
+          "A017",
+          "A036",
+          "A040"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A017",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A040",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": false
+      },
+      {
+        "week": 27,
+        "intruder": "A069",
+        "component": [
+          "A023"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A023",
+            "nature": "Non-live (Consist)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S04_H01:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 27,
+        "intruder": "A023",
+        "component": [
+          "A069"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A069",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 27,
+        "intruder": "A023",
+        "component": [
+          "A075"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A075",
+            "nature": "Live",
+            "access_type": "PM",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 27,
+        "intruder": "A025",
+        "component": [
+          "A075"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A075",
+            "nature": "Live",
+            "access_type": "PM",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:ALP:S03:EB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 27,
+        "intruder": "A036",
+        "component": [
+          "A075"
+        ],
+        "reported_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:H01:EB",
+          "SEC:BET:S14_H01:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A075",
+            "nature": "Live",
+            "access_type": "PM",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:H01:EB",
+              "SEC:BET:S14_H01:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 27,
+        "intruder": "A040",
+        "component": [
+          "A075"
+        ],
+        "reported_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A075",
+            "nature": "Live",
+            "access_type": "PM",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:H01:EB",
+              "PLAT:BET:H02:EB",
+              "SEC:BET:H01_H02:EB",
+              "SEC:BET:H02_S15:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 27,
+        "intruder": "A069",
+        "component": [
+          "A075"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:H02:WB",
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:H02:WB",
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:H01_H02:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A075",
+            "nature": "Live",
+            "access_type": "PM",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:ALP:H01:WB",
+              "PLAT:ALP:H02:WB",
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:H01_H02:WB",
+              "SEC:ALP:S03_S04:WB",
+              "SEC:ALP:S04_H01:WB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:H01:WB",
+          "PLAT:ALP:H02:WB",
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:H01_H02:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "live_platform_first_four_match": true
+      }
+    ]
+  },
+  "B": {
+    "count": 67,
+    "exact_geometry_matches": 57,
+    "base_first_four_matches": 63,
+    "live_platform_first_four_matches": 67,
+    "by_week": {
+      "13": 2,
+      "15": 4,
+      "16": 4,
+      "18": 11,
+      "19": 11,
+      "20": 4,
+      "21": 7,
+      "22": 7,
+      "23": 3,
+      "24": 3,
+      "25": 2,
+      "26": 8,
+      "28": 1
+    },
+    "multi_activity_closure_components": 11,
+    "cross_line_records": 6,
+    "records_with_work_footprint_overlap": 57,
+    "records_with_only_closure_extension_overlap": 10,
+    "blocking_activities": {
+      "A011": 8,
+      "A074": 8,
+      "A041": 7,
+      "A017": 6,
+      "A008": 4,
+      "A046": 4,
+      "A071": 3,
+      "A001": 3,
+      "A057": 2,
+      "A019": 2,
+      "A050": 2,
+      "A059": 2,
+      "A003": 2,
+      "A013": 2,
+      "A040": 2,
+      "A023": 2,
+      "A048": 2,
+      "A042": 2,
+      "A009": 1,
+      "A047": 1,
+      "A043": 1,
+      "A012": 1,
+      "A064": 1,
+      "A035": 1,
+      "A056": 1,
+      "A070": 1,
+      "A036": 1,
+      "A055": 1,
+      "A020": 1
+    },
+    "records": [
+      {
+        "week": 13,
+        "intruder": "A047",
+        "component": [
+          "A009"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:H02_S05:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:H02_S05:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A009",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:EB",
+              "PLAT:ALP:S06:EB",
+              "SEC:ALP:S05_S06:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:H02_S05:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:H02_S05:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 13,
+        "intruder": "A009",
+        "component": [
+          "A047"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A047",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:EB",
+              "PLAT:ALP:S06:EB",
+              "SEC:ALP:S05_S06:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 15,
+        "intruder": "A043",
+        "component": [
+          "A071"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:H02_S15:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A071",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "PLAT:BET:S17:EB",
+              "SEC:BET:S15_S16:EB",
+              "SEC:BET:S16_S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 15,
+        "intruder": "A057",
+        "component": [
+          "A071"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A071",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 15,
+        "intruder": "A060",
+        "component": [
+          "A071"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A071",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 15,
+        "intruder": "A071",
+        "component": [
+          "A007",
+          "A043",
+          "A057"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A043",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "PLAT:BET:S17:EB",
+              "SEC:BET:S15_S16:EB",
+              "SEC:BET:S16_S17:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A057",
+            "nature": "Non-live (Others)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A064",
+        "component": [
+          "A012"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:WB",
+          "SEC:BET:S15_S16:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:WB",
+          "SEC:BET:S15_S16:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A012",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S15_S16:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:WB",
+          "SEC:BET:S15_S16:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A008",
+        "component": [
+          "A007",
+          "A019",
+          "A057"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A019",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A012",
+        "component": [
+          "A064"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A064",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 16,
+        "intruder": "A019",
+        "component": [
+          "A008"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A008",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A050",
+        "component": [
+          "A035"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A035",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A035",
+        "component": [
+          "A050"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S02_S03:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S02_S03:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A050",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S02_S03:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S02_S03:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A056",
+        "component": [
+          "A046"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:H02_S05:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:H02_S05:WB",
+          "SEC:ALP:S05_S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A046",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:WB",
+              "PLAT:ALP:S06:WB",
+              "SEC:ALP:S05_S06:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:H02_S05:WB",
+              "SEC:ALP:S06_S07:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:H02_S05:WB",
+          "SEC:ALP:S05_S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A059",
+        "component": [
+          "A046"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A046",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S06:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S06_S07:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A046",
+        "component": [
+          "A056",
+          "A059"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A056",
+            "nature": "Non-live (Others)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:WB",
+              "PLAT:ALP:S06:WB",
+              "SEC:ALP:S05_S06:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A059",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S06:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A011",
+        "component": [
+          "A003",
+          "A007",
+          "A017"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A003",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          },
+          {
+            "activity": "A017",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A003",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A008",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S17_S18:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A017",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A040",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 18,
+        "intruder": "A011",
+        "component": [
+          "A008"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A008",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A007",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:H01:EB",
+              "PLAT:BET:H02:EB",
+              "SEC:BET:H01_H02:EB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A012",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:H01:WB",
+          "PLAT:BET:H02:WB",
+          "PLAT:BET:S15:WB",
+          "SEC:BET:H01_H02:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:H01:WB",
+          "PLAT:BET:H02:WB",
+          "PLAT:BET:S15:WB",
+          "SEC:BET:H01_H02:WB",
+          "SEC:BET:H02_S15:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:H01:WB",
+              "PLAT:BET:H02:WB",
+              "PLAT:BET:S15:WB",
+              "SEC:BET:H01_H02:WB",
+              "SEC:BET:H02_S15:WB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:H01:WB",
+          "PLAT:BET:H02:WB",
+          "PLAT:BET:S15:WB",
+          "SEC:BET:H01_H02:WB",
+          "SEC:BET:H02_S15:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A035",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A040",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:H01:EB",
+              "PLAT:BET:H02:EB",
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:H01_H02:EB",
+              "SEC:BET:H02_S15:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A046",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "predicted_locations": [
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "SEC:ALP:S05_S06:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A048",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S13:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S13_S14:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S13:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S13_S14:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:S13:EB",
+              "PLAT:BET:S14:EB",
+              "SEC:BET:S13_S14:EB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S13:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S13_S14:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A057",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": false,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:H02:EB",
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:H02_S15:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A059",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S06:WB"
+        ],
+        "predicted_locations": [],
+        "exact_geometry_match": false,
+        "sources": [],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S06:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A065",
+        "component": [
+          "A074"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S13:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S13:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A074",
+            "nature": "Live",
+            "access_type": "PC",
+            "work_footprint_overlap": [],
+            "closure_only_overlap": [
+              "PLAT:BET:S13:WB"
+            ],
+            "cross_line": true
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S13:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A059",
+        "component": [
+          "A046"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A046",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S06:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S06_S07:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S06_S07:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 19,
+        "intruder": "A046",
+        "component": [
+          "A059"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S06:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S06:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A059",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S06:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S06:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 20,
+        "intruder": "A041",
+        "component": [
+          "A003",
+          "A007",
+          "A017"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A003",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A017",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 20,
+        "intruder": "A003",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 20,
+        "intruder": "A017",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 20,
+        "intruder": "A040",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A046",
+        "component": [
+          "A013"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A013",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:WB",
+              "PLAT:ALP:S06:WB",
+              "SEC:ALP:S05_S06:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A013",
+        "component": [
+          "A046"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A046",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:WB",
+              "PLAT:ALP:S06:WB",
+              "SEC:ALP:S05_S06:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A041",
+        "component": [
+          "A001",
+          "A017",
+          "A040"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A001",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A017",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A040",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A001",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A017",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A040",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 21,
+        "intruder": "A057",
+        "component": [
+          "A041"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A041",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 22,
+        "intruder": "A070",
+        "component": [
+          "A023"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A023",
+            "nature": "Non-live (Consist)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S04_H01:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 22,
+        "intruder": "A023",
+        "component": [
+          "A070"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A070",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 22,
+        "intruder": "A048",
+        "component": [
+          "A007",
+          "A036",
+          "A055"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S13:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S13_S14:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S13:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S13_S14:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A036",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S14:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A055",
+            "nature": "Non-live (Others)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:BET:S13:EB",
+              "PLAT:BET:S14:EB",
+              "SEC:BET:S13_S14:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S13:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S13_S14:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 22,
+        "intruder": "A036",
+        "component": [
+          "A048"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A048",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S14:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S14_H01:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 22,
+        "intruder": "A055",
+        "component": [
+          "A048"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S13:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S13_S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S13:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S13_S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A048",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S13:EB",
+              "PLAT:BET:S14:EB",
+              "SEC:BET:S13_S14:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S14_H01:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S13:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S13_S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 22,
+        "intruder": "A008",
+        "component": [
+          "A019"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A019",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 22,
+        "intruder": "A019",
+        "component": [
+          "A008"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A008",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 23,
+        "intruder": "A001",
+        "component": [
+          "A007",
+          "A017",
+          "A036"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A017",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 23,
+        "intruder": "A017",
+        "component": [
+          "A001"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A001",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 23,
+        "intruder": "A057",
+        "component": [
+          "A001"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A001",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 24,
+        "intruder": "A042",
+        "component": [
+          "A017",
+          "A036",
+          "A057"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A017",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A057",
+            "nature": "Non-live (Others)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 24,
+        "intruder": "A017",
+        "component": [
+          "A042"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A042",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 24,
+        "intruder": "A057",
+        "component": [
+          "A042"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A042",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 25,
+        "intruder": "A050",
+        "component": [
+          "A023"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A023",
+            "nature": "Non-live (Consist)",
+            "access_type": "PC",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:S04_H01:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB",
+          "SEC:ALP:S04_H01:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 25,
+        "intruder": "A023",
+        "component": [
+          "A050"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A050",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S03:WB",
+              "PLAT:ALP:S04:WB",
+              "SEC:ALP:S03_S04:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 26,
+        "intruder": "A013",
+        "component": [
+          "A020",
+          "A023",
+          "A066"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A020",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:WB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 26,
+        "intruder": "A020",
+        "component": [
+          "A013"
+        ],
+        "reported_locations": [
+          "PLAT:ALP:S05:WB",
+          "SEC:ALP:H02_S05:WB"
+        ],
+        "predicted_locations": [
+          "PLAT:ALP:S05:WB",
+          "SEC:ALP:H02_S05:WB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A013",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:ALP:S05:WB"
+            ],
+            "closure_only_overlap": [
+              "SEC:ALP:H02_S05:WB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:ALP:S05:WB",
+          "SEC:ALP:H02_S05:WB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 26,
+        "intruder": "A011",
+        "component": [
+          "A017",
+          "A036",
+          "A040"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A017",
+            "nature": "Non-live (Others)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [],
+            "cross_line": false
+          },
+          {
+            "activity": "A040",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:S15_S16:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 26,
+        "intruder": "A008",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S17_S18:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S17_S18:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 26,
+        "intruder": "A017",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 26,
+        "intruder": "A040",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB",
+              "PLAT:BET:S16:EB",
+              "SEC:BET:S15_S16:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB",
+          "SEC:BET:H02_S15:EB",
+          "SEC:BET:S15_S16:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 26,
+        "intruder": "A073",
+        "component": [
+          "A011"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S15:EB",
+          "SEC:BET:H02_S15:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S15:EB",
+          "SEC:BET:H02_S15:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A011",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S15:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:H02_S15:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S15:EB",
+          "SEC:BET:H02_S15:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 26,
+        "intruder": "A011",
+        "component": [
+          "A008"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "predicted_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "exact_geometry_match": true,
+        "sources": [
+          {
+            "activity": "A008",
+            "nature": "Non-live (Consist)",
+            "access_type": "C",
+            "work_footprint_overlap": [
+              "PLAT:BET:S17:EB"
+            ],
+            "closure_only_overlap": [
+              "SEC:BET:S16_S17:EB"
+            ],
+            "cross_line": false
+          }
+        ],
+        "base_first_four_match": true,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S17:EB",
+          "SEC:BET:S16_S17:EB"
+        ],
+        "live_platform_first_four_match": true
+      },
+      {
+        "week": 28,
+        "intruder": "A021",
+        "component": [
+          "A075"
+        ],
+        "reported_locations": [
+          "PLAT:BET:S13:WB"
+        ],
+        "predicted_locations": [],
+        "exact_geometry_match": false,
+        "sources": [],
+        "base_first_four_match": false,
+        "live_platform_hypothesis_locations": [
+          "PLAT:BET:S13:WB"
+        ],
+        "live_platform_first_four_match": true
+      }
+    ]
+  },
+  "C": {
+    "count": 0,
+    "exact_geometry_matches": 0,
+    "base_first_four_matches": 0,
+    "live_platform_first_four_matches": 0,
+    "by_week": {},
+    "multi_activity_closure_components": 0,
+    "cross_line_records": 0,
+    "records_with_work_footprint_overlap": 0,
+    "records_with_only_closure_extension_overlap": 0,
+    "blocking_activities": {},
+    "records": [],
+    "portal_summary": {
+      "feasible": true,
+      "score": 98.2,
+      "overrun_days": 14,
+      "overrunning_contracts": 2,
+      "excess": 0,
+      "eclo_rows": 2
+    },
+    "inferred_delay_cost": 88.2,
+    "compatible_two_contract_pairs_under_current_scoring": [
+      [
+        "C006",
+        "C010"
+      ]
+    ]
+  },
+  "limitations": [
+    "Submission CSVs and upload timestamps/hashes are not yet available.",
+    "Geometry checks condition on the closure components printed by the portal.",
+    "Cannot independently reconstruct co-sharing, access-night assignments, omitted conflicts, or full feasibility without uploaded CSVs.",
+    "No official validation attempt was made; this is a read-only snapshot."
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "access_rows": 191,
+  "checked_rules": [
+    "schema",
+    "workload",
+    "planned_start",
+    "predecessor",
+    "horizon",
+    "occupancy_footprint",
+    "legal_mix",
+    "weekly_allocation",
+    "workfront",
+    "scenario_capacity",
+    "scenario_eclo",
+    "sample_consistent_closure_screen",
+    "results",
+    "objective_formula"
+  ],
+  "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+  "eclo_nights_total": 2,
+  "excess_access_nights_total": 0,
+  "hard_violations": [],
+  "internally_feasible": true,
+  "objective_score": 98.2,
+  "occupancy_rows": 925,
+  "priority_overrun": {
+    "1": 0,
+    "2": 0,
+    "3": 14
+  },
+  "priority_weighted_score": 88.2,
+  "reference_validator_confirmed": false,
+  "scenario": "C",
+  "submission_hash": "685071409bea20c366acc8078c660370d451d30c0d1204632b3ae4779d73e68e",
+  "warnings": [
+    "closure screen reproduces official A-001 and accepts A-002/B-001/C-001; hidden-instance equivalence is not guaranteed"
+  ]
+}

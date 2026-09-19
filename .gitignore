@@ -49,3 +49,17 @@ runs/postcontractexpand_*/
 runs/postdelayexpand_*/
 runs/post596f8f5_*/
 runs/postprecedenceexpand_*/
+
+.env
+.env.local
+.env.*.local
+.nightshift-state/
+
+# Local deployment checks and reproducible-but-generated solver probes
+output/
+runs/independent_heterogeneous_b_v1_b_candidate_portfolio_probe_first_seed1_w1/
+runs/independent_heterogeneous_b_v1_b_candidate_portfolio_probe_first_seed1_w1_audit/
+runs/independent_heterogeneous_b_v1_permuted_s23_b_candidate_portfolio_probe_first_seed31_w1/
+runs/independent_heterogeneous_b_v1_permuted_s23_b_candidate_portfolio_probe_first_seed31_w1_audit/
+
+.env.*

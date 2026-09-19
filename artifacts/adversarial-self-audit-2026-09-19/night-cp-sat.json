@@ -1,0 +1,185 @@
+{
+  "assumptions": [
+    "an activity access occupies its corridor on one physical night",
+    "same co-share group at a location-week means same night",
+    "different groups at the same location-week mean different nights",
+    "contract-local night indices map consistently to physical nights within that contract/type/week"
+  ],
+  "limitations": "Does not test official implementation. Multi-visit activities are removed, which relaxes this model. No closure or capacity constraints are needed for these contradictions.",
+  "weeks": [
+    {
+      "week": 1,
+      "status": "OPTIMAL",
+      "single_visit_activities": 1,
+      "seconds": 0.000737
+    },
+    {
+      "week": 2,
+      "status": "OPTIMAL",
+      "single_visit_activities": 1,
+      "seconds": 4.9000000000000005e-05
+    },
+    {
+      "week": 3,
+      "status": "OPTIMAL",
+      "single_visit_activities": 2,
+      "seconds": 4.1e-05
+    },
+    {
+      "week": 4,
+      "status": "OPTIMAL",
+      "single_visit_activities": 1,
+      "seconds": 3.6e-05
+    },
+    {
+      "week": 5,
+      "status": "OPTIMAL",
+      "single_visit_activities": 3,
+      "seconds": 3.4e-05
+    },
+    {
+      "week": 6,
+      "status": "OPTIMAL",
+      "single_visit_activities": 1,
+      "seconds": 2.8000000000000003e-05
+    },
+    {
+      "week": 7,
+      "status": "OPTIMAL",
+      "single_visit_activities": 3,
+      "seconds": 2.7000000000000002e-05
+    },
+    {
+      "week": 8,
+      "status": "OPTIMAL",
+      "single_visit_activities": 5,
+      "seconds": 3.2000000000000005e-05
+    },
+    {
+      "week": 9,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 8,
+      "seconds": 3.4e-05
+    },
+    {
+      "week": 10,
+      "status": "OPTIMAL",
+      "single_visit_activities": 5,
+      "seconds": 6.6e-05
+    },
+    {
+      "week": 11,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 6,
+      "seconds": 1e-05
+    },
+    {
+      "week": 12,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 7,
+      "seconds": 1e-05
+    },
+    {
+      "week": 13,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 6,
+      "seconds": 1.4000000000000001e-05
+    },
+    {
+      "week": 14,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 7,
+      "seconds": 1.3000000000000001e-05
+    },
+    {
+      "week": 15,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 9,
+      "seconds": 1.5e-05
+    },
+    {
+      "week": 16,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 8,
+      "seconds": 6e-06
+    },
+    {
+      "week": 17,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 12,
+      "seconds": 1.5e-05
+    },
+    {
+      "week": 18,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 8,
+      "seconds": 1.3000000000000001e-05
+    },
+    {
+      "week": 19,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 15,
+      "seconds": 2.4e-05
+    },
+    {
+      "week": 20,
+      "status": "OPTIMAL",
+      "single_visit_activities": 2,
+      "seconds": 3.2000000000000005e-05
+    },
+    {
+      "week": 21,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 13,
+      "seconds": 1.9e-05
+    },
+    {
+      "week": 22,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 11,
+      "seconds": 1e-05
+    },
+    {
+      "week": 23,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 9,
+      "seconds": 2.6000000000000002e-05
+    },
+    {
+      "week": 24,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 10,
+      "seconds": 2e-05
+    },
+    {
+      "week": 25,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 12,
+      "seconds": 2.1000000000000002e-05
+    },
+    {
+      "week": 26,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 10,
+      "seconds": 2.2000000000000003e-05
+    },
+    {
+      "week": 27,
+      "status": "INFEASIBLE",
+      "single_visit_activities": 8,
+      "seconds": 1.3000000000000001e-05
+    },
+    {
+      "week": 28,
+      "status": "OPTIMAL",
+      "single_visit_activities": 2,
+      "seconds": 4.2000000000000004e-05
+    },
+    {
+      "week": 29,
+      "status": "OPTIMAL",
+      "single_visit_activities": 1,
+      "seconds": 3.1e-05
+    }
+  ]
+}

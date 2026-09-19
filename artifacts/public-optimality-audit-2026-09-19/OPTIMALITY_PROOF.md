@@ -1,4 +1,6 @@
-# Exact public-instance optimum: A = 137.9, B = 30.0, C = 62.7
+# Superseded restricted-model proof: A = 137.9, B = 30.0, C = 62.7
+
+**RETRACTED AS A CLAIM ABOUT THE OFFICIAL OPTIMUM.** Later on 19 September 2026, controlled official uploads accepted multiple accesses per activity per week and achieved feasible **A=0.0, B=0.0, C=0.0**. The argument below assumed at most one access per activity per week, excluding legal portal-accepted schedules. Separate parsing, enumeration and CP-SAT implementations did not protect against that shared semantic error. This is now a historical certificate only for the overly restricted model. The current official optimum is zero because every published score term is nonnegative and the portal accepted zero-score witnesses. See `../controlled-probes-2026-09-19/RESULTS.md` and `../../deliverables/official-zero/MANIFEST.json`.
 
 Verified on 19 September 2026 against the eight current public input CSVs. These are exact primary-score optima under the current published rules and the contract-completion scoring observed in the official validator. They are instance-specific, not universal scores for hidden datasets.
 

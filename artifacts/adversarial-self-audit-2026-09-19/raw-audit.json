@@ -1,0 +1,9371 @@
+{
+  "timestamp": "2026-09-19T06:17:37.293010+00:00",
+  "portal_used": false,
+  "assumption": "co-sharing synchronizes physical nights across an activity corridor; different groups at the same location-week are different nights",
+  "inputs_sha256": {
+    "01_LINES.csv": "b6e60b0e7726e4266efd059bf5061b3b3a2c9825ae7dd85a6431f41b81b383e7",
+    "02_STATIONS.csv": "4a27d6508defd03e8c833133b523390ac8850a1c1717f309033e40f364720e24",
+    "03_SECTORS.csv": "643fdb2bd317126b42572fafcce8f8108008e8e9c7b71c08dfd31cec11c3ee34",
+    "04_LOCATION_SUPPLY.csv": "9d8a92d6ffd340f40dae28302ed6f88958f8661e2b046bb6b4e0b79c385be1e6",
+    "05_BUFFER_LOCATION.csv": "4b9fe7fd6a1f9128bd6e83405496dc64a8028f997bb1fcd28355582a6d554de0",
+    "06_PARAMETERS.csv": "9400b7b082069c56b8cae85d56994cf06fe08ae54fcd116ff6edc890034cc8e6",
+    "07_PROJECT_DETAILS.csv": "393f0dcc7e7b9a54f0eff12eb0dd0122dbd74f4b4b8b73b7676f9f232fb8a4c7",
+    "08_ACTIVITY_DETAILS.csv": "6a1ef90cd3bed93a8970ef49454e9c02e0c1df93ce8e0f0f4b071563cfb43e30"
+  },
+  "audits": {
+    "zero_A": {
+      "basic_errors": [],
+      "activities": 54,
+      "access_rows": 192,
+      "occupancy_rows": 917,
+      "eclo_rows": 0,
+      "group_count_excess": 0,
+      "repeated_visits": [
+        {
+          "activity": "A036",
+          "week": 22,
+          "nights": [
+            1,
+            2
+          ]
+        },
+        {
+          "activity": "A036",
+          "week": 23,
+          "nights": [
+            1,
+            2
+          ]
+        },
+        {
+          "activity": "A059",
+          "week": 14,
+          "nights": [
+            2,
+            3
+          ]
+        }
+      ],
+      "physical_capacity_lower_bound_witnesses": [
+        {
+          "activity": "A036",
+          "week": 22,
+          "location": "PLAT:BET:H01:EB",
+          "required_distinct_nights": 2,
+          "supply": 1
+        },
+        {
+          "activity": "A036",
+          "week": 23,
+          "location": "PLAT:BET:H01:EB",
+          "required_distinct_nights": 2,
+          "supply": 1
+        }
+      ],
+      "single_visit_night_consistency_witnesses": [
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g2"
+            ],
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "SEC:ALP:S03_S04:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S11:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A041",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A037",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A037",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A037",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A037",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:ALP:S03:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 13,
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A040",
+              3
+            ],
+            [
+              "A041",
+              2
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A041",
+              "g1"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A041",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A041",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g2"
+            ],
+            [
+              "A060",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g1"
+            ],
+            [
+              "A060",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g2"
+            ],
+            [
+              "A060",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A019",
+            "A040",
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A007",
+            "A019",
+            "A040",
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A020",
+            "A046",
+            "A050",
+            "A059"
+          ],
+          "assignments": [
+            [
+              "A020",
+              "g1"
+            ],
+            [
+              "A050",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A020",
+            "A046",
+            "A050",
+            "A059"
+          ],
+          "assignments": [
+            [
+              "A020",
+              "g1"
+            ],
+            [
+              "A050",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 18,
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A003",
+              1
+            ],
+            [
+              "A007",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A008",
+            "A017",
+            "A037",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A037",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A007",
+            "A008",
+            "A017",
+            "A037",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A060",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S11:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:BET:S12_S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 19,
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "contract_type": [
+            "C011",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A069",
+              2
+            ],
+            [
+              "A070",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A069",
+              "g2"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ],
+            [
+              "A070",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 21,
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A001",
+              1
+            ],
+            [
+              "A007",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A040",
+              "g3"
+            ],
+            [
+              "A057",
+              "g4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "PLAT:ALP:S04:EB",
+          "component": [
+            "A004",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:ALP:S04_H01:EB",
+          "component": [
+            "A004",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g2"
+            ],
+            [
+              "A054",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A023",
+            "A050",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A050",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 22,
+          "location": "PLAT:ALP:S04:EB",
+          "component": [
+            "A004",
+            "A025",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 22,
+          "location": "SEC:ALP:S04_H01:EB",
+          "component": [
+            "A004",
+            "A025",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:ALP:S03:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:ALP:S03_S04:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 24,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C003",
+            "Construction"
+          ],
+          "assignments": [
+            [
+              "A017",
+              2
+            ],
+            [
+              "A019",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C006",
+            "Construction"
+          ],
+          "assignments": [
+            [
+              "A036",
+              3
+            ],
+            [
+              "A038",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A040",
+              2
+            ],
+            [
+              "A042",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A038",
+              "g2"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:S16_S17:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g3"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:ALP:S05:WB",
+          "component": [
+            "A013",
+            "A046"
+          ],
+          "assignments": [
+            [
+              "A013",
+              "g1"
+            ],
+            [
+              "A046",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 26,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A008",
+            "A038",
+            "A042"
+          ],
+          "assignments": [
+            [
+              "A008",
+              "g2"
+            ],
+            [
+              "A038",
+              "g2"
+            ],
+            [
+              "A042",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 27,
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A042",
+              3
+            ],
+            [
+              "A043",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g2"
+            ],
+            [
+              "A043",
+              "g1"
+            ],
+            [
+              "A073",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g1"
+            ],
+            [
+              "A043",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g1"
+            ],
+            [
+              "A043",
+              "g2"
+            ]
+          ]
+        }
+      ],
+      "component_stats": [
+        {
+          "week": 1,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 2,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 3,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 4,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 5,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 6,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 7,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 8,
+          "sizes": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 9,
+          "sizes": [
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 10,
+          "sizes": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 11,
+          "sizes": [
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 12,
+          "sizes": [
+            3,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 13,
+          "sizes": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 14,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 15,
+          "sizes": [
+            5,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 16,
+          "sizes": [
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 17,
+          "sizes": [
+            4,
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 18,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 19,
+          "sizes": [
+            6,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 20,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 21,
+          "sizes": [
+            5,
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 22,
+          "sizes": [
+            3,
+            3,
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 23,
+          "sizes": [
+            7,
+            2,
+            1
+          ]
+        },
+        {
+          "week": 24,
+          "sizes": [
+            4,
+            3,
+            2,
+            1
+          ]
+        },
+        {
+          "week": 25,
+          "sizes": [
+            8,
+            2,
+            2
+          ]
+        },
+        {
+          "week": 26,
+          "sizes": [
+            3,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 27,
+          "sizes": [
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 28,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 29,
+          "sizes": [
+            1
+          ]
+        }
+      ]
+    },
+    "zero_B": {
+      "basic_errors": [],
+      "activities": 54,
+      "access_rows": 192,
+      "occupancy_rows": 917,
+      "eclo_rows": 0,
+      "group_count_excess": 0,
+      "repeated_visits": [
+        {
+          "activity": "A036",
+          "week": 22,
+          "nights": [
+            1,
+            2
+          ]
+        },
+        {
+          "activity": "A036",
+          "week": 23,
+          "nights": [
+            1,
+            2
+          ]
+        },
+        {
+          "activity": "A059",
+          "week": 14,
+          "nights": [
+            2,
+            3
+          ]
+        }
+      ],
+      "physical_capacity_lower_bound_witnesses": [
+        {
+          "activity": "A036",
+          "week": 22,
+          "location": "PLAT:BET:H01:EB",
+          "required_distinct_nights": 2,
+          "supply": 1
+        },
+        {
+          "activity": "A036",
+          "week": 23,
+          "location": "PLAT:BET:H01:EB",
+          "required_distinct_nights": 2,
+          "supply": 1
+        }
+      ],
+      "single_visit_night_consistency_witnesses": [
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g2"
+            ],
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "SEC:ALP:S03_S04:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S11:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A041",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A037",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A037",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A037",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A037",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:ALP:S03:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 13,
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A040",
+              3
+            ],
+            [
+              "A041",
+              2
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A041",
+              "g1"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A041",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A041",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g2"
+            ],
+            [
+              "A060",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g1"
+            ],
+            [
+              "A060",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g2"
+            ],
+            [
+              "A060",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A019",
+            "A040",
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A007",
+            "A019",
+            "A040",
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A020",
+            "A046",
+            "A050",
+            "A059"
+          ],
+          "assignments": [
+            [
+              "A020",
+              "g1"
+            ],
+            [
+              "A050",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A020",
+            "A046",
+            "A050",
+            "A059"
+          ],
+          "assignments": [
+            [
+              "A020",
+              "g1"
+            ],
+            [
+              "A050",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 18,
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A003",
+              1
+            ],
+            [
+              "A007",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A008",
+            "A017",
+            "A037",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A037",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A007",
+            "A008",
+            "A017",
+            "A037",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A060",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S11:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:BET:S12_S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 19,
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "contract_type": [
+            "C011",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A069",
+              2
+            ],
+            [
+              "A070",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A069",
+              "g2"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ],
+            [
+              "A070",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 21,
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A001",
+              1
+            ],
+            [
+              "A007",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A040",
+              "g3"
+            ],
+            [
+              "A057",
+              "g4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "PLAT:ALP:S04:EB",
+          "component": [
+            "A004",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:ALP:S04_H01:EB",
+          "component": [
+            "A004",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g2"
+            ],
+            [
+              "A054",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A023",
+            "A050",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A050",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 22,
+          "location": "PLAT:ALP:S04:EB",
+          "component": [
+            "A004",
+            "A025",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 22,
+          "location": "SEC:ALP:S04_H01:EB",
+          "component": [
+            "A004",
+            "A025",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:ALP:S03:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:ALP:S03_S04:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 24,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C003",
+            "Construction"
+          ],
+          "assignments": [
+            [
+              "A017",
+              2
+            ],
+            [
+              "A019",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C006",
+            "Construction"
+          ],
+          "assignments": [
+            [
+              "A036",
+              3
+            ],
+            [
+              "A038",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A040",
+              2
+            ],
+            [
+              "A042",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A038",
+              "g2"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:S16_S17:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g3"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:ALP:S05:WB",
+          "component": [
+            "A013",
+            "A046"
+          ],
+          "assignments": [
+            [
+              "A013",
+              "g1"
+            ],
+            [
+              "A046",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 26,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A008",
+            "A038",
+            "A042"
+          ],
+          "assignments": [
+            [
+              "A008",
+              "g2"
+            ],
+            [
+              "A038",
+              "g2"
+            ],
+            [
+              "A042",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 27,
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A042",
+              3
+            ],
+            [
+              "A043",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g2"
+            ],
+            [
+              "A043",
+              "g1"
+            ],
+            [
+              "A073",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g1"
+            ],
+            [
+              "A043",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g1"
+            ],
+            [
+              "A043",
+              "g2"
+            ]
+          ]
+        }
+      ],
+      "component_stats": [
+        {
+          "week": 1,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 2,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 3,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 4,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 5,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 6,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 7,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 8,
+          "sizes": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 9,
+          "sizes": [
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 10,
+          "sizes": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 11,
+          "sizes": [
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 12,
+          "sizes": [
+            3,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 13,
+          "sizes": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 14,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 15,
+          "sizes": [
+            5,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 16,
+          "sizes": [
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 17,
+          "sizes": [
+            4,
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 18,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 19,
+          "sizes": [
+            6,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 20,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 21,
+          "sizes": [
+            5,
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 22,
+          "sizes": [
+            3,
+            3,
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 23,
+          "sizes": [
+            7,
+            2,
+            1
+          ]
+        },
+        {
+          "week": 24,
+          "sizes": [
+            4,
+            3,
+            2,
+            1
+          ]
+        },
+        {
+          "week": 25,
+          "sizes": [
+            8,
+            2,
+            2
+          ]
+        },
+        {
+          "week": 26,
+          "sizes": [
+            3,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 27,
+          "sizes": [
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 28,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 29,
+          "sizes": [
+            1
+          ]
+        }
+      ]
+    },
+    "zero_C": {
+      "basic_errors": [],
+      "activities": 54,
+      "access_rows": 192,
+      "occupancy_rows": 917,
+      "eclo_rows": 0,
+      "group_count_excess": 0,
+      "repeated_visits": [
+        {
+          "activity": "A036",
+          "week": 22,
+          "nights": [
+            1,
+            2
+          ]
+        },
+        {
+          "activity": "A036",
+          "week": 23,
+          "nights": [
+            1,
+            2
+          ]
+        },
+        {
+          "activity": "A059",
+          "week": 14,
+          "nights": [
+            2,
+            3
+          ]
+        }
+      ],
+      "physical_capacity_lower_bound_witnesses": [
+        {
+          "activity": "A036",
+          "week": 22,
+          "location": "PLAT:BET:H01:EB",
+          "required_distinct_nights": 2,
+          "supply": 1
+        },
+        {
+          "activity": "A036",
+          "week": 23,
+          "location": "PLAT:BET:H01:EB",
+          "required_distinct_nights": 2,
+          "supply": 1
+        }
+      ],
+      "single_visit_night_consistency_witnesses": [
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g2"
+            ],
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "SEC:ALP:S03_S04:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S11:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A041",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A037",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A037",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A037",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A037",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:ALP:S03:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 13,
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A040",
+              3
+            ],
+            [
+              "A041",
+              2
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A041",
+              "g1"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A041",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A041",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g2"
+            ],
+            [
+              "A060",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g1"
+            ],
+            [
+              "A060",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g2"
+            ],
+            [
+              "A060",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A019",
+            "A040",
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A007",
+            "A019",
+            "A040",
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A020",
+            "A046",
+            "A050",
+            "A059"
+          ],
+          "assignments": [
+            [
+              "A020",
+              "g1"
+            ],
+            [
+              "A050",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A020",
+            "A046",
+            "A050",
+            "A059"
+          ],
+          "assignments": [
+            [
+              "A020",
+              "g1"
+            ],
+            [
+              "A050",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 18,
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A003",
+              1
+            ],
+            [
+              "A007",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A008",
+            "A017",
+            "A037",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A037",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A007",
+            "A008",
+            "A017",
+            "A037",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A060",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S11:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:BET:S12_S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 19,
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "contract_type": [
+            "C011",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A069",
+              2
+            ],
+            [
+              "A070",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A069",
+              "g2"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ],
+            [
+              "A070",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 21,
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A001",
+              1
+            ],
+            [
+              "A007",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A040",
+              "g3"
+            ],
+            [
+              "A057",
+              "g4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "PLAT:ALP:S04:EB",
+          "component": [
+            "A004",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:ALP:S04_H01:EB",
+          "component": [
+            "A004",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g2"
+            ],
+            [
+              "A054",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A023",
+            "A050",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A050",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 22,
+          "location": "PLAT:ALP:S04:EB",
+          "component": [
+            "A004",
+            "A025",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 22,
+          "location": "SEC:ALP:S04_H01:EB",
+          "component": [
+            "A004",
+            "A025",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:ALP:S03:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:ALP:S03_S04:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 24,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C003",
+            "Construction"
+          ],
+          "assignments": [
+            [
+              "A017",
+              2
+            ],
+            [
+              "A019",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C006",
+            "Construction"
+          ],
+          "assignments": [
+            [
+              "A036",
+              3
+            ],
+            [
+              "A038",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A040",
+              2
+            ],
+            [
+              "A042",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A038",
+              "g2"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:S16_S17:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g3"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:ALP:S05:WB",
+          "component": [
+            "A013",
+            "A046"
+          ],
+          "assignments": [
+            [
+              "A013",
+              "g1"
+            ],
+            [
+              "A046",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 26,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A008",
+            "A038",
+            "A042"
+          ],
+          "assignments": [
+            [
+              "A008",
+              "g2"
+            ],
+            [
+              "A038",
+              "g2"
+            ],
+            [
+              "A042",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 27,
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A042",
+              3
+            ],
+            [
+              "A043",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g2"
+            ],
+            [
+              "A043",
+              "g1"
+            ],
+            [
+              "A073",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g1"
+            ],
+            [
+              "A043",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g1"
+            ],
+            [
+              "A043",
+              "g2"
+            ]
+          ]
+        }
+      ],
+      "component_stats": [
+        {
+          "week": 1,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 2,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 3,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 4,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 5,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 6,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 7,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 8,
+          "sizes": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 9,
+          "sizes": [
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 10,
+          "sizes": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 11,
+          "sizes": [
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 12,
+          "sizes": [
+            3,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 13,
+          "sizes": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 14,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 15,
+          "sizes": [
+            5,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 16,
+          "sizes": [
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 17,
+          "sizes": [
+            4,
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 18,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 19,
+          "sizes": [
+            6,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 20,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 21,
+          "sizes": [
+            5,
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 22,
+          "sizes": [
+            3,
+            3,
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 23,
+          "sizes": [
+            7,
+            2,
+            1
+          ]
+        },
+        {
+          "week": 24,
+          "sizes": [
+            4,
+            3,
+            2,
+            1
+          ]
+        },
+        {
+          "week": 25,
+          "sizes": [
+            8,
+            2,
+            2
+          ]
+        },
+        {
+          "week": 26,
+          "sizes": [
+            3,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 27,
+          "sizes": [
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 28,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 29,
+          "sizes": [
+            1
+          ]
+        }
+      ]
+    },
+    "historical_B": {
+      "basic_errors": [],
+      "activities": 54,
+      "access_rows": 189,
+      "occupancy_rows": 917,
+      "eclo_rows": 6,
+      "group_count_excess": 0,
+      "repeated_visits": [],
+      "physical_capacity_lower_bound_witnesses": [],
+      "single_visit_night_consistency_witnesses": [
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g2"
+            ],
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "SEC:ALP:S03_S04:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A006",
+            "A058",
+            "A069"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S11:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 9,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A041",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A037",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A037",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A037",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A037",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:ALP:S03:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A058",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 13,
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A040",
+              3
+            ],
+            [
+              "A041",
+              2
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A041",
+              "g1"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A041",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A040",
+            "A041",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A041",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g2"
+            ],
+            [
+              "A060",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g1"
+            ],
+            [
+              "A060",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A043",
+            "A060",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A043",
+              "g2"
+            ],
+            [
+              "A060",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A019",
+            "A040",
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A061",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A007",
+            "A019",
+            "A040",
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A057",
+            "A061"
+          ],
+          "assignments": [
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A061",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A020",
+            "A046",
+            "A050",
+            "A059"
+          ],
+          "assignments": [
+            [
+              "A020",
+              "g1"
+            ],
+            [
+              "A050",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A020",
+            "A046",
+            "A050",
+            "A059"
+          ],
+          "assignments": [
+            [
+              "A020",
+              "g1"
+            ],
+            [
+              "A050",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 18,
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A003",
+              1
+            ],
+            [
+              "A007",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g2"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "g1"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A057",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A008",
+            "A017",
+            "A037",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A037",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A060",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A007",
+            "A008",
+            "A017",
+            "A037",
+            "A057",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A057",
+              "g1"
+            ],
+            [
+              "A060",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S11:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:BET:S12_S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "g1"
+            ],
+            [
+              "A039",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 19,
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "contract_type": [
+            "C011",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A069",
+              2
+            ],
+            [
+              "A070",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g1"
+            ],
+            [
+              "A069",
+              "g2"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 19,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A058",
+            "A069",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A058",
+              "g2"
+            ],
+            [
+              "A069",
+              "g2"
+            ],
+            [
+              "A070",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 21,
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A001",
+              1
+            ],
+            [
+              "A007",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A040",
+              "g3"
+            ],
+            [
+              "A057",
+              "g4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "PLAT:ALP:S04:EB",
+          "component": [
+            "A004",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:ALP:S04_H01:EB",
+          "component": [
+            "A004",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g2"
+            ],
+            [
+              "A054",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 21,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A023",
+            "A050",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A050",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 22,
+          "location": "PLAT:ALP:S04:EB",
+          "component": [
+            "A004",
+            "A025",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 22,
+          "location": "SEC:ALP:S04_H01:EB",
+          "component": [
+            "A004",
+            "A025",
+            "A054"
+          ],
+          "assignments": [
+            [
+              "A004",
+              "g1"
+            ],
+            [
+              "A054",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 23,
+          "component": [
+            "A001",
+            "A007",
+            "A011",
+            "A017",
+            "A036",
+            "A040",
+            "A071"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A001",
+              3
+            ],
+            [
+              "A007",
+              2
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A011",
+            "A017",
+            "A036",
+            "A040",
+            "A071"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A011",
+              "g2"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A071",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A011",
+            "A017",
+            "A036",
+            "A040",
+            "A071"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A011",
+              "g2"
+            ],
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A071",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A011",
+            "A017",
+            "A036",
+            "A040",
+            "A071"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g1"
+            ],
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A071",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A011",
+            "A017",
+            "A036",
+            "A040",
+            "A071"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "g2"
+            ],
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g1"
+            ],
+            [
+              "A071",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A001",
+            "A007",
+            "A011",
+            "A017",
+            "A036",
+            "A040",
+            "A071"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:ALP:S03:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:ALP:S03_S04:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:ALP:S04_H01:WB",
+          "component": [
+            "A006",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A006",
+              "g1"
+            ],
+            [
+              "A070",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 24,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A057",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C003",
+            "Construction"
+          ],
+          "assignments": [
+            [
+              "A017",
+              2
+            ],
+            [
+              "A019",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C006",
+            "Construction"
+          ],
+          "assignments": [
+            [
+              "A036",
+              3
+            ],
+            [
+              "A038",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A040",
+              2
+            ],
+            [
+              "A042",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A017",
+              "g2"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g1"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A038",
+              "g2"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:S16_S17:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A011",
+              "g3"
+            ],
+            [
+              "A019",
+              "g1"
+            ],
+            [
+              "A042",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A011",
+            "A017",
+            "A019",
+            "A036",
+            "A038",
+            "A040",
+            "A042",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "g1"
+            ],
+            [
+              "A040",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:ALP:S05:WB",
+          "component": [
+            "A013",
+            "A046"
+          ],
+          "assignments": [
+            [
+              "A013",
+              "g1"
+            ],
+            [
+              "A046",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 26,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A008",
+            "A038",
+            "A042"
+          ],
+          "assignments": [
+            [
+              "A008",
+              "g2"
+            ],
+            [
+              "A038",
+              "g2"
+            ],
+            [
+              "A042",
+              "g1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 27,
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A042",
+              3
+            ],
+            [
+              "A043",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g2"
+            ],
+            [
+              "A043",
+              "g1"
+            ],
+            [
+              "A073",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g1"
+            ],
+            [
+              "A043",
+              "g2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A042",
+            "A043",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A042",
+              "g1"
+            ],
+            [
+              "A043",
+              "g2"
+            ]
+          ]
+        }
+      ],
+      "component_stats": [
+        {
+          "week": 1,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 2,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 3,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 4,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 5,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 6,
+          "sizes": [
+            1
+          ]
+        },
+        {
+          "week": 7,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 8,
+          "sizes": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 9,
+          "sizes": [
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 10,
+          "sizes": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 11,
+          "sizes": [
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 12,
+          "sizes": [
+            3,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 13,
+          "sizes": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 14,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 15,
+          "sizes": [
+            5,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 16,
+          "sizes": [
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 17,
+          "sizes": [
+            4,
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 18,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 19,
+          "sizes": [
+            6,
+            3,
+            2,
+            2,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 20,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 21,
+          "sizes": [
+            5,
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 22,
+          "sizes": [
+            3,
+            3,
+            3,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 23,
+          "sizes": [
+            7,
+            2,
+            1
+          ]
+        },
+        {
+          "week": 24,
+          "sizes": [
+            4,
+            3,
+            2,
+            1
+          ]
+        },
+        {
+          "week": 25,
+          "sizes": [
+            8,
+            2,
+            2
+          ]
+        },
+        {
+          "week": 26,
+          "sizes": [
+            3,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 27,
+          "sizes": [
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 28,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 29,
+          "sizes": [
+            1
+          ]
+        }
+      ]
+    },
+    "organizer_sample": {
+      "basic_errors": [],
+      "activities": 54,
+      "access_rows": 192,
+      "occupancy_rows": 928,
+      "eclo_rows": 0,
+      "group_count_excess": 0,
+      "repeated_visits": [],
+      "physical_capacity_lower_bound_witnesses": [],
+      "single_visit_night_consistency_witnesses": [
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A041"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A041",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 11,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A041"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A041",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A041"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A041",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 12,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A041"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A041",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A019",
+            "A040",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A060",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A019",
+            "A040",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A019",
+              "b2"
+            ],
+            [
+              "A040",
+              "b1"
+            ],
+            [
+              "A060",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A019",
+            "A040",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A060",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 13,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A019",
+            "A040",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A040",
+              "b3"
+            ],
+            [
+              "A060",
+              "b3"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A003",
+            "A019",
+            "A040",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A060",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A019",
+            "A040",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A019",
+              "b2"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A060",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A003",
+            "A019",
+            "A040",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A060",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 14,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A019",
+            "A040",
+            "A060"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b1"
+            ],
+            [
+              "A040",
+              "b4"
+            ],
+            [
+              "A060",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "SEC:BET:S11_S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "b1"
+            ],
+            [
+              "A039",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 15,
+          "location": "SEC:BET:S12_S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "b1"
+            ],
+            [
+              "A039",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 16,
+          "component": [
+            "A003",
+            "A007",
+            "A011",
+            "A040",
+            "A057"
+          ],
+          "contract_type": [
+            "C001",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A003",
+              3
+            ],
+            [
+              "A007",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A011",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b2"
+            ],
+            [
+              "A011",
+              "b2"
+            ],
+            [
+              "A040",
+              "b1"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A003",
+            "A007",
+            "A011",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A003",
+              "b4"
+            ],
+            [
+              "A011",
+              "b4"
+            ],
+            [
+              "A040",
+              "b4"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "PLAT:BET:S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "b1"
+            ],
+            [
+              "A039",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "b1"
+            ],
+            [
+              "A039",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "SEC:BET:S11_S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "b1"
+            ],
+            [
+              "A039",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 16,
+          "location": "SEC:BET:S12_S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "b1"
+            ],
+            [
+              "A039",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b2"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b2"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b1"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:BET:S11_S12:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "b1"
+            ],
+            [
+              "A039",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 17,
+          "location": "SEC:BET:S12_S13:WB",
+          "component": [
+            "A021",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A021",
+              "b1"
+            ],
+            [
+              "A039",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "PLAT:BET:S13:WB",
+          "component": [
+            "A002",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A002",
+              "b1"
+            ],
+            [
+              "A039",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:S11_S12:WB",
+          "component": [
+            "A002",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A002",
+              "b1"
+            ],
+            [
+              "A039",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:S12_S13:WB",
+          "component": [
+            "A002",
+            "A039"
+          ],
+          "assignments": [
+            [
+              "A002",
+              "b1"
+            ],
+            [
+              "A039",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 18,
+          "location": "SEC:BET:H02_S15:WB",
+          "component": [
+            "A012",
+            "A049"
+          ],
+          "assignments": [
+            [
+              "A012",
+              "b2"
+            ],
+            [
+              "A049",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 20,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b2"
+            ],
+            [
+              "A040",
+              "b1"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 20,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A007",
+            "A017",
+            "A040",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b4"
+            ],
+            [
+              "A040",
+              "b1"
+            ],
+            [
+              "A057",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 20,
+          "location": "PLAT:BET:S15:WB",
+          "component": [
+            "A012",
+            "A049"
+          ],
+          "assignments": [
+            [
+              "A012",
+              "b2"
+            ],
+            [
+              "A049",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 20,
+          "location": "SEC:BET:H02_S15:WB",
+          "component": [
+            "A012",
+            "A049"
+          ],
+          "assignments": [
+            [
+              "A012",
+              "b1"
+            ],
+            [
+              "A049",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A001",
+            "A011",
+            "A042",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "b2"
+            ],
+            [
+              "A011",
+              "b1"
+            ],
+            [
+              "A042",
+              "b1"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A001",
+            "A011",
+            "A042",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "b2"
+            ],
+            [
+              "A011",
+              "b2"
+            ],
+            [
+              "A042",
+              "b1"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "PLAT:BET:S17:EB",
+          "component": [
+            "A001",
+            "A011",
+            "A042",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "b2"
+            ],
+            [
+              "A011",
+              "b2"
+            ],
+            [
+              "A042",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A001",
+            "A011",
+            "A042",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "b4"
+            ],
+            [
+              "A011",
+              "b4"
+            ],
+            [
+              "A042",
+              "b1"
+            ],
+            [
+              "A057",
+              "b4"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 23,
+          "location": "SEC:BET:S16_S17:EB",
+          "component": [
+            "A001",
+            "A011",
+            "A042",
+            "A057"
+          ],
+          "assignments": [
+            [
+              "A001",
+              "b4"
+            ],
+            [
+              "A011",
+              "b4"
+            ],
+            [
+              "A042",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 24,
+          "component": [
+            "A017",
+            "A036",
+            "A042",
+            "A043",
+            "A055"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A042",
+              1
+            ],
+            [
+              "A043",
+              3
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 24,
+          "location": "PLAT:BET:S14:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A042",
+            "A043",
+            "A055"
+          ],
+          "assignments": [
+            [
+              "A036",
+              "b1"
+            ],
+            [
+              "A055",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:ALP:S06:WB",
+          "component": [
+            "A013",
+            "A046",
+            "A056"
+          ],
+          "assignments": [
+            [
+              "A013",
+              "b1"
+            ],
+            [
+              "A046",
+              "b1"
+            ],
+            [
+              "A056",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_possession_different_contract_nights",
+          "week": 25,
+          "component": [
+            "A017",
+            "A036",
+            "A040",
+            "A042",
+            "A057",
+            "A073"
+          ],
+          "contract_type": [
+            "C007",
+            "Renewal"
+          ],
+          "assignments": [
+            [
+              "A040",
+              3
+            ],
+            [
+              "A042",
+              1
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A040",
+            "A042",
+            "A057",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b2"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A042",
+              "b2"
+            ],
+            [
+              "A057",
+              "b1"
+            ],
+            [
+              "A073",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "PLAT:BET:S16:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A040",
+            "A042",
+            "A057",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b1"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A042",
+              "b2"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:H02_S15:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A040",
+            "A042",
+            "A057",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b1"
+            ],
+            [
+              "A040",
+              "b2"
+            ],
+            [
+              "A057",
+              "b1"
+            ],
+            [
+              "A073",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 25,
+          "location": "SEC:BET:S15_S16:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A040",
+            "A042",
+            "A057",
+            "A073"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b1"
+            ],
+            [
+              "A040",
+              "b4"
+            ],
+            [
+              "A042",
+              "b4"
+            ],
+            [
+              "A057",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 26,
+          "location": "PLAT:BET:S15:EB",
+          "component": [
+            "A017",
+            "A036",
+            "A043"
+          ],
+          "assignments": [
+            [
+              "A017",
+              "b2"
+            ],
+            [
+              "A043",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 26,
+          "location": "PLAT:ALP:S03:WB",
+          "component": [
+            "A023",
+            "A035",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A023",
+              "b1"
+            ],
+            [
+              "A035",
+              "b2"
+            ],
+            [
+              "A070",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 26,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A023",
+            "A035",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A023",
+              "b1"
+            ],
+            [
+              "A035",
+              "b2"
+            ],
+            [
+              "A070",
+              "b2"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "PLAT:ALP:S04:WB",
+          "component": [
+            "A023",
+            "A035",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A023",
+              "b1"
+            ],
+            [
+              "A035",
+              "b2"
+            ],
+            [
+              "A070",
+              "b1"
+            ]
+          ]
+        },
+        {
+          "kind": "same_night_different_possession_groups",
+          "week": 27,
+          "location": "SEC:ALP:S03_S04:WB",
+          "component": [
+            "A023",
+            "A035",
+            "A070"
+          ],
+          "assignments": [
+            [
+              "A023",
+              "b2"
+            ],
+            [
+              "A035",
+              "b4"
+            ],
+            [
+              "A070",
+              "b4"
+            ]
+          ]
+        }
+      ],
+      "component_stats": [
+        {
+          "week": 1,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 2,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 3,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 4,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 5,
+          "sizes": [
+            2,
+            1
+          ]
+        },
+        {
+          "week": 6,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 7,
+          "sizes": [
+            1,
+            1
+          ]
+        },
+        {
+          "week": 8,
+          "sizes": [
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 9,
+          "sizes": [
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 10,
+          "sizes": [
+            2,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 11,
+          "sizes": [
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 12,
+          "sizes": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 13,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 14,
+          "sizes": [
+            4,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 15,
+          "sizes": [
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 16,
+          "sizes": [
+            5,
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 17,
+          "sizes": [
+            4,
+            2,
+            2,
+            2,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 18,
+          "sizes": [
+            3,
+            2,
+            2,
+            2,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 19,
+          "sizes": [
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 20,
+          "sizes": [
+            4,
+            2,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 21,
+          "sizes": [
+            3,
+            1
+          ]
+        },
+        {
+          "week": 22,
+          "sizes": [
+            5,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 23,
+          "sizes": [
+            4,
+            2,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 24,
+          "sizes": [
+            5,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 25,
+          "sizes": [
+            6,
+            3,
+            2,
+            1
+          ]
+        },
+        {
+          "week": 26,
+          "sizes": [
+            3,
+            3,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 27,
+          "sizes": [
+            3,
+            2,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 28,
+          "sizes": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "week": 29,
+          "sizes": [
+            1
+          ]
+        }
+      ]
+    }
+  }
+}

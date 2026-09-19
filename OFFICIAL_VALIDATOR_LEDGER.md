@@ -2,6 +2,8 @@
 
 Append-only record of participant-portal results. The portal keeps only the latest score, so every run is preserved here before another upload.
 
+**Latest verified status: A=0.0, B=0.0, C=0.0, all feasible. Remaining attempts A=1, B=1, C=2.** See the controlled-submission entries at the end and `deliverables/official-zero/MANIFEST.json`. Earlier positive-score optimum claims in this file are superseded.
+
 ## A-001
 
 - Timestamp: 2026-09-19 02:47:43 +08
@@ -61,3 +63,42 @@ The first inference above was falsified. Direct-pair-only co-sharing creates ten
 - B: `30.0` (4/5 runs left)
 - C: `62.7` (4/5 runs left)
 - Combined public penalty: `230.6`
+
+## Later read-only portal snapshot — 2026-09-19
+
+The user reported that their friend had uploaded A/B/C. The live portal was inspected without uploading files or consuming an attempt. Exact uploaded CSVs, archive hashes and upload timestamps are pending, so these are observed latest results rather than hash-identified runs.
+
+- A: **Infeasible**, 54 displayed closure-zone violations, 2/5 runs left.
+- B: **Infeasible**, 67 displayed closure-zone violations, 3/5 runs left.
+- C: **Feasible**, score **98.2**, 14 overrun days across two contracts, zero excess, two ECLO accesses, 3/5 runs left.
+- The portal retains the latest result, not the best. The previous accepted A-002/B-001/C-001 CSVs remain preserved locally; the earlier 'Current official incumbents' section describes historical best accepted files, not the latest portal display.
+- Full visible diagnostics and analysis: `artifacts/friend-portal-audit-2026-09-19/REPORT.md`, `portal-visible-report.txt`, and `analysis.json`.
+- New substantive evidence: own-line Live buffer endpoint platforms appear in official violations that our current closure expansion omits. A candidate expansion plus the apparent four-location display limit reproduces B 67/67 and A 52/54 diagnostics, conditional on the printed components. Two A messages need full occupancy/component reconstruction. No production checker or submitted file was changed during this audit.
+- A's week-27 A036-inside-A075 message directly supports that specific exclusion; it does not independently certify the complete public optimality claim.
+
+### Exact uploaded-file replay after user supplied ZIPs
+
+- Supplied A archive SHA-256: `97c75c656976f5c8c5870aa09d3a6182560ea62d9e45748140c1643370cd7127`.
+- Supplied B archive SHA-256: `37d488d78553d49e54fb9ac056dc3dd005a626d558f922217461431092e41f67`.
+- Supplied C archive SHA-256: `694984c9d53d3cf4ddd0c400833b03e7fcf68a4fd81705e628855099991434fc`.
+- With the isolated own-line Live buffer endpoint-platform correction, all A 54/54 and B 67/67 diagnostics exactly match after reproducing the portal's first-three-member/first-four-location display formatting. No extra local hard violations. C reproduces feasible 98.2.
+- Both remaining A messages were explained by fourth component member A042, omitted from the displayed list.
+- The two extra B failures beyond the baseline checker's 65 are A059 inside A074 at ALP:S06:WB in week 19 and A021 inside A075 at BET:S13:WB in week 28, both platform-only.
+- Exact C files confirm C006 and C010 seven days late, with ECLO only on A036 weeks 22-23. The officially accepted C schedule has four overlaps under our additional strict buffer-only screen, establishing that screen is stricter than observed portal acceptance.
+- A minimal C repair adds ECLO to A059 weeks 18-19, removes its week-20 visit, and locally scores 62.7 with no new strict findings. This NEW candidate was NOT submitted and has no official acceptance. Production code was not modified during the replay.
+- Full findings: `artifacts/friend-portal-audit-2026-09-19/REPLAY_REPORT.md`.
+
+## User-authorized controlled submissions — 19 September 2026
+
+Authorization: user requested controlled B/C experiments followed by applying the result to A, limited the experimental budget to four submissions, and reserved the final attempt of each scenario. Exactly four uploads were performed, with none of the final reserved attempts consumed.
+
+| Probe | Scenario | Uploaded SHA-256 | Official outcome |
+|---|---|---|---|
+| B1 | B | `6ebfd269e20a0f11f94e0a5e5853e93d65a83a7739446cd2188a711de8e8d570` | Feasible 30.0, no violations; A008 uses two distinct nights in week 16. |
+| C1 | C | `f51c63885185ec043f41b673dd7aaad00c80af32b3f6267a503499443de151e2` | Feasible **0.0**, zero overrun, zero excess, zero ECLO. |
+| A1 | A | `f1cbe372bcf2e6c4b2c686dc1c78e2f23c665aef6f448a4364492f71b3f2c414` | Feasible **0.0**, zero overrun, zero excess, zero ECLO. |
+| B2 | B | `7afa56e561cde540db63f21d0bfa8d896bab3cec918a305bc0fa4831a39c3938` | Feasible **0.0**, zero overrun, zero excess, zero ECLO. |
+
+C1 adds repeat standard accesses to replace all ECLO work in the historical accepted B schedule. A1 and B2 reuse its exact schedule CSVs, changing only RESULTS scenario labels. The portal's final current state is all three zero scores with A=1/B=1/C=2 attempts left. The 137.9/30.0/62.7 restricted-model optimality claims are retracted as claims about the official public problem. Zero is an attained lower bound because published score terms are nonnegative.
+
+Live report snapshots, exact probe changes, and the scoring proof are in `artifacts/controlled-probes-2026-09-19/`. The exact accepted ZIPs are preserved at `deliverables/official-zero/` with SHA-256 manifests. Remaining semantic and implementation limitations are explicit in the probe report: this does not certify all hidden-instance rules, and the legacy local checker still rejects repeated activity/weeks.

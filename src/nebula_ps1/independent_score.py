@@ -27,7 +27,7 @@ def _csv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
-def independently_score(data_dir: str | Path, submission_dir: str | Path) -> IndependentScore:
+def independently_score(data_dir: str | Path, submission_dir: str | Path, *, capacity_overrides: dict | None = None) -> IndependentScore:
     """Recompute published score components without importing project model code.
 
     This intentionally duplicates parsing and arithmetic. It is a correlated-error
@@ -60,13 +60,13 @@ def independently_score(data_dir: str | Path, submission_dir: str | Path) -> Ind
         raise ValueError(f"unknown scenario: {scenario}")
 
     by_activity: dict[str, list[dict[str, str]]] = defaultdict(list)
-    seen_activity_weeks: set[tuple[str, int]] = set()
+    seen_activity_weeks: set[tuple[str, int, int]] = set()
     for row in access_rows:
         activity_id = row["activity_id"]
         week = int(row["week"])
-        key = (activity_id, week)
+        key = (activity_id, week, int(row["access_night"]))
         if key in seen_activity_weeks:
-            raise ValueError(f"duplicate activity-week: {key}")
+            raise ValueError(f"duplicate activity-week-night: {key}")
         seen_activity_weeks.add(key)
         by_activity[activity_id].append(row)
 
@@ -113,8 +113,8 @@ def independently_score(data_dir: str | Path, submission_dir: str | Path) -> Ind
     for row in occupancy_rows:
         groups[(row["location_id"], int(row["week"]))].add(row["co_share_group"])
     excess = sum(
-        max(0, len(labels) - supply[location_id])
-        for (location_id, _), labels in groups.items()
+        max(0, len(labels) - (capacity_overrides or {}).get((location_id, week), supply[location_id]))
+        for (location_id, week), labels in groups.items()
     )
     eclo = sum(int(row["eclo"]) == 1 for row in access_rows)
 

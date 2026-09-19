@@ -1,0 +1,49 @@
+{
+  "rows": [
+    {
+      "activity_id": "A006",
+      "week": "9",
+      "location_id": "PLAT:ALP:H01:WB",
+      "co_share_group": "g1"
+    },
+    {
+      "activity_id": "A006",
+      "week": "9",
+      "location_id": "PLAT:ALP:S04:WB",
+      "co_share_group": "g2"
+    },
+    {
+      "activity_id": "A058",
+      "week": "9",
+      "location_id": "PLAT:ALP:H01:WB",
+      "co_share_group": "g1"
+    },
+    {
+      "activity_id": "A058",
+      "week": "9",
+      "location_id": "PLAT:ALP:S04:WB",
+      "co_share_group": "g1"
+    }
+  ],
+  "tests": [
+    {
+      "locations": [
+        "PLAT:ALP:H01:WB",
+        "PLAT:ALP:S04:WB"
+      ],
+      "status": "INFEASIBLE"
+    },
+    {
+      "locations": [
+        "PLAT:ALP:H01:WB"
+      ],
+      "status": "OPTIMAL"
+    },
+    {
+      "locations": [
+        "PLAT:ALP:S04:WB"
+      ],
+      "status": "OPTIMAL"
+    }
+  ]
+}

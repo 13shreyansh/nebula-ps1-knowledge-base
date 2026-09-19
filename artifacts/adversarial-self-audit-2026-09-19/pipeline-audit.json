@@ -1,0 +1,210 @@
+{
+  "portal_used": false,
+  "production_modified": false,
+  "zero": {
+    "A": {
+      "legacy": {
+        "access_rows": 192,
+        "checked_rules": [
+          "schema",
+          "workload",
+          "planned_start",
+          "predecessor",
+          "horizon",
+          "occupancy_footprint",
+          "legal_mix",
+          "weekly_allocation",
+          "workfront",
+          "scenario_capacity",
+          "scenario_eclo",
+          "sample_consistent_closure_screen",
+          "results",
+          "objective_formula"
+        ],
+        "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+        "eclo_nights_total": 0,
+        "excess_access_nights_total": 0,
+        "hard_violations": [
+          "A036: more than one access in week 22",
+          "A036: more than one access in week 23",
+          "A059: more than one access in week 14"
+        ],
+        "internally_feasible": false,
+        "objective_score": 0.0,
+        "occupancy_rows": 917,
+        "priority_overrun": {
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "priority_weighted_score": 0.0,
+        "reference_validator_confirmed": false,
+        "scenario": "A",
+        "submission_hash": "6edae6301e59f0d665b2fa46f0739afacf067973f65add35f48b7be2dec12418",
+        "warnings": [
+          "closure screen reproduces official A-001 and accepts A-002/B-001/C-001; hidden-instance equivalence is not guaranteed"
+        ]
+      },
+      "independent": {
+        "exception": "ValueError",
+        "message": "duplicate activity-week: ('A036', 22)"
+      },
+      "expanded_violations": [
+        "A036: more than one access in week 22",
+        "A036: more than one access in week 23",
+        "A059: more than one access in week 14"
+      ],
+      "strict_buffer_conflict_count": 0
+    },
+    "B": {
+      "legacy": {
+        "access_rows": 192,
+        "checked_rules": [
+          "schema",
+          "workload",
+          "planned_start",
+          "predecessor",
+          "horizon",
+          "occupancy_footprint",
+          "legal_mix",
+          "weekly_allocation",
+          "workfront",
+          "scenario_capacity",
+          "scenario_eclo",
+          "sample_consistent_closure_screen",
+          "results",
+          "objective_formula"
+        ],
+        "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+        "eclo_nights_total": 0,
+        "excess_access_nights_total": 0,
+        "hard_violations": [
+          "A036: more than one access in week 22",
+          "A036: more than one access in week 23",
+          "A059: more than one access in week 14"
+        ],
+        "internally_feasible": false,
+        "objective_score": 0.0,
+        "occupancy_rows": 917,
+        "priority_overrun": {
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "priority_weighted_score": 0.0,
+        "reference_validator_confirmed": false,
+        "scenario": "B",
+        "submission_hash": "71c1cc35edaec086ed38d6ba58012ce31b210194c66a0361474c7c489af8a697",
+        "warnings": [
+          "closure screen reproduces official A-001 and accepts A-002/B-001/C-001; hidden-instance equivalence is not guaranteed"
+        ]
+      },
+      "independent": {
+        "exception": "ValueError",
+        "message": "duplicate activity-week: ('A036', 22)"
+      },
+      "expanded_violations": [
+        "A036: more than one access in week 22",
+        "A036: more than one access in week 23",
+        "A059: more than one access in week 14"
+      ],
+      "strict_buffer_conflict_count": 0
+    },
+    "C": {
+      "legacy": {
+        "access_rows": 192,
+        "checked_rules": [
+          "schema",
+          "workload",
+          "planned_start",
+          "predecessor",
+          "horizon",
+          "occupancy_footprint",
+          "legal_mix",
+          "weekly_allocation",
+          "workfront",
+          "scenario_capacity",
+          "scenario_eclo",
+          "sample_consistent_closure_screen",
+          "results",
+          "objective_formula"
+        ],
+        "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+        "eclo_nights_total": 0,
+        "excess_access_nights_total": 0,
+        "hard_violations": [
+          "A036: more than one access in week 22",
+          "A036: more than one access in week 23",
+          "A059: more than one access in week 14"
+        ],
+        "internally_feasible": false,
+        "objective_score": 0.0,
+        "occupancy_rows": 917,
+        "priority_overrun": {
+          "1": 0,
+          "2": 0,
+          "3": 0
+        },
+        "priority_weighted_score": 0.0,
+        "reference_validator_confirmed": false,
+        "scenario": "C",
+        "submission_hash": "509a44c1bb252c0ec908cd40f674830a007996fa2e00537c9eb14906c4125730",
+        "warnings": [
+          "closure screen reproduces official A-001 and accepts A-002/B-001/C-001; hidden-instance equivalence is not guaranteed"
+        ]
+      },
+      "independent": {
+        "exception": "ValueError",
+        "message": "duplicate activity-week: ('A036', 22)"
+      },
+      "expanded_violations": [
+        "A036: more than one access in week 22",
+        "A036: more than one access in week 23",
+        "A059: more than one access in week 14"
+      ],
+      "strict_buffer_conflict_count": 0
+    }
+  },
+  "friend": {
+    "A": {
+      "legacy_violations": 54,
+      "expanded_violations": 54,
+      "score": 130.9
+    },
+    "B": {
+      "legacy_violations": 65,
+      "expanded_violations": 67,
+      "score": 30.0
+    },
+    "C": {
+      "legacy_violations": 0,
+      "expanded_violations": 0,
+      "score": 98.2
+    }
+  },
+  "web": {
+    "A": {
+      "method": "reference-confirmed public incumbent",
+      "score": 137.9,
+      "reference_confirmed": true,
+      "compute_called": false,
+      "seconds": 0.011
+    },
+    "B": {
+      "method": "reference-confirmed public incumbent",
+      "score": 30.0,
+      "reference_confirmed": true,
+      "compute_called": false,
+      "seconds": 0.01
+    },
+    "C": {
+      "method": "reference-confirmed public incumbent",
+      "score": 62.7,
+      "reference_confirmed": true,
+      "compute_called": false,
+      "seconds": 0.01
+    },
+    "row_reversed_control": "equivalent rows bypass public cache and reach compute branch; solver deliberately not run"
+  },
+  "limitations": "Expanded closures use the earlier inferred correction, not an independent official validator. Web compute branch was intercepted; this test does not measure hidden-input solving."
+}

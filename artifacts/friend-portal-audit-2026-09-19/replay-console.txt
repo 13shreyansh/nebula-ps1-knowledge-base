@@ -1,0 +1,366 @@
+A {
+  "baseline_comparison": {
+    "count": 54,
+    "matched": 49,
+    "official_only": [
+      [
+        21,
+        "A009",
+        [
+          "A074"
+        ],
+        [
+          "PLAT:ALP:S05:EB",
+          "PLAT:ALP:S06:EB",
+          "SEC:ALP:S05_S06:EB"
+        ]
+      ],
+      [
+        21,
+        "A013",
+        [
+          "A074"
+        ],
+        [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ]
+      ],
+      [
+        21,
+        "A023",
+        [
+          "A074"
+        ],
+        [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ]
+      ],
+      [
+        27,
+        "A036",
+        [
+          "A075"
+        ],
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:S14:EB",
+          "SEC:BET:S14_H01:EB"
+        ]
+      ],
+      [
+        27,
+        "A040",
+        [
+          "A075"
+        ],
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "PLAT:BET:S15:EB",
+          "PLAT:BET:S16:EB"
+        ]
+      ]
+    ],
+    "local_only": [
+      [
+        21,
+        "A009",
+        [
+          "A074"
+        ],
+        [
+          "SEC:ALP:S05_S06:EB"
+        ]
+      ],
+      [
+        21,
+        "A013",
+        [
+          "A074"
+        ],
+        [
+          "SEC:ALP:S05_S06:WB"
+        ]
+      ],
+      [
+        21,
+        "A023",
+        [
+          "A074"
+        ],
+        [
+          "SEC:ALP:S03_S04:WB"
+        ]
+      ],
+      [
+        27,
+        "A036",
+        [
+          "A075"
+        ],
+        [
+          "PLAT:BET:H01:EB",
+          "SEC:BET:S14_H01:EB"
+        ]
+      ],
+      [
+        27,
+        "A040",
+        [
+          "A075"
+        ],
+        [
+          "PLAT:BET:H01:EB",
+          "PLAT:BET:H02:EB",
+          "SEC:BET:H01_H02:EB",
+          "SEC:BET:H02_S15:EB"
+        ]
+      ]
+    ],
+    "all_exact_after_display_truncation": false
+  },
+  "candidate_comparison": {
+    "count": 54,
+    "matched": 54,
+    "official_only": [],
+    "local_only": [],
+    "all_exact_after_display_truncation": true
+  },
+  "baseline_total_hard_violations": 54,
+  "candidate_total_hard_violations": 54,
+  "candidate_nonclosure_violations": [],
+  "candidate_objective": 130.9,
+  "reference_candidate_evaluation": {
+    "access_rows": 192,
+    "checked_rules": [
+      "schema",
+      "workload",
+      "planned_start",
+      "predecessor",
+      "horizon",
+      "occupancy_footprint",
+      "legal_mix",
+      "weekly_allocation",
+      "workfront",
+      "scenario_capacity",
+      "scenario_eclo",
+      "sample_consistent_closure_screen",
+      "results",
+      "objective_formula"
+    ],
+    "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+    "eclo_nights_total": 0,
+    "excess_access_nights_total": 0,
+    "hard_violations": [],
+    "internally_feasible": true,
+    "objective_score": 137.9,
+    "occupancy_rows": 928,
+    "priority_overrun": {
+      "1": 0,
+      "2": 0,
+      "3": 28
+    },
+    "priority_weighted_score": 137.9,
+    "reference_validator_confirmed": false,
+    "scenario": "A",
+    "submission_hash": "8ecab02fa499d057b66faaec730698aa71d163297e3fe0e8c26c1693ace4f7eb",
+    "warnings": [
+      "closure screen reproduces official A-001 and accepts A-002/B-001/C-001; hidden-instance equivalence is not guaranteed"
+    ]
+  }
+}
+ECLO []
+LATE [{'scenario': 'A', 'contract_number': 'C006', 'simulated_completion_date': '2027-07-18', 'overrun_days': 14, 'delay_cost': 85.4}, {'scenario': 'A', 'contract_number': 'C010', 'simulated_completion_date': '2027-05-23', 'overrun_days': 7, 'delay_cost': 45.5}]
+CHANGED ACTIVITIES 53
+B {
+  "baseline_comparison": {
+    "count": 65,
+    "matched": 63,
+    "official_only": [
+      [
+        19,
+        "A035",
+        [
+          "A074"
+        ],
+        [
+          "PLAT:ALP:S03:WB",
+          "PLAT:ALP:S04:WB",
+          "SEC:ALP:S03_S04:WB"
+        ]
+      ],
+      [
+        19,
+        "A046",
+        [
+          "A074"
+        ],
+        [
+          "PLAT:ALP:S05:WB",
+          "PLAT:ALP:S06:WB",
+          "SEC:ALP:S05_S06:WB"
+        ]
+      ],
+      [
+        19,
+        "A059",
+        [
+          "A074"
+        ],
+        [
+          "PLAT:ALP:S06:WB"
+        ]
+      ],
+      [
+        28,
+        "A021",
+        [
+          "A075"
+        ],
+        [
+          "PLAT:BET:S13:WB"
+        ]
+      ]
+    ],
+    "local_only": [
+      [
+        19,
+        "A035",
+        [
+          "A074"
+        ],
+        [
+          "SEC:ALP:S03_S04:WB"
+        ]
+      ],
+      [
+        19,
+        "A046",
+        [
+          "A074"
+        ],
+        [
+          "SEC:ALP:S05_S06:WB"
+        ]
+      ]
+    ],
+    "all_exact_after_display_truncation": false
+  },
+  "candidate_comparison": {
+    "count": 67,
+    "matched": 67,
+    "official_only": [],
+    "local_only": [],
+    "all_exact_after_display_truncation": true
+  },
+  "baseline_total_hard_violations": 65,
+  "candidate_total_hard_violations": 67,
+  "candidate_nonclosure_violations": [],
+  "candidate_objective": 30.0,
+  "reference_candidate_evaluation": {
+    "access_rows": 189,
+    "checked_rules": [
+      "schema",
+      "workload",
+      "planned_start",
+      "predecessor",
+      "horizon",
+      "occupancy_footprint",
+      "legal_mix",
+      "weekly_allocation",
+      "workfront",
+      "scenario_capacity",
+      "scenario_eclo",
+      "sample_consistent_closure_screen",
+      "results",
+      "objective_formula"
+    ],
+    "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+    "eclo_nights_total": 6,
+    "excess_access_nights_total": 0,
+    "hard_violations": [],
+    "internally_feasible": true,
+    "objective_score": 30.0,
+    "occupancy_rows": 917,
+    "priority_overrun": {
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    "priority_weighted_score": 0.0,
+    "reference_validator_confirmed": false,
+    "scenario": "B",
+    "submission_hash": "0b38e83c94b9e9a1dfb9c33d3ab9c3a7a8cc00e08dba6b8a561570ad3ebfd373",
+    "warnings": [
+      "closure screen reproduces official A-001 and accepts A-002/B-001/C-001; hidden-instance equivalence is not guaranteed"
+    ]
+  }
+}
+ECLO [{'activity_id': 'A036', 'access_seq': 1, 'week': 22, 'eclo': 1, 'access_night': 2}, {'activity_id': 'A036', 'access_seq': 2, 'week': 23, 'eclo': 1, 'access_night': 1}, {'activity_id': 'A036', 'access_seq': 3, 'week': 24, 'eclo': 1, 'access_night': 1}, {'activity_id': 'A036', 'access_seq': 4, 'week': 25, 'eclo': 1, 'access_night': 2}, {'activity_id': 'A059', 'access_seq': 2, 'week': 15, 'eclo': 1, 'access_night': 1}, {'activity_id': 'A059', 'access_seq': 3, 'week': 16, 'eclo': 1, 'access_night': 1}]
+LATE []
+CHANGED ACTIVITIES 52
+C {
+  "baseline_comparison": {
+    "count": 0,
+    "matched": 0,
+    "official_only": [],
+    "local_only": [],
+    "all_exact_after_display_truncation": true
+  },
+  "candidate_comparison": {
+    "count": 0,
+    "matched": 0,
+    "official_only": [],
+    "local_only": [],
+    "all_exact_after_display_truncation": true
+  },
+  "baseline_total_hard_violations": 0,
+  "candidate_total_hard_violations": 0,
+  "candidate_nonclosure_violations": [],
+  "candidate_objective": 98.2,
+  "reference_candidate_evaluation": {
+    "access_rows": 190,
+    "checked_rules": [
+      "schema",
+      "workload",
+      "planned_start",
+      "predecessor",
+      "horizon",
+      "occupancy_footprint",
+      "legal_mix",
+      "weekly_allocation",
+      "workfront",
+      "scenario_capacity",
+      "scenario_eclo",
+      "sample_consistent_closure_screen",
+      "results",
+      "objective_formula"
+    ],
+    "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+    "eclo_nights_total": 4,
+    "excess_access_nights_total": 0,
+    "hard_violations": [],
+    "internally_feasible": true,
+    "objective_score": 62.7,
+    "occupancy_rows": 920,
+    "priority_overrun": {
+      "1": 0,
+      "2": 0,
+      "3": 7
+    },
+    "priority_weighted_score": 42.7,
+    "reference_validator_confirmed": false,
+    "scenario": "C",
+    "submission_hash": "30247f5773477ca3e26a0e0d1704ef2f7aecd1fb8efbda15c6f0aa9bb4047733",
+    "warnings": [
+      "closure screen reproduces official A-001 and accepts A-002/B-001/C-001; hidden-instance equivalence is not guaranteed"
+    ]
+  }
+}
+ECLO [{'activity_id': 'A036', 'access_seq': 1, 'week': 22, 'eclo': 1, 'access_night': 3}, {'activity_id': 'A036', 'access_seq': 2, 'week': 23, 'eclo': 1, 'access_night': 1}]
+LATE [{'scenario': 'C', 'contract_number': 'C006', 'simulated_completion_date': '2027-07-11', 'overrun_days': 7, 'delay_cost': 42.7}, {'scenario': 'C', 'contract_number': 'C010', 'simulated_completion_date': '2027-05-23', 'overrun_days': 7, 'delay_cost': 45.5}]
+CHANGED ACTIVITIES 50

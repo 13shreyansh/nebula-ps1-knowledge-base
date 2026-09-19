@@ -9,6 +9,8 @@ official_spec: https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/b
 
 # Nebula Hack PS1: Team Knowledge Base
 
+> **Critical update, 19 September 2026: official A/B/C scores are now all 0.0, feasible.** Four user-authorized controlled uploads disproved the universal one-access-per-activity-per-week assumption. Exact accepted archives are in [`deliverables/official-zero`](deliverables/official-zero/MANIFEST.json); remaining attempts are A=1, B=1, C=2. The older 137.9/30.0/62.7 optimum claims and associated bounds below are superseded. The NightShift web engine, local evaluator, and independent scorer now support distinct repeated accesses within a week. The web app computes fresh schedules from uploaded inputs and exposes the accepted zero-score archives separately as references. Historical CLI portfolio modes and the old final-submission pipeline retain their earlier scope; do not overwrite the accepted zero-score archives with outputs from that legacy pipeline. See [`artifacts/controlled-probes-2026-09-19/RESULTS.md`](artifacts/controlled-probes-2026-09-19/RESULTS.md).
+
 This document records the team’s verified clarifications, interpretations, and decisions for Problem Statement 1. It complements the [official PS1 specification](https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/blob/main/PS1/PS1_README.md); it does not repeat its rules, schemas, formulas, or deliverables.
 
 If the two conflict, the current official specification and reference validator govern. Record the conflict before changing implementation.

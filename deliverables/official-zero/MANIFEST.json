@@ -1,0 +1,59 @@
+{
+  "status": "Official portal feasible at 0.0 for A, B and C",
+  "observed_at": "2026-09-19T06:03:32.408335+00:00",
+  "remaining_attempts": {
+    "A": 1,
+    "B": 1,
+    "C": 2
+  },
+  "submissions_used_this_turn": 4,
+  "source_report": "/Users/shreyansh/Documents/ChatGPT/Nebula Hack/artifacts/controlled-probes-2026-09-19/after-B2-all-zero.txt",
+  "scenarios": {
+    "A": {
+      "archive": "A.zip",
+      "sha256": "f1cbe372bcf2e6c4b2c686dc1c78e2f23c665aef6f448a4364492f71b3f2c414",
+      "csv_sha256": {
+        "SCHEDULE_ACCESS.csv": "b994dbe827b7d2faabbed223c32088d0fd3a544ac65a9d6815928f0316bd7c4d",
+        "SCHEDULE_OCCUPANCY.csv": "0aa2205675897905a3b52638e69ade2734729bee62a253b1b7427c4068544fa4",
+        "RESULTS.csv": "0a71f0f322059d0f715cf2b9264a57c1b5f9e3f053a04da3c819812437e9f0c7"
+      },
+      "official_feasible": true,
+      "official_score": 0.0,
+      "official_overrun_days": 0,
+      "official_excess_access_nights": 0,
+      "official_eclo_nights": 0,
+      "probe_id": "A1"
+    },
+    "B": {
+      "archive": "B.zip",
+      "sha256": "7afa56e561cde540db63f21d0bfa8d896bab3cec918a305bc0fa4831a39c3938",
+      "csv_sha256": {
+        "SCHEDULE_ACCESS.csv": "b994dbe827b7d2faabbed223c32088d0fd3a544ac65a9d6815928f0316bd7c4d",
+        "SCHEDULE_OCCUPANCY.csv": "0aa2205675897905a3b52638e69ade2734729bee62a253b1b7427c4068544fa4",
+        "RESULTS.csv": "400e72d4eca2a4210eba3cda7b51dc04a3b576201a7ecc09d1f1ca3514a9b06a"
+      },
+      "official_feasible": true,
+      "official_score": 0.0,
+      "official_overrun_days": 0,
+      "official_excess_access_nights": 0,
+      "official_eclo_nights": 0,
+      "probe_id": "B2"
+    },
+    "C": {
+      "archive": "C.zip",
+      "sha256": "f51c63885185ec043f41b673dd7aaad00c80af32b3f6267a503499443de151e2",
+      "csv_sha256": {
+        "SCHEDULE_ACCESS.csv": "b994dbe827b7d2faabbed223c32088d0fd3a544ac65a9d6815928f0316bd7c4d",
+        "SCHEDULE_OCCUPANCY.csv": "0aa2205675897905a3b52638e69ade2734729bee62a253b1b7427c4068544fa4",
+        "RESULTS.csv": "59e441edd35ac3077cc30a1cf3c6b1dcfa325b7ec2fb01521d1c7614a737413a"
+      },
+      "official_feasible": true,
+      "official_score": 0.0,
+      "official_overrun_days": 0,
+      "official_excess_access_nights": 0,
+      "official_eclo_nights": 0,
+      "probe_id": "C1"
+    }
+  },
+  "warning": "Legacy production checker/solver and old final-submission readiness pipeline still encode the disproved one-access-per-activity-per-week assumption. These exact archived bytes passed the official portal."
+}

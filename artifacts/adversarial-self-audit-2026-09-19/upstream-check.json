@@ -1,0 +1,54 @@
+{
+  "input_comparison": [
+    {
+      "file": "01_LINES.csv",
+      "local_sha256": "b6e60b0e7726e4266efd059bf5061b3b3a2c9825ae7dd85a6431f41b81b383e7",
+      "upstream_sha256": "b6e60b0e7726e4266efd059bf5061b3b3a2c9825ae7dd85a6431f41b81b383e7",
+      "byte_identical": true
+    },
+    {
+      "file": "02_STATIONS.csv",
+      "local_sha256": "4a27d6508defd03e8c833133b523390ac8850a1c1717f309033e40f364720e24",
+      "upstream_sha256": "4a27d6508defd03e8c833133b523390ac8850a1c1717f309033e40f364720e24",
+      "byte_identical": true
+    },
+    {
+      "file": "03_SECTORS.csv",
+      "local_sha256": "643fdb2bd317126b42572fafcce8f8108008e8e9c7b71c08dfd31cec11c3ee34",
+      "upstream_sha256": "643fdb2bd317126b42572fafcce8f8108008e8e9c7b71c08dfd31cec11c3ee34",
+      "byte_identical": true
+    },
+    {
+      "file": "04_LOCATION_SUPPLY.csv",
+      "local_sha256": "9d8a92d6ffd340f40dae28302ed6f88958f8661e2b046bb6b4e0b79c385be1e6",
+      "upstream_sha256": "9d8a92d6ffd340f40dae28302ed6f88958f8661e2b046bb6b4e0b79c385be1e6",
+      "byte_identical": true
+    },
+    {
+      "file": "05_BUFFER_LOCATION.csv",
+      "local_sha256": "4b9fe7fd6a1f9128bd6e83405496dc64a8028f997bb1fcd28355582a6d554de0",
+      "upstream_sha256": "4b9fe7fd6a1f9128bd6e83405496dc64a8028f997bb1fcd28355582a6d554de0",
+      "byte_identical": true
+    },
+    {
+      "file": "06_PARAMETERS.csv",
+      "local_sha256": "9400b7b082069c56b8cae85d56994cf06fe08ae54fcd116ff6edc890034cc8e6",
+      "upstream_sha256": "9400b7b082069c56b8cae85d56994cf06fe08ae54fcd116ff6edc890034cc8e6",
+      "byte_identical": true
+    },
+    {
+      "file": "07_PROJECT_DETAILS.csv",
+      "local_sha256": "393f0dcc7e7b9a54f0eff12eb0dd0122dbd74f4b4b8b73b7676f9f232fb8a4c7",
+      "upstream_sha256": "393f0dcc7e7b9a54f0eff12eb0dd0122dbd74f4b4b8b73b7676f9f232fb8a4c7",
+      "byte_identical": true
+    },
+    {
+      "file": "08_ACTIVITY_DETAILS.csv",
+      "local_sha256": "6a1ef90cd3bed93a8970ef49454e9c02e0c1df93ce8e0f0f4b071563cfb43e30",
+      "upstream_sha256": "6a1ef90cd3bed93a8970ef49454e9c02e0c1df93ce8e0f0f4b071563cfb43e30",
+      "byte_identical": true
+    }
+  ],
+  "rules_sha256": "e7d8f9457e62a1732fc7986cea57ad5fbd595e7cabe2e8b789e673c8335bd253",
+  "rules_url": "https://raw.githubusercontent.com/aochinwen/NebulaX-Hackathon-ProblemStatement/main/PS1/PS1_README.md"
+}

@@ -10,7 +10,7 @@ from pathlib import Path
 
 from ortools.sat.python import cp_model
 
-from .closure import screen_closures
+from .closure import _blocked_locations, screen_closures
 from .evaluate import AccessRow, OccupancyRow, evaluate_submission, load_submission
 from .instance import Instance
 from .objective import ECLO_COST_TENTHS, EXCESS_COST_TENTHS
@@ -570,6 +570,12 @@ def solve_flexible_supply_relaxation(
     max_deterministic_time_per_solve: float | None = None,
     interleave_search: bool = False,
     use_structural_hints: bool = True,
+    allow_repeat_accesses: bool = False,
+    progress_callback=None,
+    zero_only: bool = False,
+    capacity_overrides: dict | None = None,
+    baseline_dir: str | Path | None = None,
+    freeze_before_week: int = 1,
 ) -> SolveTelemetry:
     """Solve a scenario with iterative cuts from the differential-tested closure screen.
 
@@ -580,8 +586,15 @@ def solve_flexible_supply_relaxation(
     being promoted as a valid submission.
     """
 
+    capacity_overrides = capacity_overrides or {}
     if scenario not in {"A", "B", "C"}:
         raise ValueError("scenario must be A, B, or C")
+    if allow_repeat_accesses:
+        # Historical preflight bounds/hint freezing assume one visit per week.
+        # The live app uses a fresh multi-visit model, never those shortcuts.
+        use_structural_hints = False
+        if freeze_access_hint:
+            raise ValueError("repeat-access mode does not support frozen legacy access hints")
     if separator_mode not in {"bridge_safe", "direct_heuristic"}:
         raise ValueError("separator_mode must be bridge_safe or direct_heuristic")
     if freeze_access_hint and sample_hint_dir is None:
@@ -607,7 +620,7 @@ def solve_flexible_supply_relaxation(
 
     checked_hint_started = time.monotonic()
     scenario_b_excess_budget: int | None = None
-    if sample_hint_dir is not None:
+    if sample_hint_dir is not None and not allow_repeat_accesses:
         checked_hint_root = Path(sample_hint_dir)
         checked_hint_evaluation = evaluate_submission(
             instance, checked_hint_root, scenario
@@ -875,6 +888,7 @@ def solve_flexible_supply_relaxation(
     access: dict[tuple[str, int], cp_model.IntVar] = {}
     eclo: dict[tuple[str, int], cp_model.IntVar] = {}
     night: dict[tuple[str, int, int], cp_model.IntVar] = {}
+    night_eclo: dict[tuple[str, int, int], cp_model.IntVar] = {}
     completion: dict[str, cp_model.IntVar] = {}
     start: dict[str, cp_model.IntVar] = {}
     scaled_delay: dict[str, cp_model.IntVar] = {}
@@ -884,7 +898,7 @@ def solve_flexible_supply_relaxation(
         first_week = max(1, instance.week_for_date(activity.planned_start_date))
         last_week = (
             instance.last_week_completing_by(project.planned_completion_date)
-            if scenario == "B"
+            if scenario == "B" or zero_only
             else horizon
         )
         last_week = min(last_week, horizon)
@@ -899,26 +913,44 @@ def solve_flexible_supply_relaxation(
             access[(activity_id, week)] = model.new_bool_var(f"access[{activity_id},{week}]")
             eclo[(activity_id, week)] = model.new_bool_var(f"eclo[{activity_id},{week}]")
             model.add(eclo[(activity_id, week)] <= access[(activity_id, week)])
-            if scenario == "A":
+            if scenario == "A" or zero_only:
                 model.add(eclo[(activity_id, week)] == 0)
             for access_night in range(1, project.number_of_maximum_access_per_week + 1):
                 night[(activity_id, week, access_night)] = model.new_bool_var(
                     f"night[{activity_id},{week},{access_night}]"
                 )
-            model.add(
-                sum(
+                if allow_repeat_accesses:
+                    nk = (activity_id, week, access_night)
+                    night_eclo[nk] = model.new_bool_var(f"night_eclo[{activity_id},{week},{access_night}]")
+                    model.add(night_eclo[nk] <= night[nk])
+                    model.add(night_eclo[nk] <= eclo[(activity_id, week)])
+            visits = sum(
                     night[(activity_id, week, access_night)]
                     for access_night in range(1, project.number_of_maximum_access_per_week + 1)
                 )
-                == access[(activity_id, week)]
-            )
+            if allow_repeat_accesses:
+                model.add(visits >= access[(activity_id, week)])
+                model.add(visits <= project.number_of_maximum_access_per_week * access[(activity_id, week)])
+                model.add(eclo[(activity_id, week)] <= sum(
+                    night_eclo[(activity_id, week, n)]
+                    for n in range(1, project.number_of_maximum_access_per_week + 1)
+                ))
+            else:
+                model.add(visits == access[(activity_id, week)])
 
         # Half-units avoid floating point: standard=2, ECLO=3.
-        model.add(
-            2 * sum(access[(activity_id, week)] for week in eligible[activity_id])
-            + sum(eclo[(activity_id, week)] for week in eligible[activity_id])
-            >= 2 * activity.total_accesses
-        )
+        if allow_repeat_accesses:
+            model.add(sum(
+                2 * night[(activity_id, w, n)] + night_eclo[(activity_id, w, n)]
+                for w in eligible[activity_id]
+                for n in range(1, project.number_of_maximum_access_per_week + 1)
+            ) >= 2 * activity.total_accesses)
+        else:
+            model.add(
+                2 * sum(access[(activity_id, week)] for week in eligible[activity_id])
+                + sum(eclo[(activity_id, week)] for week in eligible[activity_id])
+                >= 2 * activity.total_accesses
+            )
 
         start_candidates: list[cp_model.IntVar] = []
         completion_candidates: list[cp_model.IntVar] = []
@@ -947,6 +979,20 @@ def solve_flexible_supply_relaxation(
     for activity_id, activity in sorted(instance.activities.items()):
         if activity.predecessor_activity_id:
             model.add(start[activity_id] >= completion[activity.predecessor_activity_id] + 1)
+
+    if allow_repeat_accesses:
+        # PM cannot join a co-sharing component. Its conflicts therefore admit
+        # exact pairwise exclusions up front, avoiding many separator rounds.
+        blocked = {aid: _blocked_locations(instance, {aid}) for aid in instance.activities}
+        ordered = sorted(instance.activities)
+        for index, first in enumerate(ordered):
+            for second in ordered[index + 1:]:
+                if not any(instance.projects[instance.activities[a].contract_number].access_type == "PM" for a in (first, second)):
+                    continue
+                if not (set(footprints[first]) & blocked[second] or set(footprints[second]) & blocked[first]):
+                    continue
+                for week in set(eligible[first]) & set(eligible[second]):
+                    model.add(access[first, week] + access[second, week] <= 1)
 
     activities_by_contract: dict[str, list[str]] = defaultdict(list)
     for activity_id, activity in sorted(instance.activities.items()):
@@ -1040,7 +1086,9 @@ def solve_flexible_supply_relaxation(
 
     def group_limit(location_id: str, week: int) -> int:
         candidates = len(candidates_by_location_week[(location_id, week)])
-        supply = instance.locations[location_id].supply_capacity
+        supply = capacity_overrides.get((location_id, week), instance.locations[location_id].supply_capacity)
+        if zero_only or (location_id, week) in capacity_overrides:
+            return min(candidates, supply)
         # B's direct heuristic starts near nominal supply to control symmetry.
         # The bridge-safe fallback remains unrestricted and is the only B path
         # allowed to certify infeasibility or a protected incumbent.
@@ -1058,7 +1106,7 @@ def solve_flexible_supply_relaxation(
     excess_terms: list[cp_model.IntVar] = []
     for (location_id, week), activity_ids in sorted(candidates_by_location_week.items()):
         activity_ids.sort()
-        supply = instance.locations[location_id].supply_capacity
+        supply = capacity_overrides.get((location_id, week), instance.locations[location_id].supply_capacity)
         local_group_limit = group_limit(location_id, week)
         for group in range(local_group_limit):
             used[(location_id, week, group)] = model.new_bool_var(
@@ -1185,23 +1233,43 @@ def solve_flexible_supply_relaxation(
     if scenario in {"A", "C"}:
         primary_terms.extend(scaled_delay.values())
     primary_terms.extend(EXCESS_COST_TENTHS * term for term in excess_terms)
+    charged_eclo = night_eclo if allow_repeat_accesses else eclo
     if scenario in {"B", "C"}:
-        primary_terms.extend(ECLO_COST_TENTHS * term for term in eclo.values())
+        primary_terms.extend(ECLO_COST_TENTHS * term for term in charged_eclo.values())
     max_primary = (
         sum(
             max(_contract_costs(instance, contract_number))
             for contract_number in sorted(instance.projects)
         )
         + EXCESS_COST_TENTHS * len(excess_terms)
-        + ECLO_COST_TENTHS * len(eclo)
+        + ECLO_COST_TENTHS * len(charged_eclo)
     )
     primary_score = model.new_int_var(0, max_primary, "primary_score_tenths")
     model.add(primary_score == sum(primary_terms))
+    if zero_only:
+        model.add(primary_score == 0)
 
     hint_root: Path | None = None
     if sample_hint_dir is not None:
         hint_root = Path(sample_hint_dir)
-        _add_sample_hints(model, instance, hint_root, access, night, member)
+        if allow_repeat_accesses:
+            hint_rows, hint_occupancy, _ = load_submission(hint_root)
+            hinted_visits = {(r.activity_id, r.week, r.access_night): r for r in hint_rows}
+            hinted_weeks = {(r.activity_id, r.week) for r in hint_rows}
+            for key, variable in access.items():
+                model.add_hint(variable, int(key in hinted_weeks))
+            for key, variable in night.items():
+                model.add_hint(variable, int(key in hinted_visits))
+                model.add_hint(night_eclo[key], hinted_visits[key].eclo if key in hinted_visits else 0)
+            group_labels = defaultdict(set)
+            for r in hint_occupancy:
+                group_labels[r.location_id, r.week].add(r.co_share_group)
+            ranks = {key: {g: idx for idx, g in enumerate(sorted(gs))} for key, gs in group_labels.items()}
+            assigned = {(r.activity_id, r.week, r.location_id): ranks[r.location_id, r.week][r.co_share_group] for r in hint_occupancy}
+            for (aid, w, loc, group), variable in member.items():
+                model.add_hint(variable, int(assigned.get((aid, w, loc)) == group))
+        else:
+            _add_sample_hints(model, instance, hint_root, access, night, member)
         hint_access, _, _ = load_submission(hint_root)
         hinted_eclo = {(row.activity_id, row.week): row.eclo for row in hint_access}
         for key, variable in sorted(eclo.items()):
@@ -1228,9 +1296,32 @@ def solve_flexible_supply_relaxation(
 
     # Official penalty is lexicographically dominant; row count only removes
     # redundant, score-neutral access rows and cannot trade against one tenth.
-    max_rows = len(access)
+    row_variables = night if allow_repeat_accesses else access
+    max_rows = len(row_variables)
     tie_scale = max_rows + 1
-    model.minimize(primary_score * tie_scale + sum(access.values()))
+    if baseline_dir is not None:
+        if not allow_repeat_accesses:
+            raise ValueError("Replanning requires repeat-access mode")
+        baseline_rows, _, _ = load_submission(Path(baseline_dir))
+        baseline = {(r.activity_id, r.week, r.access_night): r for r in baseline_rows}
+        changes = []
+        for key, variable in night.items():
+            old = baseline.get(key)
+            if key[1] < freeze_before_week:
+                model.add(variable == int(old is not None))
+                model.add(night_eclo[key] == (old.eclo if old else 0))
+            if old:
+                same = model.new_bool_var(f"kept_{key}")
+                e = night_eclo[key] if old.eclo else night_eclo[key].Not()
+                model.add(same <= variable); model.add(same <= e)
+                model.add(same >= variable + e - 1)
+                changes.append(1 - same)
+            else:
+                changes.append(variable)
+        tie_scale = len(changes) + 1
+        model.minimize(primary_score * tie_scale + sum(changes))
+    else:
+        model.minimize(primary_score * tie_scale + sum(row_variables.values()))
 
     def extract_rows(
         solver: cp_model.CpSolver,
@@ -1244,21 +1335,22 @@ def solve_flexible_supply_relaxation(
                 if solver.value(access[(activity_id, week)])
             ]
             project = instance.projects[instance.activities[activity_id].contract_number]
-            for sequence, week in enumerate(selected_weeks, 1):
-                selected_night = next(
+            sequence = 0
+            for week in selected_weeks:
+                selected_nights = [
                     access_night
                     for access_night in range(1, project.number_of_maximum_access_per_week + 1)
                     if solver.value(night[(activity_id, week, access_night)])
-                )
-                access_rows.append(
-                    AccessRow(
+                ]
+                for selected_night in selected_nights:
+                    sequence += 1
+                    access_rows.append(AccessRow(
                         activity_id,
                         sequence,
                         week,
-                        solver.value(eclo[(activity_id, week)]),
+                        solver.value(night_eclo[(activity_id, week, selected_night)] if allow_repeat_accesses else eclo[(activity_id, week)]),
                         selected_night,
-                    )
-                )
+                    ))
                 for location_id in footprints[activity_id]:
                     selected_group = next(
                         group
@@ -1406,12 +1498,21 @@ def solve_flexible_supply_relaxation(
             forbid_buffer_overlap=forbid_buffer_overlap,
         )
         current_objective_tenths = solver.value(primary_score)
+        if progress_callback is not None:
+            progress_callback({"phase": "search", "round": solve_rounds,
+                "message": f"Search round {solve_rounds}: checking {len(final_access_rows)} access rows; {len(final_conflicts)} closure conflicts to resolve.",
+                "candidate_score": current_objective_tenths / 10,
+                "closure_conflicts": len(final_conflicts)})
         latest_objective_tenths = current_objective_tenths
         if not final_conflicts:
             if safe_objective_tenths is None or current_objective_tenths < safe_objective_tenths:
                 safe_access_rows = final_access_rows
                 safe_occupancy_rows = final_occupancy_rows
                 safe_objective_tenths = current_objective_tenths
+            if allow_repeat_accesses and current_objective_tenths == 0:
+                safe_proven_optimal = True
+                safe_tie_break_proven = status_code == cp_model.OPTIMAL
+                break
             if status_code == cp_model.OPTIMAL:
                 safe_proven_optimal = True
                 safe_tie_break_proven = True
@@ -1527,6 +1628,8 @@ def solve_flexible_supply_relaxation(
     telemetry = SolveTelemetry(
         formulation=(
             f"scenario_{scenario.lower()}_iterative_{separator_mode}_"
+            f"{'repeat_access_' if allow_repeat_accesses else ''}"
+            f"{'zero_floor_search_' if zero_only else ''}"
             f"{'strict_buffer' if forbid_buffer_overlap else 'sample_consistent'}_closure_relaxation"
             f"{'_partially_frozen_access' if free_activities else '_frozen_access' if freeze_access_hint else ''}"
             f"{'_interleaved' if interleave_search else ''}"
@@ -1586,7 +1689,9 @@ def solve_flexible_supply_relaxation(
         primary_score_proven_optimal=safe_proven_optimal,
         tie_break_proven_optimal=safe_tie_break_proven,
         primary_bound_scope=(
-            "frozen_access_neighborhood"
+            "full_instance_nonnegative_floor" if zero_only and safe_objective_tenths == 0
+            else "zero_penalty_subproblem" if zero_only
+            else "frozen_access_neighborhood"
             if free_activities
             else "fixed_access_schedule"
             if freeze_access_hint

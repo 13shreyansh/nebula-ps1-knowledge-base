@@ -1,0 +1,119 @@
+{
+  "budget": {
+    "initial_remaining": {
+      "A": 2,
+      "B": 3,
+      "C": 3
+    },
+    "reserved_final_per_scenario": 1,
+    "first_phase_max_uploads": {
+      "A": 0,
+      "B": 1,
+      "C": 1
+    },
+    "total_experimental_ceiling": 4,
+    "first_phase_completed": {
+      "B": 1,
+      "C": 1
+    },
+    "second_phase": {
+      "A": 1,
+      "B": 1
+    },
+    "expected_remaining_after_all_four": {
+      "A": 1,
+      "B": 1,
+      "C": 2
+    }
+  },
+  "probes": {
+    "B1": {
+      "archive": "/Users/shreyansh/Documents/ChatGPT/Nebula Hack/artifacts/controlled-probes-2026-09-19/B1-two-accesses-same-week.zip",
+      "sha256": "6ebfd269e20a0f11f94e0a5e5853e93d65a83a7739446cd2188a711de8e8d570",
+      "question": "May one activity take two distinct allocated nights in one week in B?",
+      "baseline_official_score": 30,
+      "expected_score_if_allowed": 30.0,
+      "activity": "A008",
+      "contract": "C002",
+      "contract_weekly_cap": 3,
+      "old_row": {
+        "activity_id": "A008",
+        "access_seq": 2,
+        "week": 17,
+        "eclo": 0,
+        "access_night": 3
+      },
+      "new_row": {
+        "activity_id": "A008",
+        "access_seq": 2,
+        "week": 16,
+        "eclo": 0,
+        "access_night": 1
+      },
+      "other_access_same_week": {
+        "activity_id": "A008",
+        "access_seq": 1,
+        "week": 16,
+        "eclo": 0,
+        "access_night": 3
+      },
+      "occupancy_encoding": "One complete footprint per activity/week, per existing occupancy schema; no access_night column exists there.",
+      "local_violations": [
+        "A008: more than one access in week 16"
+      ],
+      "interpretation": "Explicit duplicate activity/week rejection settles this representation. Occupancy-only rejection would leave encoding ambiguity; acceptance alone would not establish physical slot accounting."
+    },
+    "C1": {
+      "archive": "/Users/shreyansh/Documents/ChatGPT/Nebula Hack/artifacts/controlled-probes-2026-09-19/C1-zero-score-repeat-standard.zip",
+      "sha256": "f51c63885185ec043f41b673dd7aaad00c80af32b3f6267a503499443de151e2",
+      "question": "Does C allow repeat standard visits using the activity/week occupancy representation accepted in B1?",
+      "starting_point": "Previously official-feasible B-001 CSVs, relabelled C",
+      "changes": "Replace six ECLO rows with standard work and add three standard visits; retain all occupied activity-weeks and completion dates.",
+      "added_rows_before_resequencing": [
+        {
+          "activity_id": "A036",
+          "access_seq": 0,
+          "week": 22,
+          "eclo": 0,
+          "access_night": 1
+        },
+        {
+          "activity_id": "A036",
+          "access_seq": 0,
+          "week": 23,
+          "eclo": 0,
+          "access_night": 1
+        },
+        {
+          "activity_id": "A059",
+          "access_seq": 0,
+          "week": 14,
+          "eclo": 0,
+          "access_night": 2
+        }
+      ],
+      "local_violations": [
+        "A036: more than one access in week 22",
+        "A036: more than one access in week 23",
+        "A059: more than one access in week 14"
+      ],
+      "expected_score_if_allowed": 0,
+      "work_units": 192,
+      "capacity_caveat": "A036 has a footprint location of nominal supply one; submitted distinct sharing groups remain within capacity. Acceptance would establish this representation passes the portal, not settle whether physical nightly capacity should charge repeated accesses separately."
+    },
+    "A1": {
+      "archive": "/Users/shreyansh/Documents/ChatGPT/Nebula Hack/artifacts/controlled-probes-2026-09-19/A1-zero-score-transfer.zip",
+      "sha256": "f1cbe372bcf2e6c4b2c686dc1c78e2f23c665aef6f448a4364492f71b3f2c414",
+      "question": "Transfer officially feasible zero-score C schedule to A",
+      "changes": "Only RESULTS.csv scenario labels change; both schedule CSVs identical to officially accepted C1.",
+      "expected_score": 0
+    },
+    "B2": {
+      "archive": "/Users/shreyansh/Documents/ChatGPT/Nebula Hack/artifacts/controlled-probes-2026-09-19/B2-zero-score-transfer.zip",
+      "sha256": "7afa56e561cde540db63f21d0bfa8d896bab3cec918a305bc0fa4831a39c3938",
+      "question": "Transfer officially feasible zero-score C schedule to B",
+      "changes": "Only RESULTS.csv scenario labels change; both schedule CSVs identical to officially accepted C1.",
+      "expected_score": 0
+    }
+  }
+}

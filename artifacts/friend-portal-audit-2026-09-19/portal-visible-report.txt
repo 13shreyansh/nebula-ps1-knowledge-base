@@ -1,0 +1,193 @@
+The CS Guys
+
+PS: PS1
+
+Sign out
+Please check in physically at NUS EA Foyer between 2.30pm and 4pm today, 19 September 2026, for your submission to be qualified.
+Back to home
+Your Proposal
+
+No submission deadline set.
+
+Preview
+Pitch video URL
+GitHub repository URL
+Prototype URL
+Short-answer questions
+What does your solution do?
+
+0/150 words
+
+What tech stack was used to build this solution?
+
+0/150 words
+
+What challenges did you face, and how did you overcome them?
+
+0/150 words
+
+Save draft
+Submit
+
+Fill all fields to submit
+
+CSV Validator (PS1)
+
+Upload your solved schedule for the public test dataset, one zip per scenario, each containing exactly SCHEDULE_ACCESS.csv, SCHEDULE_OCCUPANCY.csv, and RESULTS.csv.
+
+Only your latest score is kept, not your best.
+
+Scenario A
+Infeasible
+Upload .zip
+
+2/5 runs left
+
+54 violations
+
+Copy all
+Activity inside another group's closure zone: wk15: A041 inside closure of ['A003', 'A007', 'A040'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk15: A003 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk15: A040 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk15: A057 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk16: A009 inside closure of ['A047'] at ['PLAT:ALP:S05:EB', 'PLAT:ALP:S06:EB', 'SEC:ALP:S05_S06:EB']
+Activity inside another group's closure zone: wk16: A047 inside closure of ['A009'] at ['PLAT:ALP:S05:EB', 'PLAT:ALP:S06:EB', 'SEC:ALP:H02_S05:EB', 'SEC:ALP:S05_S06:EB']
+Activity inside another group's closure zone: wk16: A064 inside closure of ['A012'] at ['PLAT:BET:S15:WB', 'SEC:BET:S15_S16:WB']
+Activity inside another group's closure zone: wk16: A012 inside closure of ['A064'] at ['PLAT:BET:S15:WB']
+Activity inside another group's closure zone: wk16: A038 inside closure of ['A008'] at ['PLAT:BET:S17:EB', 'PLAT:BET:S18:EB', 'SEC:BET:S17_S18:EB']
+Activity inside another group's closure zone: wk16: A008 inside closure of ['A038'] at ['PLAT:BET:S17:EB', 'PLAT:BET:S18:EB', 'SEC:BET:S17_S18:EB']
+Activity inside another group's closure zone: wk17: A009 inside closure of ['A054'] at ['PLAT:ALP:S05:EB']
+Activity inside another group's closure zone: wk17: A054 inside closure of ['A009'] at ['PLAT:ALP:S05:EB', 'SEC:ALP:H02_S05:EB']
+Activity inside another group's closure zone: wk17: A059 inside closure of ['A046'] at ['PLAT:ALP:S06:WB', 'SEC:ALP:S06_S07:WB']
+Activity inside another group's closure zone: wk17: A046 inside closure of ['A059'] at ['PLAT:ALP:S06:WB']
+Activity inside another group's closure zone: wk18: A038 inside closure of ['A007', 'A019', 'A040'] at ['PLAT:BET:S17:EB']
+Activity inside another group's closure zone: wk18: A019 inside closure of ['A038'] at ['PLAT:BET:S17:EB']
+Activity inside another group's closure zone: wk19: A056 inside closure of ['A046'] at ['PLAT:ALP:S05:WB', 'PLAT:ALP:S06:WB', 'SEC:ALP:H02_S05:WB', 'SEC:ALP:S05_S06:WB']
+Activity inside another group's closure zone: wk19: A059 inside closure of ['A046'] at ['PLAT:ALP:S06:WB', 'SEC:ALP:S06_S07:WB']
+Activity inside another group's closure zone: wk19: A046 inside closure of ['A056', 'A059'] at ['PLAT:ALP:S05:WB', 'PLAT:ALP:S06:WB', 'SEC:ALP:S05_S06:WB']
+Activity inside another group's closure zone: wk19: A008 inside closure of ['A007', 'A017', 'A043'] at ['PLAT:BET:S17:EB', 'SEC:BET:S17_S18:EB']
+Activity inside another group's closure zone: wk19: A043 inside closure of ['A008'] at ['PLAT:BET:S17:EB', 'SEC:BET:S16_S17:EB']
+Activity inside another group's closure zone: wk20: A039 inside closure of ['A002'] at ['PLAT:BET:S11:WB', 'PLAT:BET:S12:WB', 'PLAT:BET:S13:WB', 'SEC:BET:S11_S12:WB']
+Activity inside another group's closure zone: wk20: A002 inside closure of ['A039'] at ['PLAT:BET:S11:WB', 'PLAT:BET:S12:WB', 'PLAT:BET:S13:WB', 'SEC:BET:S11_S12:WB']
+Activity inside another group's closure zone: wk21: A001 inside closure of ['A074'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk21: A009 inside closure of ['A074'] at ['PLAT:ALP:S05:EB', 'PLAT:ALP:S06:EB', 'SEC:ALP:S05_S06:EB']
+Activity inside another group's closure zone: wk21: A011 inside closure of ['A074'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk21: A013 inside closure of ['A074'] at ['PLAT:ALP:S05:WB', 'PLAT:ALP:S06:WB', 'SEC:ALP:S05_S06:WB']
+Activity inside another group's closure zone: wk21: A017 inside closure of ['A074'] at ['PLAT:BET:H01:EB', 'PLAT:BET:H02:EB', 'PLAT:BET:S15:EB', 'PLAT:BET:S16:EB']
+Activity inside another group's closure zone: wk21: A023 inside closure of ['A074'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk21: A057 inside closure of ['A074'] at ['PLAT:BET:H02:EB', 'PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB']
+Activity inside another group's closure zone: wk23: A017 inside closure of ['A001'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk23: A042 inside closure of ['A001'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'PLAT:BET:S17:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk23: A057 inside closure of ['A001'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk23: A001 inside closure of ['A017', 'A036', 'A042'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'PLAT:BET:S17:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk24: A070 inside closure of ['A023'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB', 'SEC:ALP:S04_H01:WB']
+Activity inside another group's closure zone: wk24: A023 inside closure of ['A070'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk24: A017 inside closure of ['A011'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk24: A042 inside closure of ['A011'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'PLAT:BET:S17:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk24: A057 inside closure of ['A011'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk24: A011 inside closure of ['A017', 'A036', 'A042'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'PLAT:BET:S17:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk25: A070 inside closure of ['A035'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk25: A035 inside closure of ['A070'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S02_S03:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk25: A017 inside closure of ['A008', 'A071'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk25: A040 inside closure of ['A008', 'A071'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk25: A042 inside closure of ['A008', 'A071'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'PLAT:BET:S17:EB', 'PLAT:BET:S18:EB']
+Activity inside another group's closure zone: wk25: A008 inside closure of ['A017', 'A036', 'A040'] at ['PLAT:BET:S17:EB', 'PLAT:BET:S18:EB', 'SEC:BET:S17_S18:EB']
+Activity inside another group's closure zone: wk25: A071 inside closure of ['A017', 'A036', 'A040'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'PLAT:BET:S17:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk27: A069 inside closure of ['A023'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB', 'SEC:ALP:S04_H01:WB']
+Activity inside another group's closure zone: wk27: A023 inside closure of ['A069'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk27: A023 inside closure of ['A075'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk27: A025 inside closure of ['A075'] at ['PLAT:ALP:S03:EB']
+Activity inside another group's closure zone: wk27: A036 inside closure of ['A075'] at ['PLAT:BET:H01:EB', 'PLAT:BET:S14:EB', 'SEC:BET:S14_H01:EB']
+Activity inside another group's closure zone: wk27: A040 inside closure of ['A075'] at ['PLAT:BET:H01:EB', 'PLAT:BET:H02:EB', 'PLAT:BET:S15:EB', 'PLAT:BET:S16:EB']
+Activity inside another group's closure zone: wk27: A069 inside closure of ['A075'] at ['PLAT:ALP:H01:WB', 'PLAT:ALP:H02:WB', 'PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB']
+Scenario B
+Infeasible
+Upload .zip
+
+3/5 runs left
+
+67 violations
+
+Copy all
+Activity inside another group's closure zone: wk13: A047 inside closure of ['A009'] at ['PLAT:ALP:S05:EB', 'PLAT:ALP:S06:EB', 'SEC:ALP:H02_S05:EB', 'SEC:ALP:S05_S06:EB']
+Activity inside another group's closure zone: wk13: A009 inside closure of ['A047'] at ['PLAT:ALP:S05:EB', 'PLAT:ALP:S06:EB', 'SEC:ALP:S05_S06:EB']
+Activity inside another group's closure zone: wk15: A043 inside closure of ['A071'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'PLAT:BET:S17:EB', 'SEC:BET:H02_S15:EB']
+Activity inside another group's closure zone: wk15: A057 inside closure of ['A071'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk15: A060 inside closure of ['A071'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk15: A071 inside closure of ['A007', 'A043', 'A057'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'PLAT:BET:S17:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk16: A064 inside closure of ['A012'] at ['PLAT:BET:S15:WB', 'SEC:BET:S15_S16:WB']
+Activity inside another group's closure zone: wk16: A008 inside closure of ['A007', 'A019', 'A057'] at ['PLAT:BET:S17:EB']
+Activity inside another group's closure zone: wk16: A012 inside closure of ['A064'] at ['PLAT:BET:S15:WB']
+Activity inside another group's closure zone: wk16: A019 inside closure of ['A008'] at ['PLAT:BET:S17:EB', 'SEC:BET:S16_S17:EB']
+Activity inside another group's closure zone: wk18: A050 inside closure of ['A035'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk18: A035 inside closure of ['A050'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S02_S03:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk18: A056 inside closure of ['A046'] at ['PLAT:ALP:S05:WB', 'PLAT:ALP:S06:WB', 'SEC:ALP:H02_S05:WB', 'SEC:ALP:S05_S06:WB']
+Activity inside another group's closure zone: wk18: A059 inside closure of ['A046'] at ['PLAT:ALP:S06:WB', 'SEC:ALP:S06_S07:WB']
+Activity inside another group's closure zone: wk18: A046 inside closure of ['A056', 'A059'] at ['PLAT:ALP:S05:WB', 'PLAT:ALP:S06:WB', 'SEC:ALP:S05_S06:WB']
+Activity inside another group's closure zone: wk18: A011 inside closure of ['A003', 'A007', 'A017'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB', 'SEC:BET:S16_S17:EB']
+Activity inside another group's closure zone: wk18: A003 inside closure of ['A011'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk18: A008 inside closure of ['A011'] at ['PLAT:BET:S17:EB', 'SEC:BET:S17_S18:EB']
+Activity inside another group's closure zone: wk18: A017 inside closure of ['A011'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk18: A040 inside closure of ['A011'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk18: A011 inside closure of ['A008'] at ['PLAT:BET:S17:EB', 'SEC:BET:S16_S17:EB']
+Activity inside another group's closure zone: wk19: A007 inside closure of ['A074'] at ['PLAT:BET:H01:EB', 'PLAT:BET:H02:EB', 'SEC:BET:H01_H02:EB']
+Activity inside another group's closure zone: wk19: A012 inside closure of ['A074'] at ['PLAT:BET:H01:WB', 'PLAT:BET:H02:WB', 'PLAT:BET:S15:WB', 'SEC:BET:H01_H02:WB']
+Activity inside another group's closure zone: wk19: A035 inside closure of ['A074'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk19: A040 inside closure of ['A074'] at ['PLAT:BET:H01:EB', 'PLAT:BET:H02:EB', 'PLAT:BET:S15:EB', 'PLAT:BET:S16:EB']
+Activity inside another group's closure zone: wk19: A046 inside closure of ['A074'] at ['PLAT:ALP:S05:WB', 'PLAT:ALP:S06:WB', 'SEC:ALP:S05_S06:WB']
+Activity inside another group's closure zone: wk19: A048 inside closure of ['A074'] at ['PLAT:BET:S13:EB', 'PLAT:BET:S14:EB', 'SEC:BET:S13_S14:EB']
+Activity inside another group's closure zone: wk19: A057 inside closure of ['A074'] at ['PLAT:BET:H02:EB', 'PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB']
+Activity inside another group's closure zone: wk19: A059 inside closure of ['A074'] at ['PLAT:ALP:S06:WB']
+Activity inside another group's closure zone: wk19: A065 inside closure of ['A074'] at ['PLAT:BET:S13:WB']
+Activity inside another group's closure zone: wk19: A059 inside closure of ['A046'] at ['PLAT:ALP:S06:WB', 'SEC:ALP:S06_S07:WB']
+Activity inside another group's closure zone: wk19: A046 inside closure of ['A059'] at ['PLAT:ALP:S06:WB']
+Activity inside another group's closure zone: wk20: A041 inside closure of ['A003', 'A007', 'A017'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk20: A003 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk20: A017 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk20: A040 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk21: A046 inside closure of ['A013'] at ['PLAT:ALP:S05:WB', 'PLAT:ALP:S06:WB', 'SEC:ALP:S05_S06:WB']
+Activity inside another group's closure zone: wk21: A013 inside closure of ['A046'] at ['PLAT:ALP:S05:WB', 'PLAT:ALP:S06:WB', 'SEC:ALP:S05_S06:WB']
+Activity inside another group's closure zone: wk21: A041 inside closure of ['A001', 'A017', 'A040'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk21: A001 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB', 'SEC:BET:S16_S17:EB']
+Activity inside another group's closure zone: wk21: A017 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk21: A040 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk21: A057 inside closure of ['A041'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk22: A070 inside closure of ['A023'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB', 'SEC:ALP:S04_H01:WB']
+Activity inside another group's closure zone: wk22: A023 inside closure of ['A070'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk22: A048 inside closure of ['A007', 'A036', 'A055'] at ['PLAT:BET:S13:EB', 'PLAT:BET:S14:EB', 'SEC:BET:S13_S14:EB']
+Activity inside another group's closure zone: wk22: A036 inside closure of ['A048'] at ['PLAT:BET:S14:EB', 'SEC:BET:S14_H01:EB']
+Activity inside another group's closure zone: wk22: A055 inside closure of ['A048'] at ['PLAT:BET:S13:EB', 'PLAT:BET:S14:EB', 'SEC:BET:S13_S14:EB', 'SEC:BET:S14_H01:EB']
+Activity inside another group's closure zone: wk22: A008 inside closure of ['A019'] at ['PLAT:BET:S17:EB']
+Activity inside another group's closure zone: wk22: A019 inside closure of ['A008'] at ['PLAT:BET:S17:EB', 'SEC:BET:S16_S17:EB']
+Activity inside another group's closure zone: wk23: A001 inside closure of ['A007', 'A017', 'A036'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk23: A017 inside closure of ['A001'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk23: A057 inside closure of ['A001'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk24: A042 inside closure of ['A017', 'A036', 'A057'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk24: A017 inside closure of ['A042'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk24: A057 inside closure of ['A042'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk25: A050 inside closure of ['A023'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB', 'SEC:ALP:S04_H01:WB']
+Activity inside another group's closure zone: wk25: A023 inside closure of ['A050'] at ['PLAT:ALP:S03:WB', 'PLAT:ALP:S04:WB', 'SEC:ALP:S03_S04:WB']
+Activity inside another group's closure zone: wk26: A013 inside closure of ['A020', 'A023', 'A066'] at ['PLAT:ALP:S05:WB']
+Activity inside another group's closure zone: wk26: A020 inside closure of ['A013'] at ['PLAT:ALP:S05:WB', 'SEC:ALP:H02_S05:WB']
+Activity inside another group's closure zone: wk26: A011 inside closure of ['A017', 'A036', 'A040'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:S15_S16:EB', 'SEC:BET:S16_S17:EB']
+Activity inside another group's closure zone: wk26: A008 inside closure of ['A011'] at ['PLAT:BET:S17:EB', 'SEC:BET:S17_S18:EB']
+Activity inside another group's closure zone: wk26: A017 inside closure of ['A011'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk26: A040 inside closure of ['A011'] at ['PLAT:BET:S15:EB', 'PLAT:BET:S16:EB', 'SEC:BET:H02_S15:EB', 'SEC:BET:S15_S16:EB']
+Activity inside another group's closure zone: wk26: A073 inside closure of ['A011'] at ['PLAT:BET:S15:EB', 'SEC:BET:H02_S15:EB']
+Activity inside another group's closure zone: wk26: A011 inside closure of ['A008'] at ['PLAT:BET:S17:EB', 'SEC:BET:S16_S17:EB']
+Activity inside another group's closure zone: wk28: A021 inside closure of ['A075'] at ['PLAT:BET:S13:WB']
+Scenario C
+Feasible
+Upload .zip
+
+3/5 runs left
+
+All constraints passed
+
+Score: 98.2
+
+Overrun: 14 days across 2 contracts
+
+Excess access nights: 0
+
+ECLO nights used: 2

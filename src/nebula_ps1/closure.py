@@ -148,6 +148,14 @@ def _blocked_locations(instance: Instance, component: set[str]) -> set[str]:
         blocked.update(_replace_bound(location_id, opposite_bound) for location_id in footprint)
         blocked.update(_replace_bound(location_id, opposite_bound) for location_id in buffer_sectors)
         blocked.update(_interchange_cross_line_closure(instance, activity_id))
+        # Official diagnostics include endpoint platforms of own-line Live
+        # buffer sectors on both bounds, as well as the worked footprint.
+        for location_id in buffer_sectors:
+            _, buffer_line, sector_id, _ = location_id.split(":")
+            sector = instance.sectors[f"SEC:{buffer_line}:{sector_id}"]
+            for station in (sector.from_station_id, sector.to_station_id):
+                for affected_bound in (bound, opposite_bound):
+                    blocked.add(f"PLAT:{buffer_line}:{station}:{affected_bound}")
     return blocked
 
 

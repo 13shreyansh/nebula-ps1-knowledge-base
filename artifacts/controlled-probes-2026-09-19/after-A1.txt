@@ -1,0 +1,86 @@
+The CS Guys
+
+PS: PS1
+
+Sign out
+Please check in physically at NUS EA Foyer between 2.30pm and 4pm today, 19 September 2026, for your submission to be qualified.
+Back to home
+Your Proposal
+
+No submission deadline set.
+
+Preview
+Pitch video URL
+GitHub repository URL
+Prototype URL
+Short-answer questions
+What does your solution do?
+
+0/150 words
+
+What tech stack was used to build this solution?
+
+0/150 words
+
+What challenges did you face, and how did you overcome them?
+
+0/150 words
+
+Save draft
+Submit
+
+Fill all fields to submit
+
+CSV Validator (PS1)
+
+Upload your solved schedule for the public test dataset, one zip per scenario, each containing exactly SCHEDULE_ACCESS.csv, SCHEDULE_OCCUPANCY.csv, and RESULTS.csv.
+
+Only your latest score is kept, not your best.
+
+Scenario A
+Feasible
+Upload .zip
+
+1/5 runs left
+
+All constraints passed
+
+Score: 0.0
+
+Overrun: 0 days across 0 contracts
+
+Excess access nights: 0
+
+ECLO nights used: 0
+
+Scenario B
+Feasible
+Upload .zip
+
+2/5 runs left
+
+All constraints passed
+
+Score: 30.0
+
+Overrun: 0 days across 0 contracts
+
+Excess access nights: 0
+
+ECLO nights used: 6
+
+Scenario C
+Feasible
+Upload .zip
+
+2/5 runs left
+
+All constraints passed
+
+Score: 0.0
+
+Overrun: 0 days across 0 contracts
+
+Excess access nights: 0
+
+ECLO nights used: 0

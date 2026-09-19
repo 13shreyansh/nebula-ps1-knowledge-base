@@ -1,0 +1,60 @@
+{
+  "access_rows": 190,
+  "checked_rules": [
+    "schema",
+    "workload",
+    "planned_start",
+    "predecessor",
+    "horizon",
+    "occupancy_footprint",
+    "legal_mix",
+    "weekly_allocation",
+    "workfront",
+    "scenario_capacity",
+    "scenario_eclo",
+    "sample_consistent_closure_screen",
+    "results",
+    "objective_formula"
+  ],
+  "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+  "eclo_nights_total": 4,
+  "excess_access_nights_total": 0,
+  "hard_violations": [],
+  "internally_feasible": true,
+  "objective_score": 62.7,
+  "occupancy_rows": 920,
+  "priority_overrun": {
+    "1": 0,
+    "2": 0,
+    "3": 7
+  },
+  "priority_weighted_score": 42.7,
+  "reference_validator_confirmed": false,
+  "scenario": "C",
+  "submission_hash": "c288735546cdc84cb5b15190243b942230e61d952f0d545659cb6a62c4a28464",
+  "warnings": [
+    "closure screen reproduces official A-001 and accepts A-002/B-001/C-001; hidden-instance equivalence is not guaranteed"
+  ],
+  "strict_closure_conflicts": [
+    "week 19: closure conflict between ['A003', 'A007', 'A040', 'A057'] and ['A008'] at ['SEC:BET:S16_S17:EB']",
+    "week 23: closure conflict between ['A001', 'A008', 'A011', 'A042'] and ['A007', 'A036'] at ['SEC:BET:H02_S15:EB']",
+    "week 23: closure conflict between ['A006', 'A023'] and ['A013'] at ['SEC:ALP:H02_S05:WB']",
+    "week 27: closure conflict between ['A049'] and ['A051'] at ['SEC:BET:S16_S17:WB']"
+  ],
+  "officially_accepted_source_strict_conflicts": [
+    "week 19: closure conflict between ['A003', 'A007', 'A040', 'A057'] and ['A008'] at ['SEC:BET:S16_S17:EB']",
+    "week 23: closure conflict between ['A001', 'A008', 'A011', 'A042'] and ['A007', 'A036'] at ['SEC:BET:H02_S15:EB']",
+    "week 23: closure conflict between ['A006', 'A023'] and ['A013'] at ['SEC:ALP:H02_S05:WB']",
+    "week 27: closure conflict between ['A049'] and ['A051'] at ['SEC:BET:S16_S17:WB']"
+  ],
+  "independent_score": {
+    "scenario": "C",
+    "priority_weighted_delay": 42.7,
+    "excess_access_nights": 0,
+    "eclo_nights": 4,
+    "objective_score": 62.7,
+    "access_rows": 190,
+    "occupancy_rows": 920
+  },
+  "status": "Locally validated candidate only; never submitted to official portal."
+}

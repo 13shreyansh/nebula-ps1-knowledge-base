@@ -153,7 +153,7 @@ def _legal_possession_mix(access_types: list[str]) -> bool:
 
 
 def evaluate_submission(
-    instance: Instance, submission_dir: str | Path, scenario: str | None = None
+    instance: Instance, submission_dir: str | Path, scenario: str | None = None, *, capacity_overrides: dict | None = None
 ) -> Evaluation:
     root = Path(submission_dir).resolve()
     access, occupancy, results = load_submission(root)
@@ -172,6 +172,7 @@ def evaluate_submission(
 
     access_by_activity: dict[str, list[AccessRow]] = defaultdict(list)
     access_keys: set[tuple[str, int]] = set()
+    access_night_keys: set[tuple[str, int, int]] = set()
     for row in access:
         if row.activity_id not in instance.activities:
             violations.append(f"unknown activity in access output: {row.activity_id}")
@@ -181,14 +182,16 @@ def evaluate_submission(
         if not 1 <= row.week <= instance.horizon_weeks:
             violations.append(f"{row.activity_id}: week {row.week} outside horizon")
         key = (row.activity_id, row.week)
-        if key in access_keys:
-            violations.append(f"{row.activity_id}: more than one access in week {row.week}")
+        night_key = (row.activity_id, row.week, row.access_night)
+        if night_key in access_night_keys:
+            violations.append(f"{row.activity_id}: duplicate access night {row.access_night} in week {row.week}")
+        access_night_keys.add(night_key)
         access_keys.add(key)
         access_by_activity[row.activity_id].append(row)
 
     activity_completion_week: dict[str, int] = {}
     for activity_id, activity in instance.activities.items():
-        rows = sorted(access_by_activity.get(activity_id, ()), key=lambda item: item.week)
+        rows = sorted(access_by_activity.get(activity_id, ()), key=lambda item: (item.week, item.access_night))
         if not rows:
             violations.append(f"{activity_id}: no scheduled access")
             continue
@@ -296,9 +299,11 @@ def evaluate_submission(
 
     excess_total = 0
     for (week, location_id), groups in location_week_groups.items():
-        supply = instance.locations[location_id].supply_capacity
+        supply = (capacity_overrides or {}).get((location_id, week), instance.locations[location_id].supply_capacity)
         excess = max(0, len(groups) - supply)
         excess_total += excess
+        if (location_id, week) in (capacity_overrides or {}) and excess:
+            violations.append(f"week {week} {location_id}: incident capacity exceeded by {excess}")
         if selected_scenario == "A" and excess:
             violations.append(f"week {week} {location_id}: Scenario A capacity exceeded by {excess}")
         if selected_scenario == "C" and excess > 1:
