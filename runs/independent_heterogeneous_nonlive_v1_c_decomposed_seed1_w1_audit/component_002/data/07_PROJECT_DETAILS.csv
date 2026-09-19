@@ -1,0 +1,4 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+FPDKFOLLOW,FPD Competitor successor,2039-05-28,FootprintDependencyTradeoff,FPD Non-live (Others),3,2040-06-17,2040-03-11,1,C,1
+FPDKDIRECT,FPD ECLO cost contributor,2039-05-28,FootprintDependencyTradeoff,FPD Non-live (Others),1,2040-06-17,2040-01-29,1,PM,1
+FPDKCOMP,FPD Footprint competitor,2039-05-28,FootprintDependencyTradeoff,FPD Non-live (Others),3,2040-06-17,2040-03-11,1,C,1

@@ -26,6 +26,7 @@ from nebula_ps1.eclo_compact import (
 )
 from nebula_ps1.decomposed import (
     _activity_interaction_reasons,
+    _primary_proof_telemetry,
     independent_activity_components,
     solve_decomposed_scenario,
 )
@@ -227,6 +228,39 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertEqual(sorted(map(len, components), reverse=True), [8, 6, 5, 3, 2, 2, 2])
         self.assertFalse((data / "RESULTS.csv").exists())
+
+    def test_decomposition_recognizes_checked_zero_floor_proof_provenance(self) -> None:
+        telemetry = {
+            "primary_score_proven_optimal": True,
+            "primary_bound_scope": "full_instance_nonnegative_floor",
+            "best_bound": 0.0,
+            "objective_score": 0.0,
+        }
+        report = {
+            "selected_objective_score": 0.0,
+            "verification_skipped_primary_proven": True,
+            "heuristic_telemetry": telemetry,
+            "verification_telemetry": None,
+        }
+        self.assertIs(_primary_proof_telemetry(report), telemetry)
+        for mutation in (
+            {"verification_skipped_primary_proven": False},
+            {"selected_objective_score": 0.1},
+            {
+                "heuristic_telemetry": {
+                    **telemetry,
+                    "primary_bound_scope": "conditional_frozen_access",
+                }
+            },
+            {
+                "heuristic_telemetry": {
+                    **telemetry,
+                    "primary_score_proven_optimal": False,
+                }
+            },
+        ):
+            with self.subTest(mutation=mutation):
+                self.assertIsNone(_primary_proof_telemetry({**report, **mutation}))
 
     def test_decomposed_solver_matches_monolithic_exact_two_line_result(self) -> None:
         data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
@@ -574,6 +608,91 @@ class PublicFixtureTests(unittest.TestCase):
                 (submission / name).read_bytes(),
                 (resumed / name).read_bytes(),
             )
+
+    def test_heterogeneous_decomposition_recovers_after_proof_aggregation_failure(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_nonlive_v1"
+        submission = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_nonlive_v1_c_decomposed_seed1_w1"
+        )
+        audit = submission.with_name(f"{submission.name}_audit")
+        rejected = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_nonlive_v1_c_decomposed_seed1_w1_failed_null_proof"
+        )
+        rejected_audit = rejected.with_name(f"{rejected.name}_audit")
+        monolithic_audit = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_nonlive_v1_c_monolithic_seed1_w1_audit"
+        )
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, submission, "C")
+        independent = independently_score(data, submission)
+        access, occupancy, _ = load_submission(submission)
+        report = json.loads(
+            (audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        failure = json.loads(
+            (monolithic_audit / "STAGED_FAILURES.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 11432.0)
+        self.assertEqual(independent.objective_score, 11432.0)
+        self.assertEqual(evaluation.priority_weighted_score, 11368.0)
+        self.assertEqual(evaluation.excess_access_nights_total, 2)
+        self.assertEqual(evaluation.eclo_nights_total, 10)
+        self.assertEqual((evaluation.access_rows, evaluation.occupancy_rows), (63, 249))
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertEqual(report["component_count"], 7)
+        self.assertTrue(report["global_optimality_proved_by_additivity"])
+        self.assertEqual(
+            sorted(
+                component["primary_proof_telemetry"]["primary_bound_scope"]
+                for component in report["components"]
+            ),
+            ["full_instance"] * 4 + ["full_instance_nonnegative_floor"] * 3,
+        )
+        self.assertEqual(
+            sum(
+                component["selected_objective_score"]
+                for component in report["components"]
+            ),
+            11432.0,
+        )
+        self.assertTrue((rejected_audit / "REJECTED.md").exists())
+        self.assertFalse((rejected_audit / "DECOMPOSED.json").exists())
+        for name in SUBMISSION_FILES:
+            self.assertEqual(
+                (submission / name).read_bytes(),
+                (rejected / name).read_bytes(),
+            )
+        self.assertGreater(
+            min(
+                attempt["telemetry"]["remaining_closure_conflicts"]
+                for attempt in failure["bridge_safe_fallback_attempts"]
+            ),
+            0,
+        )
+        self.assertGreater(
+            min(
+                attempt["remaining_closure_conflicts"]
+                for attempt in failure["heuristic_attempts"]
+            ),
+            0,
+        )
 
     def test_independent_synthetic_oracle_is_valid_without_public_identifiers(self) -> None:
         synthetic_root = ROOT / "fixtures" / "independent_synthetic_v1"

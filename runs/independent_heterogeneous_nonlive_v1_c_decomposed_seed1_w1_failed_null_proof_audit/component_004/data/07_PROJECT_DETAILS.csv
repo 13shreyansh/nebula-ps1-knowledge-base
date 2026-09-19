@@ -1,0 +1,3 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+MPAKMX1,MPA Multipass contract MX1,2039-06-02,Synthetic,MPA Non-live (Others),1,2040-03-25,2040-01-08,1,PM,1
+MPAKMX2,MPA Multipass contract MX2,2039-06-02,Synthetic,MPA Non-live (Others),1,2040-03-25,2040-01-08,1,PM,1

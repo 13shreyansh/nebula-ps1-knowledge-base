@@ -221,6 +221,29 @@ def _merge_submissions(sources: list[Path], output: Path) -> None:
         _write(output / name, fields, rows)
 
 
+def _primary_proof_telemetry(
+    staged_report: dict[str, object],
+) -> dict[str, object] | None:
+    """Return the telemetry that proves the selected primary score, if any."""
+
+    if staged_report.get("verification_skipped_primary_proven") is True:
+        telemetry = staged_report.get("heuristic_telemetry")
+    else:
+        telemetry = staged_report.get("verification_telemetry")
+    if not isinstance(telemetry, dict):
+        return None
+    selected_score = staged_report.get("selected_objective_score")
+    if (
+        telemetry.get("primary_score_proven_optimal") is not True
+        or telemetry.get("primary_bound_scope")
+        not in {"full_instance", "full_instance_nonnegative_floor"}
+        or telemetry.get("best_bound") != selected_score
+        or telemetry.get("objective_score") != selected_score
+    ):
+        return None
+    return telemetry
+
+
 def solve_decomposed_scenario(
     data_dir: str | Path,
     output_dir: str | Path,
@@ -294,6 +317,7 @@ def solve_decomposed_scenario(
                 "selected_submission_hash": staged_report["selected_submission_hash"],
                 "selected_stage": staged_report["selected_stage"],
                 "verification_telemetry": staged_report["verification_telemetry"],
+                "primary_proof_telemetry": _primary_proof_telemetry(staged_report),
             }
         )
         component_outputs.append(component_output)
@@ -333,10 +357,7 @@ def solve_decomposed_scenario(
             f"components={component_score} merged={evaluation.objective_score}"
         )
     globally_proven = all(
-        report["verification_telemetry"]["primary_score_proven_optimal"]
-        and report["verification_telemetry"]["primary_bound_scope"] == "full_instance"
-        and report["verification_telemetry"]["best_bound"]
-        == report["selected_objective_score"]
+        report["primary_proof_telemetry"] is not None
         for report in component_reports
     )
     report: dict[str, object] = {
