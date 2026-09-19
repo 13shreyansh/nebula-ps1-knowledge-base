@@ -20,7 +20,7 @@ from nebula_ps1.eclo_compact import (
     best_serialized_eclo_compaction_sequence,
     best_single_lane_eclo_compaction,
 )
-from nebula_ps1.evaluate import evaluate_submission, load_submission
+from nebula_ps1.evaluate import _legal_possession_mix, evaluate_submission, load_submission
 from nebula_ps1.flexible_solver import solve_flexible_supply_relaxation
 from nebula_ps1.independent_score import independently_score
 from nebula_ps1.idle_compact import (
@@ -3140,6 +3140,25 @@ class PublicFixtureTests(unittest.TestCase):
             ),
             scenario_b_late.hard_violations,
         )
+
+    def test_legal_mix_checker_matches_solver_inequalities_exhaustively(self) -> None:
+        for pm in range(6):
+            for pc in range(6):
+                for coworkers in range(6):
+                    if pm + pc + coworkers == 0:
+                        continue
+                    solver_accepts = (
+                        pm <= 1
+                        and pc <= 1
+                        and coworkers <= 4 - pc
+                        and pc + coworkers <= 4 * (1 - pm)
+                    )
+                    access_types = ["PM"] * pm + ["PC"] * pc + ["C"] * coworkers
+                    self.assertEqual(
+                        _legal_possession_mix(access_types),
+                        solver_accepts,
+                        (pm, pc, coworkers),
+                    )
 
     def test_missing_access_is_rejected_instead_of_scoring_well(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

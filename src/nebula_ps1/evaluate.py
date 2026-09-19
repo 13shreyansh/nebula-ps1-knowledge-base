@@ -143,6 +143,15 @@ def _submission_hash(root: Path) -> str:
     return digest.hexdigest()
 
 
+def _legal_possession_mix(access_types: list[str]) -> bool:
+    pm = access_types.count("PM")
+    pc = access_types.count("PC")
+    c = access_types.count("C")
+    return (pm == 1 and len(access_types) == 1) or (
+        pm == 0 and pc == 1 and c <= 3 and len(access_types) == pc + c
+    ) or (pm == 0 and pc == 0 and c <= 4 and len(access_types) == c)
+
+
 def evaluate_submission(
     instance: Instance, submission_dir: str | Path, scenario: str | None = None
 ) -> Evaluation:
@@ -280,10 +289,7 @@ def evaluate_submission(
         pm = access_types.count("PM")
         pc = access_types.count("PC")
         c = access_types.count("C")
-        legal = (pm == 1 and len(access_types) == 1) or (
-            pm == 0 and pc == 1 and c <= 3 and len(access_types) == pc + c
-        ) or (pm == 0 and pc == 0 and c <= 4 and len(access_types) == c)
-        if not legal:
+        if not _legal_possession_mix(access_types):
             violations.append(
                 f"week {week} {location_id} group {group}: illegal mix PM={pm} PC={pc} C={c}"
             )
