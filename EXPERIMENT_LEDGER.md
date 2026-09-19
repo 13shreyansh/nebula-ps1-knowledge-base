@@ -1894,3 +1894,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Contradiction guard: if any already gated candidate is lower than the claimed monolithic optimum, abort before decomposition or publication. A proof/candidate disagreement is a system-integrity failure, not a tie-break decision.
 - Preserved diversity: decomposition still runs after monolithic failure or any valid but unproved monolithic result. One-component inputs remain skipped for the existing no-diversity reason.
 - Precommit: implementation and falsification tests are committed before an unmocked replay. Expected score and runtime behavior are hypotheses, not results.
+
+### E201: Full proof removes redundant search without suppressing rescue
+
+- Timestamp: 2026-09-19 13:21:50 +08.
+- Multi-component B control: the nine-component input again reaches and proves B=`349` through monolithic solving. The previous portfolio spent 0.480 seconds monolithic plus 5.314 seconds decomposed; the new run spends 0.469 seconds monolithic and records decomposition as proof-skipped. All three selected CSVs are byte-identical with hash `7407bddd…`; measured policy time falls 91.9%.
+- C rescue control: monolithic solving again fails after 10.243 seconds. Decomposition still runs, proves C=`11,432` in 14.004 seconds, and publishes a dual-scored, hard-feasible, strict-clean schedule. Its hash differs from the previous equal-score run (`43c97968…` versus `8bd96255…`), so score/proof reproducibility is confirmed but schedule-byte reproducibility is not.
+- Falsification: a mocked full proof above an already gated lower candidate now aborts before decomposition and publication. A valid-but-unproved monolithic candidate still permits a lower decomposed candidate; a malformed lower candidate remains excluded.
+- Release replay: 194/194 regressions pass in 11.011 seconds; 19 isolated portable-validator checks pass with unchanged archive hash `495d4ef7…`; all 30 final-package checks are true.
+- Scope: no arbitrary total timeout was introduced because no official limit is published. No official score, release package, portal attempt, or attempt counter changed.

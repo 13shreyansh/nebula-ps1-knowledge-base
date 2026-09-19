@@ -1,0 +1,4 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+AGGKC3,AGG Aggregation contract KC3,2039-06-01,Synthetic,AGG Non-live (Others),3,2040-05-06,2040-03-25,1,PM,1
+AGGKC2,AGG Aggregation contract KC2,2039-06-01,Synthetic,AGG Non-live (Others),2,2040-05-06,2040-02-26,1,PM,1
+AGGKC1,AGG Aggregation contract KC1,2039-06-01,Synthetic,AGG Non-live (Others),1,2040-05-06,2040-01-29,1,PM,1

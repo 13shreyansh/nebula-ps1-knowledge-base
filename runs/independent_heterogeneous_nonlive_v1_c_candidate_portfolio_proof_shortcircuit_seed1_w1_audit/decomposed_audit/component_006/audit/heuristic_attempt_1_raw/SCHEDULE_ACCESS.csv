@@ -1,0 +1,8 @@
+activity_id,access_seq,week,eclo,access_night
+PCPCOMP,1,5,0,1
+PCPDIRECT,1,2,0,1
+PCPDIRECT,2,3,0,1
+PCPDIRECT,3,4,0,1
+PCPFOLLOW,1,6,0,1
+PCPPEER,1,5,0,1
+PCPPREPEER,1,4,0,1
