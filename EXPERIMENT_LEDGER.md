@@ -1866,3 +1866,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Consequence: no new organizer change invalidates the encoded rules, public optimality certificates, release packages, or current robustness experiments.
 - Integrity boundary: this verifies published GitHub state only. It cannot detect an unpublished portal-side validator change or undisclosed hidden-data behavior.
 - Portal protection: no login, upload, validation run, or attempt-counter change occurred.
+
+### E198: Decomposition over-connection measurement precommit
+
+- Timestamp: 2026-09-19 13:17:02 +08.
+- Question: does the safe graph connect activities so conservatively that valid decomposition opportunities disappear, even though no coupled pair crosses a component boundary?
+- Frozen measurement: across every complete fixture, the released public input, all three scenarios, and both closure policies, record pair-reason overlap signatures, exclusive edges, the component reduction achieved by each reason alone, and the marginal component increase when each reason is removed from the otherwise complete graph.
+- Interpretation boundary: a zero marginal count can result from transitive redundancy or correlated fixtures; it does not prove that an edge is unnecessary or safe to remove. No graph rule will change from this diagnostic alone.
+- Integrity: the script uses no scores, target outputs, protected hashes, seeds, or portal feedback. The protocol and code are committed before any result is observed.

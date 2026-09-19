@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.109
+version: 0.8.110
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
