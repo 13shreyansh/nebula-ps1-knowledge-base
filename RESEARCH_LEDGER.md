@@ -894,6 +894,15 @@ Confidence labels:
 - **Boundary:** Repacking changes ZIP metadata and therefore the final ZIP hash, but not any CSV byte. The preserved numbered archives remain the evidence of what the portal evaluated.
 - **Confidence:** Very high.
 
+### `R108` The local PS1 pack is byte-identical to the exact upstream commit
+
+- **Status:** Confirmed for every public PS1 file available in the repository, excluding `.DS_Store`.
+- **Reference:** Organizer `main` resolves to `966c976005db2e3e40a691cff268fdb8f396a5df`; the locally retained README SHA-256 is `e7d8f9457e62a1732fc7986cea57ad5fbd595e7cabe2e8b789e673c8335bd253`.
+- **Method:** A shallow clone stalled and ended with a sideband disconnect, so it was not accepted as evidence. The fallback enumerated the local PS1 files, fetched each corresponding raw file from the exact commit, and compared bytes directly.
+- **Result:** All 14/14 files match. This excludes silent local drift in the available public pack.
+- **Boundary:** The comparison cannot observe portal-only notices, validator code, runtime limits, or unpublished changes.
+- **Confidence:** Very high for public repository bytes; none for portal-only state.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

@@ -1253,3 +1253,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Interpretation: different final ZIP hashes come only from deterministic repacking metadata/compression. The evaluated CSV bytes are unchanged.
 - Regression status: all 108 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E133: Exact-commit upstream byte audit passes
+
+- Timestamp: 2026-09-19 10:03:45 +08
+- Reference: organizer `main` and the locally recorded specification commit both resolve to `966c976005db2e3e40a691cff268fdb8f396a5df`.
+- Failed diagnostic: a shallow clone stalled for more than two minutes, was interrupted, and ended with `fetch-pack: unexpected disconnect while reading sideband packet`. It is retained as a failed acquisition path, not positive evidence.
+- Fallback method: enumerate every local PS1 file except `.DS_Store`, fetch its raw counterpart from the exact commit, and compare complete file bytes.
+- Result: 14/14 files match; the README SHA-256 is `e7d8f9457e62a1732fc7986cea57ad5fbd595e7cabe2e8b789e673c8335bd253`.
+- Boundary: public-repository equality does not reveal portal-only notices or invoke the official validator.
+- Official protection: no portal interaction or attempt was used.
