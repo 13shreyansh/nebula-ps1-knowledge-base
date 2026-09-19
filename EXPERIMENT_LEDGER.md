@@ -1903,3 +1903,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Falsification: a mocked full proof above an already gated lower candidate now aborts before decomposition and publication. A valid-but-unproved monolithic candidate still permits a lower decomposed candidate; a malformed lower candidate remains excluded.
 - Release replay: 194/194 regressions pass in 11.011 seconds; 19 isolated portable-validator checks pass with unchanged archive hash `495d4ef7…`; all 30 final-package checks are true.
 - Scope: no arbitrary total timeout was introduced because no official limit is published. No official score, release package, portal attempt, or attempt counter changed.
+
+### E202: Policy-order benchmark precommit
+
+- Timestamp: 2026-09-19 13:24:14 +08.
+- Selection before outcomes: two structurally distinct multi-component inputs per scenario, covering 2–9 components, 4–72 activities, equal-sized modules, one dominant component plus small modules, heterogeneous contracts, identifier permutation, and ECLO/idle structure.
+- Frozen execution: run monolithic and decomposed policies independently on all six cases with 3/2/5/10-second stage limits, one worker, seed 31, one heuristic/fallback attempt, strict closure, full evaluator, and independent raw-CSV scoring.
+- Integrity: fixture hashes, activity counts, and component-size vectors are hard-coded before execution. Every failure is retained. The benchmark does not use public answers, portal feedback, target scores, or post-outcome case replacement.
+- Interpretation: six retained fixtures remain correlated with our synthetic corpus. Results may falsify an ordering rule but cannot justify learned routing or a universal A/B/C heuristic by themselves.

@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.114
+version: 0.8.115
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -767,3 +767,4 @@ When sources conflict:
 | `0.8.112` | 2026-09-19 | Pinned the conservatism artifact and passed 192 regressions, 19 isolated-validator checks, and all 30 final-package checks. |
 | `0.8.113` | 2026-09-19 | Precommitted a proof-safe portfolio short circuit: skip decomposition only after a consistent monolithic full-instance proof, and abort on a lower-incumbent contradiction. |
 | `0.8.114` | 2026-09-19 | Real controls preserve proved B=`349` while reducing policy time 91.9%, and preserve decomposed C=`11,432` rescue after monolithic failure. |
+| `0.8.115` | 2026-09-19 | Precommitted a six-case, structure-stratified monolithic/decomposed order benchmark with fixed inputs, hashes, budgets, worker count, seed, and validation gates. |
