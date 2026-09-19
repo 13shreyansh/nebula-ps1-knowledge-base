@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.117
+version: 0.8.118
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -770,3 +770,4 @@ When sources conflict:
 | `0.8.115` | 2026-09-19 | Precommitted a six-case, structure-stratified monolithic/decomposed order benchmark with fixed inputs, hashes, budgets, worker count, seed, and validation gates. |
 | `0.8.116` | 2026-09-19 | Decomposition proves all 6/6 frozen cases; monolithic proves 4/6, fails one, and loses one score comparison. Proof-first projected time falls 49.6%. |
 | `0.8.117` | 2026-09-19 | Added one serial release-gate command after concurrent validator rebuilds produced a transient false hash mismatch; the isolated rerun passed. |
+| `0.8.118` | 2026-09-19 | Precommitted additive-proof-first portfolio execution for genuine multi-component inputs, with symmetric proof-contradiction abort and monolithic fallback. |

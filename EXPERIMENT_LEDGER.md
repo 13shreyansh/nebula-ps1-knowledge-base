@@ -1929,3 +1929,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Falsification: an immediate serial rerun passed 195 regressions and all 19 isolated-validator checks with canonical hash `495d4ef7…`; the subsequent serial readiness audit passed all 30 checks. This supports a file race, not archive nondeterminism, but does not erase the failed concurrent run.
 - Correction: `scripts/run_release_gates.py` runs the two mutating/read-only gate phases serially and verifies their machine-readable results. Future release claims must use this command rather than parallel orchestration.
 - Official boundary: no portal interaction, score change, or package-byte change occurred.
+
+### E205: Additive-proof-first portfolio precommit
+
+- Timestamp: 2026-09-19 13:28:48 +08.
+- Policy: inputs with more than one conservatively independent component run decomposition first. A fully gated additive global proof skips monolithic search; decomposition failure or a valid unproved result still triggers monolithic fallback. One-component inputs retain monolithic-first behavior and skip decomposition.
+- Symmetric integrity: either policy's full-instance proof is checked against every already gated candidate. A lower candidate contradicts the proof and aborts before publication; proof status never overrides score validation.
+- Selection remains unchanged: lowest fully gated primary objective wins; exact ties preserve the initial incumbent, then monolithic, then decomposed. Execution order does not alter tie priority.
+- Tests frozen before real controls: lower unproved decomposition followed by monolithic comparison, malformed decomposition fallback, one-component skip, decomposed proof short-circuit, contradictory additive proof abort, and unexpected programmer-error propagation.

@@ -122,7 +122,6 @@ def solve_candidate_portfolio(
     }
     attempts: list[dict[str, object]] = []
     candidates: list[tuple[int, str, Path, Evaluation, bool]] = []
-    monolithic_proved_score: float | None = None
 
     if initial_submission_dir is not None:
         initial = Path(initial_submission_dir)
@@ -144,72 +143,70 @@ def solve_candidate_portfolio(
             }
         )
 
-    monolithic_output = audit / "monolithic_submission"
-    started = time.perf_counter()
-    try:
-        monolithic_report = solve_staged_scenario(
-            instance,
-            monolithic_output,
-            scenario,
-            audit_output_dir=audit / "monolithic_audit",
-            initial_submission_dir=initial_submission_dir,
-            initial_score_data_dir=data_root if initial_submission_dir else None,
-            **common,
-        )
-        monolithic_evaluation = _externally_gate_candidate(
-            instance,
-            data_root,
-            monolithic_output,
-            scenario,
-            forbid_buffer_overlap=forbid_buffer_overlap,
-        )
-        monolithic_proved = _primary_proof_telemetry(monolithic_report) is not None
-        if monolithic_proved:
-            monolithic_proved_score = monolithic_evaluation.objective_score
-        candidates.append(
-            (
-                1,
-                "monolithic",
-                monolithic_output,
-                monolithic_evaluation,
-                monolithic_proved,
-            )
-        )
-        attempts.append(
-            {
-                "policy": "monolithic",
-                "status": "accepted",
-                "outer_wall_time_seconds": time.perf_counter() - started,
-                "objective_score": monolithic_evaluation.objective_score,
-                "submission_hash": monolithic_evaluation.submission_hash,
-                "global_optimality_proved": monolithic_proved,
-            }
-        )
-    except (RuntimeError, ValueError) as error:
-        attempts.append(
-            {
-                "policy": "monolithic",
-                "status": "failed",
-                "outer_wall_time_seconds": time.perf_counter() - started,
-                "error_type": type(error).__name__,
-                "error": str(error),
-            }
-        )
-
-    if monolithic_proved_score is not None:
+    def assert_proof_consistent(policy: str, proved_score: float) -> None:
         contradictory = [
-            (policy, evaluation.objective_score)
-            for _, policy, _, evaluation, _ in candidates
-            if evaluation.objective_score < monolithic_proved_score
+            (candidate_policy, evaluation.objective_score)
+            for _, candidate_policy, _, evaluation, _ in candidates
+            if evaluation.objective_score < proved_score
         ]
         if contradictory:
             raise RuntimeError(
-                "monolithic full-instance proof contradicts a lower fully gated "
-                f"candidate: proof={monolithic_proved_score!r}, "
+                f"{policy} full-instance proof contradicts a lower fully gated "
+                f"candidate: proof={proved_score!r}, "
                 f"lower_candidates={contradictory!r}"
             )
 
-    if len(components) > 1 and monolithic_proved_score is None:
+    def run_monolithic() -> float | None:
+        monolithic_output = audit / "monolithic_submission"
+        started = time.perf_counter()
+        try:
+            monolithic_report = solve_staged_scenario(
+                instance,
+                monolithic_output,
+                scenario,
+                audit_output_dir=audit / "monolithic_audit",
+                initial_submission_dir=initial_submission_dir,
+                initial_score_data_dir=data_root if initial_submission_dir else None,
+                **common,
+            )
+            evaluation = _externally_gate_candidate(
+                instance,
+                data_root,
+                monolithic_output,
+                scenario,
+                forbid_buffer_overlap=forbid_buffer_overlap,
+            )
+            proved = _primary_proof_telemetry(monolithic_report) is not None
+            candidates.append(
+                (1, "monolithic", monolithic_output, evaluation, proved)
+            )
+            attempts.append(
+                {
+                    "policy": "monolithic",
+                    "status": "accepted",
+                    "outer_wall_time_seconds": time.perf_counter() - started,
+                    "objective_score": evaluation.objective_score,
+                    "submission_hash": evaluation.submission_hash,
+                    "global_optimality_proved": proved,
+                }
+            )
+        except (RuntimeError, ValueError) as error:
+            attempts.append(
+                {
+                    "policy": "monolithic",
+                    "status": "failed",
+                    "outer_wall_time_seconds": time.perf_counter() - started,
+                    "error_type": type(error).__name__,
+                    "error": str(error),
+                }
+            )
+            return None
+        if proved:
+            assert_proof_consistent("monolithic", evaluation.objective_score)
+            return evaluation.objective_score
+        return None
+
+    def run_decomposed() -> float | None:
         decomposed_output = audit / "decomposed_submission"
         started = time.perf_counter()
         try:
@@ -220,33 +217,27 @@ def solve_candidate_portfolio(
                 audit_output_dir=audit / "decomposed_audit",
                 **common,
             )
-            decomposed_evaluation = _externally_gate_candidate(
+            evaluation = _externally_gate_candidate(
                 instance,
                 data_root,
                 decomposed_output,
                 scenario,
                 forbid_buffer_overlap=forbid_buffer_overlap,
             )
-            decomposed_proved = bool(
+            proved = bool(
                 decomposed_report["global_optimality_proved_by_additivity"]
             )
             candidates.append(
-                (
-                    2,
-                    "decomposed",
-                    decomposed_output,
-                    decomposed_evaluation,
-                    decomposed_proved,
-                )
+                (2, "decomposed", decomposed_output, evaluation, proved)
             )
             attempts.append(
                 {
                     "policy": "decomposed",
                     "status": "accepted",
                     "outer_wall_time_seconds": time.perf_counter() - started,
-                    "objective_score": decomposed_evaluation.objective_score,
-                    "submission_hash": decomposed_evaluation.submission_hash,
-                    "global_optimality_proved": decomposed_proved,
+                    "objective_score": evaluation.objective_score,
+                    "submission_hash": evaluation.submission_hash,
+                    "global_optimality_proved": proved,
                 }
             )
         except (RuntimeError, ValueError) as error:
@@ -259,25 +250,36 @@ def solve_candidate_portfolio(
                     "error": str(error),
                 }
             )
-    elif len(components) == 1:
+            return None
+        if proved:
+            assert_proof_consistent("decomposed", evaluation.objective_score)
+            return evaluation.objective_score
+        return None
+
+    if len(components) > 1:
+        decomposed_proved_score = run_decomposed()
+        if decomposed_proved_score is None:
+            run_monolithic()
+        else:
+            attempts.append(
+                {
+                    "policy": "monolithic",
+                    "status": "skipped",
+                    "reason": (
+                        "decomposed full-instance additive proof leaves no lower "
+                        "primary objective for monolithic search to find"
+                    ),
+                    "proof_policy": "decomposed",
+                    "proved_objective_score": decomposed_proved_score,
+                }
+            )
+    else:
+        run_monolithic()
         attempts.append(
             {
                 "policy": "decomposed",
                 "status": "skipped",
                 "reason": "one component; identical staged policy adds no search diversity",
-            }
-        )
-    else:
-        attempts.append(
-            {
-                "policy": "decomposed",
-                "status": "skipped",
-                "reason": (
-                    "monolithic full-instance proof leaves no lower primary "
-                    "objective for decomposition to find"
-                ),
-                "proof_policy": "monolithic",
-                "proved_objective_score": monolithic_proved_score,
             }
         )
 
@@ -310,6 +312,11 @@ def solve_candidate_portfolio(
         "scenario": scenario,
         "dataset_hash": instance.dataset_hash,
         "component_count": len(components),
+        "execution_order": [
+            attempt["policy"]
+            for attempt in attempts
+            if attempt["policy"] != "initial_incumbent"
+        ],
         "selection_rule": (
             "lowest fully gated objective; exact ties preserve initial incumbent, "
             "then monolithic, then decomposed"
