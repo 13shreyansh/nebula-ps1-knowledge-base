@@ -1692,3 +1692,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - New necessary-feasibility gate: for each activity, compute eligible weeks before its B planned-completion deadline, multiply by the maximum three half-units per weekly row, and compare with twice the required workload. The fixture has zero deficits; the earlier heterogeneous input correctly identifies four 3/2-versus-6/2 deficits.
 - Precommit boundary: generator already existed; this commit adds only raw input, its hash/structure assertions, and the general feasibility check. No score, output, oracle, target, or solver observation exists yet.
 - Falsification target: unchanged strict decomposition must either produce a fully validated additive proof or fail closed. The nine-component structure will not be edited after observing the result.
+
+### E179: B proof-scope gap fails safe, then proves B=`349`
+
+- Timestamp: 2026-09-19 12:37:59 +08.
+- First run: all nine components merge into a valid, strict-clean, dual-scored B=`349` schedule, but aggregate proof remains false. Six components use the explicit `full_instance_workload_eclo_lower_bound` scope, which the aggregator did not yet recognize. The valid files and false proof flag are retained unchanged as an unproved result.
+- Correction: the aggregator now accepts that scope only when formulation is exactly the checked B incumbent or checked structural workload-lower-bound path, proof flag is true, and objective/bound equal the selected component score. Zero-floor scopes likewise require an exact zero-floor formulation; conditional and mismatched scopes remain rejected.
+- Corrected additive proof: component scores `21`, `196`, `112`, `10`, `0`, `10`, `0`, `0`, `0` sum to B=`349`. Three use full-instance CP-SAT proofs and six use full-instance workload/ECLO lower bounds. Merged scoring is 27 excess × 7 + 32 ECLO × 5 = `349`; both scorers agree, strict conflicts are zero, and 65 access/219 occupancy rows are complete.
+- Monolithic control: the same one-worker 3/2/5/10-second policy independently proves B=`349` with a different valid schedule in 0.456 seconds, while decomposition takes 5.162 seconds. The direct heuristic itself is infeasible, but bridge-safe fallback and verification prove the optimum.
+- Decision: preserve decomposition for cases where it improves score/proof or isolates failures, but do not make it the default for B. The observed monolithic speed advantage is a single-host result, yet it decisively falsifies any blanket decomposition-speed claim on this input.
+- Official boundary: this is synthetic exactness, not an official score change. No portal interaction occurred.

@@ -250,6 +250,21 @@ class PublicFixtureTests(unittest.TestCase):
             ROOT / "fixtures" / "independent_heterogeneous_b_v1"
         )
         self.assertEqual(_scenario_b_workload_deadline_deficits(feasible), ())
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / "submission"
+            with self.assertRaisesRegex(
+                ValueError,
+                r"Scenario B workload cannot fit.*MPAMX1 max=3/2 required=6/2",
+            ):
+                solve_staged_scenario(
+                    infeasible,
+                    output,
+                    "B",
+                    workers=1,
+                    heuristic_attempts=1,
+                    fallback_attempts=1,
+                )
+            self.assertFalse(output.exists())
 
     def test_heterogeneous_b_fixture_is_frozen_before_solving(self) -> None:
         data = ROOT / "fixtures" / "independent_heterogeneous_b_v1"
@@ -295,6 +310,7 @@ class PublicFixtureTests(unittest.TestCase):
             "primary_bound_scope": "full_instance_nonnegative_floor",
             "best_bound": 0.0,
             "objective_score": 0.0,
+            "formulation": "scenario_c_checked_structural_zero_floor_candidate",
         }
         report = {
             "selected_objective_score": 0.0,
@@ -318,9 +334,26 @@ class PublicFixtureTests(unittest.TestCase):
                     "primary_score_proven_optimal": False,
                 }
             },
+            {
+                "heuristic_telemetry": {
+                    **telemetry,
+                    "formulation": "scenario_b_checked_structural_workload_lower_bound_candidate",
+                }
+            },
         ):
             with self.subTest(mutation=mutation):
                 self.assertIsNone(_primary_proof_telemetry({**report, **mutation}))
+
+        workload = {
+            **telemetry,
+            "primary_bound_scope": "full_instance_workload_eclo_lower_bound",
+            "formulation": "scenario_b_checked_structural_workload_lower_bound_candidate",
+        }
+        workload_report = {
+            **report,
+            "heuristic_telemetry": workload,
+        }
+        self.assertIs(_primary_proof_telemetry(workload_report), workload)
 
     def test_decomposed_solver_matches_monolithic_exact_two_line_result(self) -> None:
         data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
@@ -825,6 +858,94 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(
             failure["bridge_safe_fallback_attempts"][0]["telemetry"]["status"],
             "INFEASIBLE",
+        )
+
+    def test_heterogeneous_b_decomposition_proof_and_monolithic_control(self) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_b_v1"
+        decomposed = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_b_v1_b_decomposed_seed1_w1"
+        )
+        decomposed_audit = decomposed.with_name(f"{decomposed.name}_audit")
+        unproved = decomposed.with_name(f"{decomposed.name}_unproved_scope_gap")
+        unproved_audit = unproved.with_name(f"{unproved.name}_audit")
+        monolithic = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_b_v1_b_monolithic_seed1_w1"
+        )
+        monolithic_audit = monolithic.with_name(f"{monolithic.name}_audit")
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, decomposed, "B")
+        independent = independently_score(data, decomposed)
+        access, occupancy, _ = load_submission(decomposed)
+        report = json.loads(
+            (decomposed_audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        old_report = json.loads(
+            (unproved_audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        mono_report = json.loads(
+            (monolithic_audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        mono_evaluation = evaluate_submission(instance, monolithic, "B")
+        mono_independent = independently_score(data, monolithic)
+        mono_access, mono_occupancy, _ = load_submission(monolithic)
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 349.0)
+        self.assertEqual(independent.objective_score, 349.0)
+        self.assertEqual(evaluation.excess_access_nights_total, 27)
+        self.assertEqual(evaluation.eclo_nights_total, 32)
+        self.assertEqual((evaluation.access_rows, evaluation.occupancy_rows), (65, 219))
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertEqual(report["component_count"], 9)
+        self.assertTrue(report["global_optimality_proved_by_additivity"])
+        self.assertEqual(
+            sorted(
+                component["primary_proof_telemetry"]["primary_bound_scope"]
+                for component in report["components"]
+            ),
+            ["full_instance"] * 3
+            + ["full_instance_workload_eclo_lower_bound"] * 6,
+        )
+        self.assertFalse(old_report["global_optimality_proved_by_additivity"])
+        self.assertTrue((unproved_audit / "UNPROVED.md").exists())
+        for name in SUBMISSION_FILES:
+            self.assertEqual(
+                (decomposed / name).read_bytes(),
+                (unproved / name).read_bytes(),
+            )
+        self.assertEqual(mono_evaluation.objective_score, 349.0)
+        self.assertEqual(mono_independent.objective_score, 349.0)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                mono_access,
+                mono_occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertTrue(
+            mono_report["verification_telemetry"]["primary_score_proven_optimal"]
+        )
+        self.assertEqual(mono_report["verification_telemetry"]["best_bound"], 349.0)
+        self.assertLess(
+            mono_report["outer_wall_time_seconds"],
+            report["outer_wall_time_seconds"],
+        )
+        self.assertNotEqual(
+            mono_evaluation.submission_hash,
+            evaluation.submission_hash,
         )
 
     def test_independent_synthetic_oracle_is_valid_without_public_identifiers(self) -> None:

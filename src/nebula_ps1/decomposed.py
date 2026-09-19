@@ -233,10 +233,33 @@ def _primary_proof_telemetry(
     if not isinstance(telemetry, dict):
         return None
     selected_score = staged_report.get("selected_objective_score")
+    scope = telemetry.get("primary_bound_scope")
+    formulation = telemetry.get("formulation")
+    scope_matches_formulation = (
+        scope == "full_instance"
+        or (
+            scope == "full_instance_nonnegative_floor"
+            and formulation
+            in {
+                "scenario_a_checked_zero_floor_incumbent",
+                "scenario_b_checked_zero_floor_incumbent",
+                "scenario_c_checked_zero_floor_incumbent",
+                "scenario_a_checked_structural_zero_floor_candidate",
+                "scenario_c_checked_structural_zero_floor_candidate",
+            }
+        )
+        or (
+            scope == "full_instance_workload_eclo_lower_bound"
+            and formulation
+            in {
+                "scenario_b_checked_workload_lower_bound_incumbent",
+                "scenario_b_checked_structural_workload_lower_bound_candidate",
+            }
+        )
+    )
     if (
         telemetry.get("primary_score_proven_optimal") is not True
-        or telemetry.get("primary_bound_scope")
-        not in {"full_instance", "full_instance_nonnegative_floor"}
+        or not scope_matches_formulation
         or telemetry.get("best_bound") != selected_score
         or telemetry.get("objective_score") != selected_score
     ):
