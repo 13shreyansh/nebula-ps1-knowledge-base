@@ -1489,3 +1489,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Preserve: precommit order, zero-violation artifact, exact dataset set, counts, and organizer-equivalence disclaimer. Improve: mutation-test the audit itself by deliberately removing each graph reason and proving the corpus catches every omission. Stop: using raw pair count as probability of hidden-data success.
 - Confidence: very high in protected public state; high in encoded graph coverage; medium in structural diversity; low in undisclosed semantics.
 - Next experiment and immediate action: fault-inject each of the six edge reasons out of the graph on a targeted witness and require the independent audit to find a cross-component violation. This tests the auditor rather than only the implementation.
+
+## 2026-09-19 13:13:18 +08
+
+- Interval: 4 minutes 50 seconds since the previous inspection. Official A=`137.9`, B=`30.0`, C=`62.7`; no score or portal change.
+- What improved: each of six decomposition edge reasons now has a mutation-killing witness. Removing any one reason splits a pair that must remain coupled. The full suite reaches 191 tests with all validator/readiness gates green.
+- Failure encountered: the first strict-buffer witness did not split because A001/A007 were also tied by same contract. This was not a solver success; it was a masked mutation and invalid test design. The witness was corrected by separating only the contracts while preserving the buffer-only geometry.
+- Harness failure encountered: the exploratory corpus search queued many witnesses before updating its found set and produced repeated output; it was interrupted and replaced with one patched graph per dataset/policy. Five isolated corpus witnesses were found; strict buffer required the controlled projection above.
+- Could the final mutation test be misleading: it proves each edge reason matters somewhere, not that the reason is correctly broad on every topology. It also removes one reason at a time; two compensating defects or a shared location-calculation bug may survive.
+- What is going well: the graph is now protected by direct reason tests, pairwise encoded-family audits, a 56-dataset corpus audit, and mutation-killing witnesses. What remains bad: all layers still inherit organizer-rule uncertainty and shared topology helpers.
+- Preserve: both failed harness attempts, six final witnesses, full corpus artifact, and no-portal boundary. Improve: test over-connection/false edges because excessive coupling can destroy decomposition benefits without invalidating feasibility. Stop: interpreting intact-code coverage as auditor sensitivity.
+- Confidence: very high in official state; high in encoded edge-omission detection; medium in performance relevance; low in undisclosed semantics.
+- Next experiment and immediate action: quantify graph over-connection. For every edge reason across the corpus, measure how often multiple reasons overlap and how much each reason alone reduces component count. Identify unnecessary conservative edges only as research; do not remove any without objective/feasibility equivalence proof.

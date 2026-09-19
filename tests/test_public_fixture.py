@@ -1095,6 +1095,131 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertFalse(report["portal_used"])
         self.assertTrue(all(report["coupling_observation_counts"].values()))
 
+    def test_each_decomposition_edge_reason_has_a_mutation_killing_witness(self) -> None:
+        witness_specs = {
+            "predecessor": (
+                load_instance(ROOT / "fixtures" / "independent_predecessor_tradeoff_v1"),
+                "A",
+                False,
+                "PRED",
+                "SUCC",
+            ),
+            "resource_or_closure": (
+                load_instance(ROOT / "fixtures" / "independent_idle_tie_v1"),
+                "A",
+                False,
+                "TIEA",
+                "TIEB",
+            ),
+            "same_contract": (
+                load_instance(
+                    ROOT / "fixtures" / "independent_post_precedence_contract_v1"
+                ),
+                "A",
+                False,
+                "FOLLOW",
+                "PEER",
+            ),
+            "scenario_c_live_all_line_window": (
+                load_instance(ROOT / "fixtures" / "independent_interchange_scale8_v1"),
+                "C",
+                False,
+                "R01HLA",
+                "R02HLA",
+            ),
+            "scenario_c_same_line_window": (
+                load_instance(ROOT / "fixtures" / "independent_irregular_coupled_b_v1"),
+                "C",
+                False,
+                "IC12",
+                "IPM6",
+            ),
+        }
+        strict_ids = ("A001", "A007")
+        first_strict = self.instance.activities["A001"]
+        second_source = self.instance.activities["A007"]
+        second_contract = "STRICT_BUFFER_WITNESS"
+        second_strict = replace(second_source, contract_number=second_contract)
+        strict_activities = {"A001": first_strict, "A007": second_strict}
+        strict_instance = replace(
+            self.instance,
+            projects={
+                first_strict.contract_number: self.instance.projects[
+                    first_strict.contract_number
+                ],
+                second_contract: replace(
+                    self.instance.projects[second_source.contract_number],
+                    contract_number=second_contract,
+                ),
+            },
+            activities=strict_activities,
+        )
+        self.assertEqual(
+            _activity_interaction_reasons(
+                strict_instance,
+                "A",
+                "A001",
+                "A007",
+                forbid_buffer_overlap=True,
+            ),
+            ("strict_buffer_overlap",),
+        )
+        witness_specs["strict_buffer_overlap"] = (
+            strict_instance,
+            "A",
+            True,
+            "A001",
+            "A007",
+        )
+
+        original = _activity_interaction_reasons
+        for removed_reason, (
+            instance,
+            scenario,
+            strict,
+            first,
+            second,
+        ) in witness_specs.items():
+            with self.subTest(removed_reason=removed_reason):
+                baseline = independent_activity_components(
+                    instance,
+                    scenario,
+                    forbid_buffer_overlap=strict,
+                )
+                baseline_component = {
+                    activity_id: index
+                    for index, component in enumerate(baseline)
+                    for activity_id in component
+                }
+                self.assertEqual(baseline_component[first], baseline_component[second])
+
+                def remove_reason(*args: object, **kwargs: object) -> tuple[str, ...]:
+                    return tuple(
+                        reason
+                        for reason in original(*args, **kwargs)
+                        if reason != removed_reason
+                    )
+
+                with patch(
+                    "nebula_ps1.decomposed._activity_interaction_reasons",
+                    side_effect=remove_reason,
+                ):
+                    mutated = independent_activity_components(
+                        instance,
+                        scenario,
+                        forbid_buffer_overlap=strict,
+                    )
+                mutated_component = {
+                    activity_id: index
+                    for index, component in enumerate(mutated)
+                    for activity_id in component
+                }
+                self.assertNotEqual(
+                    mutated_component[first],
+                    mutated_component[second],
+                    msg=f"removing {removed_reason} did not split its witness",
+                )
+
     def test_interchange_holdout_c_is_exact_and_policy_stable(self) -> None:
         data = ROOT / "fixtures" / "independent_interchange_holdout_v1"
         instance = load_instance(data)

@@ -1848,3 +1848,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Drift guard: a regression recomputes the set of fixture directories containing all eight input files and requires exact equality with the artifact's dataset set. Fixture additions therefore require an explicit audit rerun rather than silently falling outside coverage.
 - Release replay: 190/190 regressions pass in 10.265 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true.
 - Boundary: millions of checks increase structural coverage but do not create semantic independence from reused topology/closure helpers or prove undisclosed organizer constraints.
+
+### E196: Every decomposition edge reason is killed by mutation testing
+
+- Timestamp: 2026-09-19 13:13:18 +08.
+- Method: for each of the six graph reasons, patch only that reason out of `_activity_interaction_reasons`, recompute components, and require a targeted pair that is connected in baseline to become separated under the mutation.
+- Witnesses: predecessor=`PRED/SUCC`; resource/closure=`TIEA/TIEB`; same contract=`FOLLOW/PEER`; Live all-line C window=`R01HLA/R02HLA`; same-line C window=`IC12/IPM6`; strict buffer=`A001/A007` projected into distinct otherwise identical contracts.
+- Failed first strict witness: unmodified A001/A007 also share contract C001, so removing strict-buffer coupling did not separate them. This correctly exposed transitive masking in the test. Cloning only the second contract isolates strict buffer as the sole reason; the mutation then splits the pair.
+- Result: all six single-reason mutations are detected. The auditor is not merely passing the intact implementation; every declared edge family has a concrete failure witness.
+- Release replay: 191/191 regressions pass in 10.238 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true. No portal interaction occurred.
+- Boundary: single-reason deletion does not test combinations of simultaneous graph bugs, over-connection, or wrong topology semantics shared by baseline and witness construction.
