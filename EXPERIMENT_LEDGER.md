@@ -1389,3 +1389,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Integrity gates: all 119 tests pass in 7.513 seconds; the dedicated fast-path test re-runs both scorers and asserts no model was built. All 30 local readiness checks remain true.
 - Boundary: positive-score public and synthetic cases cannot enter this path; no official score or artifact changed.
 - Official protection: no portal interaction or attempt was used.
+
+### E146: Positive-score scale replays survive checked-hint promotion
+
+- Timestamp: 2026-09-19 10:52:43 +08
+- 360 activities: fresh seed 5 returns A=`280.0` in 2.501 seconds, B=`400.0` in 1.414, and C=`280.0` in 10.885. All are dual-scored and strict-clean. A/C use different checked equal-score hashes (`3b9ad8a3…`, `eecc5dbc…`); B preserves `70fbd577…`.
+- 720 activities: fresh seed 2 returns A=`560.0` in 9.686 seconds, B=`800.0` in 5.214, and C=`560.0` in 24.715, again dual-scored and strict-clean. A now selects `heuristic_incumbent` from its checked complete constructor instead of the historical `bridge_safe_fallback`; B remains byte-identical, while A/C hashes change.
+- Integrity interpretation: score, feasibility, and strict-policy results are preserved; byte identity is not claimed across a deliberate incumbent-source change. Protected official A/B/C bytes remain untouched.
+- Regression status: all 119 tests pass in 7.634 seconds and re-evaluate the six fresh outputs.
+- Official protection: no portal interaction or attempt was used.

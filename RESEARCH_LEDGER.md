@@ -999,6 +999,14 @@ Confidence labels:
 - **Boundary:** Only score zero qualifies. Positive-score incumbents, malformed hints, and strict-conflicting hints continue through rejection or full model search.
 - **Confidence:** Very high in primary-score optimality and gating; high in measured runtime removal.
 
+### `R120` Checked complete hints preserve positive scores, not necessarily schedule bytes
+
+- **Status:** Confirmed on fresh 360- and 720-activity A/B/C replays.
+- **Result:** The current controller retains scores `280/400/280` and `560/800/560`, with both scorers agreeing and zero strict conflicts in all six cases. The 720-activity A stage now returns its fully checked constructor incumbent instead of waiting for the fallback.
+- **Hash boundary:** B remains byte-identical. A and C select different equal-score checked schedules, so historical exact-hash claims apply to their recorded before/after experiments, not every future controller replay.
+- **Interpretation:** Incumbent selection is score- and validity-based. Output-byte identity is required for protected official artifacts and controlled regression comparisons, not for independently reconstructed synthetic optima.
+- **Confidence:** High in current positive-score safety; medium in transfer beyond tested structural regimes.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

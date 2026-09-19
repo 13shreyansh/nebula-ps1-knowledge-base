@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.67
+version: 0.8.68
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -339,6 +339,7 @@ Each protected public answer matches its bound and has passed the official valid
 - A precommitted 720-activity, 640-contract scale holdout succeeds 3/3 at A=`560`, B=`800`, C=`560` with zero strict conflicts in 13.395/4.782/27.517 seconds. A's two-second direct heuristic returns `UNKNOWN`; the three-second unrestricted fallback then proves `560`. This is a fail-safe portfolio success and a warning that heuristic construction alone no longer clears the doubled model.
 - A precommitted 164-activity shared-bottleneck holdout first failed 0/3 because complete structural hints never became solver incumbents within the fixed budget. Complete hints are now canonicalized, serialized, and fully checked before use as protected incumbents. The unchanged replay reaches A/B/C=`0.0` with zero strict conflicts; corrupting one occupancy row causes explicit rejection and no emitted submission.
 - A checked zero-score incumbent now returns immediately at the global nonnegative objective floor instead of rebuilding a model. The dense replay preserves exact hashes while improving 1.070/12.321/2.596 seconds to 0.580/0.679/1.407; positive-score candidates still use the full solver path.
+- Fresh positive-score replays under the checked-complete-hint controller preserve 360-activity scores `280/400/280` and 720-activity scores `560/800/560`, all dual-scored with zero strict conflicts. A/C hashes change because a different checked equal-score schedule is selected; B remains byte-identical. The 720-activity A stage improves from fallback to its validated constructor incumbent.
 - On the altered-capacity/priority fixture, no-hint standard construction reaches A=`4599.7` with a 0.87% bound gap, and proves B=`30.0` and C=`59.9`. The stricter buffer-to-buffer hedge fails to construct B after 240 seconds while the validator-confirmed standard rule solves it in 18.7 seconds; strict overlap is therefore audit-only on unseen inputs.
 - On a separately generated two-line topology with novel identifiers and no public-submission input, the staged solver reconstructs and proves A=`7.0`, B=`10.0`, and C=`7.0`. The independent oracle is generated with separate footprint/result logic; B pays two necessary ECLO nights while C rationally accepts seven points of delay instead.
 - Experimental `solve-flexible-relaxation` flags expose per-solve deterministic time and OR-Tools interleaved search. Two structural-B repetitions were byte-identical at `30.0`, but took 98.8–104.9 seconds versus 16.6–21.2 seconds for successful ordinary portfolio seeds. Keep this as an audit mode, not the default score path.
@@ -711,3 +712,4 @@ When sources conflict:
 | `0.8.65` | 2026-09-19 | Added a precommitted 720-activity scale holdout; all scenarios succeed with zero strict conflicts, while A exposes the two-second direct-heuristic limit and recovers through the sound fallback. |
 | `0.8.66` | 2026-09-19 | Preserved a 0/3 dense-scale failure, then added full-gate promotion of complete structural candidates; the same holdout recovers 3/3, while a fault-injected invalid candidate fails closed. |
 | `0.8.67` | 2026-09-19 | Added a fully checked zero-objective floor path; dense A/B/C hashes stay exact while end-to-end runtime falls from 15.988 to 2.666 seconds. |
+| `0.8.68` | 2026-09-19 | Replayed positive-score 360- and 720-activity holdouts after checked-hint promotion; all six scores and strict gates persist, while equal-score A/C schedules legitimately change hashes. |
