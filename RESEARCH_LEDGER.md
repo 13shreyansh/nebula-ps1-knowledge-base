@@ -808,6 +808,15 @@ Confidence labels:
 - **Runtime note:** Total retained-audit wall time remains about 1.22 seconds because source loading, dual scoring, and closure checks dominate these small cases; the benefit is reduced file generation rather than a claimed timing speedup.
 - **Confidence:** Very high in soundness; high in candidate-count reduction.
 
+### `R098` Full final post-processing scales safely to 120 activities
+
+- **Status:** Confirmed on the independent 120-activity, 360-week scale fixture.
+- **Method:** Run the same checked idle-normalization-plus-ECLO sequence used after final production selection, then independently rescore and apply the strict buffered closure screen.
+- **Floor case:** A C=`0` source emits no idle or ECLO candidate and remains byte-identical.
+- **Positive case:** A reverse-order C=`2,880,360` source has no removable idle week; exact score ordering checks one ECLO candidate, prunes 119, and selects strict-clean C=`2,864,830`, a decrease of `15,530` confirmed by both scorers.
+- **Runtime:** The two cases complete in about 0.56 seconds combined on this machine. Treat timing as local evidence, not a competition runtime guarantee.
+- **Confidence:** High for this scale regime; medium for denser multi-line inputs with many removable gaps.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

@@ -1123,6 +1123,36 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(ranked["minimum_candidate_score"], 2864830.0)
         self.assertEqual(ranked["source_score"], 2880360.0)
 
+    def test_final_postprocessing_is_safe_on_120_job_scale_audit(self) -> None:
+        benchmark = json.loads(
+            (
+                ROOT / "runs" / "postselection_compaction_scale_benchmark.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(benchmark["activity_count"], 120)
+        self.assertEqual(benchmark["horizon_weeks"], 360)
+        by_name = {record["case"]: record for record in benchmark["cases"]}
+        floor = by_name["zero_score_floor"]
+        self.assertEqual(floor["source_score"], 0.0)
+        self.assertEqual(floor["selected_score"], 0.0)
+        self.assertFalse(floor["strict_improvement"])
+        self.assertFalse(floor["hash_changed"])
+        self.assertEqual(floor["idle_candidates_checked"], 0)
+        self.assertEqual(floor["eclo_candidates_checked"], 0)
+        reverse = by_name["reverse_positive_score"]
+        self.assertEqual(reverse["source_score"], 2880360.0)
+        self.assertEqual(reverse["selected_score"], 2864830.0)
+        self.assertEqual(reverse["independent_score"], 2864830.0)
+        self.assertEqual(reverse["score_change"], -15530.0)
+        self.assertTrue(reverse["strict_improvement"])
+        self.assertEqual(reverse["selected_stage"], "eclo_compaction")
+        self.assertEqual(reverse["strict_conflicts"], 0)
+        self.assertEqual(reverse["idle_candidates_checked"], 0)
+        self.assertEqual(reverse["eclo_candidates_checked"], 1)
+        self.assertEqual(
+            reverse["eclo_candidates_pruned_by_exact_score_order"], 119
+        )
+
     def test_eclo_compaction_score_order_matches_contract_aggregation_audit(
         self,
     ) -> None:

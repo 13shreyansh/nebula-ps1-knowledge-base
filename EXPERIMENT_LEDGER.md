@@ -1150,3 +1150,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: the retained idle audit still reports nine removable weeks but checks three candidates instead of eight. The final-selection audit checks three idle candidates instead of nine. Both retain zero promotions and zero hash changes.
 - Runtime: the final-selection audit takes 1.220 seconds with a 0.515-second maximum case, essentially unchanged because independent rescoring and closure checks dominate. The accepted claim is lower candidate/file volume, not wall-time speedup.
 - Regression status: 99 tests pass. Official scores, hashes, and portal quotas are unchanged.
+
+### E122: Complete final post-processing passes the 120-activity scale audit
+
+- Timestamp: 2026-09-19 09:32:13 +08
+- Method: run the production final Scenario C post-processor on both frozen 120-activity scale sources, independently rescore its selection, and reapply the strict buffered closure screen.
+- Zero-floor result: C=`0` remains byte-identical and generates zero idle and ECLO candidates.
+- Positive result: C=`2,880,360` improves to dual-scored, strict-clean C=`2,864,830`; exact score ordering checks one ECLO candidate and prunes 119. No idle candidate is applicable.
+- Runtime: 0.56 seconds combined in this local run. This is evidence against prohibitive overhead for this fixture, not a guarantee for unknown competition instances.
+- Regression status: all 100 tests pass. No official attempt was used.
