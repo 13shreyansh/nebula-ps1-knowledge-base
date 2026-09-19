@@ -1,0 +1,3 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+R001,K301,Synthetic,SEC:LNX:X1_X2:EB,SEC:LNX:X2_X3:EB,3,2031-01-06,,3
+R002,K302,Synthetic,SEC:LNY:X1_X2:WB,SEC:LNY:X2_X3:WB,3,2031-01-06,,3
