@@ -32,7 +32,7 @@ from nebula_ps1.flexible_solver import (
     _write_submission_rows,
     solve_flexible_supply_relaxation,
 )
-from nebula_ps1.independent_score import independently_score
+from nebula_ps1.independent_score import IndependentScore, independently_score
 from nebula_ps1.idle_compact import (
     _predicted_objective as predict_idle_compaction_objective,
     best_idle_week_compaction_sequence,
@@ -3914,6 +3914,10 @@ class PublicFixtureTests(unittest.TestCase):
             solve.call_args.kwargs["initial_submission_dir"],
             "trusted-incumbent",
         )
+        self.assertEqual(
+            solve.call_args.kwargs["initial_score_data_dir"],
+            str(PACK / "01_data"),
+        )
         self.assertEqual(solve.call_args.kwargs["local_repair_time_limit_seconds"], 16.0)
         self.assertEqual(solve.call_args.kwargs["fallback_time_limit_seconds"], 17.0)
         self.assertEqual(solve.call_args.kwargs["fallback_attempts"], 4)
@@ -4919,6 +4923,7 @@ class PublicFixtureTests(unittest.TestCase):
                 "B",
                 audit_output_dir=root / "audit",
                 initial_submission_dir=source,
+                initial_score_data_dir=PACK / "01_data",
                 heuristic_attempts=0,
                 fallback_attempts=1,
                 local_repair_time_limit_seconds=0.0,
@@ -4939,6 +4944,11 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report["selected_objective_score"], 30.0)
         self.assertEqual(report["selected_submission_hash"], source_evaluation.submission_hash)
         self.assertTrue(report["initial_incumbent"]["provided"])
+        self.assertTrue(report["initial_incumbent"]["independent_score_checked"])
+        self.assertEqual(
+            report["initial_incumbent"]["independent_score"]["objective_score"],
+            30.0,
+        )
         self.assertEqual(report["initial_incumbent"]["selected_policy_conflicts"], 0)
         self.assertEqual(report["heuristic_attempts"], [])
         self.assertIsNone(report["heuristic_telemetry"])
@@ -4972,6 +4982,53 @@ class PublicFixtureTests(unittest.TestCase):
                     "A",
                     audit_output_dir=Path(temporary) / "audit",
                     initial_submission_dir=invalid,
+                    initial_score_data_dir=PACK / "01_data",
+                    heuristic_attempts=0,
+                )
+
+    def test_staged_resume_rejects_missing_independent_score_data(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation",
+            side_effect=AssertionError("solver ran before independent-score gate"),
+        ):
+            with self.assertRaisesRegex(
+                ValueError, "initial_score_data_dir is required"
+            ):
+                solve_staged_scenario(
+                    self.instance,
+                    Path(temporary) / "submission",
+                    "B",
+                    audit_output_dir=Path(temporary) / "audit",
+                    initial_submission_dir=ROOT / "deliverables" / "public" / "B",
+                    heuristic_attempts=0,
+                )
+
+    def test_staged_resume_rejects_independent_score_disagreement(self) -> None:
+        disagreement = IndependentScore(
+            scenario="B",
+            priority_weighted_delay=0.0,
+            excess_access_nights=0,
+            eclo_nights=0,
+            objective_score=0.0,
+            access_rows=0,
+            occupancy_rows=0,
+        )
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "nebula_ps1.staged.independently_score", return_value=disagreement
+        ), patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation",
+            side_effect=AssertionError("solver ran after independent-score disagreement"),
+        ):
+            with self.assertRaisesRegex(
+                ValueError, "initial submission failed independent score agreement"
+            ):
+                solve_staged_scenario(
+                    self.instance,
+                    Path(temporary) / "submission",
+                    "B",
+                    audit_output_dir=Path(temporary) / "audit",
+                    initial_submission_dir=ROOT / "deliverables" / "public" / "B",
+                    initial_score_data_dir=PACK / "01_data",
                     heuristic_attempts=0,
                 )
 

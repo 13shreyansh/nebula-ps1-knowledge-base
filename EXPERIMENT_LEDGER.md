@@ -1556,3 +1556,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Interpretation: the separate public certificate proves A=`137.9`, but resume telemetry reports only what its own solver established. Numerical equality does not collapse evidence provenance.
 - Regression: retained outputs are re-read with both scorers, compared byte-for-byte to protected A/C, and checked for exact status/bound/proof fields.
 - Official protection: no portal interaction or attempt occurred; official hashes and quotas remain unchanged.
+
+### E163: Independent-score admission fails closed before resumed search
+
+- Timestamp: 2026-09-19 12:03:00 +08.
+- Change: protected resume now requires the raw input directory and compares the primary evaluation with the separate raw-CSV scorer before copying or solving. Compared fields are scenario, objective, delay, excess, ECLO, and both output row counts.
+- Failure injection: a forged independent B result of `0.0` with zero rows is rejected with an explicit disagreement error before a patched solver can run. Omitting the raw-data source is rejected at the same boundary.
+- Positive control: protected B-001 remains accepted at `30.0`; the report records the independent components and the existing byte-preservation and full lower-bound proof tests still pass.
+- Integrity gates: all 156 regressions pass in 9.830 seconds. Portable-validator isolation passes 19 focused tests under system Python 3.9 and reproduces all protected scores; the 30-check final readiness audit remains fully green. No portal interaction or attempt occurred.
+- Boundary: this is an integrity improvement, not a numerical score improvement, and both local scorers can still share a mistaken interpretation of an unreleased organiser rule.

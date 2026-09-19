@@ -9,6 +9,7 @@ from .eclo_compact import best_serialized_eclo_compaction_sequence
 from .evaluate import Evaluation, evaluate_submission, load_submission
 from .flexible_solver import solve_flexible_supply_relaxation
 from .idle_compact import best_idle_week_compaction_sequence
+from .independent_score import IndependentScore, independently_score
 from .instance import Instance
 from .portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from .postprocess import best_checked_c_postprocessing_sequence
@@ -302,6 +303,7 @@ def solve_staged_scenario(
     *,
     audit_output_dir: str | Path | None = None,
     initial_submission_dir: str | Path | None = None,
+    initial_score_data_dir: str | Path | None = None,
     heuristic_time_limit_seconds: float = 120.0,
     local_repair_time_limit_seconds: float = 30.0,
     fallback_time_limit_seconds: float = 120.0,
@@ -341,8 +343,13 @@ def solve_staged_scenario(
 
     initial_incumbent_dir: Path | None = None
     initial_incumbent: Evaluation | None = None
+    initial_independent_score: IndependentScore | None = None
     initial_incumbent_conflicts: tuple[object, ...] = ()
     if initial_submission_dir is not None:
+        if initial_score_data_dir is None:
+            raise ValueError(
+                "initial_score_data_dir is required with an initial submission"
+            )
         source = Path(initial_submission_dir)
         missing = [name for name in SUBMISSION_FILES if not (source / name).is_file()]
         if missing:
@@ -365,6 +372,42 @@ def solve_staged_scenario(
             raise ValueError(
                 "initial submission failed the full selected-policy gate: "
                 + "; ".join(details)
+            )
+        initial_independent_score = independently_score(initial_score_data_dir, source)
+        score_mismatches = []
+        score_pairs = {
+            "scenario": (checked.scenario, initial_independent_score.scenario),
+            "objective_score": (
+                checked.objective_score,
+                initial_independent_score.objective_score,
+            ),
+            "priority_weighted_score": (
+                checked.priority_weighted_score,
+                initial_independent_score.priority_weighted_delay,
+            ),
+            "excess_access_nights_total": (
+                checked.excess_access_nights_total,
+                initial_independent_score.excess_access_nights,
+            ),
+            "eclo_nights_total": (
+                checked.eclo_nights_total,
+                initial_independent_score.eclo_nights,
+            ),
+            "access_rows": (checked.access_rows, initial_independent_score.access_rows),
+            "occupancy_rows": (
+                checked.occupancy_rows,
+                initial_independent_score.occupancy_rows,
+            ),
+        }
+        for field, (primary_value, independent_value) in score_pairs.items():
+            if primary_value != independent_value:
+                score_mismatches.append(
+                    f"{field} primary={primary_value!r} independent={independent_value!r}"
+                )
+        if score_mismatches:
+            raise ValueError(
+                "initial submission failed independent score agreement: "
+                + "; ".join(score_mismatches)
             )
         initial_incumbent_dir = audit_output / "initial_incumbent"
         _copy_submission(source, initial_incumbent_dir)
@@ -909,6 +952,8 @@ def solve_staged_scenario(
             {
                 "provided": True,
                 "objective_score": initial_incumbent.objective_score,
+                "independent_score_checked": True,
+                "independent_score": asdict(initial_independent_score),
                 "submission_hash": initial_incumbent.submission_hash,
                 "selected_policy_conflicts": len(initial_incumbent_conflicts),
             }

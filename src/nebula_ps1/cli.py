@@ -275,6 +275,7 @@ def main() -> None:
             args.scenario,
             audit_output_dir=args.audit_output,
             initial_submission_dir=args.initial_submission,
+            initial_score_data_dir=args.data if args.initial_submission else None,
             heuristic_time_limit_seconds=args.heuristic_time_limit,
             local_repair_time_limit_seconds=args.local_repair_time_limit,
             fallback_time_limit_seconds=args.fallback_time_limit,

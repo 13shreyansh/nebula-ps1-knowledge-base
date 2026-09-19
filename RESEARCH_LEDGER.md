@@ -1160,6 +1160,16 @@ Confidence labels:
 - **Boundary:** Single seeds and short budgets; A's solver proof gap remains open inside the resume path even though the separate public certificate closes it externally.
 - **Confidence:** Very high in preservation and telemetry honesty; high in C proof; medium in A resume search efficiency.
 
+### `R137` Resume admission requires two score implementations
+
+- **Status:** Implemented and falsification-tested.
+- **Risk:** The staged controller previously checked a resumed incumbent with the full evaluator and closure policy, but its score floor still came from one implementation. A parser or objective bug shared by later selection could therefore protect the wrong numerical floor.
+- **Gate:** A resumed incumbent now requires the raw data directory. Before any solver call or audit copy, the separate raw-CSV scorer must agree with the primary evaluator on scenario, objective, delay component, excess, ECLO, access-row count, and occupancy-row count. Missing data or any disagreement raises an error. The accepted independent result is recorded in staged telemetry.
+- **Falsification:** A patched independent result reporting B=`0` with zero rows is rejected before a patched solver can run. A second test proves that omitting raw data also fails before solving. Protected B-001 still enters at `30.0` with full component agreement.
+- **Evidence:** All 156 regressions pass. The isolated portable validator still reproduces A-002=`137.9`, B-001=`30.0`, C-001=`62.7`, and the five A-001 failures; all 30 final-readiness checks remain true.
+- **Boundary:** Both scorers consume the same CSV files and published interpretation. This reduces implementation-correlation risk; it cannot reveal an organiser rule absent from the released materials or portal behavior.
+- **Confidence:** Very high in fail-closed invocation and mismatch detection; high in score-implementation diversity; low in unobserved portal-only semantics.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
