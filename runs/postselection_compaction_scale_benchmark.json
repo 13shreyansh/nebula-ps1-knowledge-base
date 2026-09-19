@@ -5,7 +5,7 @@
       "case": "zero_score_floor",
       "eclo_candidates_checked": 0,
       "eclo_candidates_pruned_by_exact_score_order": 0,
-      "elapsed_seconds": 0.155183,
+      "elapsed_seconds": 0.139174,
       "hash_changed": false,
       "idle_candidates_checked": 0,
       "independent_score": 0.0,
@@ -23,7 +23,7 @@
       "case": "reverse_positive_score",
       "eclo_candidates_checked": 1,
       "eclo_candidates_pruned_by_exact_score_order": 119,
-      "elapsed_seconds": 0.435346,
+      "elapsed_seconds": 0.38825,
       "hash_changed": true,
       "idle_candidates_checked": 0,
       "independent_score": 2864830.0,
@@ -41,5 +41,5 @@
   "dataset_hash": "9b8dd3824421989e5aae11044d8a5c40699a3a705accf2bb8bd7de8086bc6431",
   "horizon_weeks": 360,
   "strict_buffer_overlap_required": true,
-  "total_elapsed_seconds": 0.590529
+  "total_elapsed_seconds": 0.527424
 }

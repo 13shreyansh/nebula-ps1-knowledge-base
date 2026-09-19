@@ -817,6 +817,15 @@ Confidence labels:
 - **Runtime:** The two cases complete in about 0.56 seconds combined on this machine. Treat timing as local evidence, not a competition runtime guarantee.
 - **Confidence:** High for this scale regime; medium for denser multi-line inputs with many removable gaps.
 
+### `R099` Prediction distrust must not restore the harmful idle-gap tie rule
+
+- **Status:** Confirmed by fault injection on the frozen equal-score gap counterexample.
+- **Failure:** Once any predicted idle score disagreed with serialized evaluation, the normalizer correctly checked every candidate but broke equal actual-score ties by the smallest week number. That could reselect a leading gap and lose the later ECLO improvement the internal-gap rule was introduced to preserve.
+- **Correction:** Candidate selection now uses the same `(internal before leading, then week)` tie key as initial ranking, including after prediction distrust activates.
+- **Falsification:** Deliberately false predictions rank leading week 1 first and force exhaustive checking. The checked tie still selects internal week 5 at C=`1,820`, preserving the path that can reach C=`920`.
+- **Scope:** This changes only equal-score tie handling under a predictor mismatch. All retained audits keep the same scores and hashes.
+- **Confidence:** High.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

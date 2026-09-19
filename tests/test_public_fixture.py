@@ -1349,6 +1349,30 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(final.objective_score, 920.0)
             self.assertEqual(independently_score(data, final_dir).objective_score, 920.0)
 
+    def test_idle_gap_tie_stays_internal_after_prediction_mismatch(self) -> None:
+        data = ROOT / "fixtures" / "independent_idle_tie_v1"
+        source = ROOT / "fixtures" / "independent_idle_tie_v1_source_c"
+        instance = load_instance(data)
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "nebula_ps1.idle_compact._predicted_objective",
+            side_effect=lambda _instance, _access, gap_week, **_kwargs: (
+                0.0 if gap_week == 1 else 1.0
+            ),
+        ):
+            idle_dir, idle, report = best_idle_week_compaction_sequence(
+                instance,
+                source,
+                Path(temporary) / "idle",
+                forbid_buffer_overlap=True,
+                allow_equal=True,
+            )
+        self.assertIsNotNone(idle_dir)
+        self.assertIsNotNone(idle)
+        self.assertTrue(report["score_prediction_untrusted"])
+        self.assertGreater(report["score_prediction_mismatches"], 0)
+        self.assertEqual(report["rounds"][0]["selected_gap_week"], 5)
+        self.assertEqual(idle.objective_score, 1820.0)
+
     def test_idle_gap_greedy_search_matches_exhaustive_composition(self) -> None:
         audit = json.loads(
             (ROOT / "runs" / "idle_gap_search_audit.json").read_text(

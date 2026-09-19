@@ -180,9 +180,10 @@ def best_idle_week_compaction_sequence(
             break
         round_best_dir: Path | None = None
         round_best: Evaluation | None = None
+        round_best_rank_key: tuple[int, int] | None = None
         for candidate_index, (
             predicted_score,
-            _,
+            leading_gap,
             gap_week,
         ) in enumerate(ranked):
             score_cannot_qualify = (
@@ -227,10 +228,14 @@ def best_idle_week_compaction_sequence(
                 or candidate.objective_score < round_best.objective_score
                 or (
                     candidate.objective_score == round_best.objective_score
-                    and gap_week < int(round_record["selected_gap_week"])
+                    and (
+                        round_best_rank_key is None
+                        or (leading_gap, gap_week) < round_best_rank_key
+                    )
                 )
             ):
                 round_best_dir, round_best = candidate_dir, candidate
+                round_best_rank_key = (leading_gap, gap_week)
                 round_record["selected_gap_week"] = gap_week
                 round_record["selected_score"] = candidate.objective_score
             if candidate_is_acceptable and not prediction_untrusted:

@@ -1159,3 +1159,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Positive result: C=`2,880,360` improves to dual-scored, strict-clean C=`2,864,830`; exact score ordering checks one ECLO candidate and prunes 119. No idle candidate is applicable.
 - Runtime: 0.56 seconds combined in this local run. This is evidence against prohibitive overhead for this fixture, not a guarantee for unknown competition instances.
 - Regression status: all 100 tests pass. No official attempt was used.
+
+### E123: Fault-injected idle predictions retain the safe tie rule
+
+- Timestamp: 2026-09-19 09:34:09 +08
+- Adversarial setup: on the frozen C=`2,730` equal-gap fixture, inject wrong predicted scores that rank leading week 1 before internal week 5 and trigger prediction distrust.
+- Preserved failure: the old exhaustive fallback compared tied checked candidates by week number and would keep week 1, despite internal week 5 being the ECLO-unlocking choice.
+- Correction: checked equal-score candidates now retain the internal-before-leading ranking key after prediction mismatch.
+- Result: exhaustive fallback selects week 5 at checked C=`1,820`; the unmodified predictor audits and all retained final selections preserve their scores and hashes.
+- Regression status: all 101 tests pass.
+- Official protection: no official attempt was used.
