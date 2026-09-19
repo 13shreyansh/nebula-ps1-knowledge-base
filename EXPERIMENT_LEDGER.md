@@ -1774,3 +1774,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Independent replay: all four successful schedules have zero hard and strict conflicts, and raw-CSV scoring exactly matches `229340`, `145920`, `12435.8`, and `349`; row counts are complete.
 - Conclusion: neither component count nor equal division is a safe router. Decomposition can dominate a connected-search bottleneck, rescue a case without proving or matching its larger-budget quality, or fail where the monolith immediately proves. The safest production pattern is incumbent-preserving candidate competition with full external gates, not exclusive structural routing.
 - Measurement boundary: nominal allowances are still not CPU accounting; observed wall times include model construction and early exits. No official score or portal state changed.
+
+### E188: Incumbent-preserving candidate portfolio implementation checkpoint
+
+- Timestamp: 2026-09-19 12:56:07 +08.
+- Policy: admit an optional incumbent, monolithic result, and genuinely multi-component decomposed result only after exact three-file structure, full evaluator feasibility, selected strict-closure policy, and independent raw-CSV score/component/row-count agreement.
+- Selection: minimize validated primary objective. Exact ties preserve the initial incumbent, then monolithic, then decomposed, preventing schedule churn without score evidence. One-component decomposition is skipped because it repeats the same staged search without diversity.
+- Failure behavior: each policy failure remains in the audit with exception type, message, and wall time. A failed or malformed lower-looking candidate is not admitted. If no candidate survives, a failure report is written and nothing is published.
+- Publication: the selected candidate uses the fault-tested atomic publisher and is externally gated again after publication. The portfolio report changes from `staged` to `published` only after the final hash matches.
+- Focused falsification: mocked policies select valid C=`11432` over valid C=`12435.8`; a forged score-zero result missing `RESULTS.csv` is rejected and `12435.8` preserved; the public one-component C case preserves the exact incumbent on a tie and never calls decomposition.
+- Release replay: 186/186 regressions pass in 10.296 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true. No official package or portal state changed.
+- Remaining boundary: policy functions were fault-injected against real checked artifacts, but the new controller has not yet completed an unmocked multi-policy run. Its runtime is additive and may be inappropriate under a hard global deadline unless wrapped by an external budget.

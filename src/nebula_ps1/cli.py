@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 
+from .candidate_portfolio import solve_candidate_portfolio
 from .evaluate import evaluate_submission
 from .flexible_solver import solve_flexible_supply_relaxation
 from .independent_score import independently_score
@@ -147,6 +148,25 @@ def main() -> None:
     staged_parser.add_argument("--fallback-attempts", type=int, default=2)
     staged_parser.add_argument("--closure-rounds", type=int, default=500)
     staged_parser.add_argument("--strict-buffer-overlap", action="store_true")
+    candidate_parser = subparsers.add_parser(
+        "solve-candidate-portfolio",
+        help="retain the best fully gated incumbent, monolithic, or decomposed candidate",
+    )
+    candidate_parser.add_argument("--data", required=True)
+    candidate_parser.add_argument("--output", required=True)
+    candidate_parser.add_argument("--audit-output")
+    candidate_parser.add_argument("--initial-submission")
+    candidate_parser.add_argument("--scenario", choices=("A", "B", "C"), required=True)
+    candidate_parser.add_argument("--heuristic-time-limit", type=float, default=3.0)
+    candidate_parser.add_argument("--local-repair-time-limit", type=float, default=2.0)
+    candidate_parser.add_argument("--fallback-time-limit", type=float, default=5.0)
+    candidate_parser.add_argument("--verification-time-limit", type=float, default=10.0)
+    candidate_parser.add_argument("--workers", type=int, default=1)
+    candidate_parser.add_argument("--seed", type=int, default=1)
+    candidate_parser.add_argument("--heuristic-attempts", type=int, default=1)
+    candidate_parser.add_argument("--fallback-attempts", type=int, default=1)
+    candidate_parser.add_argument("--closure-rounds", type=int, default=1000)
+    candidate_parser.add_argument("--strict-buffer-overlap", action="store_true")
     staged_c_parser = subparsers.add_parser(
         "solve-staged-c",
         help="construct a guarded A fallback, then verify and improve it under Scenario C",
@@ -281,6 +301,26 @@ def main() -> None:
             fallback_time_limit_seconds=args.fallback_time_limit,
             verification_time_limit_seconds=args.verification_time_limit,
             verification_round_time_limit_seconds=args.verification_round_time_limit,
+            workers=args.workers,
+            seed=args.seed,
+            heuristic_attempts=args.heuristic_attempts,
+            fallback_attempts=args.fallback_attempts,
+            closure_round_limit=args.closure_rounds,
+            forbid_buffer_overlap=args.strict_buffer_overlap,
+        )
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return
+    if args.command == "solve-candidate-portfolio":
+        report = solve_candidate_portfolio(
+            args.data,
+            args.output,
+            args.scenario,
+            audit_output_dir=args.audit_output,
+            initial_submission_dir=args.initial_submission,
+            heuristic_time_limit_seconds=args.heuristic_time_limit,
+            local_repair_time_limit_seconds=args.local_repair_time_limit,
+            fallback_time_limit_seconds=args.fallback_time_limit,
+            verification_time_limit_seconds=args.verification_time_limit,
             workers=args.workers,
             seed=args.seed,
             heuristic_attempts=args.heuristic_attempts,
