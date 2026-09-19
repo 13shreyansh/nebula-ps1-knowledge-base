@@ -1,0 +1,15 @@
+activity_id,access_seq,week,eclo,access_night
+IC12,1,1,1,1
+IC12,2,2,1,1
+IC23,1,1,1,1
+IC23,2,2,1,1
+IC34,1,1,1,1
+IC34,2,2,1,1
+IPC1,1,1,1,1
+IPC1,2,2,1,1
+IPC2,1,1,1,1
+IPC2,2,2,1,1
+IPC3,1,1,1,1
+IPC3,2,2,1,1
+IPC4,1,1,1,1
+IPC4,2,2,1,1

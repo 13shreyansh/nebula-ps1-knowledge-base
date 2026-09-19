@@ -1,0 +1,9 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+K527,ICB Irregular coupled IC23,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,C,1
+K539,ICB Irregular coupled IPC4,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,PC,1
+K517,ICB Irregular coupled IPM6,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-29,1,PM,1
+K538,ICB Irregular coupled IPC3,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,PC,1
+K512,ICB Irregular coupled IPC1,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,PC,1
+K508,ICB Irregular coupled IC12,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,C,1
+K513,ICB Irregular coupled IPC2,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,PC,1
+K510,ICB Irregular coupled IC34,2039-06-02,IrregularCoupled,ICB Non-live (Consist),3,2040-02-12,2040-01-15,1,C,1

@@ -1,0 +1,10 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+R0101,Z0101,ScaledSynthetic,SEC:LSX:J1B_N1C:EB,SEC:LSX:J1B_N1C:EB,3,2031-01-06,,3
+R0102,Z0102,ScaledSynthetic,SEC:LSX:N1C_N1D:WB,SEC:LSX:N1C_N1D:WB,2,2031-01-27,,2
+R0103,Z0103,ScaledSynthetic,SEC:LSX:J1A_J1B:EB,SEC:LSX:J1A_J1B:EB,1,2031-02-10,,1
+R0104,Z0104,ScaledSynthetic,SEC:LSY:J1B_S1C:WB,SEC:LSY:S1C_S1D:WB,2,2031-02-17,,2
+R0105,Z0104,ScaledSynthetic,SEC:LSY:S1C_S1D:WB,SEC:LSY:S1C_S1D:WB,1,2031-03-03,R0104,1
+R0106,Z0105,ScaledSynthetic,SEC:LSY:J1A_J1B:EB,SEC:LSY:J1A_J1B:EB,2,2031-03-10,,2
+R0107,Z0106,ScaledSynthetic,SEC:LSX:J1B_N1C:WB,SEC:LSX:N1C_N1D:WB,2,2031-03-24,,3
+R0108,Z0107,ScaledSynthetic,SEC:LSY:S1C_S1D:EB,SEC:LSY:S1C_S1D:EB,1,2031-04-07,,1
+R0109,Z0108,ScaledSynthetic,SEC:LSX:N1C_N1D:WB,SEC:LSX:N1C_N1D:WB,2,2031-01-27,,2

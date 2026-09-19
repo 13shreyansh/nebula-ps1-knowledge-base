@@ -1,0 +1,6 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+Z527,K520,Synthetic,SEC:L06:N022_N018:WB,SEC:L06:N022_N018:WB,2,2040-01-23,,2
+Z536,K526,Synthetic,SEC:L06:N022_N018:WB,SEC:L06:N022_N018:WB,2,2040-01-23,,2
+Z541,K524,Synthetic,SEC:L06:N008_N022:EB,SEC:L06:N008_N022:EB,3,2040-01-02,,3
+Z540,K514,Synthetic,SEC:L06:N008_N022:WB,SEC:L06:N022_N018:WB,2,2040-03-19,,3
+Z512,K523,Synthetic,SEC:L06:N016_N008:EB,SEC:L06:N016_N008:EB,1,2040-02-06,,1

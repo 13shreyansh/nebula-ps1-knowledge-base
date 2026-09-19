@@ -1,0 +1,2 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+IPM6,KIPM6,IrregularCoupled,SEC:LIB:I6_I7:EB,SEC:LIB:I6_I7:EB,3,2035-01-15,,3

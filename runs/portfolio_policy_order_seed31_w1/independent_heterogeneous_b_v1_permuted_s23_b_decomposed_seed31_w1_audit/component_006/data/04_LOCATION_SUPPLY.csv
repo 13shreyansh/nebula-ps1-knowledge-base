@@ -1,0 +1,76 @@
+location_id,location_kind,line_code,bound,supply_capacity
+PLAT:L01:N010:WB,platform,L01,WB,1
+PLAT:L07:N006:WB,platform,L07,WB,1
+SEC:L02:N019_N009:EB,tunnel sector,L02,EB,1
+SEC:L01:N008_N004:EB,tunnel sector,L01,EB,1
+SEC:L04:N013_N021:EB,tunnel sector,L04,EB,6
+SEC:L07:N001_N002:EB,tunnel sector,L07,EB,1
+SEC:L02:N023_N020:EB,tunnel sector,L02,EB,1
+SEC:L06:N008_N022:WB,tunnel sector,L06,WB,1
+PLAT:L07:N007:WB,platform,L07,WB,1
+PLAT:L01:N004:WB,platform,L01,WB,1
+PLAT:L03:N006:EB,platform,L03,EB,1
+PLAT:L02:N009:EB,platform,L02,EB,1
+PLAT:L06:N008:WB,platform,L06,WB,1
+PLAT:L05:N012:EB,platform,L05,EB,1
+SEC:L01:N008_N004:WB,tunnel sector,L01,WB,1
+SEC:L07:N006_N007:EB,tunnel sector,L07,EB,1
+PLAT:L01:N004:EB,platform,L01,EB,1
+PLAT:L03:N011:WB,platform,L03,WB,1
+SEC:L07:N006_N007:WB,tunnel sector,L07,WB,1
+SEC:L03:N007_N011:WB,tunnel sector,L03,WB,1
+PLAT:L06:N018:EB,platform,L06,EB,1
+SEC:L03:N011_N003:WB,tunnel sector,L03,WB,1
+PLAT:L07:N001:WB,platform,L07,WB,1
+SEC:L01:N016_N008:WB,tunnel sector,L01,WB,1
+PLAT:L01:N016:EB,platform,L01,EB,1
+PLAT:L01:N016:WB,platform,L01,WB,1
+PLAT:L06:N022:EB,platform,L06,EB,1
+PLAT:L02:N017:EB,platform,L02,EB,1
+SEC:L01:N004_N010:EB,tunnel sector,L01,EB,1
+PLAT:L07:N006:EB,platform,L07,EB,1
+SEC:L01:N016_N008:EB,tunnel sector,L01,EB,1
+SEC:L02:N015_N014:EB,tunnel sector,L02,EB,1
+PLAT:L03:N011:EB,platform,L03,EB,1
+PLAT:L07:N002:EB,platform,L07,EB,1
+SEC:L03:N007_N011:EB,tunnel sector,L03,EB,1
+PLAT:L06:N018:WB,platform,L06,WB,1
+PLAT:L07:N002:WB,platform,L07,WB,1
+SEC:L03:N006_N007:WB,tunnel sector,L03,WB,1
+SEC:L05:N012_N005:EB,tunnel sector,L05,EB,1
+PLAT:L03:N006:WB,platform,L03,WB,1
+SEC:L07:N001_N002:WB,tunnel sector,L07,WB,1
+PLAT:L04:N013:EB,platform,L04,EB,6
+PLAT:L01:N008:EB,platform,L01,EB,1
+PLAT:L01:N008:WB,platform,L01,WB,1
+PLAT:L06:N022:WB,platform,L06,WB,1
+PLAT:L03:N007:WB,platform,L03,WB,1
+PLAT:L06:N008:EB,platform,L06,EB,1
+SEC:L06:N016_N008:WB,tunnel sector,L06,WB,1
+PLAT:L02:N014:EB,platform,L02,EB,1
+PLAT:L06:N016:EB,platform,L06,EB,1
+SEC:L06:N022_N018:WB,tunnel sector,L06,WB,1
+SEC:L02:N009_N015:EB,tunnel sector,L02,EB,1
+SEC:L07:N007_N001:WB,tunnel sector,L07,WB,1
+PLAT:L03:N003:EB,platform,L03,EB,1
+SEC:L06:N008_N022:EB,tunnel sector,L06,EB,1
+PLAT:L06:N016:WB,platform,L06,WB,1
+PLAT:L02:N019:EB,platform,L02,EB,1
+SEC:L02:N017_N023:EB,tunnel sector,L02,EB,1
+SEC:L07:N007_N001:EB,tunnel sector,L07,EB,1
+PLAT:L02:N023:EB,platform,L02,EB,1
+SEC:L03:N006_N007:EB,tunnel sector,L03,EB,1
+PLAT:L04:N021:EB,platform,L04,EB,6
+PLAT:L02:N015:EB,platform,L02,EB,1
+PLAT:L05:N005:EB,platform,L05,EB,1
+SEC:L02:N014_N017:EB,tunnel sector,L02,EB,1
+PLAT:L03:N007:EB,platform,L03,EB,1
+PLAT:L03:N003:WB,platform,L03,WB,1
+PLAT:L07:N007:EB,platform,L07,EB,1
+PLAT:L02:N020:EB,platform,L02,EB,1
+SEC:L01:N004_N010:WB,tunnel sector,L01,WB,1
+PLAT:L07:N001:EB,platform,L07,EB,1
+SEC:L06:N016_N008:EB,tunnel sector,L06,EB,1
+PLAT:L01:N010:EB,platform,L01,EB,1
+SEC:L06:N022_N018:EB,tunnel sector,L06,EB,1
+SEC:L03:N011_N003:EB,tunnel sector,L03,EB,1

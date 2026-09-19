@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.115
+version: 0.8.117
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -362,7 +362,7 @@ The protected public answer keys are in `deliverables/public/A`, `B`, and `C`. E
 
 Upload-ready copies are generated only in `deliverables/final-submission`. Its manifest proves that every archived member matches the protected official incumbent bytes. Do not use the historical generic ZIPs under `deliverables/validator`: `A.zip` is the failed A-001 artifact, and the unnumbered B/C archives are not the confirmed uploads. Packaging does not authorize or perform a portal submission.
 
-Before any user-authorized upload, run `PYTHONPATH=src .venv/bin/python scripts/audit_final_submission_readiness.py` and require `deliverables/final-submission/READINESS.json` to report `all_ready: true`. The gate also verifies the preserved official-upload archive hashes and proves that their contained CSV bytes equal the final package. This is local verification only and consumes no portal attempt.
+Before any user-authorized upload, run `PYTHONPATH=src .venv/bin/python scripts/run_release_gates.py`. It serially runs the portable-validator verification and final-package audit; require 19 isolated checks, 30 package checks, the pinned archive hash, and `all_ready: true`. Serial execution is mandatory because concurrent validator rebuilds can race. This is local verification only and consumes no portal attempt.
 
 <a id="improvement"></a>
 
@@ -768,3 +768,5 @@ When sources conflict:
 | `0.8.113` | 2026-09-19 | Precommitted a proof-safe portfolio short circuit: skip decomposition only after a consistent monolithic full-instance proof, and abort on a lower-incumbent contradiction. |
 | `0.8.114` | 2026-09-19 | Real controls preserve proved B=`349` while reducing policy time 91.9%, and preserve decomposed C=`11,432` rescue after monolithic failure. |
 | `0.8.115` | 2026-09-19 | Precommitted a six-case, structure-stratified monolithic/decomposed order benchmark with fixed inputs, hashes, budgets, worker count, seed, and validation gates. |
+| `0.8.116` | 2026-09-19 | Decomposition proves all 6/6 frozen cases; monolithic proves 4/6, fails one, and loses one score comparison. Proof-first projected time falls 49.6%. |
+| `0.8.117` | 2026-09-19 | Added one serial release-gate command after concurrent validator rebuilds produced a transient false hash mismatch; the isolated rerun passed. |

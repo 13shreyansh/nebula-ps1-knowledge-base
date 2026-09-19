@@ -1,0 +1,8 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+K534,CBD Coupled deadline BC5,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,C,1
+K531,CBD Coupled deadline BPC2,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,PC,1
+K505,CBD Coupled deadline BPC1,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,PC,1
+K518,CBD Coupled deadline BC7,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,C,1
+K507,CBD Coupled deadline BPC4,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,PC,1
+K528,CBD Coupled deadline BC6,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,C,1
+K515,CBD Coupled deadline BPC3,2039-06-01,CoupledDeadline,CBD Non-live (Consist),3,2040-01-29,2040-01-15,1,PC,1

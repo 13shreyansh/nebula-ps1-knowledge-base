@@ -1,0 +1,8 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+Z525,K505,CoupledDeadline,SEC:L05:N012_N005:EB,SEC:L05:N012_N005:EB,3,2040-01-02,,3
+Z513,K531,CoupledDeadline,SEC:L05:N012_N005:EB,SEC:L05:N012_N005:EB,3,2040-01-02,,3
+Z521,K518,CoupledDeadline,SEC:L05:N012_N005:EB,SEC:L05:N012_N005:EB,3,2040-01-02,,3
+Z506,K528,CoupledDeadline,SEC:L05:N012_N005:EB,SEC:L05:N012_N005:EB,3,2040-01-02,,3
+Z542,K515,CoupledDeadline,SEC:L05:N012_N005:EB,SEC:L05:N012_N005:EB,3,2040-01-02,,3
+Z539,K534,CoupledDeadline,SEC:L05:N012_N005:EB,SEC:L05:N012_N005:EB,3,2040-01-02,,3
+Z537,K507,CoupledDeadline,SEC:L05:N012_N005:EB,SEC:L05:N012_N005:EB,3,2040-01-02,,3

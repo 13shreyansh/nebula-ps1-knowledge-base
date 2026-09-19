@@ -1,0 +1,9 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+Z0101,Scaled independent module 1 contract 1,2030-06-01,ScaledSynthetic,Non-live (Others),3,2031-06-22,2031-01-19,1,C,2
+Z0102,Scaled independent module 1 contract 2,2030-06-01,ScaledSynthetic,Non-live (Consist),2,2031-06-22,2031-02-09,1,PC,2
+Z0103,Scaled independent module 1 contract 3,2030-06-01,ScaledSynthetic,Live,1,2031-06-22,2031-02-16,1,PM,1
+Z0104,Scaled independent module 1 contract 4,2030-06-01,ScaledSynthetic,Non-live (Consist),2,2031-06-22,2031-03-09,1,C,2
+Z0105,Scaled independent module 1 contract 5,2030-06-01,ScaledSynthetic,Live,1,2031-06-22,2031-03-23,1,PC,2
+Z0106,Scaled independent module 1 contract 6,2030-06-01,ScaledSynthetic,Non-live (Others),3,2031-06-22,2031-04-06,1,C,2
+Z0107,Scaled independent module 1 contract 7,2030-06-01,ScaledSynthetic,Non-live (Others),2,2031-06-22,2031-04-13,1,PM,1
+Z0108,Scaled independent module 1 contract 8,2030-06-01,ScaledSynthetic,Non-live (Others),1,2031-06-22,2031-02-09,1,C,2

@@ -1911,3 +1911,21 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Frozen execution: run monolithic and decomposed policies independently on all six cases with 3/2/5/10-second stage limits, one worker, seed 31, one heuristic/fallback attempt, strict closure, full evaluator, and independent raw-CSV scoring.
 - Integrity: fixture hashes, activity counts, and component-size vectors are hard-coded before execution. Every failure is retained. The benchmark does not use public answers, portal feedback, target scores, or post-outcome case replacement.
 - Interpretation: six retained fixtures remain correlated with our synthetic corpus. Results may falsify an ordering rule but cannot justify learned routing or a universal A/B/C heuristic by themselves.
+
+### E203: Fixed benchmark favors additive proof first
+
+- Timestamp: 2026-09-19 13:25:31 +08.
+- Decomposed outcome: 6/6 candidates are hard-feasible, strict-clean, dual-scored, and globally proved. Monolithic outcome: four proved candidates, one failure, and one valid but unproved candidate.
+- Score comparison: four cases tie at the proved objective. Permuted heterogeneous B fails monolithically after 5.037 seconds while decomposition proves B=`349` in 5.557 seconds. Permuted heterogeneous C returns monolithic unproved `278` in 17.208 seconds while decomposition proves `250` in 15.165 seconds.
+- Timing counterfactual: stop an ordering only on a full proof. Across these fixed outcomes, monolithic-first would spend 45.304 seconds; decomposition-first would spend 22.812 seconds, a 49.6% reduction. This is a deterministic replay calculation over observed runs, not a prospective runtime guarantee.
+- Adversarial result: the B identifier/order permutation reverses the earlier apparent monolithic advantage. A scenario-only or component-count router is not robust enough; solver branching remains sensitive even with one worker and a fixed seed.
+- Decision evidence: use structural independence itself as the first-policy reason. If decomposition proves the additive global optimum, stop. If it fails or remains unproved, retain monolithic as the independent fallback. Do not learn from six labels or delete either policy.
+- Boundary: cases are synthetic and correlated; wall times are single-host, single-order observations. The benchmark contacts no portal and changes no official package or score.
+
+### E204: Concurrent release-gate execution is invalid
+
+- Timestamp: 2026-09-19 13:27:08 +08.
+- Failure retained: running the full regression and portable-validator verification concurrently caused the deterministic-build test to observe transient archive hash `391bc67c…` while another process rebuilt the shared file. The standalone 195-test process passed, but the combined release gate was rejected.
+- Falsification: an immediate serial rerun passed 195 regressions and all 19 isolated-validator checks with canonical hash `495d4ef7…`; the subsequent serial readiness audit passed all 30 checks. This supports a file race, not archive nondeterminism, but does not erase the failed concurrent run.
+- Correction: `scripts/run_release_gates.py` runs the two mutating/read-only gate phases serially and verifies their machine-readable results. Future release claims must use this command rather than parallel orchestration.
+- Official boundary: no portal interaction, score change, or package-byte change occurred.

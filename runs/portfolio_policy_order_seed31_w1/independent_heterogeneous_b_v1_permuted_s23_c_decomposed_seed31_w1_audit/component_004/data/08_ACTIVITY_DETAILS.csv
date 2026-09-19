@@ -1,0 +1,6 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+Z533,K529,PostPrecedenceContractTradeoff,SEC:L03:N011_N003:EB,SEC:L03:N011_N003:EB,1,2040-01-02,Z515,1
+Z517,K537,PostPrecedenceContractTradeoff,SEC:L07:N007_N001:EB,SEC:L07:N007_N001:EB,3,2040-01-09,,1
+Z505,K511,PostPrecedenceContractTradeoff,SEC:L07:N007_N001:EB,SEC:L07:N007_N001:EB,1,2040-01-09,,1
+Z515,K519,PostPrecedenceContractTradeoff,SEC:L03:N007_N011:WB,SEC:L03:N011_N003:WB,1,2040-01-02,,1
+Z531,K529,PostPrecedenceContractTradeoff,SEC:L03:N007_N011:WB,SEC:L03:N011_N003:WB,1,2040-01-02,Z505,1

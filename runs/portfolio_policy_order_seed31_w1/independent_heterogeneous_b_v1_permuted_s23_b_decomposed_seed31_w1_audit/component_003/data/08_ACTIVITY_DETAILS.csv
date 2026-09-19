@@ -1,0 +1,8 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+Z504,K508,IrregularCoupled,SEC:L02:N019_N009:EB,SEC:L02:N009_N015:EB,3,2040-01-02,,3
+Z514,K539,IrregularCoupled,SEC:L02:N014_N017:EB,SEC:L02:N014_N017:EB,3,2040-01-02,,3
+Z520,K527,IrregularCoupled,SEC:L02:N009_N015:EB,SEC:L02:N015_N014:EB,3,2040-01-02,,3
+Z523,K510,IrregularCoupled,SEC:L02:N015_N014:EB,SEC:L02:N014_N017:EB,3,2040-01-02,,3
+Z524,K513,IrregularCoupled,SEC:L02:N009_N015:EB,SEC:L02:N009_N015:EB,3,2040-01-02,,3
+Z528,K512,IrregularCoupled,SEC:L02:N019_N009:EB,SEC:L02:N019_N009:EB,3,2040-01-02,,3
+Z530,K538,IrregularCoupled,SEC:L02:N015_N014:EB,SEC:L02:N015_N014:EB,3,2040-01-02,,3

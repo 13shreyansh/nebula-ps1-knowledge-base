@@ -1,0 +1,229 @@
+{
+  "cases": [
+    {
+      "activities": 72,
+      "attempts": [
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_multimodule_tradeoff_v1_a_monolithic_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 126.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_multimodule_tradeoff_v1_a_monolithic_seed31_w1",
+          "policy": "monolithic",
+          "status": "accepted",
+          "submission_hash": "e04335f0f167e2734c209eb599d9275b05dee0d75f4fdff5bca9a7c67be5c40b",
+          "wall_time_seconds": 1.5101291669998318
+        },
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_multimodule_tradeoff_v1_a_decomposed_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 126.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_multimodule_tradeoff_v1_a_decomposed_seed31_w1",
+          "policy": "decomposed",
+          "status": "accepted",
+          "submission_hash": "7068786d6e45744c36a0c015aea16122a699c7086142ced24c37eba0f7167fd8",
+          "wall_time_seconds": 1.4753630420018453
+        }
+      ],
+      "component_sizes": [
+        45,
+        9,
+        9,
+        9
+      ],
+      "dataset_hash": "3220b2c715aaf57df46d10570ed0de9b6b79a1900e26d6df9c342e760ab9a293",
+      "fixture": "independent_multimodule_tradeoff_v1",
+      "scenario": "A"
+    },
+    {
+      "activities": 72,
+      "attempts": [
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_scaled_m8_a_monolithic_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 56.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_scaled_m8_a_monolithic_seed31_w1",
+          "policy": "monolithic",
+          "status": "accepted",
+          "submission_hash": "bdef07a5401dc1f8f0e12ca9f47f3edd798d5c082386bfe78075bb95dfb90e14",
+          "wall_time_seconds": 0.38795441600086633
+        },
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_scaled_m8_a_decomposed_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 56.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_scaled_m8_a_decomposed_seed31_w1",
+          "policy": "decomposed",
+          "status": "accepted",
+          "submission_hash": "bdef07a5401dc1f8f0e12ca9f47f3edd798d5c082386bfe78075bb95dfb90e14",
+          "wall_time_seconds": 0.3958086249913322
+        }
+      ],
+      "component_sizes": [
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9
+      ],
+      "dataset_hash": "4f28846aabe8ba18a9f2c146e441929641782b50a2728789c7cae459937defc2",
+      "fixture": "independent_scaled_m8",
+      "scenario": "A"
+    },
+    {
+      "activities": 8,
+      "attempts": [
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_irregular_coupled_b_v1_b_monolithic_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 122.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_irregular_coupled_b_v1_b_monolithic_seed31_w1",
+          "policy": "monolithic",
+          "status": "accepted",
+          "submission_hash": "0167ab506ba7e8f2056b37de6ef895139e6a0ba7e8902bb53f6c987c6a57fe48",
+          "wall_time_seconds": 0.034647500011487864
+        },
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_irregular_coupled_b_v1_b_decomposed_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 122.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_irregular_coupled_b_v1_b_decomposed_seed31_w1",
+          "policy": "decomposed",
+          "status": "accepted",
+          "submission_hash": "34222d559967a21995e416f48be4f826dc4bbf3718b10ffa575550c0d14e6d4a",
+          "wall_time_seconds": 0.036311541000031866
+        }
+      ],
+      "component_sizes": [
+        7,
+        1
+      ],
+      "dataset_hash": "2ceb2a7c769ea594e36d5b42a622626e9e512b03b5dea87179e6b77ab2a422da",
+      "fixture": "independent_irregular_coupled_b_v1",
+      "scenario": "B"
+    },
+    {
+      "activities": 42,
+      "attempts": [
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_heterogeneous_b_v1_permuted_s23_b_monolithic_seed31_w1_audit",
+          "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+          "error_type": "RuntimeError",
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_heterogeneous_b_v1_permuted_s23_b_monolithic_seed31_w1",
+          "policy": "monolithic",
+          "status": "failed",
+          "wall_time_seconds": 5.036605125002097
+        },
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_heterogeneous_b_v1_permuted_s23_b_decomposed_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 349.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_heterogeneous_b_v1_permuted_s23_b_decomposed_seed31_w1",
+          "policy": "decomposed",
+          "status": "accepted",
+          "submission_hash": "e3cd8a675e9193ef8abff37ce6a0e097317482c3b198fad9524468db92e6120d",
+          "wall_time_seconds": 5.556772041993099
+        }
+      ],
+      "component_sizes": [
+        13,
+        7,
+        7,
+        5,
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "dataset_hash": "2aad7853acbd3dfc945d8b8600bcf3d44e7776c95b7c760f9e949080e6dc71f5",
+      "fixture": "independent_heterogeneous_b_v1_permuted_s23",
+      "scenario": "B"
+    },
+    {
+      "activities": 4,
+      "attempts": [
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_eclo_long_access_v1_c_monolithic_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 14580.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_eclo_long_access_v1_c_monolithic_seed31_w1",
+          "policy": "monolithic",
+          "status": "accepted",
+          "submission_hash": "b9c3f8113b73d70121f646cb0a98a59caaac8a8156a7b743c8c561500010b314",
+          "wall_time_seconds": 0.4039506249973783
+        },
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_eclo_long_access_v1_c_decomposed_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 14580.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_eclo_long_access_v1_c_decomposed_seed31_w1",
+          "policy": "decomposed",
+          "status": "accepted",
+          "submission_hash": "663ac10f9a16db3bb6b857583212ac59240fee8f6e9271c92a7b79f358054e0f",
+          "wall_time_seconds": 0.18195670799468644
+        }
+      ],
+      "component_sizes": [
+        2,
+        2
+      ],
+      "dataset_hash": "06660e467be28c897c74d57088ed5360fcb3471aa2d847b6950174f536b9a1cb",
+      "fixture": "independent_eclo_long_access_v1",
+      "scenario": "C"
+    },
+    {
+      "activities": 42,
+      "attempts": [
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_heterogeneous_b_v1_permuted_s23_c_monolithic_seed31_w1_audit",
+          "global_optimality_proved": false,
+          "objective_score": 278.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_heterogeneous_b_v1_permuted_s23_c_monolithic_seed31_w1",
+          "policy": "monolithic",
+          "status": "accepted",
+          "submission_hash": "1ae012a04f45cb8bd36eb9b7faca6f13bb6e02ba838bd0696a61d2e30630b1a4",
+          "wall_time_seconds": 17.208275666998816
+        },
+        {
+          "audit": "runs/portfolio_policy_order_seed31_w1/independent_heterogeneous_b_v1_permuted_s23_c_decomposed_seed31_w1_audit",
+          "global_optimality_proved": true,
+          "objective_score": 250.0,
+          "output": "runs/portfolio_policy_order_seed31_w1/independent_heterogeneous_b_v1_permuted_s23_c_decomposed_seed31_w1",
+          "policy": "decomposed",
+          "status": "accepted",
+          "submission_hash": "62b6c7fd49e494d7133f13b41b9d67b13825efeaea9d391c1ea4971e0823d3c4",
+          "wall_time_seconds": 15.165388541994616
+        }
+      ],
+      "component_sizes": [
+        13,
+        8,
+        7,
+        5,
+        5,
+        4
+      ],
+      "dataset_hash": "2aad7853acbd3dfc945d8b8600bcf3d44e7776c95b7c760f9e949080e6dc71f5",
+      "fixture": "independent_heterogeneous_b_v1_permuted_s23",
+      "scenario": "C"
+    }
+  ],
+  "policy": {
+    "closure_round_limit": 1000,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 5.0,
+    "forbid_buffer_overlap": true,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 3.0,
+    "local_repair_time_limit_seconds": 2.0,
+    "seed": 31,
+    "verification_time_limit_seconds": 10.0,
+    "workers": 1
+  },
+  "portal_used": false,
+  "protocol": "six structure-selected cases; both policies; fixed 3/2/5/10-second stage limits; one worker; seed 31; strict closure; no portal",
+  "status": "complete"
+}

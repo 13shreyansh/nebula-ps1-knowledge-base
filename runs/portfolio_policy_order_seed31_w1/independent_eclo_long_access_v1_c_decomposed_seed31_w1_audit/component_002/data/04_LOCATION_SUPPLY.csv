@@ -1,0 +1,13 @@
+location_id,location_kind,line_code,bound,supply_capacity
+PLAT:MPX:MPX1:EB,platform,MPX,EB,1
+PLAT:MPX:MPX1:WB,platform,MPX,WB,1
+PLAT:MPX:MPX2:EB,platform,MPX,EB,1
+PLAT:MPX:MPX2:WB,platform,MPX,WB,1
+PLAT:MPY:MPY1:EB,platform,MPY,EB,1
+PLAT:MPY:MPY1:WB,platform,MPY,WB,1
+PLAT:MPY:MPY2:EB,platform,MPY,EB,1
+PLAT:MPY:MPY2:WB,platform,MPY,WB,1
+SEC:MPX:MPX1_MPX2:EB,tunnel sector,MPX,EB,1
+SEC:MPX:MPX1_MPX2:WB,tunnel sector,MPX,WB,1
+SEC:MPY:MPY1_MPY2:EB,tunnel sector,MPY,EB,1
+SEC:MPY:MPY1_MPY2:WB,tunnel sector,MPY,WB,1

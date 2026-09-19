@@ -1,0 +1,7 @@
+activity_id,week,location_id,co_share_group
+IPM6,3,PLAT:LIB:I6:EB,g1
+IPM6,3,PLAT:LIB:I7:EB,g1
+IPM6,3,SEC:LIB:I6_I7:EB,g1
+IPM6,4,PLAT:LIB:I6:EB,g1
+IPM6,4,PLAT:LIB:I7:EB,g1
+IPM6,4,SEC:LIB:I6_I7:EB,g1

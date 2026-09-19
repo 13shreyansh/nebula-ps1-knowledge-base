@@ -1244,6 +1244,56 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertFalse(report["portal_used"])
 
+    def test_portfolio_policy_order_benchmark_is_pinned(self) -> None:
+        report = json.loads(
+            (
+                ROOT / "artifacts" / "portfolio-policy-order-seed31-w1.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(report["status"], "complete")
+        self.assertFalse(report["portal_used"])
+        self.assertEqual(len(report["cases"]), 6)
+        attempts = [
+            attempt
+            for case in report["cases"]
+            for attempt in case["attempts"]
+        ]
+        self.assertEqual(
+            [(attempt["policy"], attempt["status"]) for attempt in attempts],
+            [
+                ("monolithic", "accepted"),
+                ("decomposed", "accepted"),
+                ("monolithic", "accepted"),
+                ("decomposed", "accepted"),
+                ("monolithic", "accepted"),
+                ("decomposed", "accepted"),
+                ("monolithic", "failed"),
+                ("decomposed", "accepted"),
+                ("monolithic", "accepted"),
+                ("decomposed", "accepted"),
+                ("monolithic", "accepted"),
+                ("decomposed", "accepted"),
+            ],
+        )
+        decomposed = [
+            attempt for attempt in attempts if attempt["policy"] == "decomposed"
+        ]
+        monolithic = [
+            attempt for attempt in attempts if attempt["policy"] == "monolithic"
+        ]
+        self.assertTrue(
+            all(attempt["global_optimality_proved"] for attempt in decomposed)
+        )
+        self.assertEqual(
+            sum(attempt.get("global_optimality_proved", False) for attempt in monolithic),
+            4,
+        )
+        final_case = report["cases"][-1]
+        self.assertEqual(final_case["attempts"][0]["objective_score"], 278.0)
+        self.assertFalse(final_case["attempts"][0]["global_optimality_proved"])
+        self.assertEqual(final_case["attempts"][1]["objective_score"], 250.0)
+        self.assertTrue(final_case["attempts"][1]["global_optimality_proved"])
+
     def test_each_decomposition_edge_reason_has_a_mutation_killing_witness(self) -> None:
         witness_specs = {
             "predecessor": (
