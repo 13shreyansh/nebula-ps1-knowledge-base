@@ -59,6 +59,14 @@ def delay_score_from_completion_weeks(
 ) -> float:
     """Return official delay score for a complete contract-to-week mapping."""
 
+    expected = set(instance.projects)
+    observed = set(completion_by_contract)
+    if observed != expected:
+        raise ValueError(
+            "contract completion mapping mismatch: "
+            f"missing={sorted(expected - observed)}, "
+            f"extra={sorted(observed - expected)}"
+        )
     total_tenths = sum(
         contract_cost_tenths_at_week(instance, contract_number, week)
         for contract_number, week in completion_by_contract.items()

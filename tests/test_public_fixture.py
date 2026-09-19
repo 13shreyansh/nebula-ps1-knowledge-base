@@ -2206,6 +2206,10 @@ class PublicFixtureTests(unittest.TestCase):
                 contract_costs_tenths(self.instance, contract),
                 _contract_costs(self.instance, contract),
             )
+        incomplete = dict(completion_by_contract)
+        incomplete.pop(next(iter(incomplete)))
+        with self.assertRaisesRegex(ValueError, "contract completion mapping mismatch"):
+            delay_score_from_completion_weeks(self.instance, incomplete)
 
     def test_generated_work_footprints_match_all_public_occupancy_keys(self) -> None:
         access, occupancy, _ = load_submission(PACK / "03_submission_sample")
