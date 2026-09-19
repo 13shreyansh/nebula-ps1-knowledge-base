@@ -10,8 +10,8 @@ propagations: 4225
 integer_propagations: 11477
 restarts: 0
 lp_iterations: 746
-walltime: 0.042217
-usertime: 0.042217
+walltime: 0.043885
+usertime: 0.043885
 deterministic_time: 0.00773209
 gap_integral: 0
 solution_fingerprint: 0x5ae39700995f0bab

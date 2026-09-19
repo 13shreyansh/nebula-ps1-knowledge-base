@@ -2997,11 +2997,23 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(exclusion["status"], "INFEASIBLE")
             self.assertEqual(exclusion["tested_score_at_most"], score - 0.1)
             self.assertEqual(witness["score"], score)
+            self.assertTrue(witness["matches_pinned_official_archive_hash"])
             self.assertTrue(witness["matches_archived_successful_csv_bytes"])
             self.assertTrue(witness["three_score_calculations_agree"])
             self.assertEqual(optimum["lower_bound"], score)
             self.assertEqual(optimum["achieved_upper_bound"], score)
             self.assertEqual(optimum["absolute_gap"], 0.0)
+        sensitivity = certificate["sensitivity"]
+        self.assertEqual(sensitivity["A_without_pm_closure"]["score"], 130.9)
+        self.assertEqual(sensitivity["A_keep_A075_on_time"]["score"], 173.6)
+        self.assertEqual(
+            sensitivity["B_at_most_five_eclo"]["status"], "INFEASIBLE"
+        )
+        self.assertEqual(
+            sensitivity["C_without_two_week_eclo_window"]["score"], 30.0
+        )
+        self.assertEqual(sensitivity["C_at_most_three_eclo"]["score"], 98.2)
+        self.assertEqual(sensitivity["C_A036_on_time"]["status"], "INFEASIBLE")
 
     def test_official_a002_contract_score_is_reproduced(self) -> None:
         candidate = ROOT / "runs" / "a_official_a001_local_repair_pruned"

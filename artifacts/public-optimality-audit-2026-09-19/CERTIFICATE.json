@@ -547,7 +547,7 @@
       "three_score_calculations_agree": true
     }
   },
-  "generated_utc": "2026-09-19T03:30:16.749841+00:00",
+  "generated_utc": "2026-09-19T03:31:38.079628+00:00",
   "independent_cp_relaxations": {
     "A": {
       "best_bound": 137.9,
@@ -561,7 +561,7 @@
       "pm_exclusion_included": true,
       "score": 137.9,
       "status": "OPTIMAL",
-      "wall_seconds": 0.09774500000000001
+      "wall_seconds": 0.096039
     },
     "B": {
       "best_bound": 30.0,
@@ -575,7 +575,7 @@
       "pm_exclusion_included": true,
       "score": 30.0,
       "status": "OPTIMAL",
-      "wall_seconds": 0.042217000000000005
+      "wall_seconds": 0.043885
     },
     "C": {
       "best_bound": 62.7,
@@ -589,7 +589,7 @@
       "pm_exclusion_included": true,
       "score": 62.7,
       "status": "OPTIMAL",
-      "wall_seconds": 0.206323
+      "wall_seconds": 0.212591
     }
   },
   "input_audit": {
@@ -1086,7 +1086,7 @@
       "pm_exclusion_included": true,
       "score": 173.6,
       "status": "OPTIMAL",
-      "wall_seconds": 0.082774
+      "wall_seconds": 0.09804700000000001
     },
     "A_without_pm_closure": {
       "best_bound": 130.9,
@@ -1100,7 +1100,7 @@
       "pm_exclusion_included": false,
       "score": 130.9,
       "status": "OPTIMAL",
-      "wall_seconds": 0.079155
+      "wall_seconds": 0.071968
     },
     "B_at_most_five_eclo": {
       "branches": 0,
@@ -1112,7 +1112,7 @@
       "no_hints": true,
       "pm_exclusion_included": true,
       "status": "INFEASIBLE",
-      "wall_seconds": 0.011759
+      "wall_seconds": 0.013178
     },
     "C_A036_on_time": {
       "branches": 0,
@@ -1126,7 +1126,7 @@
       "no_hints": true,
       "pm_exclusion_included": true,
       "status": "INFEASIBLE",
-      "wall_seconds": 0.010152000000000001
+      "wall_seconds": 0.011096
     },
     "C_at_most_three_eclo": {
       "best_bound": 98.2,
@@ -1140,7 +1140,7 @@
       "pm_exclusion_included": true,
       "score": 98.2,
       "status": "OPTIMAL",
-      "wall_seconds": 0.18763100000000002
+      "wall_seconds": 0.209401
     },
     "C_without_two_week_eclo_window": {
       "best_bound": 30.0,
@@ -1154,7 +1154,7 @@
       "pm_exclusion_included": true,
       "score": 30.0,
       "status": "OPTIMAL",
-      "wall_seconds": 0.075838
+      "wall_seconds": 0.073795
     }
   },
   "strictly_better_infeasibility_checks": {
@@ -1169,7 +1169,7 @@
       "pm_exclusion_included": true,
       "status": "INFEASIBLE",
       "tested_score_at_most": 137.8,
-      "wall_seconds": 0.005795000000000001
+      "wall_seconds": 0.006307
     },
     "B": {
       "branches": 0,
@@ -1182,7 +1182,7 @@
       "pm_exclusion_included": true,
       "status": "INFEASIBLE",
       "tested_score_at_most": 29.9,
-      "wall_seconds": 0.011297000000000001
+      "wall_seconds": 0.011557000000000001
     },
     "C": {
       "branches": 1576,
@@ -1195,7 +1195,7 @@
       "pm_exclusion_included": true,
       "status": "INFEASIBLE",
       "tested_score_at_most": 62.6,
-      "wall_seconds": 0.041627000000000004
+      "wall_seconds": 0.04433
     }
   }
 }
