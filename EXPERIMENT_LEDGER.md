@@ -1198,3 +1198,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Interpretation: planned-start and precedence feasibility checks are active and did not expose a choice-order defect in this bounded family. This is not a proof for arbitrary schedules.
 - Regression status: all 104 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E127: Final release archives are separated from stale validator history
+
+- Timestamp: 2026-09-19 09:44:00 +08
+- Finding: historical `deliverables/validator/A.zip` is the infeasible A-001 artifact; unnumbered B/C ZIPs also have different archive bytes from the confirmed B-001/C-001 uploads. These remain historical evidence, not release files.
+- Packaging: deterministic ZIPs are now generated under `deliverables/final-submission` from the hash-pinned protected public A/B/C directories only. Each archive contains exactly `RESULTS.csv`, `SCHEDULE_ACCESS.csv`, and `SCHEDULE_OCCUPANCY.csv` at its root.
+- Verification: every archived member hash matches the official-incumbent public manifest. The final manifest records archive hashes `d003c6f1…` (A), `25b87dc9…` (B), and `a3e3419f…` (C), plus run IDs and scores.
+- Test correction: the first archive regression required the same member order as an unrelated tuple and failed all three archives. ZIP member order is not a submission rule; the corrected assertion requires exactly three unique required root names and preserves byte-hash verification.
+- Regression status: all 105 tests pass.
+- Authorization boundary: packaging is local and reversible; no portal interaction or attempt was used.

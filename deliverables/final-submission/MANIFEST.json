@@ -1,0 +1,59 @@
+{
+  "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+  "reference_validator_confirmed": true,
+  "scenarios": {
+    "A": {
+      "archive": "A.zip",
+      "archive_sha256": "d003c6f165a3bd3aa6addb03c5c16e691484b7ab442d09e3c7f12328e586b82d",
+      "file_sha256": {
+        "RESULTS.csv": "8fd5c1f0bd7712a30863e55e383d67a020339383bcea0aec290b78d166ec17f6",
+        "SCHEDULE_ACCESS.csv": "b648a4076393b451e1c4c935052568a13da84357323c11033042014e44006c4e",
+        "SCHEDULE_OCCUPANCY.csv": "e21719ee9f95fb44be54c3a796c333b6bfc2199d9d00020b390f762beafff810"
+      },
+      "members": [
+        "RESULTS.csv",
+        "SCHEDULE_ACCESS.csv",
+        "SCHEDULE_OCCUPANCY.csv"
+      ],
+      "official_score": 137.9,
+      "official_validator_run": "A-002",
+      "submission_hash": "8ecab02fa499d057b66faaec730698aa71d163297e3fe0e8c26c1693ace4f7eb"
+    },
+    "B": {
+      "archive": "B.zip",
+      "archive_sha256": "25b87dc99014d5320c959f14154b8a8dcef6e62172805c89bc9047faaafde90b",
+      "file_sha256": {
+        "RESULTS.csv": "400e72d4eca2a4210eba3cda7b51dc04a3b576201a7ecc09d1f1ca3514a9b06a",
+        "SCHEDULE_ACCESS.csv": "d0d6ffad0a9da9d8c4f123a20db22a5374b498510768a7c7a26867f423ca235d",
+        "SCHEDULE_OCCUPANCY.csv": "0aa2205675897905a3b52638e69ade2734729bee62a253b1b7427c4068544fa4"
+      },
+      "members": [
+        "RESULTS.csv",
+        "SCHEDULE_ACCESS.csv",
+        "SCHEDULE_OCCUPANCY.csv"
+      ],
+      "official_score": 30.0,
+      "official_validator_run": "B-001",
+      "submission_hash": "0b38e83c94b9e9a1dfb9c33d3ab9c3a7a8cc00e08dba6b8a561570ad3ebfd373"
+    },
+    "C": {
+      "archive": "C.zip",
+      "archive_sha256": "a3e3419f4f2cf9811548a7576109d2c6c108294dc75bd38d5fabb4c394373d91",
+      "file_sha256": {
+        "RESULTS.csv": "c4fcd7c7fddd6a46f17514a78e79e402bd4343ab28d9202794713e19e5f86a34",
+        "SCHEDULE_ACCESS.csv": "500f731d94344a1cf9a63b008ce8698443e11024b5a083cdcaa87cc55980f813",
+        "SCHEDULE_OCCUPANCY.csv": "10d2ceced386a5250aeb7ed4204a8fd33e2bb45881bd497cf8d0936cc0295ee6"
+      },
+      "members": [
+        "RESULTS.csv",
+        "SCHEDULE_ACCESS.csv",
+        "SCHEDULE_OCCUPANCY.csv"
+      ],
+      "official_score": 62.7,
+      "official_validator_run": "C-001",
+      "submission_hash": "30247f5773477ca3e26a0e0d1704ef2f7aecd1fb8efbda15c6f0aa9bb4047733"
+    }
+  },
+  "source_manifest": "../public/MANIFEST.json",
+  "warning": "Upload only after explicit user authorization; packaging is not submission."
+}

@@ -3746,6 +3746,45 @@ class PublicFixtureTests(unittest.TestCase):
                     expected["submission_hash"],
                 )
 
+    def test_final_submission_archives_match_protected_incumbents(self) -> None:
+        public = json.loads(
+            (ROOT / "deliverables" / "public" / "MANIFEST.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        final_root = ROOT / "deliverables" / "final-submission"
+        packaged = json.loads(
+            (final_root / "MANIFEST.json").read_text(encoding="utf-8")
+        )
+        self.assertTrue(packaged["reference_validator_confirmed"])
+        self.assertEqual(packaged["dataset_hash"], public["dataset_hash"])
+        for scenario in ("A", "B", "C"):
+            with self.subTest(scenario=scenario):
+                record = packaged["scenarios"][scenario]
+                expected = public["scenarios"][scenario]
+                archive_path = final_root / record["archive"]
+                self.assertEqual(
+                    hashlib.sha256(archive_path.read_bytes()).hexdigest(),
+                    record["archive_sha256"],
+                )
+                with zipfile.ZipFile(archive_path) as archive:
+                    self.assertEqual(len(archive.namelist()), len(SUBMISSION_FILES))
+                    self.assertEqual(set(archive.namelist()), set(SUBMISSION_FILES))
+                    archived_hashes = {
+                        name: hashlib.sha256(archive.read(name)).hexdigest()
+                        for name in archive.namelist()
+                    }
+                self.assertEqual(archived_hashes, expected["files"])
+                self.assertEqual(record["file_sha256"], expected["files"])
+                self.assertEqual(
+                    record["submission_hash"], expected["submission_hash"]
+                )
+                self.assertEqual(record["official_score"], expected["official_score"])
+                self.assertEqual(
+                    record["official_validator_run"],
+                    expected["official_validator_run"],
+                )
+
     def test_public_incumbents_bypass_strict_hedge_unchanged(self) -> None:
         manifest = json.loads(
             (ROOT / "deliverables" / "public" / "MANIFEST.json").read_text(

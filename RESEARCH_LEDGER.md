@@ -852,6 +852,15 @@ Confidence labels:
 - **Boundary:** Fixed activity block order and one omitted week per block remain controlled simplifications. Arbitrary overlapping access patterns are outside the normalizer's serialized ECLO precondition.
 - **Confidence:** High for the tested constrained family.
 
+### `R103` Historical validator ZIP names are unsafe release selectors
+
+- **Status:** Confirmed by archive hashes and the append-only official ledger.
+- **Risk:** `deliverables/validator/A.zip` is the failed A-001 upload, while A-002 is the confirmed A=`137.9` file. The unnumbered B/C ZIPs also differ from the confirmed B-001/C-001 upload archives. Selecting by the generic filenames could silently submit stale bytes.
+- **Control:** `scripts/package_final_submissions.py` deterministically archives only the protected `deliverables/public/{A,B,C}` files into `deliverables/final-submission`. Its manifest records archive hashes, member hashes, official run IDs, scores, and protected submission hashes.
+- **Verification:** Each final ZIP has exactly the three required root members; every archived member hash equals the protected public manifest. A regression recomputes both archive and member hashes.
+- **Boundary:** These are ready-to-inspect local packages. No portal upload is authorized or performed.
+- **Confidence:** Very high.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
