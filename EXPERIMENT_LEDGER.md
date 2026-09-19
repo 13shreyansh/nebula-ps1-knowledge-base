@@ -1969,3 +1969,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Failure control: identifier/row-order-permuted heterogeneous B produces no safe incumbent in 0.541 seconds. The failure is retained and emits no accepted candidate; its unchanged additive path separately proves `349`.
 - Portfolio implication: a proof-only probe can recover the 11.6× additive-first slowdown on the easy B case. On the hard permutation it adds about 0.54 seconds before decomposition rather than spending the old five-second full monolithic failure.
 - Integrity boundary: this is four fixed cases and seed behavior can vary. Production must retain the probe's valid candidate if unproved, run decomposition after failure/non-proof, and retain full monolithic fallback if neither earlier policy proves.
+
+### E210: B probe portfolio integration precommit
+
+- Timestamp: 2026-09-19 13:34:33 +08.
+- Multi-component B order: bounded monolithic probe → additive decomposition → full monolithic fallback. A full consistent proof skips later search; failure or a valid unproved candidate continues. Non-B multi-component and every one-component path remain unchanged.
+- Bound discipline: probe stage limits are `min(0.1/0.1/0.5/0.2, caller limits)`, with one attempt and the caller's worker/seed/closure policy. If the caller disables required stages or supplies nonpositive limits, the probe is explicitly skipped.
+- Candidate discipline: an unproved probe remains eligible but has lower exact-tie priority than initial incumbent, full monolithic, and decomposition. It cannot displace a lower candidate or transfer proof. All policies use isolated audit/output directories and identical external gates.
+- Precommitted branch tests: probe proof skips both later policies; probe failure reaches decomposed proof; two unproved candidates reach full monolithic proof; existing malformed, contradiction, programmer-error, and one-component cases remain covered.

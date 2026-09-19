@@ -156,18 +156,24 @@ def solve_candidate_portfolio(
                 f"lower_candidates={contradictory!r}"
             )
 
-    def run_monolithic() -> float | None:
-        monolithic_output = audit / "monolithic_submission"
+    def run_monolithic(
+        *,
+        policy: str = "monolithic",
+        priority: int = 1,
+        policy_options: dict[str, object] | None = None,
+    ) -> float | None:
+        options = common if policy_options is None else policy_options
+        monolithic_output = audit / f"{policy}_submission"
         started = time.perf_counter()
         try:
             monolithic_report = solve_staged_scenario(
                 instance,
                 monolithic_output,
                 scenario,
-                audit_output_dir=audit / "monolithic_audit",
+                audit_output_dir=audit / f"{policy}_audit",
                 initial_submission_dir=initial_submission_dir,
                 initial_score_data_dir=data_root if initial_submission_dir else None,
-                **common,
+                **options,
             )
             evaluation = _externally_gate_candidate(
                 instance,
@@ -178,11 +184,11 @@ def solve_candidate_portfolio(
             )
             proved = _primary_proof_telemetry(monolithic_report) is not None
             candidates.append(
-                (1, "monolithic", monolithic_output, evaluation, proved)
+                (priority, policy, monolithic_output, evaluation, proved)
             )
             attempts.append(
                 {
-                    "policy": "monolithic",
+                    "policy": policy,
                     "status": "accepted",
                     "outer_wall_time_seconds": time.perf_counter() - started,
                     "objective_score": evaluation.objective_score,
@@ -193,7 +199,7 @@ def solve_candidate_portfolio(
         except (RuntimeError, ValueError) as error:
             attempts.append(
                 {
-                    "policy": "monolithic",
+                    "policy": policy,
                     "status": "failed",
                     "outer_wall_time_seconds": time.perf_counter() - started,
                     "error_type": type(error).__name__,
@@ -202,7 +208,7 @@ def solve_candidate_portfolio(
             )
             return None
         if proved:
-            assert_proof_consistent("monolithic", evaluation.objective_score)
+            assert_proof_consistent(policy, evaluation.objective_score)
             return evaluation.objective_score
         return None
 
@@ -256,22 +262,88 @@ def solve_candidate_portfolio(
             return evaluation.objective_score
         return None
 
+    def append_proof_skip(
+        policy: str,
+        proof_policy: str,
+        proved_score: float,
+    ) -> None:
+        attempts.append(
+            {
+                "policy": policy,
+                "status": "skipped",
+                "reason": (
+                    f"{proof_policy} full-instance proof leaves no lower primary "
+                    f"objective for {policy} search to find"
+                ),
+                "proof_policy": proof_policy,
+                "proved_objective_score": proved_score,
+            }
+        )
+
     if len(components) > 1:
-        decomposed_proved_score = run_decomposed()
-        if decomposed_proved_score is None:
-            run_monolithic()
+        terminal_proof_score: float | None = None
+        terminal_proof_policy: str | None = None
+        if scenario == "B":
+            probe_enabled = (
+                heuristic_attempts >= 1
+                and fallback_attempts >= 1
+                and heuristic_time_limit_seconds > 0
+                and local_repair_time_limit_seconds > 0
+                and fallback_time_limit_seconds > 0
+                and verification_time_limit_seconds > 0
+            )
+            if probe_enabled:
+                probe_options = dict(common)
+                probe_options.update(
+                    {
+                        "heuristic_time_limit_seconds": min(
+                            0.1, heuristic_time_limit_seconds
+                        ),
+                        "local_repair_time_limit_seconds": min(
+                            0.1, local_repair_time_limit_seconds
+                        ),
+                        "fallback_time_limit_seconds": min(
+                            0.5, fallback_time_limit_seconds
+                        ),
+                        "verification_time_limit_seconds": min(
+                            0.2, verification_time_limit_seconds
+                        ),
+                        "heuristic_attempts": 1,
+                        "fallback_attempts": 1,
+                    }
+                )
+                terminal_proof_score = run_monolithic(
+                    policy="monolithic_probe",
+                    priority=3,
+                    policy_options=probe_options,
+                )
+                if terminal_proof_score is not None:
+                    terminal_proof_policy = "monolithic_probe"
+            else:
+                attempts.append(
+                    {
+                        "policy": "monolithic_probe",
+                        "status": "skipped",
+                        "reason": "caller policy disables the bounded B proof probe",
+                    }
+                )
+
+        if terminal_proof_score is None:
+            terminal_proof_score = run_decomposed()
+            if terminal_proof_score is not None:
+                terminal_proof_policy = "decomposed"
         else:
-            attempts.append(
-                {
-                    "policy": "monolithic",
-                    "status": "skipped",
-                    "reason": (
-                        "decomposed full-instance additive proof leaves no lower "
-                        "primary objective for monolithic search to find"
-                    ),
-                    "proof_policy": "decomposed",
-                    "proved_objective_score": decomposed_proved_score,
-                }
+            assert terminal_proof_policy is not None
+            append_proof_skip(
+                "decomposed", terminal_proof_policy, terminal_proof_score
+            )
+
+        if terminal_proof_score is None:
+            run_monolithic()
+        elif terminal_proof_policy != "monolithic":
+            assert terminal_proof_policy is not None
+            append_proof_skip(
+                "monolithic", terminal_proof_policy, terminal_proof_score
             )
     else:
         run_monolithic()
@@ -319,7 +391,7 @@ def solve_candidate_portfolio(
         ],
         "selection_rule": (
             "lowest fully gated objective; exact ties preserve initial incumbent, "
-            "then monolithic, then decomposed"
+            "then monolithic, decomposed, then bounded monolithic probe"
         ),
         "attempts": attempts,
         "selected_policy": selected_policy,
