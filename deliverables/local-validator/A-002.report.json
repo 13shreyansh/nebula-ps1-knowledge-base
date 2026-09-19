@@ -1,0 +1,180 @@
+{
+  "checked_rules": [
+    "schema",
+    "workload",
+    "planned_start",
+    "predecessor",
+    "horizon",
+    "occupancy_footprint",
+    "legal_mix",
+    "weekly_allocation",
+    "workfront",
+    "scenario_capacity",
+    "scenario_eclo",
+    "sample_consistent_closure_screen",
+    "results",
+    "objective_formula"
+  ],
+  "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+  "detail": {
+    "access_rows_scheduled": 192,
+    "capacity_hotspots": [],
+    "contracts": [
+      {
+        "complete_schedule": true,
+        "contract_number": "C001",
+        "delay_penalty": 0.0,
+        "earliness_days": 0,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-06-13"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C002",
+        "delay_penalty": 0.0,
+        "earliness_days": 0,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-07-04"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C003",
+        "delay_penalty": 0.0,
+        "earliness_days": 0,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-07-04"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C004",
+        "delay_penalty": 0.0,
+        "earliness_days": 7,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-07-18"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C005",
+        "delay_penalty": 0.0,
+        "earliness_days": 0,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-03-21"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C006",
+        "delay_penalty": 85.4,
+        "earliness_days": 0,
+        "overrun_days": 14,
+        "simulated_completion_date": "2027-07-18"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C007",
+        "delay_penalty": 0.0,
+        "earliness_days": 0,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-07-11"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C008",
+        "delay_penalty": 0.0,
+        "earliness_days": 0,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-07-18"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C009",
+        "delay_penalty": 0.0,
+        "earliness_days": 0,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-06-27"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C010",
+        "delay_penalty": 45.5,
+        "earliness_days": 0,
+        "overrun_days": 7,
+        "simulated_completion_date": "2027-05-23"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C011",
+        "delay_penalty": 0.0,
+        "earliness_days": 0,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-07-11"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C012",
+        "delay_penalty": 0.0,
+        "earliness_days": 21,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-06-20"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C013",
+        "delay_penalty": 0.0,
+        "earliness_days": 0,
+        "overrun_days": 0,
+        "simulated_completion_date": "2027-05-30"
+      },
+      {
+        "complete_schedule": true,
+        "contract_number": "C014",
+        "delay_penalty": 7.0,
+        "earliness_days": 0,
+        "overrun_days": 7,
+        "simulated_completion_date": "2027-07-25"
+      }
+    ],
+    "eclo_nights": 0,
+    "occupancy_rows": 928,
+    "strict_buffer_overlap": {
+      "additional_conflicts": [],
+      "enforced": false
+    }
+  },
+  "feasible": true,
+  "hard_violations": [],
+  "scenario": "A",
+  "soft_scores": {
+    "contracts_overrunning": 3,
+    "earliness_days_total": 28,
+    "eclo_nights_total": 0,
+    "excess_access_nights_total": 0,
+    "formula_version": "local-contract-completion-v1",
+    "independent_score_matches": true,
+    "objective_score": 137.9,
+    "overrun_days_total": 28,
+    "priority_overrun": {
+      "1": 0,
+      "2": 0,
+      "3": 28
+    },
+    "priority_weighted_score": 137.9,
+    "scenario": "A"
+  },
+  "submission_hash": "8ecab02fa499d057b66faaec730698aa71d163297e3fe0e8c26c1693ace4f7eb",
+  "validator": {
+    "closure_policy": "observed_standard",
+    "known_evidence": [
+      "A-001: five closure violations",
+      "A-002: feasible, 137.9",
+      "B-001: feasible, 30.0",
+      "C-001: feasible, 62.7"
+    ],
+    "name": "nebula-ps1-local-validator",
+    "origin": "local feasibility engine with independent raw-CSV score cross-check; not organiser source",
+    "reference_validator_confirmed": false,
+    "version": "1.0.0"
+  },
+  "warnings": [
+    "Local validation does not establish official acceptance or complete equivalence on hidden instances."
+  ]
+}

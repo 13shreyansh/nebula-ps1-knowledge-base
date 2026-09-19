@@ -1110,6 +1110,16 @@ Confidence labels:
 - **Boundary:** The instance remains small, has zero external buffers, and separates PM work spatially and temporally. It does not cover Live opposite-bound closures, interchanges, precedence, or large irregular graphs. The constructor's rejected complete hint is a retained limitation, not a success claim.
 - **Confidence:** Very high in the exact fixture optimum and five retained runs; high in bridge-safe repair on this asymmetric regime; medium-low in larger irregular hidden instances.
 
+### `R132` A portable validator is useful only with an explicit trust boundary
+
+- **Status:** Confirmed by source review, fault injection, deterministic packaging, and isolated replay.
+- **Risk found:** The first concurrent draft called itself an independent validator although feasibility deliberately reused the repository's evaluator. That wording overstated independence and could cause the team to mistake correlated local agreement for official confirmation.
+- **Correction:** Label it a portable local validator. Keep `reference_validator_confirmed=false` in every report. For every candidate accepted by the feasibility engine, independently reparse the raw CSVs and recompute delay, excess, ECLO, and the objective; any component mismatch becomes a hard `internal_consistency` failure and suppresses the score.
+- **Packaging:** A deterministic standard-library zipapp and source archive run with Python `-I -S`, require no repository or third-party package, reject malformed/unsafe flat ZIPs, and fail closed on parsing or diagnostic errors. The build manifest pins every source/archive hash.
+- **Evidence:** Nineteen focused validator regressions include a forced scorer disagreement. All 148 repository regressions pass. Isolated system Python 3.9.6 runs reproduce the organiser sample at `137.9`, reject A-001 with the five recorded closure failures, and reproduce accepted A-002/B-001/C-001 scores `137.9/30.0/62.7`. Extracted-source execution independently reproduces C=`62.7`.
+- **Boundary:** Both score implementations still encode our interpretation of the published formula, and feasibility remains correlated with production's evaluator. This package cannot reveal hidden portal rules, prove official acceptance, or prove optimality. It is a preflight and diagnostic tool only.
+- **Confidence:** Very high in reproducible packaging and fail-closed local behavior; high in published-instance score agreement; low in unobserved official-parser equivalence.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

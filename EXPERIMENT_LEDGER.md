@@ -1507,3 +1507,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Anti-copy evidence: selected hash `0167ab50…` differs from oracle `3d004c9d…`; access and occupancy bytes both differ. No oracle path, target score, protected hash, public identifier, or portal signal is available to the solver.
 - Boundary: small zero-buffer fixture; no Live/interchange/precedence interaction. Seed stability does not establish topology diversity.
 - Official protection: no portal interaction or attempt occurred; protected public artifacts and quotas are unchanged.
+
+### E158: Portable local validator gains an independent score gate
+
+- Timestamp: 2026-09-19 11:45:55 +08.
+- Origin: concurrently generated untracked files were treated as untrusted and excluded from earlier commits until source review and replay completed.
+- Audit correction: the first draft's “independent validator” wording was inaccurate because feasibility shares `evaluate.py`, `closure.py`, `topology.py`, and `instance.py` with the repository. Reports and documentation now state “local feasibility engine with independent raw-CSV score cross-check; not organiser source” and keep `reference_validator_confirmed=false`.
+- Fail-closed gate: an accepted schedule is reparsed and rescored through `independent_score.py`. Objective, delay, excess, and ECLO must all agree within `1e-9`; an injected mismatch produces a hard `internal_consistency` violation and removes `objective_score` and `formula_version`.
+- Portable evidence: deterministic zipapp hash `495d4ef7…` and source archive hash `a9684487…`; both include only standard-library modules and run under isolated system Python 3.9.6. Five replays reproduce sample A=`137.9`, reject A-001 with five closure failures, and accept A-002/B-001/C-001 at `137.9/30.0/62.7`. Extracted source reproduces C=`62.7`.
+- Regression: 19 focused validator tests and all 148 repository tests pass. The verifier regenerates the build, reports, hashes, test counts, and isolated evidence in one command.
+- Boundary: local validation, not a portal attempt, score improvement, official acceptance, or hidden-rule proof. Protected public files and quotas are unchanged.

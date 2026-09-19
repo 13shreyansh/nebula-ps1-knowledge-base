@@ -1,0 +1,46 @@
+{
+  "archive_sha256": "495d4ef700dbed2c7a55460ed0afaeacd7f950b08ec5fe6137c870f9b843f1a1",
+  "cases": [
+    {
+      "case": "organiser-sample-A",
+      "exit_code": 0,
+      "feasible": true,
+      "hard_violations": 0,
+      "score": 137.9
+    },
+    {
+      "case": "A-001",
+      "exit_code": 1,
+      "feasible": false,
+      "hard_violations": 5,
+      "score": null
+    },
+    {
+      "case": "A-002",
+      "exit_code": 0,
+      "feasible": true,
+      "hard_violations": 0,
+      "score": 137.9
+    },
+    {
+      "case": "B-001",
+      "exit_code": 0,
+      "feasible": true,
+      "hard_violations": 0,
+      "score": 30.0
+    },
+    {
+      "case": "C-001",
+      "exit_code": 0,
+      "feasible": true,
+      "hard_violations": 0,
+      "score": 62.7
+    }
+  ],
+  "full_regression_tests_passed": 148,
+  "generated_utc": "2026-09-19T03:46:56.303384+00:00",
+  "isolation": "separate directory, Python -I -S; no third-party site packages; portable and extracted-source executions",
+  "portal_used": false,
+  "runtime": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+  "validator_tests_passed": 19
+}
