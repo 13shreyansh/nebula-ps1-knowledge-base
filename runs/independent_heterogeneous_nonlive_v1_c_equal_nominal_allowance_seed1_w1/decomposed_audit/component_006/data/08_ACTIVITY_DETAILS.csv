@@ -1,0 +1,6 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+PCPFOLLOW,PCPKCHAIN,PostPrecedenceContractTradeoff,SEC:PCPLNY:PCPX2_PCPS3:WB,SEC:PCPLNY:PCPS3_PCPS4:WB,1,2040-01-02,PCPCOMP,1
+PCPPEER,PCPKCHAIN,PostPrecedenceContractTradeoff,SEC:PCPLNY:PCPS3_PCPS4:EB,SEC:PCPLNY:PCPS3_PCPS4:EB,1,2040-01-02,PCPPREPEER,1
+PCPCOMP,PCPKCOMP,PostPrecedenceContractTradeoff,SEC:PCPLNX:PCPX2_PCPN3:EB,SEC:PCPLNX:PCPX2_PCPN3:EB,1,2040-01-09,,1
+PCPDIRECT,PCPKDIRECT,PostPrecedenceContractTradeoff,SEC:PCPLNX:PCPX2_PCPN3:EB,SEC:PCPLNX:PCPX2_PCPN3:EB,3,2040-01-09,,1
+PCPPREPEER,PCPKPREPEER,PostPrecedenceContractTradeoff,SEC:PCPLNY:PCPX2_PCPS3:WB,SEC:PCPLNY:PCPS3_PCPS4:WB,1,2040-01-02,,1

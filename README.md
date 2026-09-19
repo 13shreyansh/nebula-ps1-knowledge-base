@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.99
+version: 0.8.100
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -752,3 +752,4 @@ When sources conflict:
 | `0.8.97` | 2026-09-19 | Decomposed Scenario B now rejects a known workload/deadline contradiction before writing artifacts, and a full-run missing-proof injection preserves the valid score while correctly refusing global optimality. |
 | `0.8.98` | 2026-09-19 | Decomposed merges now pass full feasibility, strict closure, independent score, additivity, and proof gates in audit staging before any upload-facing output is published. |
 | `0.8.99` | 2026-09-19 | Decomposed publication now uses checked same-parent staging and atomic rename; injected mid-copy and end-to-end failures expose no partial final output and retain an explicit staged report. |
+| `0.8.100` | 2026-09-19 | Equal summed nominal stage allowances preserve the 32-component C proof, weaken heterogeneous C, and fail heterogeneous B; component count and equal division are rejected as universal routing rules. |

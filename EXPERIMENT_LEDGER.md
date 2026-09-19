@@ -1764,3 +1764,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Declared limitation: this equalizes summed nominal stage limits, not measured CPU time. Stages can exit early or be skipped, model construction has overhead, and wall-clock timers are not additive compute accounting.
 - Test order fixed before outcomes: (1) 64-activity/32-component C scale case, (2) 28-activity/7-component heterogeneous C case, and (3) 42-activity/9-component heterogeneous B counter-control. Preserve failures and do not change inputs or budgets after observation.
 - Decision rule: compare hard-valid, strict-clean, dual-scored primary objectives and explicit proof state before wall time. No protected official incumbent is eligible for replacement from this benchmark.
+
+### E187: Equal nominal allowances reject a universal routing rule
+
+- Timestamp: 2026-09-19 12:51:57 +08.
+- Scale C: with 32 components and per-component limits 0.09375/0.0625/0.15625/0.3125 seconds, decomposition still proves C=`145920` in 1.702 seconds. The monolith returns strict-clean, dual-scored but unproved C=`229340` in 17.865 seconds. This strengthens the E173 score/proof result without the 32× nominal allowance advantage.
+- Heterogeneous C: with seven components and limits divided by seven, decomposition returns strict-clean, dual-scored C=`12435.8` in 3.169 seconds but does not prove it. The full per-component policy had proved C=`11432`; divided budgets therefore lose 1,003.8 points and proof. The monolith again produces no safe incumbent after 10.250 seconds.
+- Heterogeneous B: with nine components and limits divided by nine, decomposition produces no safe incumbent after 0.897 seconds. The monolith proves B=`349` in 0.482 seconds.
+- Independent replay: all four successful schedules have zero hard and strict conflicts, and raw-CSV scoring exactly matches `229340`, `145920`, `12435.8`, and `349`; row counts are complete.
+- Conclusion: neither component count nor equal division is a safe router. Decomposition can dominate a connected-search bottleneck, rescue a case without proving or matching its larger-budget quality, or fail where the monolith immediately proves. The safest production pattern is incumbent-preserving candidate competition with full external gates, not exclusive structural routing.
+- Measurement boundary: nominal allowances are still not CPU accounting; observed wall times include model construction and early exits. No official score or portal state changed.

@@ -1,0 +1,11 @@
+line_code,line_name
+PRDLNX,PRD Synthetic North
+PCPLNX,PCP Synthetic North
+MPAMPY,MPA Multipass MPY
+AGGLCZ,AGG Contract Aggregation Line
+PCPLNY,PCP Synthetic South
+MPAMPX,MPA Multipass MPX
+FPDLNY,FPD Synthetic South
+PRDLNY,PRD Synthetic South
+FPDLNX,FPD Synthetic North
+IRRLIB,IRR Irregular coupled line

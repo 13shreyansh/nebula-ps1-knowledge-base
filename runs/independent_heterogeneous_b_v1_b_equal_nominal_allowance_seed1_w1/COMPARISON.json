@@ -1,0 +1,47 @@
+{
+  "comparison_limit": "Equal summed nominal stage allowances, not equal measured CPU time. Stages may exit early or be skipped, and model-construction overhead differs.",
+  "component_count": 9,
+  "component_sizes": [
+    13,
+    7,
+    7,
+    5,
+    3,
+    2,
+    2,
+    2,
+    1
+  ],
+  "dataset_hash": "9f457c848f337da76b54d88887b2c9eaef8d718a79f41fc08e606fe281770be4",
+  "decomposed": {
+    "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+    "error_type": "RuntimeError",
+    "label": "decomposed_divided_allowance",
+    "outer_wall_time_seconds": 0.897460249994765,
+    "succeeded": false
+  },
+  "monolithic": {
+    "global_optimality_proved": true,
+    "label": "monolithic",
+    "outer_wall_time_seconds": 0.4815694999997504,
+    "selected_objective_score": 349.0,
+    "selected_submission_hash": "7407bddd670598e820336bf7ece37f594a6bc67400bb34ae7aae5af114924fe0",
+    "succeeded": true
+  },
+  "nominal_decomposed_per_component_allowances_seconds": {
+    "fallback_time_limit_seconds": 0.5555555555555556,
+    "heuristic_time_limit_seconds": 0.3333333333333333,
+    "local_repair_time_limit_seconds": 0.2222222222222222,
+    "verification_time_limit_seconds": 1.1111111111111112
+  },
+  "nominal_monolithic_stage_allowances_seconds": {
+    "fallback_time_limit_seconds": 5.0,
+    "heuristic_time_limit_seconds": 3.0,
+    "local_repair_time_limit_seconds": 2.0,
+    "verification_time_limit_seconds": 10.0
+  },
+  "scenario": "B",
+  "seed": 1,
+  "strict_buffer_overlap": true,
+  "workers": 1
+}

@@ -1,0 +1,2012 @@
+{
+  "bridge_safe_cost_repair_activities": [
+    "R01MX1",
+    "R01MX2",
+    "R01MY1",
+    "R01MY2",
+    "R02MX1",
+    "R02MX2",
+    "R02MY1",
+    "R02MY2",
+    "R03MX1",
+    "R03MX2",
+    "R03MY1",
+    "R03MY2",
+    "R04MX1",
+    "R04MX2",
+    "R04MY1",
+    "R04MY2",
+    "R05MX1",
+    "R05MX2",
+    "R05MY1",
+    "R05MY2",
+    "R06MX1",
+    "R06MX2",
+    "R06MY1",
+    "R06MY2",
+    "R07MX1",
+    "R07MX2",
+    "R07MY1",
+    "R07MY2",
+    "R08MX1",
+    "R08MX2",
+    "R08MY1",
+    "R08MY2",
+    "R09MX1",
+    "R09MX2",
+    "R09MY1",
+    "R09MY2",
+    "R10MX1",
+    "R10MX2",
+    "R10MY1",
+    "R10MY2",
+    "R11MX1",
+    "R11MX2",
+    "R11MY1",
+    "R11MY2",
+    "R12MX1",
+    "R12MX2",
+    "R12MY1",
+    "R12MY2",
+    "R13MX1",
+    "R13MX2",
+    "R13MY1",
+    "R13MY2",
+    "R14MX1",
+    "R14MX2",
+    "R14MY1",
+    "R14MY2",
+    "R15MX1",
+    "R15MX2",
+    "R15MY1",
+    "R15MY2",
+    "R16MX1",
+    "R16MX2",
+    "R16MY1",
+    "R16MY2"
+  ],
+  "bridge_safe_cost_repair_prune": {
+    "final_access_rows": 190,
+    "final_score": 229340.0,
+    "final_submission_hash": "64ff3fd33c8c60920f0e7aa9f393c64caf17a90909414b6de0794b0ea5daceab",
+    "initial_access_rows": 190,
+    "initial_score": 229340.0,
+    "initial_submission_hash": "64ff3fd33c8c60920f0e7aa9f393c64caf17a90909414b6de0794b0ea5daceab",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "C",
+    "strict_buffer_overlap_checked": true
+  },
+  "bridge_safe_cost_repair_telemetry": {
+    "best_bound": 59518.4,
+    "branches": 157235,
+    "closure_rounds": 1,
+    "conflicts": 216,
+    "deterministic_time_seconds": 1.6255571532522937,
+    "formulation": "scenario_c_iterative_bridge_safe_strict_buffer_closure_relaxation_partially_frozen_access",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective. The reported bound and optimality status apply only to the frozen-access neighborhood.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 1.992778208994423,
+    "model_constraints": 28522,
+    "model_variables": 11570,
+    "objective_score": 229340.0,
+    "primary_bound_scope": "frozen_access_neighborhood",
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 5.0,
+    "seed": 1,
+    "solve_rounds": 1,
+    "status": "FEASIBLE_SAFE_INCUMBENT",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 2.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 2.009750833007274,
+    "workers": 1
+  },
+  "bridge_safe_expanded_cost_repair_activities": [
+    "R01MX1",
+    "R01MX2",
+    "R01MY1",
+    "R01MY2",
+    "R02MX1",
+    "R02MX2",
+    "R02MY1",
+    "R02MY2",
+    "R03MX1",
+    "R03MX2",
+    "R03MY1",
+    "R03MY2",
+    "R04MX1",
+    "R04MX2",
+    "R04MY1",
+    "R04MY2",
+    "R05MX1",
+    "R05MX2",
+    "R05MY1",
+    "R05MY2",
+    "R06MX1",
+    "R06MX2",
+    "R06MY1",
+    "R06MY2",
+    "R07MX1",
+    "R07MX2",
+    "R07MY1",
+    "R07MY2",
+    "R08MX1",
+    "R08MX2",
+    "R08MY1",
+    "R08MY2",
+    "R09MX1",
+    "R09MX2",
+    "R09MY1",
+    "R09MY2",
+    "R10MX1",
+    "R10MX2",
+    "R10MY1",
+    "R10MY2",
+    "R11MX1",
+    "R11MX2",
+    "R11MY1",
+    "R11MY2",
+    "R12MX1",
+    "R12MX2",
+    "R12MY1",
+    "R12MY2",
+    "R13MX1",
+    "R13MX2",
+    "R13MY1",
+    "R13MY2",
+    "R14MX1",
+    "R14MX2",
+    "R14MY1",
+    "R14MY2",
+    "R15MX1",
+    "R15MX2",
+    "R15MY1",
+    "R15MY2",
+    "R16MX1",
+    "R16MX2",
+    "R16MY1",
+    "R16MY2"
+  ],
+  "bridge_safe_expanded_cost_repair_prune": null,
+  "bridge_safe_expanded_cost_repair_telemetry": null,
+  "bridge_safe_fallback_attempts": [],
+  "bridge_safe_fallback_prune": {
+    "final_access_rows": 191,
+    "final_score": 230240.0,
+    "final_submission_hash": "a6ab76c8040295665661730dfb946ce8fcbbd4528316bc539877883683d42213",
+    "initial_access_rows": 377,
+    "initial_score": 399500.0,
+    "initial_submission_hash": "ad7db0d89fd86e5f6cc1329a6544347e864e3c9426c99a4cbe8269670a1e523e",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [
+      [
+        "R01MY1",
+        12
+      ],
+      [
+        "R02MX1",
+        12
+      ],
+      [
+        "R02MY1",
+        12
+      ],
+      [
+        "R03MX1",
+        12
+      ],
+      [
+        "R03MY1",
+        12
+      ],
+      [
+        "R04MX1",
+        12
+      ],
+      [
+        "R04MY1",
+        12
+      ],
+      [
+        "R05MX1",
+        12
+      ],
+      [
+        "R05MY1",
+        12
+      ],
+      [
+        "R06MX1",
+        12
+      ],
+      [
+        "R06MY1",
+        12
+      ],
+      [
+        "R07MX1",
+        12
+      ],
+      [
+        "R07MY1",
+        12
+      ],
+      [
+        "R08MX1",
+        12
+      ],
+      [
+        "R08MY1",
+        12
+      ],
+      [
+        "R09MX1",
+        12
+      ],
+      [
+        "R09MY1",
+        12
+      ],
+      [
+        "R10MX1",
+        12
+      ],
+      [
+        "R10MY1",
+        12
+      ],
+      [
+        "R11MX1",
+        12
+      ],
+      [
+        "R11MY1",
+        12
+      ],
+      [
+        "R12MX1",
+        12
+      ],
+      [
+        "R12MY1",
+        12
+      ],
+      [
+        "R13MX1",
+        12
+      ],
+      [
+        "R13MY1",
+        12
+      ],
+      [
+        "R14MX1",
+        12
+      ],
+      [
+        "R14MY1",
+        12
+      ],
+      [
+        "R15MX1",
+        12
+      ],
+      [
+        "R15MY1",
+        12
+      ],
+      [
+        "R16MX1",
+        12
+      ],
+      [
+        "R16MY1",
+        12
+      ],
+      [
+        "R01MY1",
+        11
+      ],
+      [
+        "R02MX1",
+        11
+      ],
+      [
+        "R02MY1",
+        11
+      ],
+      [
+        "R03MX1",
+        11
+      ],
+      [
+        "R03MY1",
+        11
+      ],
+      [
+        "R04MX1",
+        11
+      ],
+      [
+        "R04MY1",
+        11
+      ],
+      [
+        "R05MX1",
+        11
+      ],
+      [
+        "R05MY1",
+        11
+      ],
+      [
+        "R06MX1",
+        11
+      ],
+      [
+        "R06MY1",
+        11
+      ],
+      [
+        "R07MX1",
+        11
+      ],
+      [
+        "R07MY1",
+        11
+      ],
+      [
+        "R08MX1",
+        11
+      ],
+      [
+        "R08MY1",
+        11
+      ],
+      [
+        "R09MX1",
+        11
+      ],
+      [
+        "R09MY1",
+        11
+      ],
+      [
+        "R10MX1",
+        11
+      ],
+      [
+        "R10MY1",
+        11
+      ],
+      [
+        "R11MX1",
+        11
+      ],
+      [
+        "R11MY1",
+        11
+      ],
+      [
+        "R12MX1",
+        11
+      ],
+      [
+        "R12MY1",
+        11
+      ],
+      [
+        "R13MX1",
+        11
+      ],
+      [
+        "R13MY1",
+        11
+      ],
+      [
+        "R14MX1",
+        11
+      ],
+      [
+        "R14MY1",
+        11
+      ],
+      [
+        "R15MX1",
+        11
+      ],
+      [
+        "R15MY1",
+        11
+      ],
+      [
+        "R16MX1",
+        11
+      ],
+      [
+        "R16MY1",
+        11
+      ],
+      [
+        "R01MY1",
+        10
+      ],
+      [
+        "R02MX1",
+        10
+      ],
+      [
+        "R02MY1",
+        10
+      ],
+      [
+        "R03MX1",
+        10
+      ],
+      [
+        "R03MY1",
+        10
+      ],
+      [
+        "R04MX1",
+        10
+      ],
+      [
+        "R04MY1",
+        10
+      ],
+      [
+        "R05MX1",
+        10
+      ],
+      [
+        "R05MY1",
+        10
+      ],
+      [
+        "R06MX1",
+        10
+      ],
+      [
+        "R06MY1",
+        10
+      ],
+      [
+        "R07MX1",
+        10
+      ],
+      [
+        "R07MY1",
+        10
+      ],
+      [
+        "R08MX1",
+        10
+      ],
+      [
+        "R08MY1",
+        10
+      ],
+      [
+        "R09MX1",
+        10
+      ],
+      [
+        "R09MY1",
+        10
+      ],
+      [
+        "R10MX1",
+        10
+      ],
+      [
+        "R10MY1",
+        10
+      ],
+      [
+        "R11MX1",
+        10
+      ],
+      [
+        "R11MY1",
+        10
+      ],
+      [
+        "R12MX1",
+        10
+      ],
+      [
+        "R12MY1",
+        10
+      ],
+      [
+        "R13MX1",
+        10
+      ],
+      [
+        "R13MY1",
+        10
+      ],
+      [
+        "R14MX1",
+        10
+      ],
+      [
+        "R14MY1",
+        10
+      ],
+      [
+        "R15MX1",
+        10
+      ],
+      [
+        "R15MY1",
+        10
+      ],
+      [
+        "R16MX1",
+        10
+      ],
+      [
+        "R16MY1",
+        10
+      ],
+      [
+        "R01MY1",
+        9
+      ],
+      [
+        "R02MX1",
+        9
+      ],
+      [
+        "R02MY1",
+        9
+      ],
+      [
+        "R03MX1",
+        9
+      ],
+      [
+        "R03MY1",
+        9
+      ],
+      [
+        "R04MX1",
+        9
+      ],
+      [
+        "R04MY1",
+        9
+      ],
+      [
+        "R05MX1",
+        9
+      ],
+      [
+        "R05MY1",
+        9
+      ],
+      [
+        "R06MX1",
+        9
+      ],
+      [
+        "R06MY1",
+        9
+      ],
+      [
+        "R07MX1",
+        9
+      ],
+      [
+        "R07MY1",
+        9
+      ],
+      [
+        "R08MX1",
+        9
+      ],
+      [
+        "R08MY1",
+        9
+      ],
+      [
+        "R09MX1",
+        9
+      ],
+      [
+        "R09MY1",
+        9
+      ],
+      [
+        "R10MX1",
+        9
+      ],
+      [
+        "R10MY1",
+        9
+      ],
+      [
+        "R11MX1",
+        9
+      ],
+      [
+        "R11MY1",
+        9
+      ],
+      [
+        "R12MX1",
+        9
+      ],
+      [
+        "R12MY1",
+        9
+      ],
+      [
+        "R13MX1",
+        9
+      ],
+      [
+        "R13MY1",
+        9
+      ],
+      [
+        "R14MX1",
+        9
+      ],
+      [
+        "R14MY1",
+        9
+      ],
+      [
+        "R15MX1",
+        9
+      ],
+      [
+        "R15MY1",
+        9
+      ],
+      [
+        "R16MX1",
+        9
+      ],
+      [
+        "R16MY1",
+        9
+      ],
+      [
+        "R01MY1",
+        8
+      ],
+      [
+        "R02MX1",
+        8
+      ],
+      [
+        "R02MY1",
+        8
+      ],
+      [
+        "R03MX1",
+        8
+      ],
+      [
+        "R03MY1",
+        8
+      ],
+      [
+        "R04MX1",
+        8
+      ],
+      [
+        "R04MY1",
+        8
+      ],
+      [
+        "R05MX1",
+        8
+      ],
+      [
+        "R05MY1",
+        8
+      ],
+      [
+        "R06MX1",
+        8
+      ],
+      [
+        "R06MY1",
+        8
+      ],
+      [
+        "R07MX1",
+        8
+      ],
+      [
+        "R07MY1",
+        8
+      ],
+      [
+        "R08MX1",
+        8
+      ],
+      [
+        "R08MY1",
+        8
+      ],
+      [
+        "R09MX1",
+        8
+      ],
+      [
+        "R09MY1",
+        8
+      ],
+      [
+        "R10MX1",
+        8
+      ],
+      [
+        "R10MY1",
+        8
+      ],
+      [
+        "R11MX1",
+        8
+      ],
+      [
+        "R11MY1",
+        8
+      ],
+      [
+        "R12MX1",
+        8
+      ],
+      [
+        "R12MY1",
+        8
+      ],
+      [
+        "R13MX1",
+        8
+      ],
+      [
+        "R13MY1",
+        8
+      ],
+      [
+        "R14MX1",
+        8
+      ],
+      [
+        "R14MY1",
+        8
+      ],
+      [
+        "R15MX1",
+        8
+      ],
+      [
+        "R15MY1",
+        8
+      ],
+      [
+        "R16MX1",
+        8
+      ],
+      [
+        "R16MY1",
+        8
+      ],
+      [
+        "R01MY1",
+        7
+      ],
+      [
+        "R02MX1",
+        7
+      ],
+      [
+        "R02MY1",
+        7
+      ],
+      [
+        "R03MX1",
+        7
+      ],
+      [
+        "R03MY1",
+        7
+      ],
+      [
+        "R04MX1",
+        7
+      ],
+      [
+        "R04MY1",
+        7
+      ],
+      [
+        "R05MX1",
+        7
+      ],
+      [
+        "R05MY1",
+        7
+      ],
+      [
+        "R06MX1",
+        7
+      ],
+      [
+        "R06MY1",
+        7
+      ],
+      [
+        "R07MX1",
+        7
+      ],
+      [
+        "R07MY1",
+        7
+      ],
+      [
+        "R08MX1",
+        7
+      ],
+      [
+        "R08MY1",
+        7
+      ],
+      [
+        "R09MX1",
+        7
+      ],
+      [
+        "R09MY1",
+        7
+      ],
+      [
+        "R10MX1",
+        7
+      ],
+      [
+        "R10MY1",
+        7
+      ],
+      [
+        "R11MX1",
+        7
+      ],
+      [
+        "R11MY1",
+        7
+      ],
+      [
+        "R12MX1",
+        7
+      ],
+      [
+        "R12MY1",
+        7
+      ],
+      [
+        "R13MX1",
+        7
+      ],
+      [
+        "R13MY1",
+        7
+      ],
+      [
+        "R14MX1",
+        7
+      ],
+      [
+        "R14MY1",
+        7
+      ],
+      [
+        "R15MX1",
+        7
+      ],
+      [
+        "R15MY1",
+        7
+      ],
+      [
+        "R16MX1",
+        7
+      ],
+      [
+        "R16MY1",
+        7
+      ]
+    ],
+    "scenario": "C",
+    "strict_buffer_overlap_checked": true
+  },
+  "bridge_safe_fallback_selected_attempt": null,
+  "bridge_safe_fallback_telemetry": {
+    "best_bound": 399500.0,
+    "branches": 1659,
+    "closure_rounds": 1,
+    "conflicts": 31,
+    "deterministic_time_seconds": 0.012078153122267541,
+    "formulation": "scenario_c_iterative_bridge_safe_strict_buffer_closure_relaxation_partially_frozen_access",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective. The reported bound and optimality status apply only to the frozen-access neighborhood.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 1.9837849169998663,
+    "model_constraints": 29157,
+    "model_variables": 11066,
+    "objective_score": 399500.0,
+    "primary_bound_scope": "frozen_access_neighborhood",
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 3.0,
+    "seed": 1,
+    "solve_rounds": 2,
+    "status": "OPTIMAL",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": true,
+    "time_limit_seconds": 2.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.12439316700329073,
+    "workers": 1
+  },
+  "bridge_safe_local_repair_activities": [
+    "R01MX1",
+    "R01MX2"
+  ],
+  "bridge_safe_local_repair_prune": {
+    "final_access_rows": 191,
+    "final_score": 230240.0,
+    "final_submission_hash": "a6ab76c8040295665661730dfb946ce8fcbbd4528316bc539877883683d42213",
+    "initial_access_rows": 377,
+    "initial_score": 399500.0,
+    "initial_submission_hash": "ad7db0d89fd86e5f6cc1329a6544347e864e3c9426c99a4cbe8269670a1e523e",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [
+      [
+        "R01MY1",
+        12
+      ],
+      [
+        "R02MX1",
+        12
+      ],
+      [
+        "R02MY1",
+        12
+      ],
+      [
+        "R03MX1",
+        12
+      ],
+      [
+        "R03MY1",
+        12
+      ],
+      [
+        "R04MX1",
+        12
+      ],
+      [
+        "R04MY1",
+        12
+      ],
+      [
+        "R05MX1",
+        12
+      ],
+      [
+        "R05MY1",
+        12
+      ],
+      [
+        "R06MX1",
+        12
+      ],
+      [
+        "R06MY1",
+        12
+      ],
+      [
+        "R07MX1",
+        12
+      ],
+      [
+        "R07MY1",
+        12
+      ],
+      [
+        "R08MX1",
+        12
+      ],
+      [
+        "R08MY1",
+        12
+      ],
+      [
+        "R09MX1",
+        12
+      ],
+      [
+        "R09MY1",
+        12
+      ],
+      [
+        "R10MX1",
+        12
+      ],
+      [
+        "R10MY1",
+        12
+      ],
+      [
+        "R11MX1",
+        12
+      ],
+      [
+        "R11MY1",
+        12
+      ],
+      [
+        "R12MX1",
+        12
+      ],
+      [
+        "R12MY1",
+        12
+      ],
+      [
+        "R13MX1",
+        12
+      ],
+      [
+        "R13MY1",
+        12
+      ],
+      [
+        "R14MX1",
+        12
+      ],
+      [
+        "R14MY1",
+        12
+      ],
+      [
+        "R15MX1",
+        12
+      ],
+      [
+        "R15MY1",
+        12
+      ],
+      [
+        "R16MX1",
+        12
+      ],
+      [
+        "R16MY1",
+        12
+      ],
+      [
+        "R01MY1",
+        11
+      ],
+      [
+        "R02MX1",
+        11
+      ],
+      [
+        "R02MY1",
+        11
+      ],
+      [
+        "R03MX1",
+        11
+      ],
+      [
+        "R03MY1",
+        11
+      ],
+      [
+        "R04MX1",
+        11
+      ],
+      [
+        "R04MY1",
+        11
+      ],
+      [
+        "R05MX1",
+        11
+      ],
+      [
+        "R05MY1",
+        11
+      ],
+      [
+        "R06MX1",
+        11
+      ],
+      [
+        "R06MY1",
+        11
+      ],
+      [
+        "R07MX1",
+        11
+      ],
+      [
+        "R07MY1",
+        11
+      ],
+      [
+        "R08MX1",
+        11
+      ],
+      [
+        "R08MY1",
+        11
+      ],
+      [
+        "R09MX1",
+        11
+      ],
+      [
+        "R09MY1",
+        11
+      ],
+      [
+        "R10MX1",
+        11
+      ],
+      [
+        "R10MY1",
+        11
+      ],
+      [
+        "R11MX1",
+        11
+      ],
+      [
+        "R11MY1",
+        11
+      ],
+      [
+        "R12MX1",
+        11
+      ],
+      [
+        "R12MY1",
+        11
+      ],
+      [
+        "R13MX1",
+        11
+      ],
+      [
+        "R13MY1",
+        11
+      ],
+      [
+        "R14MX1",
+        11
+      ],
+      [
+        "R14MY1",
+        11
+      ],
+      [
+        "R15MX1",
+        11
+      ],
+      [
+        "R15MY1",
+        11
+      ],
+      [
+        "R16MX1",
+        11
+      ],
+      [
+        "R16MY1",
+        11
+      ],
+      [
+        "R01MY1",
+        10
+      ],
+      [
+        "R02MX1",
+        10
+      ],
+      [
+        "R02MY1",
+        10
+      ],
+      [
+        "R03MX1",
+        10
+      ],
+      [
+        "R03MY1",
+        10
+      ],
+      [
+        "R04MX1",
+        10
+      ],
+      [
+        "R04MY1",
+        10
+      ],
+      [
+        "R05MX1",
+        10
+      ],
+      [
+        "R05MY1",
+        10
+      ],
+      [
+        "R06MX1",
+        10
+      ],
+      [
+        "R06MY1",
+        10
+      ],
+      [
+        "R07MX1",
+        10
+      ],
+      [
+        "R07MY1",
+        10
+      ],
+      [
+        "R08MX1",
+        10
+      ],
+      [
+        "R08MY1",
+        10
+      ],
+      [
+        "R09MX1",
+        10
+      ],
+      [
+        "R09MY1",
+        10
+      ],
+      [
+        "R10MX1",
+        10
+      ],
+      [
+        "R10MY1",
+        10
+      ],
+      [
+        "R11MX1",
+        10
+      ],
+      [
+        "R11MY1",
+        10
+      ],
+      [
+        "R12MX1",
+        10
+      ],
+      [
+        "R12MY1",
+        10
+      ],
+      [
+        "R13MX1",
+        10
+      ],
+      [
+        "R13MY1",
+        10
+      ],
+      [
+        "R14MX1",
+        10
+      ],
+      [
+        "R14MY1",
+        10
+      ],
+      [
+        "R15MX1",
+        10
+      ],
+      [
+        "R15MY1",
+        10
+      ],
+      [
+        "R16MX1",
+        10
+      ],
+      [
+        "R16MY1",
+        10
+      ],
+      [
+        "R01MY1",
+        9
+      ],
+      [
+        "R02MX1",
+        9
+      ],
+      [
+        "R02MY1",
+        9
+      ],
+      [
+        "R03MX1",
+        9
+      ],
+      [
+        "R03MY1",
+        9
+      ],
+      [
+        "R04MX1",
+        9
+      ],
+      [
+        "R04MY1",
+        9
+      ],
+      [
+        "R05MX1",
+        9
+      ],
+      [
+        "R05MY1",
+        9
+      ],
+      [
+        "R06MX1",
+        9
+      ],
+      [
+        "R06MY1",
+        9
+      ],
+      [
+        "R07MX1",
+        9
+      ],
+      [
+        "R07MY1",
+        9
+      ],
+      [
+        "R08MX1",
+        9
+      ],
+      [
+        "R08MY1",
+        9
+      ],
+      [
+        "R09MX1",
+        9
+      ],
+      [
+        "R09MY1",
+        9
+      ],
+      [
+        "R10MX1",
+        9
+      ],
+      [
+        "R10MY1",
+        9
+      ],
+      [
+        "R11MX1",
+        9
+      ],
+      [
+        "R11MY1",
+        9
+      ],
+      [
+        "R12MX1",
+        9
+      ],
+      [
+        "R12MY1",
+        9
+      ],
+      [
+        "R13MX1",
+        9
+      ],
+      [
+        "R13MY1",
+        9
+      ],
+      [
+        "R14MX1",
+        9
+      ],
+      [
+        "R14MY1",
+        9
+      ],
+      [
+        "R15MX1",
+        9
+      ],
+      [
+        "R15MY1",
+        9
+      ],
+      [
+        "R16MX1",
+        9
+      ],
+      [
+        "R16MY1",
+        9
+      ],
+      [
+        "R01MY1",
+        8
+      ],
+      [
+        "R02MX1",
+        8
+      ],
+      [
+        "R02MY1",
+        8
+      ],
+      [
+        "R03MX1",
+        8
+      ],
+      [
+        "R03MY1",
+        8
+      ],
+      [
+        "R04MX1",
+        8
+      ],
+      [
+        "R04MY1",
+        8
+      ],
+      [
+        "R05MX1",
+        8
+      ],
+      [
+        "R05MY1",
+        8
+      ],
+      [
+        "R06MX1",
+        8
+      ],
+      [
+        "R06MY1",
+        8
+      ],
+      [
+        "R07MX1",
+        8
+      ],
+      [
+        "R07MY1",
+        8
+      ],
+      [
+        "R08MX1",
+        8
+      ],
+      [
+        "R08MY1",
+        8
+      ],
+      [
+        "R09MX1",
+        8
+      ],
+      [
+        "R09MY1",
+        8
+      ],
+      [
+        "R10MX1",
+        8
+      ],
+      [
+        "R10MY1",
+        8
+      ],
+      [
+        "R11MX1",
+        8
+      ],
+      [
+        "R11MY1",
+        8
+      ],
+      [
+        "R12MX1",
+        8
+      ],
+      [
+        "R12MY1",
+        8
+      ],
+      [
+        "R13MX1",
+        8
+      ],
+      [
+        "R13MY1",
+        8
+      ],
+      [
+        "R14MX1",
+        8
+      ],
+      [
+        "R14MY1",
+        8
+      ],
+      [
+        "R15MX1",
+        8
+      ],
+      [
+        "R15MY1",
+        8
+      ],
+      [
+        "R16MX1",
+        8
+      ],
+      [
+        "R16MY1",
+        8
+      ],
+      [
+        "R01MY1",
+        7
+      ],
+      [
+        "R02MX1",
+        7
+      ],
+      [
+        "R02MY1",
+        7
+      ],
+      [
+        "R03MX1",
+        7
+      ],
+      [
+        "R03MY1",
+        7
+      ],
+      [
+        "R04MX1",
+        7
+      ],
+      [
+        "R04MY1",
+        7
+      ],
+      [
+        "R05MX1",
+        7
+      ],
+      [
+        "R05MY1",
+        7
+      ],
+      [
+        "R06MX1",
+        7
+      ],
+      [
+        "R06MY1",
+        7
+      ],
+      [
+        "R07MX1",
+        7
+      ],
+      [
+        "R07MY1",
+        7
+      ],
+      [
+        "R08MX1",
+        7
+      ],
+      [
+        "R08MY1",
+        7
+      ],
+      [
+        "R09MX1",
+        7
+      ],
+      [
+        "R09MY1",
+        7
+      ],
+      [
+        "R10MX1",
+        7
+      ],
+      [
+        "R10MY1",
+        7
+      ],
+      [
+        "R11MX1",
+        7
+      ],
+      [
+        "R11MY1",
+        7
+      ],
+      [
+        "R12MX1",
+        7
+      ],
+      [
+        "R12MY1",
+        7
+      ],
+      [
+        "R13MX1",
+        7
+      ],
+      [
+        "R13MY1",
+        7
+      ],
+      [
+        "R14MX1",
+        7
+      ],
+      [
+        "R14MY1",
+        7
+      ],
+      [
+        "R15MX1",
+        7
+      ],
+      [
+        "R15MY1",
+        7
+      ],
+      [
+        "R16MX1",
+        7
+      ],
+      [
+        "R16MY1",
+        7
+      ]
+    ],
+    "scenario": "C",
+    "strict_buffer_overlap_checked": true
+  },
+  "bridge_safe_local_repair_telemetry": {
+    "best_bound": 399500.0,
+    "branches": 1659,
+    "closure_rounds": 1,
+    "conflicts": 31,
+    "deterministic_time_seconds": 0.012078153122267541,
+    "formulation": "scenario_c_iterative_bridge_safe_strict_buffer_closure_relaxation_partially_frozen_access",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective. The reported bound and optimality status apply only to the frozen-access neighborhood.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 1.9837849169998663,
+    "model_constraints": 29157,
+    "model_variables": 11066,
+    "objective_score": 399500.0,
+    "primary_bound_scope": "frozen_access_neighborhood",
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 3.0,
+    "seed": 1,
+    "solve_rounds": 2,
+    "status": "OPTIMAL",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": true,
+    "time_limit_seconds": 2.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.12439316700329073,
+    "workers": 1
+  },
+  "bridge_safe_repair_hint_source_attempt": 1,
+  "eclo_compaction": {
+    "applicable": false,
+    "candidates_checked": 0,
+    "candidates_pruned_by_exact_score_order": 0,
+    "candidates_skipped_existing_eclo_window": 0,
+    "duplicate_candidates_skipped": 0,
+    "feasible_candidates": 0,
+    "improving_candidates": 0,
+    "promotions": 0,
+    "reason": "source is not a one-activity-per-week serialization",
+    "rounds": [
+      {
+        "applicable": false,
+        "candidates_checked": 0,
+        "candidates_pruned_by_exact_score_order": 0,
+        "candidates_skipped_existing_eclo_window": 0,
+        "duplicate_candidates_skipped": 0,
+        "exhaustive": false,
+        "feasible_candidates": 0,
+        "improving_candidates": 0,
+        "reason": "source is not a one-activity-per-week serialization",
+        "score_prediction_mismatches": 0,
+        "selected_activity": null,
+        "selected_eclo_weeks": null,
+        "selected_removed_week": null,
+        "selected_score": null,
+        "selected_submission_hash": null,
+        "source_score": 230240.0,
+        "strict_buffer_overlap_required": true,
+        "unique_candidates_ranked": 0
+      }
+    ],
+    "score_prediction_mismatches": 0,
+    "selected_score": null,
+    "selected_submission_hash": null,
+    "source_score": 230240.0
+  },
+  "eclo_compaction_promoted": false,
+  "heuristic_attempts": [
+    {
+      "best_bound": null,
+      "branches": 319847,
+      "closure_rounds": 2,
+      "conflicts": 1946,
+      "deterministic_time_seconds": 3.776259850557927,
+      "formulation": "scenario_c_iterative_direct_heuristic_strict_buffer_closure_relaxation",
+      "interleave_search": false,
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "max_deterministic_time_per_solve": null,
+      "maximum_round_time_seconds": 2.9999992920056684,
+      "model_constraints": 29319,
+      "model_variables": 11822,
+      "objective_score": 400421.0,
+      "primary_bound_scope": "full_instance",
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 2,
+      "round_time_limit_seconds": 3.0,
+      "seed": 1,
+      "solve_rounds": 2,
+      "status": "FEASIBLE",
+      "structural_hint_access_count": 0,
+      "structural_hint_activity_count": 0,
+      "structural_hint_checked": false,
+      "structural_hint_complete": false,
+      "structural_hint_feasible": false,
+      "structural_hint_objective_score": null,
+      "structural_hints_used": true,
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 3.0,
+      "unknown_retries": 0,
+      "wall_time_seconds": 3.010706917004427,
+      "workers": 1
+    }
+  ],
+  "heuristic_prune": null,
+  "heuristic_selected_attempt": null,
+  "heuristic_telemetry": null,
+  "idle_week_compaction": {
+    "allow_equal": true,
+    "candidates_checked": 0,
+    "promotions": 0,
+    "reason": "no removable idle week",
+    "rounds": [
+      {
+        "candidates_checked": 0,
+        "gap_count": 0,
+        "reason": "no removable idle week",
+        "selected_gap_week": null,
+        "selected_score": null,
+        "source_score": 230240.0
+      }
+    ],
+    "score_prediction_mismatches": 0,
+    "score_prediction_untrusted": false,
+    "selected_score": null,
+    "selected_submission_hash": null,
+    "source_score": 230240.0,
+    "strict_improvement": false
+  },
+  "idle_week_compaction_promoted": false,
+  "idle_week_compaction_used_as_seed": false,
+  "initial_incumbent": {
+    "provided": false
+  },
+  "postselection_compaction": {
+    "eclo_compaction": {
+      "applicable": false,
+      "candidates_checked": 0,
+      "candidates_pruned_by_exact_score_order": 0,
+      "candidates_skipped_existing_eclo_window": 0,
+      "duplicate_candidates_skipped": 0,
+      "feasible_candidates": 0,
+      "improving_candidates": 0,
+      "promotions": 0,
+      "reason": "source is not a one-activity-per-week serialization",
+      "rounds": [
+        {
+          "applicable": false,
+          "candidates_checked": 0,
+          "candidates_pruned_by_exact_score_order": 0,
+          "candidates_skipped_existing_eclo_window": 0,
+          "duplicate_candidates_skipped": 0,
+          "exhaustive": false,
+          "feasible_candidates": 0,
+          "improving_candidates": 0,
+          "reason": "source is not a one-activity-per-week serialization",
+          "score_prediction_mismatches": 0,
+          "selected_activity": null,
+          "selected_eclo_weeks": null,
+          "selected_removed_week": null,
+          "selected_score": null,
+          "selected_submission_hash": null,
+          "source_score": 229340.0,
+          "strict_buffer_overlap_required": true,
+          "unique_candidates_ranked": 0
+        }
+      ],
+      "score_prediction_mismatches": 0,
+      "selected_score": null,
+      "selected_submission_hash": null,
+      "source_score": 229340.0
+    },
+    "eclo_compaction_promoted": false,
+    "idle_week_compaction": {
+      "allow_equal": true,
+      "candidates_checked": 0,
+      "promotions": 0,
+      "reason": "no removable idle week",
+      "rounds": [
+        {
+          "candidates_checked": 0,
+          "gap_count": 0,
+          "reason": "no removable idle week",
+          "selected_gap_week": null,
+          "selected_score": null,
+          "source_score": 229340.0
+        }
+      ],
+      "score_prediction_mismatches": 0,
+      "score_prediction_untrusted": false,
+      "selected_score": null,
+      "selected_submission_hash": null,
+      "source_score": 229340.0,
+      "strict_improvement": false
+    },
+    "idle_week_compaction_promoted": false,
+    "idle_week_compaction_used_as_seed": false,
+    "selected_score": 229340.0,
+    "selected_stage": null,
+    "selected_submission_hash": "64ff3fd33c8c60920f0e7aa9f393c64caf17a90909414b6de0794b0ea5daceab",
+    "source_score": 229340.0,
+    "strict_improvement": false
+  },
+  "postselection_compaction_promoted": false,
+  "reference_validator_confirmed": false,
+  "scenario": "C",
+  "selected_objective_score": 229340.0,
+  "selected_stage": "bridge_safe_local_repair_improvement",
+  "selected_submission_hash": "64ff3fd33c8c60920f0e7aa9f393c64caf17a90909414b6de0794b0ea5daceab",
+  "selection_rule": "strictly lower fully checked objective; an equal-score candidate may replace the incumbent only as a standard-feasible, strict-clean final hedge",
+  "strict_buffer_overlap_checked": true,
+  "strict_buffer_overlap_clean": true,
+  "strict_hedge_activities": [],
+  "strict_hedge_conflicts_after": [],
+  "strict_hedge_conflicts_before": [],
+  "strict_hedge_promoted": false,
+  "strict_hedge_prune": null,
+  "strict_hedge_telemetry": null,
+  "submission_files": [
+    "SCHEDULE_ACCESS.csv",
+    "SCHEDULE_OCCUPANCY.csv",
+    "RESULTS.csv"
+  ],
+  "verification_prune": {
+    "final_access_rows": 190,
+    "final_score": 229340.0,
+    "final_submission_hash": "64ff3fd33c8c60920f0e7aa9f393c64caf17a90909414b6de0794b0ea5daceab",
+    "initial_access_rows": 190,
+    "initial_score": 229340.0,
+    "initial_submission_hash": "64ff3fd33c8c60920f0e7aa9f393c64caf17a90909414b6de0794b0ea5daceab",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "C",
+    "strict_buffer_overlap_checked": true
+  },
+  "verification_round_time_limit_seconds": null,
+  "verification_skipped_primary_proven": false,
+  "verification_telemetry": {
+    "best_bound": 36834.7,
+    "branches": 512772,
+    "closure_rounds": 3,
+    "conflicts": 2327,
+    "deterministic_time_seconds": 7.980371139239015,
+    "formulation": "scenario_c_iterative_bridge_safe_strict_buffer_closure_relaxation",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 3.0,
+    "model_constraints": 30423,
+    "model_variables": 12170,
+    "objective_score": 229340.0,
+    "primary_bound_scope": "full_instance",
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 3.0,
+    "seed": 1,
+    "solve_rounds": 4,
+    "status": "FEASIBLE_SAFE_INCUMBENT",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 10.007078499998897,
+    "workers": 1
+  }
+}

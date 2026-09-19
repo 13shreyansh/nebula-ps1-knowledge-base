@@ -1,0 +1,71 @@
+{
+  "comparison_limit": "Equal summed nominal stage allowances, not equal measured CPU time. Stages may exit early or be skipped, and model-construction overhead differs.",
+  "component_count": 32,
+  "component_sizes": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2
+  ],
+  "dataset_hash": "7cdbc1984ff3e8192b0fa53f9f118c1546457f080604772fb02c8640eb210001",
+  "decomposed": {
+    "global_optimality_proved": true,
+    "label": "decomposed_divided_allowance",
+    "outer_wall_time_seconds": 1.7015162909956416,
+    "selected_objective_score": 145920.0,
+    "selected_submission_hash": "0dac01d987c652add80303cb415df79f671460b08ea438a156631e7fff7ccbed",
+    "succeeded": true
+  },
+  "monolithic": {
+    "global_optimality_proved": false,
+    "label": "monolithic",
+    "outer_wall_time_seconds": 17.86538429198845,
+    "selected_objective_score": 229340.0,
+    "selected_submission_hash": "64ff3fd33c8c60920f0e7aa9f393c64caf17a90909414b6de0794b0ea5daceab",
+    "succeeded": true
+  },
+  "nominal_decomposed_per_component_allowances_seconds": {
+    "fallback_time_limit_seconds": 0.15625,
+    "heuristic_time_limit_seconds": 0.09375,
+    "local_repair_time_limit_seconds": 0.0625,
+    "verification_time_limit_seconds": 0.3125
+  },
+  "nominal_monolithic_stage_allowances_seconds": {
+    "fallback_time_limit_seconds": 5.0,
+    "heuristic_time_limit_seconds": 3.0,
+    "local_repair_time_limit_seconds": 2.0,
+    "verification_time_limit_seconds": 10.0
+  },
+  "scenario": "C",
+  "seed": 1,
+  "strict_buffer_overlap": true,
+  "workers": 1
+}
