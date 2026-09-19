@@ -7,7 +7,10 @@ from pathlib import Path
 from .closure import screen_closures
 from .eclo_compact import best_serialized_eclo_compaction_sequence
 from .evaluate import Evaluation, evaluate_submission, load_submission
-from .flexible_solver import solve_flexible_supply_relaxation
+from .flexible_solver import (
+    _scenario_b_workload_deadline_deficits,
+    solve_flexible_supply_relaxation,
+)
 from .idle_compact import best_idle_week_compaction_sequence
 from .independent_score import IndependentScore, independently_score
 from .instance import Instance
@@ -320,6 +323,18 @@ def solve_staged_scenario(
 
     if scenario not in {"A", "B", "C"}:
         raise ValueError("scenario must be A, B, or C")
+    if scenario == "B":
+        workload_deficits = _scenario_b_workload_deadline_deficits(instance)
+        if workload_deficits:
+            details = "; ".join(
+                f"{item['activity_id']} max={item['maximum_half_units']}/2 "
+                f"required={item['required_half_units']}/2"
+                for item in workload_deficits
+            )
+            raise ValueError(
+                "Scenario B workload cannot fit before planned completion: "
+                + details
+            )
     if heuristic_attempts < 0:
         raise ValueError("heuristic_attempts must be nonnegative")
     if heuristic_attempts == 0 and initial_submission_dir is None:

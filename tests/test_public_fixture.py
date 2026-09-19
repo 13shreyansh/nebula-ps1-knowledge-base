@@ -33,6 +33,7 @@ from nebula_ps1.decomposed import (
 from nebula_ps1.evaluate import _legal_possession_mix, evaluate_submission, load_submission
 from nebula_ps1.flexible_solver import (
     _group_limit,
+    _scenario_b_workload_deadline_deficits,
     _scenario_b_strict_improvement_excess_budget,
     _scenario_b_workload_lower_bound_tenths,
     _write_submission_rows,
@@ -227,6 +228,65 @@ class PublicFixtureTests(unittest.TestCase):
             forbid_buffer_overlap=True,
         )
         self.assertEqual(sorted(map(len, components), reverse=True), [8, 6, 5, 3, 2, 2, 2])
+        self.assertFalse((data / "RESULTS.csv").exists())
+
+    def test_scenario_b_workload_deadline_preflight_catches_row_capacity(self) -> None:
+        infeasible = load_instance(
+            ROOT / "fixtures" / "independent_heterogeneous_nonlive_v1"
+        )
+        deficits = _scenario_b_workload_deadline_deficits(infeasible)
+        self.assertEqual(
+            {item["activity_id"] for item in deficits},
+            {"MPAMX1", "MPAMX2", "MPAMY1", "MPAMY2"},
+        )
+        self.assertTrue(
+            all(
+                item["maximum_half_units"] == 3
+                and item["required_half_units"] == 6
+                for item in deficits
+            )
+        )
+        feasible = load_instance(
+            ROOT / "fixtures" / "independent_heterogeneous_b_v1"
+        )
+        self.assertEqual(_scenario_b_workload_deadline_deficits(feasible), ())
+
+    def test_heterogeneous_b_fixture_is_frozen_before_solving(self) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_b_v1"
+        instance = load_instance(data)
+        self.assertEqual(
+            instance.dataset_hash,
+            "9f457c848f337da76b54d88887b2c9eaef8d718a79f41fc08e606fe281770be4",
+        )
+        self.assertEqual(len(instance.activities), 42)
+        self.assertEqual(len(instance.projects), 40)
+        self.assertEqual(len(instance.lines), 7)
+        self.assertEqual(len(instance.locations), 75)
+        self.assertEqual(
+            {project.access_type for project in instance.projects.values()},
+            {"C", "PC", "PM"},
+        )
+        self.assertEqual(
+            {project.contract_priority for project in instance.projects.values()},
+            {1, 2, 3},
+        )
+        self.assertEqual(
+            sum(
+                activity.predecessor_activity_id is not None
+                for activity in instance.activities.values()
+            ),
+            3,
+        )
+        self.assertEqual(_scenario_b_workload_deadline_deficits(instance), ())
+        components = independent_activity_components(
+            instance,
+            "B",
+            forbid_buffer_overlap=True,
+        )
+        self.assertEqual(
+            sorted(map(len, components), reverse=True),
+            [13, 7, 7, 5, 3, 2, 2, 2, 1],
+        )
         self.assertFalse((data / "RESULTS.csv").exists())
 
     def test_decomposition_recognizes_checked_zero_floor_proof_provenance(self) -> None:

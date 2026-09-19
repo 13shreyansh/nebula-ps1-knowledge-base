@@ -1683,3 +1683,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Retraction: E176 initially attributed infeasibility to `number_of_maximum_access_per_week=1` and described capacity as one of three accesses. That was imprecise: the field limits possession groups, not workload nights.
 - Exact proof: output schema permits at most one access row per activity/week. A standard row supplies one workload unit and ECLO supplies 1.5. With only week 1 available, maximum supplied half-units are 3; each activity requires 6. The infeasibility conclusion remains correct, but for this workload-row bound.
 - Integrity consequence: solver `INFEASIBLE` status was never the sole evidence, and the mistaken explanation is explicitly corrected before constructing the B-specific holdout.
+
+### E178: B-feasible heterogeneous holdout precommit
+
+- Timestamp: 2026-09-19 12:35:39 +08.
+- Input-only composition: five frozen B-oriented or cross-scenario sources are namespaced and date-normalized without reading their outputs. Dataset hash is `9f457c84…`; it has 42 activities, 40 contracts, seven lines, 75 locations, PC/C/PM types, priorities 1/2/3, and three predecessor links.
+- Strict-B dependency structure: nine components sized 13, 7, 7, 5, 3, 2, 2, 2, and 1. No Live crossover is present.
+- New necessary-feasibility gate: for each activity, compute eligible weeks before its B planned-completion deadline, multiply by the maximum three half-units per weekly row, and compare with twice the required workload. The fixture has zero deficits; the earlier heterogeneous input correctly identifies four 3/2-versus-6/2 deficits.
+- Precommit boundary: generator already existed; this commit adds only raw input, its hash/structure assertions, and the general feasibility check. No score, output, oracle, target, or solver observation exists yet.
+- Falsification target: unchanged strict decomposition must either produce a fully validated additive proof or fail closed. The nine-component structure will not be edited after observing the result.

@@ -506,6 +506,36 @@ def _scenario_b_workload_lower_bound_tenths(instance: Instance) -> int:
     return ECLO_COST_TENTHS * required_eclo_rows
 
 
+def _scenario_b_workload_deadline_deficits(
+    instance: Instance,
+) -> tuple[dict[str, int | str], ...]:
+    """Return activities whose B deadline cannot hold enough workload rows."""
+
+    deficits: list[dict[str, int | str]] = []
+    for activity_id, activity in sorted(instance.activities.items()):
+        project = instance.projects[activity.contract_number]
+        first_week = max(1, instance.week_for_date(activity.planned_start_date))
+        last_week = min(
+            instance.horizon_weeks,
+            instance.last_week_completing_by(project.planned_completion_date),
+        )
+        available_rows = max(0, last_week - first_week + 1)
+        maximum_half_units = 3 * available_rows
+        required_half_units = 2 * activity.total_accesses
+        if maximum_half_units < required_half_units:
+            deficits.append(
+                {
+                    "activity_id": activity_id,
+                    "first_week": first_week,
+                    "last_week": last_week,
+                    "available_rows": available_rows,
+                    "maximum_half_units": maximum_half_units,
+                    "required_half_units": required_half_units,
+                }
+            )
+    return tuple(deficits)
+
+
 def _scenario_b_strict_improvement_excess_budget(
     instance: Instance,
     incumbent_score_tenths: int,
