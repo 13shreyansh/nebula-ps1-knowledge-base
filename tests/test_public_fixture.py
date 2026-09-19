@@ -249,6 +249,59 @@ class PublicFixtureTests(unittest.TestCase):
             "full_instance",
         )
 
+    def test_interchange_scale_holdout_recovers_after_heuristic_failure(self) -> None:
+        data = ROOT / "fixtures" / "independent_interchange_scale8_v1"
+        submission = ROOT / "runs" / "independent_interchange_scale8_v1_c_seed1_w1"
+        report_path = (
+            ROOT
+            / "runs"
+            / "independent_interchange_scale8_v1_c_seed1_w1_audit"
+            / "STAGED.json"
+        )
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, submission, "C")
+        independent = independently_score(data, submission)
+        access, occupancy, _ = load_submission(submission)
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 1659.2)
+        self.assertEqual(independent.objective_score, 1659.2)
+        self.assertEqual(evaluation.priority_weighted_score, 1579.2)
+        self.assertEqual(evaluation.excess_access_nights_total, 0)
+        self.assertEqual(evaluation.eclo_nights_total, 16)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertTrue(
+            all(
+                attempt["remaining_closure_conflicts"] > 0
+                for attempt in report["heuristic_attempts"]
+            )
+        )
+        self.assertIsNone(report["heuristic_selected_attempt"])
+        self.assertEqual(
+            report["bridge_safe_local_repair_telemetry"]["objective_score"],
+            39084.0,
+        )
+        self.assertEqual(report["selected_objective_score"], 1659.2)
+        self.assertEqual(
+            report["verification_telemetry"]["best_bound"],
+            1659.2,
+        )
+        self.assertTrue(
+            report["verification_telemetry"]["primary_score_proven_optimal"]
+        )
+        self.assertEqual(
+            report["verification_telemetry"]["primary_bound_scope"],
+            "full_instance",
+        )
+
     def test_independent_synthetic_oracle_is_valid_without_public_identifiers(self) -> None:
         synthetic_root = ROOT / "fixtures" / "independent_synthetic_v1"
         oracle = ROOT / "fixtures" / "independent_synthetic_v1_oracle"

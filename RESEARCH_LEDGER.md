@@ -1187,6 +1187,15 @@ Confidence labels:
 - **Evidence boundary:** Output hashes differ because identifiers differ, as required. Equal score and proof refute this one ordering/identifier shortcut; they do not rule out dependence on other generator regularities or larger-scale search order.
 - **Confidence:** Very high in this metamorphic invariance; medium-low in general hidden-instance robustness.
 
+### `R140` Scale exposes heuristic fragility but validates the exact fallback
+
+- **Status:** Mixed result on the input-only eight-component commit `ba89233`.
+- **Failure:** Every three-second direct heuristic seed returns a numerically attractive but unsafe partial result with 43–46 remaining closure conflicts; no heuristic incumbent is admitted. A guarded repair finds a strict-clean incumbent at C=`39084.0`, far above the component baseline.
+- **Recovery:** The unrestricted bridge-safe verifier improves that incumbent to C=`1659.2` and proves the same full-instance bound in 6.700 seconds. Both scorers decompose it as delay `1579.2`, zero excess, and 16 ECLO rows; strict conflicts are zero.
+- **Interpretation:** The validation and fallback architecture works, but the fast constructor does not scale even across disjoint components. More heuristic seeds are not the remedy: all five fail at the first closure round. Component-aware solving or decomposition is the strongest next candidate.
+- **Integrity:** The scaled input was committed before any output existed; the observed `1659.2` equals eight times the earlier exact component optimum only after the run and is independently rescored. No target enters the solver.
+- **Confidence:** Very high in the recovered local optimum and failure diagnosis; high that decomposition can remove needless cross-component search; medium in gains on coupled public-scale instances.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

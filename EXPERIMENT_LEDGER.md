@@ -1604,3 +1604,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Precommit scope: generic replication script, input-only fixture, structural regression, and dataset hash `742ecb97…`. No answer key, solver output, score assertion, or production-derived target exists.
 - Structure: eight disjoint copies of the frozen three-line holdout, with per-copy identifiers and shuffled raw tables: 24 lines, 48 activities, 336 locations, and 16 derived Live crossover activities.
 - Falsification target: the unchanged small-case portfolio may time out, lose feasibility, lose the exact bound, or expose cross-component bookkeeping defects. The fixture will not be redesigned after observing the result.
+
+### E169: Scaled interchange run fails fast construction and recovers exact C=`1659.2`
+
+- Timestamp: 2026-09-19 12:13:00 +08.
+- Unchanged recipe: five heuristic seeds, one worker, strict closure, 3/2/5/10-second stage limits, and no hint or answer key on precommitted dataset `742ecb97…`.
+- Failure evidence: all five direct attempts stop after one solve round with 43–46 closure conflicts; no heuristic candidate is admitted. The first safe local repair is C=`39084.0` and only proves its frozen neighborhood.
+- Recovery evidence: unrestricted full verification reaches and proves C=`1659.2` with score/bound equality, full-instance scope, 4,210 variables, 16,931 constraints, and 6.700 seconds wall time. Final selection is hard-feasible and strict-clean.
+- Independent score: delay `1579.2`, excess `0`, 16 ECLO rows costing `80`, total `1659.2`; this equals eight independently proved C=`207.4` components. Both scoring implementations agree.
+- Consequence: the fallback is robust, but the direct heuristic's closure-separation cadence is a scale bottleneck. Additional same-budget seeds waste 15 seconds without producing one safe incumbent; decomposition is now higher value than further seed expansion.
+- Official boundary: no public artifact, official score, quota, or portal state changed.
