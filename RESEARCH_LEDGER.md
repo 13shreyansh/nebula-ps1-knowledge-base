@@ -826,6 +826,15 @@ Confidence labels:
 - **Scope:** This changes only equal-score tie handling under a predictor mismatch. All retained audits keep the same scores and hashes.
 - **Confidence:** High.
 
+### `R100` Many-gap final post-processing remains practical in the measured scale regime
+
+- **Status:** Confirmed on an independent 60-activity, 240-week schedule with 59 internal idle weeks.
+- **Construction:** Reverse the activity order and separate consecutive three-week activity blocks by one globally idle week. The source is standard-feasible, strict-buffer clean, and scored identically by both implementations before production post-processing sees it.
+- **Result:** The checked normalizer performs 59 promotions with 59 serialized candidates and zero prediction mismatches; the resulting contiguous schedule enables one checked ECLO promotion. C falls from `1,116,689` to dual-scored, strict-clean `733,120`, a decrease of `383,569`.
+- **Runtime:** About 1.54 seconds locally for the complete final helper. This falsifies an immediate runtime failure at this size, but the one-gap-per-round implementation still scales with gap count and submission size.
+- **Integrity:** The generator uses only schema-derived activity ordering and complete candidate validation. This is a synthetic robustness result, not an official score change.
+- **Confidence:** High for the measured case; medium for much larger dense inputs.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

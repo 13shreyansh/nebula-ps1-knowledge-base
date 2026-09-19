@@ -1,0 +1,20 @@
+{
+  "activity_count": 60,
+  "dataset_hash": "a00c0618aba8b559fbdb03d8adf3ed7de23bd0e378a623cf7c966f1320532c84",
+  "eclo_candidates_checked": 1,
+  "eclo_promotions": 1,
+  "elapsed_seconds": 1.537096,
+  "horizon_weeks": 240,
+  "idle_candidates_checked": 59,
+  "idle_prediction_mismatches": 0,
+  "idle_promotions": 59,
+  "independent_score": 733120.0,
+  "initial_gap_count": 59,
+  "score_change": -383569.0,
+  "selected_score": 733120.0,
+  "selected_stage": "eclo_compaction",
+  "selected_submission_hash": "8c2433f36a755da719c5cc163517c1fad62390e599aa89b45a9d0c6a6a198c3b",
+  "source_score": 1116689.0,
+  "source_submission_hash": "810a7e52aae50e3e8eeaa586dbc11e23c9aba057b43a7a68104b776e72eea39b",
+  "strict_conflicts": 0
+}

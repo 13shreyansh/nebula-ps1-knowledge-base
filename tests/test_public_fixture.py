@@ -1153,6 +1153,27 @@ class PublicFixtureTests(unittest.TestCase):
             reverse["eclo_candidates_pruned_by_exact_score_order"], 119
         )
 
+    def test_final_postprocessing_handles_59_idle_gaps_at_scale(self) -> None:
+        benchmark = json.loads(
+            (ROOT / "runs" / "idle_compaction_scale_benchmark.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(benchmark["activity_count"], 60)
+        self.assertEqual(benchmark["horizon_weeks"], 240)
+        self.assertEqual(benchmark["initial_gap_count"], 59)
+        self.assertEqual(benchmark["idle_promotions"], 59)
+        self.assertEqual(benchmark["idle_candidates_checked"], 59)
+        self.assertEqual(benchmark["idle_prediction_mismatches"], 0)
+        self.assertEqual(benchmark["eclo_promotions"], 1)
+        self.assertEqual(benchmark["eclo_candidates_checked"], 1)
+        self.assertEqual(benchmark["source_score"], 1116689.0)
+        self.assertEqual(benchmark["selected_score"], 733120.0)
+        self.assertEqual(benchmark["independent_score"], 733120.0)
+        self.assertEqual(benchmark["score_change"], -383569.0)
+        self.assertEqual(benchmark["selected_stage"], "eclo_compaction")
+        self.assertEqual(benchmark["strict_conflicts"], 0)
+
     def test_eclo_compaction_score_order_matches_contract_aggregation_audit(
         self,
     ) -> None:

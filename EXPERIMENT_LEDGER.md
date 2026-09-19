@@ -1169,3 +1169,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: exhaustive fallback selects week 5 at checked C=`1,820`; the unmodified predictor audits and all retained final selections preserve their scores and hashes.
 - Regression status: all 101 tests pass.
 - Official protection: no official attempt was used.
+
+### E124: Final cleanup survives a 59-gap scale stress
+
+- Timestamp: 2026-09-19 09:36:38 +08
+- Precondition: a generated 60-activity, 240-week reverse-order source has 59 internal idle weeks, standard feasibility, strict-buffer cleanliness, and matching source score C=`1,116,689` under both scorers.
+- Result: final post-processing checks and promotes 59 idle deletions with zero prediction mismatches, then checks and promotes one ECLO candidate. The selected result is dual-scored C=`733,120`, strict-clean, for a decrease of `383,569`.
+- Runtime: 1.537 seconds in this local run. The accepted claim is measured practicality at this scale, not asymptotic safety or an unknown-instance guarantee.
+- Regression status: all 102 tests pass.
+- Official protection: no portal interaction or attempt was used.
