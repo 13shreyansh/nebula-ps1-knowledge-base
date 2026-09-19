@@ -1156,6 +1156,26 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(final.objective_score, 920.0)
             self.assertEqual(independently_score(data, final_dir).objective_score, 920.0)
 
+    def test_idle_gap_greedy_search_matches_exhaustive_composition(self) -> None:
+        audit = json.loads(
+            (ROOT / "runs" / "idle_gap_search_audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(audit["case_count"], 16)
+        self.assertEqual(audit["score_match_count"], 16)
+        self.assertEqual(audit["mismatch_count"], 0)
+        for case in audit["cases"]:
+            self.assertTrue(case["score_matches"])
+            self.assertEqual(case["greedy_score"], case["exhaustive"]["score"])
+            self.assertEqual(
+                case["greedy_independent_score"], case["greedy_score"]
+            )
+            self.assertEqual(
+                case["exhaustive"]["independent_score"],
+                case["exhaustive"]["score"],
+            )
+
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"
         oracle = ROOT / "fixtures" / "independent_scaled_m20_oracle"

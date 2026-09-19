@@ -1,0 +1,456 @@
+{
+  "case_count": 16,
+  "cases": [
+    {
+      "a_weeks": [
+        1,
+        2,
+        3
+      ],
+      "b_weeks": [
+        5,
+        6,
+        7
+      ],
+      "exhaustive": {
+        "idle_path": [],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862"
+      },
+      "greedy_idle_path": [],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862",
+      "reachable_normalization_states": 1,
+      "score_matches": true,
+      "source_score": 1820.0
+    },
+    {
+      "a_weeks": [
+        1,
+        2,
+        3
+      ],
+      "b_weeks": [
+        5,
+        6,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          7
+        ],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862"
+      },
+      "greedy_idle_path": [
+        7
+      ],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862",
+      "reachable_normalization_states": 2,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        1,
+        2,
+        3
+      ],
+      "b_weeks": [
+        5,
+        7,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          6
+        ],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862"
+      },
+      "greedy_idle_path": [
+        6
+      ],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862",
+      "reachable_normalization_states": 2,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        1,
+        2,
+        3
+      ],
+      "b_weeks": [
+        6,
+        7,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          4
+        ],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862"
+      },
+      "greedy_idle_path": [
+        4
+      ],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862",
+      "reachable_normalization_states": 2,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        1,
+        2,
+        4
+      ],
+      "b_weeks": [
+        5,
+        6,
+        7
+      ],
+      "exhaustive": {
+        "idle_path": [],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "acd2f66b521c3b03023fd300b7f0dda3ce6272582ec90f874aaec01a23388208"
+      },
+      "greedy_idle_path": [],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "acd2f66b521c3b03023fd300b7f0dda3ce6272582ec90f874aaec01a23388208",
+      "reachable_normalization_states": 1,
+      "score_matches": true,
+      "source_score": 1820.0
+    },
+    {
+      "a_weeks": [
+        1,
+        2,
+        4
+      ],
+      "b_weeks": [
+        5,
+        6,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          7
+        ],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "acd2f66b521c3b03023fd300b7f0dda3ce6272582ec90f874aaec01a23388208"
+      },
+      "greedy_idle_path": [
+        7
+      ],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "acd2f66b521c3b03023fd300b7f0dda3ce6272582ec90f874aaec01a23388208",
+      "reachable_normalization_states": 2,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        1,
+        2,
+        4
+      ],
+      "b_weeks": [
+        5,
+        7,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          6
+        ],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "acd2f66b521c3b03023fd300b7f0dda3ce6272582ec90f874aaec01a23388208"
+      },
+      "greedy_idle_path": [
+        6
+      ],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "acd2f66b521c3b03023fd300b7f0dda3ce6272582ec90f874aaec01a23388208",
+      "reachable_normalization_states": 2,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        1,
+        2,
+        4
+      ],
+      "b_weeks": [
+        6,
+        7,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          3
+        ],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862"
+      },
+      "greedy_idle_path": [
+        3
+      ],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862",
+      "reachable_normalization_states": 3,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        1,
+        3,
+        4
+      ],
+      "b_weeks": [
+        5,
+        6,
+        7
+      ],
+      "exhaustive": {
+        "idle_path": [],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "76d415b1f565796b8df8b83a84dd3701c8fe89a957746d901469b113c6655565"
+      },
+      "greedy_idle_path": [],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "76d415b1f565796b8df8b83a84dd3701c8fe89a957746d901469b113c6655565",
+      "reachable_normalization_states": 1,
+      "score_matches": true,
+      "source_score": 1820.0
+    },
+    {
+      "a_weeks": [
+        1,
+        3,
+        4
+      ],
+      "b_weeks": [
+        5,
+        6,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          7
+        ],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "76d415b1f565796b8df8b83a84dd3701c8fe89a957746d901469b113c6655565"
+      },
+      "greedy_idle_path": [
+        7
+      ],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "76d415b1f565796b8df8b83a84dd3701c8fe89a957746d901469b113c6655565",
+      "reachable_normalization_states": 2,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        1,
+        3,
+        4
+      ],
+      "b_weeks": [
+        5,
+        7,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          6
+        ],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "76d415b1f565796b8df8b83a84dd3701c8fe89a957746d901469b113c6655565"
+      },
+      "greedy_idle_path": [
+        6
+      ],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "76d415b1f565796b8df8b83a84dd3701c8fe89a957746d901469b113c6655565",
+      "reachable_normalization_states": 2,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        1,
+        3,
+        4
+      ],
+      "b_weeks": [
+        6,
+        7,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          5
+        ],
+        "independent_score": 1820.0,
+        "score": 1820.0,
+        "submission_hash": "76d415b1f565796b8df8b83a84dd3701c8fe89a957746d901469b113c6655565"
+      },
+      "greedy_idle_path": [
+        2
+      ],
+      "greedy_independent_score": 1820.0,
+      "greedy_score": 1820.0,
+      "greedy_submission_hash": "915d1f5aeadfe4e5f65ab07feeeb4b00a5b61f450fac263973bda7d0af83f862",
+      "reachable_normalization_states": 3,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        2,
+        3,
+        4
+      ],
+      "b_weeks": [
+        5,
+        6,
+        7
+      ],
+      "exhaustive": {
+        "idle_path": [],
+        "independent_score": 920.0,
+        "score": 920.0,
+        "submission_hash": "6df8f1b736a49d72d8237f8cc283be7c0c628c62558abb547477068a7a2a702b"
+      },
+      "greedy_idle_path": [],
+      "greedy_independent_score": 920.0,
+      "greedy_score": 920.0,
+      "greedy_submission_hash": "6df8f1b736a49d72d8237f8cc283be7c0c628c62558abb547477068a7a2a702b",
+      "reachable_normalization_states": 1,
+      "score_matches": true,
+      "source_score": 1820.0
+    },
+    {
+      "a_weeks": [
+        2,
+        3,
+        4
+      ],
+      "b_weeks": [
+        5,
+        6,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          7
+        ],
+        "independent_score": 920.0,
+        "score": 920.0,
+        "submission_hash": "6df8f1b736a49d72d8237f8cc283be7c0c628c62558abb547477068a7a2a702b"
+      },
+      "greedy_idle_path": [
+        7
+      ],
+      "greedy_independent_score": 920.0,
+      "greedy_score": 920.0,
+      "greedy_submission_hash": "6df8f1b736a49d72d8237f8cc283be7c0c628c62558abb547477068a7a2a702b",
+      "reachable_normalization_states": 2,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        2,
+        3,
+        4
+      ],
+      "b_weeks": [
+        5,
+        7,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          6
+        ],
+        "independent_score": 920.0,
+        "score": 920.0,
+        "submission_hash": "6df8f1b736a49d72d8237f8cc283be7c0c628c62558abb547477068a7a2a702b"
+      },
+      "greedy_idle_path": [
+        6
+      ],
+      "greedy_independent_score": 920.0,
+      "greedy_score": 920.0,
+      "greedy_submission_hash": "6df8f1b736a49d72d8237f8cc283be7c0c628c62558abb547477068a7a2a702b",
+      "reachable_normalization_states": 2,
+      "score_matches": true,
+      "source_score": 2730.0
+    },
+    {
+      "a_weeks": [
+        2,
+        3,
+        4
+      ],
+      "b_weeks": [
+        6,
+        7,
+        8
+      ],
+      "exhaustive": {
+        "idle_path": [
+          5
+        ],
+        "independent_score": 920.0,
+        "score": 920.0,
+        "submission_hash": "6df8f1b736a49d72d8237f8cc283be7c0c628c62558abb547477068a7a2a702b"
+      },
+      "greedy_idle_path": [
+        5
+      ],
+      "greedy_independent_score": 920.0,
+      "greedy_score": 920.0,
+      "greedy_submission_hash": "6df8f1b736a49d72d8237f8cc283be7c0c628c62558abb547477068a7a2a702b",
+      "reachable_normalization_states": 3,
+      "score_matches": true,
+      "source_score": 2730.0
+    }
+  ],
+  "dataset_hash": "60efa1c7b3e23b4c33949a29334b17a3445c768a5291ec48c0d75f66abb488e9",
+  "mismatch_count": 0,
+  "score_match_count": 16
+}

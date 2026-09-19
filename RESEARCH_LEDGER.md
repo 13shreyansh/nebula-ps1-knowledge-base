@@ -771,6 +771,15 @@ Confidence labels:
 - **Limitation:** The correction does not exhaustively branch over equal-score internal gaps. If several internal deletions are individually valid but cannot all compose, downstream outcomes could still differ.
 - **Confidence:** High in this failure and correction; medium in completeness over more complex equal-score normalization graphs.
 
+### `R094` Corrected idle ordering matches exhaustive small-state composition
+
+- **Status:** Confirmed on all 16 controlled six-row schedules over the frozen eight-week tie fixture.
+- **Method:** For every combination of three first-activity weeks from 1–4 and three second-activity weeks from 5–8, an independent audit enumerates every reachable fully valid non-worsening idle-deletion state. It runs exhaustive per-round ECLO compaction from every state and compares the best composed score with the production greedy pipeline.
+- **Result:** Production and exhaustive composition match in 16/16 cases. Each selected score also agrees with the independent scorer. The largest normalization graph contains three unique states.
+- **Protection:** The audit compares scores, not only chosen hashes, because equal-score normalization paths can legitimately produce different files. It uses full evaluation and the strict closure screen for every retained state.
+- **Limitation:** This finite audit fixes one line, two activities, six rows, and an eight-week horizon. It does not prove greedy completeness for larger branching normalization graphs.
+- **Confidence:** High for the enumerated state space; medium for transfer to larger multi-line schedules.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
