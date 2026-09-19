@@ -24,6 +24,11 @@ from nebula_ps1.eclo_compact import (
     best_serialized_eclo_compaction_sequence,
     best_single_lane_eclo_compaction,
 )
+from nebula_ps1.decomposed import (
+    _activity_interaction_reasons,
+    independent_activity_components,
+    solve_decomposed_scenario,
+)
 from nebula_ps1.evaluate import _legal_possession_mix, evaluate_submission, load_submission
 from nebula_ps1.flexible_solver import (
     _group_limit,
@@ -142,6 +147,128 @@ class PublicFixtureTests(unittest.TestCase):
             16,
         )
         self.assertFalse((data / "RESULTS.csv").exists())
+
+    def test_live_interchange_c_window_prevents_false_decomposition(self) -> None:
+        data = ROOT / "fixtures" / "independent_interchange_scale8_v1"
+        instance = load_instance(data)
+        components = independent_activity_components(
+            instance,
+            "C",
+            forbid_buffer_overlap=True,
+        )
+        self.assertEqual(len(components), 1)
+        self.assertEqual(set(components[0]), set(instance.activities))
+
+    def test_decomposed_solver_matches_monolithic_exact_two_line_result(self) -> None:
+        data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
+        monolithic = (
+            ROOT
+            / "runs"
+            / "independent_eclo_multipass_v1_c_monolithic_seed1_w1"
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            report = solve_decomposed_scenario(
+                data,
+                root / "submission",
+                "C",
+                audit_output_dir=root / "audit",
+                workers=1,
+                seed=1,
+                heuristic_attempts=1,
+                fallback_attempts=1,
+                forbid_buffer_overlap=True,
+            )
+            evaluation = evaluate_submission(
+                load_instance(data), root / "submission", "C"
+            )
+            independent = independently_score(data, root / "submission")
+            for name in SUBMISSION_FILES:
+                self.assertEqual(
+                    (root / "submission" / name).read_bytes(),
+                    (monolithic / name).read_bytes(),
+                )
+        self.assertEqual(report["component_count"], 2)
+        self.assertEqual(report["selected_objective_score"], 9120.0)
+        self.assertEqual(report["independent_objective_score"], 9120.0)
+        self.assertTrue(report["global_optimality_proved_by_additivity"])
+        self.assertEqual(report["selected_policy_conflicts"], 0)
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 9120.0)
+        self.assertEqual(independent.objective_score, 9120.0)
+
+    def test_decomposition_dependency_reasons_cover_constraint_families(self) -> None:
+        scale = load_instance(ROOT / "fixtures" / "independent_interchange_scale8_v1")
+        live_pair = _activity_interaction_reasons(
+            scale,
+            "C",
+            "R01HLA",
+            "R02OPA",
+            forbid_buffer_overlap=True,
+        )
+        self.assertIn("scenario_c_live_all_line_window", live_pair)
+        self.assertNotIn(
+            "scenario_c_live_all_line_window",
+            _activity_interaction_reasons(scale, "A", "R01HLA", "R02OPA"),
+        )
+
+        activities = dict(scale.activities)
+        activities["R02OPA"] = replace(
+            activities["R02OPA"],
+            contract_number=activities["R01OPA"].contract_number,
+        )
+        shared_contract = replace(scale, activities=activities)
+        self.assertIn(
+            "same_contract",
+            _activity_interaction_reasons(
+                shared_contract, "A", "R01OPA", "R02OPA"
+            ),
+        )
+        self.assertEqual(
+            len(independent_activity_components(shared_contract, "A")),
+            7,
+        )
+
+        activities = dict(scale.activities)
+        activities["R02OPA"] = replace(
+            activities["R02OPA"],
+            predecessor_activity_id="R01OPA",
+        )
+        predecessor = replace(scale, activities=activities)
+        self.assertIn(
+            "predecessor",
+            _activity_interaction_reasons(
+                predecessor, "A", "R01OPA", "R02OPA"
+            ),
+        )
+        self.assertEqual(len(independent_activity_components(predecessor, "A")), 7)
+
+        multipass = load_instance(ROOT / "fixtures" / "independent_eclo_multipass_v1")
+        same_line = _activity_interaction_reasons(
+            multipass, "C", "MX1", "MX2", forbid_buffer_overlap=True
+        )
+        self.assertIn("scenario_c_same_line_window", same_line)
+        self.assertIn("resource_or_closure", same_line)
+
+        public_buffer = _activity_interaction_reasons(
+            self.instance,
+            "A",
+            "A001",
+            "A007",
+            forbid_buffer_overlap=True,
+        )
+        self.assertIn("strict_buffer_overlap", public_buffer)
+        self.assertNotIn("resource_or_closure", public_buffer)
+        self.assertNotIn(
+            "strict_buffer_overlap",
+            _activity_interaction_reasons(
+                self.instance,
+                "A",
+                "A001",
+                "A007",
+                forbid_buffer_overlap=False,
+            ),
+        )
 
     def test_interchange_holdout_c_is_exact_and_policy_stable(self) -> None:
         data = ROOT / "fixtures" / "independent_interchange_holdout_v1"

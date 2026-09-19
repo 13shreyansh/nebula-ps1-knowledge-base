@@ -1,0 +1,11 @@
+activity_id,access_seq,week,eclo,access_night
+R04HLA,1,1,1,1
+R04HLA,2,2,1,1
+R04HLB,1,3,0,1
+R04HLC,1,4,0,1
+R04HLC,2,5,0,1
+R04OPA,1,4,0,1
+R04OPA,2,5,0,1
+R04OPB,1,4,0,1
+R04OPB,2,5,0,1
+R04SCC,1,6,0,1

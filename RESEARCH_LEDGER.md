@@ -1196,6 +1196,23 @@ Confidence labels:
 - **Integrity:** The scaled input was committed before any output existed; the observed `1659.2` equals eight times the earlier exact component optimum only after the run and is independently rescored. No target enters the solver.
 - **Confidence:** Very high in the recovered local optimum and failure diagnosis; high that decomposition can remove needless cross-component search; medium in gains on coupled public-scale instances.
 
+### `R141` Location-disjoint decomposition is unsound under global C windows
+
+- **Status:** First proof rejected; graph corrected before promotion.
+- **Failure:** A first partition treated eight location-disjoint Live-interchange copies as independent and reported a fast additive proof at C=`1659.2`. The merged schedule was valid and matched the monolithic optimum, which initially made the claim look credible.
+- **Counterexample:** In the production Scenario C model, an ECLO row for any Live interchange activity constrains the window variable of every line. Location-disjoint components therefore remain coupled. Feasible merging and numerical agreement cannot prove additivity.
+- **Correction:** The dependency graph now connects a Live-crossover activity to every activity in Scenario C. The 48-activity fixture collapses to one component. The original report is retained and explicitly marked rejected.
+- **Lesson:** Decomposition requires a complete graph over constraint families, not only shared locations. Current reasons cover same contract/workfront, predecessor, same-line C window, Live all-line C window, resource/closure interaction, and optional strict buffer overlap.
+- **Confidence:** Very high in the rejection and corrected Live edge; medium in complete graph soundness pending broader formulations or future rule changes.
+
+### `R142` Corrected decomposition matches a separate monolithic proof
+
+- **Status:** Positive control passed; remains experimental and non-default.
+- **Control:** Existing non-Live two-line multipass fixture partitions into two components of two activities. Each component independently proves C=`4560.0`; the merged output is hard-feasible, strict-clean, dual-scored at `9120.0`, and reports an additive proof.
+- **Independent confirmation:** A separate monolithic staged run proves score/bound C=`9120.0` with full-instance scope and emits byte-identical CSVs. This checks the partition, merge, score additivity, and proof aggregation on one genuine case.
+- **Boundary:** The small control is not a runtime win and does not validate every future constraint. Decomposition stays behind full merged feasibility, independent scoring, component proof-scope checks, and dependency-reason regressions.
+- **Confidence:** Very high on this control; medium in generic decomposition until more structurally varied independent cases pass.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

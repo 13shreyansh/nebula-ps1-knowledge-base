@@ -1,0 +1,7 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+R03KLA,R03 Live A bridge,2036-06-01,InterchangeHoldout,Live,1,2037-03-01,2037-01-18,1,PC,1
+R03KPA,R03 A outer PM,2036-06-01,InterchangeHoldout,Non-live (Consist),2,2037-03-01,2037-02-08,1,PM,1
+R03KPB,R03 B outer PC,2036-06-01,InterchangeHoldout,Non-live (Consist),2,2037-03-01,2037-02-01,1,PC,2
+R03KCC,R03 C successor,2036-06-01,InterchangeHoldout,Non-live (Consist),3,2037-03-01,2037-02-08,1,C,1
+R03KLB,R03 Live B bridge,2036-06-01,InterchangeHoldout,Live,2,2037-03-01,2037-01-18,1,C,1
+R03KLC,R03 Consist C bridge,2036-06-01,InterchangeHoldout,Non-live (Consist),3,2037-03-01,2037-01-25,1,C,2

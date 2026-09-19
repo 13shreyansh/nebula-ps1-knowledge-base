@@ -1614,3 +1614,21 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Independent score: delay `1579.2`, excess `0`, 16 ECLO rows costing `80`, total `1659.2`; this equals eight independently proved C=`207.4` components. Both scoring implementations agree.
 - Consequence: the fallback is robust, but the direct heuristic's closure-separation cadence is a scale bottleneck. Additional same-budget seeds waste 15 seconds without producing one safe incumbent; decomposition is now higher value than further seed expansion.
 - Official boundary: no public artifact, official score, quota, or portal state changed.
+
+### E170: First component decomposition proof is rejected
+
+- Timestamp: 2026-09-19 12:17:00 +08.
+- Apparent result: an experimental graph split the 48-activity scale fixture into eight location-disjoint components, solved each at `207.4`, merged a hard-feasible strict-clean `1659.2` schedule, and reported an additive global proof in 1.7 seconds.
+- Falsification: source review found that Scenario C gives every Live interchange activity an ECLO-window constraint on every line. The graph connected same-line activities and closure/resource interactions but omitted this global cross-line dependency. The eight components were therefore not formally independent.
+- Decision: reject the additive proof and do not promote the experimental result. Retain the original report with an explicit `REJECTED.md`. The merged bytes happen to equal the separately monolithic-proved `1659.2` output, but numerical agreement does not repair an unsound proof method.
+- Correction: connect every Live-crossover activity to every activity under Scenario C. The corrected graph returns one 48-activity component, and a regression pins that behavior.
+- Lesson: resource-disjointness is insufficient for decomposition; objective-window, contract, predecessor, and any other global constraints must enter the dependency graph. Any future decomposition proof requires a constraint-family completeness audit, not only a feasible merged output.
+
+### E171: Corrected decomposition matches monolithic C=`9120`
+
+- Timestamp: 2026-09-19 12:18:00 +08.
+- Control: the existing non-Live multipass fixture separates into two lines/components, each containing two activities. The corrected experimental solver runs the unchanged staged policy per component, then merges and revalidates the full submission.
+- Component proof: both components prove C=`4560.0` with full-instance local scope. The merged output is strict-clean and both scorers return C=`9120.0`; additive proof conditions are true.
+- Independent monolithic check: a separate full four-activity run proves score/bound `9120.0` and emits the exact same submission hash `75d7d88…` and byte-identical CSVs.
+- Boundary protections: the Live-interchange scale fixture now partitions into one component. Boundary regressions cover contract/workfront, predecessor, same-line C window, Live all-line C window, resource/closure, and strict-buffer dependency reasons.
+- Interpretation: the corrected method passes one genuine decomposition control, but remains experimental and non-default. No official score or portal state changed.
