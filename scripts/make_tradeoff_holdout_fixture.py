@@ -39,6 +39,11 @@ def main() -> None:
     parser.add_argument("--base-oracle", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--oracle-output", required=True)
+    parser.add_argument(
+        "--location",
+        default="SEC:LHX:HN5_HN6:EB",
+        help="Unused single-sector location for the additive tight activity",
+    )
     args = parser.parse_args()
     base_data = Path(args.base_data)
     base_oracle = Path(args.base_oracle)
@@ -58,6 +63,25 @@ def main() -> None:
     parameters = {row["key"]: row["value"] for row in parameter_rows}
     horizon_start = date.fromisoformat(parameters["horizon_start"])
     planned_completion = horizon_start + timedelta(days=7 * 2 - 1)
+    location_parts = args.location.split(":")
+    if len(location_parts) != 4 or location_parts[0] != "SEC":
+        raise ValueError("location must be SEC:<line>:<from>_<to>:<bound>")
+    line, sector_endpoints, bound = location_parts[1:]
+    try:
+        from_station, to_station = sector_endpoints.split("_", maxsplit=1)
+    except ValueError as exc:
+        raise ValueError("location sector must contain from_to stations") from exc
+    available_locations = {
+        row["location_id"] for row in tables["04_LOCATION_SUPPLY.csv"][1]
+    }
+    footprint = (
+        args.location,
+        f"PLAT:{line}:{from_station}:{bound}",
+        f"PLAT:{line}:{to_station}:{bound}",
+    )
+    missing_locations = sorted(set(footprint) - available_locations)
+    if missing_locations:
+        raise ValueError(f"unknown footprint locations: {missing_locations}")
 
     project_fields, projects = tables["07_PROJECT_DETAILS.csv"]
     projects.append(
@@ -81,8 +105,8 @@ def main() -> None:
             "activity_id": "WTIGHT",
             "contract_number": "KWTIGHT",
             "activity_type": "HeldoutTradeoff",
-            "start_location_id": "SEC:LHX:HN5_HN6:EB",
-            "end_location_id": "SEC:LHX:HN5_HN6:EB",
+            "start_location_id": args.location,
+            "end_location_id": args.location,
             "total_accesses": "3",
             "planned_start_date": horizon_start.isoformat(),
             "predecessor_activity_id": "",
@@ -110,11 +134,7 @@ def main() -> None:
                 "access_night": "1",
             }
         )
-        for location_id in (
-            "SEC:LHX:HN5_HN6:EB",
-            "PLAT:LHX:HN5:EB",
-            "PLAT:LHX:HN6:EB",
-        ):
+        for location_id in footprint:
             occupancy_rows.append(
                 {
                     "activity_id": "WTIGHT",
