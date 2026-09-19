@@ -1,0 +1,3 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+KTIE1,Idle tie contract 1,2034-06-01,Synthetic,Non-live (Others),1,2035-04-30,2035-01-28,1,PM,1
+KTIE2,Idle tie contract 2,2034-06-01,Synthetic,Non-live (Others),1,2035-04-30,2035-02-04,1,PM,1

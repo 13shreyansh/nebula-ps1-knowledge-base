@@ -1,0 +1,7 @@
+location_id,location_kind,line_code,bound,supply_capacity
+PLAT:TIE:TIE1:EB,platform,TIE,EB,1
+PLAT:TIE:TIE1:WB,platform,TIE,WB,1
+PLAT:TIE:TIE2:EB,platform,TIE,EB,1
+PLAT:TIE:TIE2:WB,platform,TIE,WB,1
+SEC:TIE:TIE1_TIE2:EB,tunnel sector,TIE,EB,1
+SEC:TIE:TIE1_TIE2:WB,tunnel sector,TIE,WB,1
