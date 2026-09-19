@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.51
+version: 0.8.52
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -328,6 +328,7 @@ Each protected public answer matches its bound and has passed the official valid
 - **A-002:** officially feasible at `137.9`; 28 overrun days across three contracts, zero excess, zero ECLO. It reaches the structural lower bound.
 - **B-001:** officially feasible at `30.0`; zero overrun/excess and six ECLO nights. The full bridge-safe model proves `<30.0` infeasible.
 - **C-001:** officially feasible at `62.7`; seven overrun days in C006, zero excess, four ECLO nights. The full model and workload argument prove the same lower bound.
+- The organizer's upstream `main` was rechecked at 2026-09-19 09:45 +08 and remains commit `966c976`, matching the locally verified problem pack.
 - Combined public penalty is `230.6`. Lower is better; the portal does not publish a cross-scenario combined metric.
 - The current controller reconstructed all three optimum scores from scratch in 15/15 fixed-policy runs across five seeds: A 15.425–25.742 seconds, B 9.902–23.039, and production C 17.360–37.354. Every schedule hash differed and only local validation applies, so the official ZIPs remain the release artifacts.
 - Both local scorers reproduce every official score exactly. The earlier activity-completion proxy was rejected after A-002 exposed the correct contract-completion aggregation.
@@ -689,3 +690,4 @@ When sources conflict:
 | `0.8.49` | 2026-09-19 | Extended full branching comparison to 768 cases with staggered starts, a precedence chain, and both constraints together; every greedy final score matched the oracle. |
 | `0.8.50` | 2026-09-19 | Added deterministic final A/B/C ZIPs whose archived bytes match the protected, officially confirmed incumbents; explicitly quarantined stale historical validator archives. |
 | `0.8.51` | 2026-09-19 | Added a one-command local pre-upload audit covering archive structure and hashes, both scorers, hard feasibility, strict closures, official run IDs, and official scores. |
+| `0.8.52` | 2026-09-19 | Rechecked the organizer's upstream specification; `main` remains the locally verified commit `966c976` with no pending rule update. |

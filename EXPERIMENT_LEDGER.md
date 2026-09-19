@@ -1217,3 +1217,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Boundary: this is a local drift and packaging check, not an official validator call or a new score claim.
 - Regression status: all 106 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E129: Organizer specification remains unchanged upstream
+
+- Timestamp: 2026-09-19 09:45:36 +08
+- Read-only check: `git ls-remote` reports organizer repository `main` at full commit `966c976005db2e3e40a691cff268fdb8f396a5df`.
+- Result: this equals the commit already recorded for the locally verified PS1 pack. No new upstream problem-statement change requires reconciliation.
+- Boundary: this checks the public Git branch only; portal-only notices would require separate evidence.
+- Official protection: no validator or submission attempt was used.
