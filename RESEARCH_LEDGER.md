@@ -1015,6 +1015,15 @@ Confidence labels:
 - **Boundary:** The stricter screen is not a confirmed official hard rule. Its conflicts do not invalidate the fresh replay under the published rules, but equal-score artifact selection should preserve the stronger hedge when available.
 - **Confidence:** Very high in non-replacement and score equality; high in local feasibility; no new official validation claim.
 
+### `R122` Checked construction transfers to a doubled dense bottleneck, but model assembly dominates
+
+- **Status:** Confirmed on a fixture committed before solving.
+- **Result:** The 324-activity, 324-contract dense holdout succeeds in A/B/C at score zero, with both scorers agreeing and zero standard or strict conflicts. Candidate access weeks differ from the separately generated oracle for both Live activities.
+- **Scale signal:** End-to-end times are 2.363/2.774/5.478 seconds. An A profile attributes 2.900 of 3.479 profiled seconds to two flexible-solver calls; the direct call builds 284,048 variables and 457,994 constraints even though its fully checked constructor already attains the nonnegative floor.
+- **Consequence:** The next safe optimization is to validate a complete structural zero-floor candidate before materializing CP-SAT, while retaining full model construction for incomplete, invalid, or positive-score candidates.
+- **Boundary:** This generator still has repeated dense modules and an easy zero optimum. It tests scale and trust gates, not arbitrary coupling or positive-score optimality.
+- **Confidence:** High in measured transfer and diagnosis; medium in extrapolation beyond this family.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

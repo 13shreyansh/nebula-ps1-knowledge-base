@@ -1823,6 +1823,77 @@ class PublicFixtureTests(unittest.TestCase):
                 self.assertEqual(independent.objective_score, 0.0)
                 self.assertNotEqual(candidate_keys, oracle_keys)
 
+    def test_checked_complete_hint_scales_to_larger_dense_holdout(self) -> None:
+        data = ROOT / "fixtures" / "independent_dense_m40"
+        oracle = ROOT / "fixtures" / "independent_dense_m40_oracle"
+        instance = load_instance(data)
+        oracle_evaluation = evaluate_submission(instance, oracle, "A")
+        oracle_independent = independently_score(data, oracle)
+        self.assertEqual(
+            instance.dataset_hash,
+            "b5e18c49654dd6c074d63ec322fe24c10e71aaecc35a93df1b371ad5285dae49",
+        )
+        self.assertEqual(len(instance.activities), 324)
+        self.assertEqual(len(instance.projects), 324)
+        self.assertEqual(instance.horizon_weeks, 87)
+        self.assertEqual(oracle_evaluation.hard_violations, ())
+        self.assertEqual(oracle_evaluation.objective_score, 0.0)
+        self.assertEqual(oracle_independent.objective_score, 0.0)
+
+        matrix = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m40_seed1_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(matrix["dataset_hash"], instance.dataset_hash)
+        self.assertEqual(matrix["successes"], 3)
+        self.assertEqual(matrix["failures"], 0)
+
+        oracle_access, _, _ = load_submission(oracle)
+        oracle_keys = {
+            (row.activity_id, row.week, row.eclo, row.access_night)
+            for row in oracle_access
+        }
+        expected_stages = {
+            "A": "heuristic_incumbent",
+            "B": "heuristic_incumbent",
+            "C": "scenario_c_fallback",
+        }
+        for row in matrix["runs"]:
+            scenario = row["scenario"]
+            with self.subTest(scenario=scenario):
+                submission = (
+                    ROOT
+                    / "runs"
+                    / "independent_dense_m40_seed1_w1"
+                    / f"{scenario.lower()}_seed_1"
+                )
+                evaluation = evaluate_submission(instance, submission, scenario)
+                independent = independently_score(data, submission)
+                access, occupancy, _ = load_submission(submission)
+                candidate_keys = {
+                    (item.activity_id, item.week, item.eclo, item.access_night)
+                    for item in access
+                }
+                strict = screen_closures(
+                    instance,
+                    access,
+                    occupancy,
+                    forbid_buffer_overlap=True,
+                )
+                self.assertEqual(row["status"], "SUCCESS")
+                self.assertEqual(row["score"], 0.0)
+                self.assertEqual(row["strict_conflicts"], 0)
+                self.assertEqual(row["selected_stage"], expected_stages[scenario])
+                self.assertEqual(evaluation.hard_violations, ())
+                self.assertEqual(evaluation.objective_score, 0.0)
+                self.assertEqual(independent.objective_score, 0.0)
+                self.assertEqual(strict, ())
+                self.assertNotEqual(candidate_keys, oracle_keys)
+
     def test_invalid_complete_structural_hint_is_not_promoted(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_v1"
         instance = load_instance(data)

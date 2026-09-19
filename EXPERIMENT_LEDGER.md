@@ -1408,3 +1408,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Adversarial boundary: the separate strict-buffer audit reports A=`4`, B=`0`, C=`9` conflicts. This optional hedge is not a confirmed official hard rule, but the protected official files are equal-score, strict-clean, and official-validator-confirmed. The new files are therefore retained only as current-code replay evidence.
 - Integrity gates: all 120 tests pass in 7.880 seconds, including dual rescoring, dataset-hash equality, exact score equality, and explicit non-replacement assertions.
 - Official protection: no portal interaction or attempt was used; remaining quotas stay A=`3/5`, B=`4/5`, C=`4/5`.
+
+### E148: Doubled dense holdout succeeds and exposes model-assembly overhead
+
+- Timestamp: 2026-09-19 11:01:53 +08.
+- Frozen-before-solve input: `independent_dense_m40`, dataset hash `b5e18c49…`, has 324 activities, 324 contracts, 44 locations, and an 87-week horizon. Its independent oracle has 644 access and 1,932 occupancy rows, is hard-feasible, and is dual-scored A=`0.0`.
+- Policy and result: the unchanged one-worker 2/1/3/2-second fixed policy succeeds A/B/C at `0.0` in 2.363/2.774/5.478 seconds; selected stages are heuristic/heuristic/C-fallback. Every output is dual-scored and strict-clean.
+- Anti-copy check: all three candidates swap the two Live activities' weeks 81/82 relative to the independent oracle. The solver did not receive the oracle directory.
+- Scale profile: direct A constructs 284,048 variables and 457,994 constraints. In a fresh profile, two flexible-solver calls consume 2.900 of 3.479 seconds; CP-SAT itself takes 0.130 seconds, while 225,330 hint additions consume 0.496 seconds. Full model construction is now the dominant avoidable cost after the constructor has already produced a checked score-zero candidate.
+- Integrity gates: the dedicated regression and all 121 tests pass in 8.736 seconds. The fixture and oracle were committed before the first solve.
+- Boundary: repeated dense structure and a zero lower bound remain easier than unknown coupled positive-score instances. No official artifact or score changed, and no portal attempt was used.
