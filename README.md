@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.112
+version: 0.8.113
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -765,3 +765,4 @@ When sources conflict:
 | `0.8.110` | 2026-09-19 | Precommitted a corpus-wide graph-conservatism audit before observing its overlap and marginal-connectivity results. |
 | `0.8.111` | 2026-09-19 | Quantified decomposition over-connection across 3,160,962 pair checks and retained every safety edge because low corpus marginality failed to generalize to controlled witnesses. |
 | `0.8.112` | 2026-09-19 | Pinned the conservatism artifact and passed 192 regressions, 19 isolated-validator checks, and all 30 final-package checks. |
+| `0.8.113` | 2026-09-19 | Precommitted a proof-safe portfolio short circuit: skip decomposition only after a consistent monolithic full-instance proof, and abort on a lower-incumbent contradiction. |

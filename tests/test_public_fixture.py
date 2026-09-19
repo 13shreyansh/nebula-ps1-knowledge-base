@@ -656,10 +656,10 @@ class PublicFixtureTests(unittest.TestCase):
                 "selected_submission_hash": evaluation.submission_hash,
                 "verification_skipped_primary_proven": False,
                 "verification_telemetry": {
-                    "primary_score_proven_optimal": True,
+                    "primary_score_proven_optimal": False,
                     "primary_bound_scope": "full_instance",
                     "objective_score": evaluation.objective_score,
-                    "best_bound": evaluation.objective_score,
+                    "best_bound": 0.0,
                 },
             }
 
@@ -760,6 +760,112 @@ class PublicFixtureTests(unittest.TestCase):
                     (root / "submission" / name).read_bytes(),
                     (incumbent / name).read_bytes(),
                 )
+
+    def test_candidate_portfolio_skips_decomposition_after_full_proof(self) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_b_v1"
+        monolithic = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_b_v1_b_monolithic_seed1_w1"
+        )
+        instance = load_instance(data)
+        self.assertGreater(len(independent_activity_components(instance, "B")), 1)
+
+        def fake_monolithic(*args: object, **kwargs: object) -> dict[str, object]:
+            output = Path(kwargs.get("output_dir", args[1]))
+            _copy_submission(monolithic, output)
+            evaluation = evaluate_submission(instance, output, "B")
+            return {
+                "selected_objective_score": evaluation.objective_score,
+                "selected_submission_hash": evaluation.submission_hash,
+                "verification_skipped_primary_proven": False,
+                "verification_telemetry": {
+                    "primary_score_proven_optimal": True,
+                    "primary_bound_scope": "full_instance",
+                    "objective_score": evaluation.objective_score,
+                    "best_bound": evaluation.objective_score,
+                },
+            }
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with patch(
+                "nebula_ps1.candidate_portfolio.solve_staged_scenario",
+                side_effect=fake_monolithic,
+            ), patch(
+                "nebula_ps1.candidate_portfolio.solve_decomposed_scenario",
+                side_effect=AssertionError("proved objective must skip decomposition"),
+            ) as decomposed:
+                report = solve_candidate_portfolio(
+                    data,
+                    root / "submission",
+                    "B",
+                    audit_output_dir=root / "audit",
+                    forbid_buffer_overlap=True,
+                )
+            decomposed.assert_not_called()
+            self.assertEqual(report["selected_policy"], "monolithic")
+            self.assertEqual(report["selected_objective_score"], 349.0)
+            self.assertTrue(report["selected_global_optimality_proved"])
+            skipped = next(
+                item for item in report["attempts"] if item["policy"] == "decomposed"
+            )
+            self.assertEqual(skipped["status"], "skipped")
+            self.assertEqual(skipped["proved_objective_score"], 349.0)
+
+    def test_candidate_portfolio_aborts_on_contradictory_full_proof(self) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_nonlive_v1"
+        lower = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_nonlive_v1_c_decomposed_seed1_w1"
+        )
+        higher = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_nonlive_v1_c_equal_nominal_allowance_seed1_w1"
+            / "decomposed"
+        )
+        instance = load_instance(data)
+
+        def fake_false_proof(*args: object, **kwargs: object) -> dict[str, object]:
+            output = Path(kwargs.get("output_dir", args[1]))
+            _copy_submission(higher, output)
+            evaluation = evaluate_submission(instance, output, "C")
+            return {
+                "selected_objective_score": evaluation.objective_score,
+                "selected_submission_hash": evaluation.submission_hash,
+                "verification_skipped_primary_proven": False,
+                "verification_telemetry": {
+                    "primary_score_proven_optimal": True,
+                    "primary_bound_scope": "full_instance",
+                    "objective_score": evaluation.objective_score,
+                    "best_bound": evaluation.objective_score,
+                },
+            }
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with patch(
+                "nebula_ps1.candidate_portfolio.solve_staged_scenario",
+                side_effect=fake_false_proof,
+            ), patch(
+                "nebula_ps1.candidate_portfolio.solve_decomposed_scenario",
+                side_effect=AssertionError("contradiction must abort first"),
+            ) as decomposed:
+                with self.assertRaisesRegex(
+                    RuntimeError, "full-instance proof contradicts"
+                ):
+                    solve_candidate_portfolio(
+                        data,
+                        root / "submission",
+                        "C",
+                        audit_output_dir=root / "audit",
+                        initial_submission_dir=lower,
+                        forbid_buffer_overlap=True,
+                    )
+            decomposed.assert_not_called()
+            self.assertFalse((root / "submission").exists())
 
     def test_candidate_portfolio_does_not_swallow_programming_errors(self) -> None:
         data = ROOT / "fixtures" / "independent_eclo_multipass_v1"

@@ -122,6 +122,7 @@ def solve_candidate_portfolio(
     }
     attempts: list[dict[str, object]] = []
     candidates: list[tuple[int, str, Path, Evaluation, bool]] = []
+    monolithic_proved_score: float | None = None
 
     if initial_submission_dir is not None:
         initial = Path(initial_submission_dir)
@@ -163,6 +164,8 @@ def solve_candidate_portfolio(
             forbid_buffer_overlap=forbid_buffer_overlap,
         )
         monolithic_proved = _primary_proof_telemetry(monolithic_report) is not None
+        if monolithic_proved:
+            monolithic_proved_score = monolithic_evaluation.objective_score
         candidates.append(
             (
                 1,
@@ -193,7 +196,20 @@ def solve_candidate_portfolio(
             }
         )
 
-    if len(components) > 1:
+    if monolithic_proved_score is not None:
+        contradictory = [
+            (policy, evaluation.objective_score)
+            for _, policy, _, evaluation, _ in candidates
+            if evaluation.objective_score < monolithic_proved_score
+        ]
+        if contradictory:
+            raise RuntimeError(
+                "monolithic full-instance proof contradicts a lower fully gated "
+                f"candidate: proof={monolithic_proved_score!r}, "
+                f"lower_candidates={contradictory!r}"
+            )
+
+    if len(components) > 1 and monolithic_proved_score is None:
         decomposed_output = audit / "decomposed_submission"
         started = time.perf_counter()
         try:
@@ -243,12 +259,25 @@ def solve_candidate_portfolio(
                     "error": str(error),
                 }
             )
-    else:
+    elif len(components) == 1:
         attempts.append(
             {
                 "policy": "decomposed",
                 "status": "skipped",
                 "reason": "one component; identical staged policy adds no search diversity",
+            }
+        )
+    else:
+        attempts.append(
+            {
+                "policy": "decomposed",
+                "status": "skipped",
+                "reason": (
+                    "monolithic full-instance proof leaves no lower primary "
+                    "objective for decomposition to find"
+                ),
+                "proof_policy": "monolithic",
+                "proved_objective_score": monolithic_proved_score,
             }
         )
 

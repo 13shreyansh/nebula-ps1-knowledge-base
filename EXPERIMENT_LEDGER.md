@@ -1885,3 +1885,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Falsification boundary: zero corpus-level marginal effect is not removal evidence. E196's controlled strict-buffer-only witness splits when that edge is deleted, proving a plausible hidden input can depend on it. The same-line and Live window edges encode global two-week decisions even where current resource paths happen to make them redundant.
 - Decision: retain all six edge families. Use the measurement to explain runtime and routing limits, not to weaken feasibility. No score, release package, portal state, or attempt counter changed.
 - Release replay: 192/192 regressions pass in 10.823 seconds; all 19 isolated portable-validator checks pass with unchanged archive hash `495d4ef7…`; all 30 final-package readiness checks are true.
+
+### E200: Proof-safe portfolio short-circuit precommit
+
+- Timestamp: 2026-09-19 13:20:12 +08.
+- Official boundary: the published specification states no hidden-evaluation runtime or instance-size limit. Do not invent a global timeout that could suppress a stronger safe candidate.
+- Sound shortcut: if the monolithic policy passes every external gate and supplies a full-instance objective proof, decomposition cannot find a lower legal primary score. Record it as skipped instead of spending additive runtime.
+- Contradiction guard: if any already gated candidate is lower than the claimed monolithic optimum, abort before decomposition or publication. A proof/candidate disagreement is a system-integrity failure, not a tie-break decision.
+- Preserved diversity: decomposition still runs after monolithic failure or any valid but unproved monolithic result. One-component inputs remain skipped for the existing no-diversity reason.
+- Precommit: implementation and falsification tests are committed before an unmocked replay. Expected score and runtime behavior are hypotheses, not results.
