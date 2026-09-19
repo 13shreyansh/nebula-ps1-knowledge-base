@@ -1726,3 +1726,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: direct heuristic reports infeasible; bridge-safe fallback reaches and proves `349`; verification independently reports full-instance score/bound `349`. Both scorers agree on 27 excess, 32 ECLO, 65 access rows, and 219 occupancy rows; strict conflicts are zero.
 - Metamorphic conclusion: lexical identifiers and raw CSV row order do not change the primary optimum, decomposition structure, or selected proof path on this 42-activity case. Output hash `f231a187…` changes as expected because identifiers changed.
 - Timing boundary: observed outer wall time is 0.380 seconds versus 0.456 seconds in the source-order run. This is run noise/order-sensitive and not claimed as an improvement.
+
+### E183: Decomposed solving now fails before writes and cannot fabricate aggregate proof
+
+- Timestamp: 2026-09-19 12:43:32 +08.
+- Pre-write B refusal: the decomposition entry point now runs the input-derived Scenario B workload/deadline necessary check before creating its audit directory. On frozen hash `84a00bdb…`, it raises with the exact `MPAMX1 max=3/2 required=6/2` deficit and leaves neither submission nor audit directory.
+- Proof fault injection: on the genuine two-component C=`9120` control, the first component's otherwise valid proof telemetry is deliberately replaced with `None`. The merged schedule remains hard-feasible and both scorers still return `9120`, but `global_optimality_proved_by_additivity` is false and the missing proof is visible in the report.
+- Interpretation: feasibility, score correctness, and optimality proof are separate claims. A valid merged schedule must not inherit a global proof from the remaining component, and an input-level impossibility must be rejected before partial solver artifacts imply progress.
+- Release replay: all 179 regressions pass in 9.779 seconds; the isolated portable-validator suite passes 19 cases with unchanged archive hash `495d4ef7…`; all 30 final-package readiness checks remain true for A-002/B-001/C-001.
+- Boundary: these are retained local regressions under encoded rules. They do not change the protected official scores or consume a portal attempt.

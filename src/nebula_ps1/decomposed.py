@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .closure import _blocked_locations, _buffer_locations, screen_closures
 from .evaluate import evaluate_submission, load_submission
+from .flexible_solver import _scenario_b_workload_deadline_deficits
 from .independent_score import independently_score
 from .instance import FILES, Instance, load_instance
 from .portfolio import SUBMISSION_FILES
@@ -297,9 +298,21 @@ def solve_decomposed_scenario(
         raise ValueError(f"decomposed output directory must be empty: {output}")
     if audit.exists() and any(audit.iterdir()):
         raise ValueError(f"decomposed audit directory must be empty: {audit}")
+    instance = load_instance(data_root)
+    if scenario == "B":
+        workload_deficits = _scenario_b_workload_deadline_deficits(instance)
+        if workload_deficits:
+            details = "; ".join(
+                f"{item['activity_id']} max={item['maximum_half_units']}/2 "
+                f"required={item['required_half_units']}/2"
+                for item in workload_deficits
+            )
+            raise ValueError(
+                "Scenario B workload cannot fit before planned completion: "
+                + details
+            )
     audit.mkdir(parents=True, exist_ok=True)
 
-    instance = load_instance(data_root)
     components = independent_activity_components(
         instance,
         scenario,

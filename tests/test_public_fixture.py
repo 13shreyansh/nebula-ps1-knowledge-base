@@ -378,6 +378,76 @@ class PublicFixtureTests(unittest.TestCase):
         }
         self.assertIs(_primary_proof_telemetry(workload_report), workload)
 
+    def test_decomposition_rejects_b_workload_deficit_before_writing(self) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_nonlive_v1"
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            output = root / "submission"
+            audit = root / "audit"
+            with self.assertRaisesRegex(
+                ValueError,
+                r"Scenario B workload cannot fit.*MPAMX1 max=3/2 required=6/2",
+            ):
+                solve_decomposed_scenario(
+                    data,
+                    output,
+                    "B",
+                    audit_output_dir=audit,
+                    workers=1,
+                    heuristic_attempts=1,
+                    fallback_attempts=1,
+                    forbid_buffer_overlap=True,
+                )
+            self.assertFalse(output.exists())
+            self.assertFalse(audit.exists())
+
+    def test_decomposition_missing_component_proof_cannot_claim_global_proof(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
+        call_count = 0
+
+        def reject_first_proof(report: dict[str, object]) -> dict[str, object] | None:
+            nonlocal call_count
+            call_count += 1
+            proof = _primary_proof_telemetry(report)
+            return None if call_count == 1 else proof
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with patch(
+                "nebula_ps1.decomposed._primary_proof_telemetry",
+                side_effect=reject_first_proof,
+            ):
+                report = solve_decomposed_scenario(
+                    data,
+                    root / "submission",
+                    "C",
+                    audit_output_dir=root / "audit",
+                    heuristic_time_limit_seconds=3.0,
+                    local_repair_time_limit_seconds=2.0,
+                    fallback_time_limit_seconds=5.0,
+                    verification_time_limit_seconds=10.0,
+                    workers=1,
+                    seed=1,
+                    heuristic_attempts=1,
+                    fallback_attempts=1,
+                    closure_round_limit=1000,
+                    forbid_buffer_overlap=True,
+                )
+            self.assertFalse(report["global_optimality_proved_by_additivity"])
+            self.assertEqual(report["selected_objective_score"], 9120.0)
+            self.assertIsNone(report["components"][0]["primary_proof_telemetry"])
+            self.assertIsNotNone(report["components"][1]["primary_proof_telemetry"])
+            evaluation = evaluate_submission(
+                load_instance(data),
+                root / "submission",
+                "C",
+            )
+            independent = independently_score(data, root / "submission")
+            self.assertEqual(evaluation.objective_score, 9120.0)
+            self.assertEqual(independent.objective_score, 9120.0)
+
     def test_decomposed_solver_matches_monolithic_exact_two_line_result(self) -> None:
         data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
         monolithic = (
