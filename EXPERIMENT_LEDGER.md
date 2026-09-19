@@ -1597,3 +1597,10 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: all five heuristic attempts return C=`207.4`. Full verification proves score/bound `207.4` with 528 variables, 1,445 constraints, and full-instance scope in 0.018 seconds. Output hash `9a7b7e41…` differs from the source fixture as identifier changes require.
 - Cross-check: both scorers agree on delay `197.4`, excess `0`, ECLO `2`, total `207.4`; the strict closure screen is clean.
 - Interpretation: no observed dependence on lexical identifiers or CSV row order for this case. This is metamorphic generalization evidence, not an official score change or broad distributional guarantee.
+
+### E168: Eight-component Live-interchange scale precommit
+
+- Timestamp: 2026-09-19 12:12:00 +08.
+- Precommit scope: generic replication script, input-only fixture, structural regression, and dataset hash `742ecb97…`. No answer key, solver output, score assertion, or production-derived target exists.
+- Structure: eight disjoint copies of the frozen three-line holdout, with per-copy identifiers and shuffled raw tables: 24 lines, 48 activities, 336 locations, and 16 derived Live crossover activities.
+- Falsification target: the unchanged small-case portfolio may time out, lose feasibility, lose the exact bound, or expose cross-component bookkeeping defects. The fixture will not be redesigned after observing the result.

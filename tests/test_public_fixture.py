@@ -124,6 +124,25 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertFalse((data / "RESULTS.csv").exists())
 
+    def test_interchange_scale_holdout_is_frozen_before_solving(self) -> None:
+        data = ROOT / "fixtures" / "independent_interchange_scale8_v1"
+        instance = load_instance(data)
+        self.assertEqual(
+            instance.dataset_hash,
+            "742ecb974811c5486dc31a7df30238228e84c73f9a63fb976ef2b600b9ec64be",
+        )
+        self.assertEqual(len(instance.lines), 24)
+        self.assertEqual(len(instance.activities), 48)
+        self.assertEqual(len(instance.locations), 336)
+        self.assertEqual(
+            sum(
+                affects_interchange_cross_line(instance, activity)
+                for activity in instance.activities.values()
+            ),
+            16,
+        )
+        self.assertFalse((data / "RESULTS.csv").exists())
+
     def test_interchange_holdout_c_is_exact_and_policy_stable(self) -> None:
         data = ROOT / "fixtures" / "independent_interchange_holdout_v1"
         instance = load_instance(data)
