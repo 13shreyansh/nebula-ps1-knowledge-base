@@ -1541,7 +1541,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertAlmostEqual(evaluation.objective_score, 140.0)
         self.assertAlmostEqual(independent.objective_score, 140.0)
 
-    def test_week_local_hint_screen_preserves_360_activity_results(self) -> None:
+    def test_scale_optimizations_preserve_360_activity_results(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m40"
         instance = load_instance(data)
         baseline = json.loads(
@@ -1560,18 +1560,32 @@ class PublicFixtureTests(unittest.TestCase):
                 / "SEED_MATRIX.json"
             ).read_text(encoding="utf-8")
         )
+        cached = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_scaled_m40_seed3_w1_footprint_cache"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
 
         self.assertEqual(baseline["dataset_hash"], optimized["dataset_hash"])
         self.assertEqual(baseline["policy"], optimized["policy"])
+        self.assertEqual(optimized["dataset_hash"], cached["dataset_hash"])
+        self.assertEqual(optimized["policy"], cached["policy"])
         self.assertEqual(baseline["successes"], 3)
         self.assertEqual(optimized["successes"], 3)
+        self.assertEqual(cached["successes"], 3)
         self.assertEqual(baseline["failures"], 0)
         self.assertEqual(optimized["failures"], 0)
+        self.assertEqual(cached["failures"], 0)
 
         baseline_runs = {row["scenario"]: row for row in baseline["runs"]}
         optimized_runs = {row["scenario"]: row for row in optimized["runs"]}
+        cached_runs = {row["scenario"]: row for row in cached["runs"]}
         self.assertEqual(set(baseline_runs), {"A", "B", "C"})
         self.assertEqual(set(optimized_runs), {"A", "B", "C"})
+        self.assertEqual(set(cached_runs), {"A", "B", "C"})
         self.assertEqual(
             {scenario: row["score"] for scenario, row in optimized_runs.items()},
             {"A": 280.0, "B": 400.0, "C": 280.0},
@@ -1581,6 +1595,7 @@ class PublicFixtureTests(unittest.TestCase):
             with self.subTest(scenario=scenario):
                 before = baseline_runs[scenario]
                 after = optimized_runs[scenario]
+                after_cache = cached_runs[scenario]
                 for field in (
                     "status",
                     "score",
@@ -1589,17 +1604,21 @@ class PublicFixtureTests(unittest.TestCase):
                     "submission_hash",
                 ):
                     self.assertEqual(before[field], after[field])
+                    self.assertEqual(after[field], after_cache[field])
                 self.assertEqual(after["status"], "SUCCESS")
                 self.assertEqual(after["strict_conflicts"], 0)
                 self.assertGreaterEqual(
                     before["wall_seconds"] / after["wall_seconds"], 5.0
                 )
+                self.assertGreaterEqual(
+                    after["wall_seconds"] / after_cache["wall_seconds"], 3.0
+                )
 
                 submission = (
                     ROOT
                     / "runs"
-                    / "independent_scaled_m40_seed1_w1_weeklocal"
-                    / f"{scenario.lower()}_seed_1"
+                    / "independent_scaled_m40_seed3_w1_footprint_cache"
+                    / f"{scenario.lower()}_seed_3"
                 )
                 evaluation = evaluate_submission(
                     instance, submission, scenario=scenario

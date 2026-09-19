@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Iterable
@@ -85,6 +85,12 @@ class Instance:
     activities: dict[str, Activity]
     horizon_start: date
     horizon_weeks: int
+    _activity_footprint_cache: dict[Activity, tuple[str, ...]] = field(
+        default_factory=dict,
+        init=False,
+        repr=False,
+        compare=False,
+    )
 
     def week_for_date(self, value: date) -> int:
         return ((value - self.horizon_start).days // 7) + 1

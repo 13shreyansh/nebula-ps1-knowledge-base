@@ -1335,3 +1335,22 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Regression status: all 115 tests pass in 16.965 seconds.
 - Boundary: this proves equivalence of the implemented screen on these incremental states, not hidden-validator semantics or universal runtime gains.
 - Official protection: no portal interaction or attempt was used.
+
+### E141: A second 360-activity replay is byte-reproducible
+
+- Timestamp: 2026-09-19 10:37:00 +08
+- Protocol: repeat the exact E139 one-worker policy with solver seed 2 before any footprint-cache change.
+- Result: A/B/C again succeed at `280/400/280`, zero strict conflicts, the same selected stages, and the exact E139 hashes. Recorded times are 14.776, 14.873, and 38.586 seconds versus 15.140, 15.162, and 39.090.
+- Interpretation: the second run supports timing stability and deterministic construction under this complete-hint, one-worker regime. Identical hashes mean it is not independent schedule diversity and must not be presented as such.
+- Official protection: no portal interaction or attempt was used.
+
+### E142: Per-instance footprint caching removes the new dominant bottleneck
+
+- Timestamp: 2026-09-19 10:39:35 +08
+- Pre-change profile: a 360-activity A run made 21,450,928 calls in 23.306 profiled seconds. `activity_footprint` was invoked 544,500 times and consumed 18.875 cumulative seconds; CP-SAT consumed 1.164.
+- Change: memoize the pure footprint result per loaded instance and frozen `Activity`. The cache is private, excluded from instance equality, and initialized fresh on construction or `dataclasses.replace`.
+- Post-change profile: identical A score, stage, hash, and strict status in 4.488 profiled seconds with 8,175,832 calls. `activity_footprint` is absent from the top 25 cumulative sites; CP-SAT remains 1.163 seconds.
+- Full replay: A=`280.0` in 3.014 seconds, B=`400.0` in 1.308, C=`280.0` in 11.218. Against E141 this is 4.90×, 11.37×, and 3.44× faster; aggregate time falls 68.235→15.540 seconds. Against the original E139 pre-week-local baseline, aggregate improvement is 29.7×.
+- Integrity gates: every output hash and stage matches E139/E141, both scorers agree, strict conflicts are zero, all 115 tests pass, and all 30 local readiness checks remain true.
+- Boundary: local deterministic timing is not an official score or universal performance guarantee; mutable in-place edits to a loaded instance are outside the solver's data contract.
+- Official protection: no portal interaction or attempt was used.

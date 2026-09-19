@@ -11,6 +11,10 @@ def split_sector_location(location_id: str) -> tuple[str, str, str]:
 
 
 def activity_footprint(instance: Instance, activity: Activity) -> tuple[str, ...]:
+    cached = instance._activity_footprint_cache.get(activity)
+    if cached is not None:
+        return cached
+
     start_line, start_sector_id, start_bound = split_sector_location(activity.start_location_id)
     end_line, end_sector_id, end_bound = split_sector_location(activity.end_location_id)
     if start_line != end_line or start_bound != end_bound:
@@ -45,7 +49,9 @@ def activity_footprint(instance: Instance, activity: Activity) -> tuple[str, ...
     missing = sorted(set(locations) - set(instance.locations))
     if missing:
         raise InputError(f"activity {activity.activity_id}: footprint locations missing: {missing}")
-    return tuple(sorted(locations))
+    footprint = tuple(sorted(locations))
+    instance._activity_footprint_cache.setdefault(activity, footprint)
+    return instance._activity_footprint_cache[activity]
 
 
 def affects_interchange_cross_line(instance: Instance, activity: Activity) -> bool:

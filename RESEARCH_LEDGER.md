@@ -963,6 +963,15 @@ Confidence labels:
 - **Boundary:** The activity orders and topology come from one public artifact; this is differential local evidence, not an official validator result.
 - **Confidence:** Very high in the week decomposition implemented by the closure checker.
 
+### `R116` Activity footprints should be cached per immutable instance
+
+- **Status:** Confirmed by before/after profiling and a complete A/B/C replay.
+- **Finding:** After week-local screening, one profiled 360-activity A run still made 544,500 `activity_footprint` calls, consuming 18.875 of 23.306 profiled seconds; CP-SAT used only 1.164 seconds.
+- **Correction:** Cache each derived footprint inside its loaded `Instance`, keyed by the frozen `Activity` value. The cache is excluded from equality and construction so `dataclasses.replace` receives a fresh cache rather than inheriting topology-derived state.
+- **Evidence:** The post-cache A profile falls to 4.488 seconds and 8.18 million calls from 23.306 seconds and 21.45 million; footprint calculation leaves the top 25 cumulative sites. A/B/C retain exact scores `280/400/280`, stages, hashes, and zero strict conflicts while recorded unprofiled time falls `14.776→3.014`, `14.873→1.308`, and `38.586→11.218` seconds.
+- **Boundary:** Inputs are treated as immutable after loading. The cache adds memory proportional to distinct activities queried. Timings compare consecutive deterministic local replays and remain host-specific.
+- **Confidence:** Very high in semantic preservation across the current suite; high in the measured bottleneck removal.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
