@@ -125,6 +125,172 @@ def _scenario_b_cost_contributing_activities(
     return sorted(contributors)
 
 
+def _strict_conflict_repair_activities(
+    instance: Instance, submission_dir: str | Path
+) -> list[str]:
+    """Return strict-conflict participants plus contract/precedence dependencies."""
+
+    access, occupancy, _ = load_submission(submission_dir)
+    conflicts = screen_closures(
+        instance,
+        access,
+        occupancy,
+        forbid_buffer_overlap=True,
+    )
+    activities = {
+        activity_id
+        for conflict in conflicts
+        for activity_id in (*conflict.first_activities, *conflict.second_activities)
+    }
+    if not activities:
+        return []
+
+    precedence_neighbors = {activity_id: set() for activity_id in instance.activities}
+    for activity_id, activity in instance.activities.items():
+        predecessor = activity.predecessor_activity_id
+        if predecessor:
+            precedence_neighbors[activity_id].add(predecessor)
+            precedence_neighbors[predecessor].add(activity_id)
+
+    while True:
+        before = set(activities)
+        contracts = {
+            instance.activities[activity_id].contract_number
+            for activity_id in activities
+        }
+        activities.update(
+            activity_id
+            for activity_id, activity in instance.activities.items()
+            if activity.contract_number in contracts
+        )
+        pending = list(activities)
+        while pending:
+            activity_id = pending.pop()
+            for neighbor in precedence_neighbors[activity_id] - activities:
+                activities.add(neighbor)
+                pending.append(neighbor)
+        if activities == before:
+            break
+    return sorted(activities)
+
+
+def _run_strict_score_preserving_hedge(
+    instance: Instance,
+    selected_dir: Path,
+    selected: Evaluation,
+    scenario: str,
+    audit_output: Path,
+    *,
+    time_limit_seconds: float,
+    workers: int,
+    seed: int,
+    closure_round_limit: int,
+) -> tuple[
+    Path,
+    Evaluation,
+    tuple[object, ...],
+    tuple[object, ...],
+    list[str],
+    SolveTelemetry | None,
+    object | None,
+    bool,
+]:
+    """Try an equal-or-better strict-clean schedule without weakening the incumbent."""
+
+    access, occupancy, _ = load_submission(selected_dir)
+    conflicts_before = screen_closures(
+        instance,
+        access,
+        occupancy,
+        forbid_buffer_overlap=True,
+    )
+    activities = _strict_conflict_repair_activities(instance, selected_dir)
+    if not conflicts_before or not activities or time_limit_seconds <= 0:
+        return (
+            selected_dir,
+            selected,
+            tuple(conflicts_before),
+            tuple(conflicts_before),
+            activities,
+            None,
+            None,
+            False,
+        )
+
+    raw = audit_output / "strict_score_preserving_hedge_raw"
+    pruned = audit_output / "strict_score_preserving_hedge_pruned"
+    telemetry = solve_flexible_supply_relaxation(
+        instance,
+        raw,
+        scenario,
+        time_limit_seconds=time_limit_seconds,
+        workers=workers,
+        seed=seed,
+        closure_round_limit=closure_round_limit,
+        sample_hint_dir=selected_dir,
+        round_time_limit_seconds=5.0,
+        forbid_buffer_overlap=True,
+        freeze_access_hint=True,
+        freeze_access_except=set(activities),
+        separator_mode="bridge_safe",
+    )
+    prune_report = None
+    conflicts_after = tuple(conflicts_before)
+    promoted = False
+    raw_strict_conflicts: tuple[object, ...] = ()
+    if telemetry.objective_score is not None:
+        raw_access, raw_occupancy, _ = load_submission(raw)
+        raw_strict_conflicts = tuple(
+            screen_closures(
+                instance,
+                raw_access,
+                raw_occupancy,
+                forbid_buffer_overlap=True,
+            )
+        )
+    if (
+        telemetry.objective_score is not None
+        and telemetry.remaining_closure_conflicts == 0
+        and not raw_strict_conflicts
+    ):
+        prune_report = prune_submission(
+            instance,
+            raw,
+            pruned,
+            scenario,
+            report_path=audit_output / "STRICT_SCORE_PRESERVING_HEDGE_PRUNE.json",
+            forbid_buffer_overlap=True,
+        )
+        candidate = evaluate_submission(instance, pruned, scenario)
+        candidate_access, candidate_occupancy, _ = load_submission(pruned)
+        conflicts_after = tuple(
+            screen_closures(
+                instance,
+                candidate_access,
+                candidate_occupancy,
+                forbid_buffer_overlap=True,
+            )
+        )
+        if (
+            candidate.internally_feasible
+            and not conflicts_after
+            and candidate.objective_score <= selected.objective_score
+        ):
+            selected_dir = pruned
+            selected = candidate
+            promoted = True
+    return (
+        selected_dir,
+        selected,
+        tuple(conflicts_before),
+        conflicts_after,
+        activities,
+        telemetry,
+        prune_report,
+        promoted,
+    )
+
+
 def solve_staged_scenario(
     instance: Instance,
     output_dir: str | Path,
@@ -527,23 +693,57 @@ def solve_staged_scenario(
                         selected_stage = "bridge_safe_expanded_cost_repair"
                         selected_dir = expanded_cost_repair_pruned
                         selected = expanded_repaired
+
+    strict_hedge_activities: list[str] = []
+    strict_hedge_telemetry: SolveTelemetry | None = None
+    strict_hedge_prune = None
+    strict_hedge_promoted = False
+    selected_access, selected_occupancy, _ = load_submission(selected_dir)
+    strict_hedge_conflicts_before = tuple(
+        screen_closures(
+            instance,
+            selected_access,
+            selected_occupancy,
+            forbid_buffer_overlap=True,
+        )
+    )
+    strict_hedge_conflicts_after = strict_hedge_conflicts_before
+    if not forbid_buffer_overlap and local_repair_time_limit_seconds > 0:
+        (
+            selected_dir,
+            selected,
+            strict_hedge_conflicts_before,
+            strict_hedge_conflicts_after,
+            strict_hedge_activities,
+            strict_hedge_telemetry,
+            strict_hedge_prune,
+            strict_hedge_promoted,
+        ) = _run_strict_score_preserving_hedge(
+            instance,
+            selected_dir,
+            selected,
+            scenario,
+            audit_output,
+            time_limit_seconds=min(local_repair_time_limit_seconds, 10.0),
+            workers=workers,
+            seed=seed + 2,
+            closure_round_limit=closure_round_limit,
+        )
+        if strict_hedge_promoted:
+            selected_stage = "strict_score_preserving_hedge"
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, scenario)
     access, occupancy, _ = load_submission(output)
-    strict_conflicts = (
-        screen_closures(
-            instance,
-            access,
-            occupancy,
-            forbid_buffer_overlap=True,
-        )
-        if forbid_buffer_overlap
-        else ()
+    final_strict_conflicts = screen_closures(
+        instance,
+        access,
+        occupancy,
+        forbid_buffer_overlap=True,
     )
     if (
         not final.internally_feasible
-        or strict_conflicts
+        or (forbid_buffer_overlap and final_strict_conflicts)
         or final.submission_hash != selected.submission_hash
     ):
         raise RuntimeError("staged final-copy verification failed")
@@ -556,6 +756,7 @@ def solve_staged_scenario(
         "selected_objective_score": final.objective_score,
         "selected_submission_hash": final.submission_hash,
         "strict_buffer_overlap_checked": forbid_buffer_overlap,
+        "strict_buffer_overlap_clean": not final_strict_conflicts,
         "reference_validator_confirmed": False,
         "submission_files": list(SUBMISSION_FILES),
         "selection_rule": "strictly lower fully checked objective; otherwise preserve incumbent",
@@ -598,6 +799,22 @@ def solve_staged_scenario(
             if expanded_cost_repair_prune is not None
             else None
         ),
+        "strict_hedge_conflicts_before": [
+            asdict(conflict) for conflict in strict_hedge_conflicts_before
+        ],
+        "strict_hedge_conflicts_after": [
+            asdict(conflict) for conflict in strict_hedge_conflicts_after
+        ],
+        "strict_hedge_activities": strict_hedge_activities,
+        "strict_hedge_telemetry": (
+            asdict(strict_hedge_telemetry)
+            if strict_hedge_telemetry is not None
+            else None
+        ),
+        "strict_hedge_prune": (
+            asdict(strict_hedge_prune) if strict_hedge_prune is not None else None
+        ),
+        "strict_hedge_promoted": strict_hedge_promoted,
     }
     (audit_output / "STAGED.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",

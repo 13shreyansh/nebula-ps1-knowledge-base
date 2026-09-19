@@ -961,3 +961,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Contradictory evidence: strict conflicts were `[0, 0, 1]`, not 3/3 clean. Permutation 3 conflicts at week 13 between `Z528` and `Z572` on `SEC:L02:N007_N001:WB` under the stricter buffer-to-buffer interpretation.
 - Targeted hedge: freeing `Z528`, `Z572`, and successor `Z596` under strict closure produced C=`31.0`, standard conflicts=`0`, strict conflicts=`0`, hash `e551e776edde090420c03a4eab3145697c3311315549a7d154c511bfcb4c031c`, with a conditional bound of `31.0` in 0.282 seconds.
 - Decision: retain standard closure as the validator-matching rule. Implement strict closure only as a protected equal-or-better final hedge, never as evidence that the official rule is strict.
+
+### E101: Protected strict hedge is integrated and file-gated
+
+- Timestamp: 2026-09-19 08:02:37 +08
+- Controller rule: after standard selection, screen the final candidate under the conservative strict buffer-overlap interpretation. If conflicts exist, free their participants plus fixed-point contract and precedence dependencies for at most ten seconds under strict closure.
+- Promotion gate: the candidate files themselves must be standard-feasible and strict-clean after pruning, and their official objective must be no higher than the incumbent. Telemetry alone cannot pass the gate. The original incumbent remains protected otherwise.
+- Real replay: the permutation-3 conflict produced repair set `Z528`, `Z572`, `Z596`; conflicts changed `1→0`; both scorers remained C=`31.0`; the solver conditionally proved `31.0` for the frozen neighborhood. A fresh run produced hash `062d4db1e3455caa3fb57e9be58204c577b8ad369a5d736cf68c4f5b0de15516`.
+- Regression: both generic staged and guarded Scenario C controllers expose hedge telemetry and promotion state; contradictory mocked telemetry is rejected by raw-file screening. All 72 tests pass.
+- Boundary: strict closure remains an optional hedge because it contradicts organizer sample cases. This does not change official public artifacts or scores.

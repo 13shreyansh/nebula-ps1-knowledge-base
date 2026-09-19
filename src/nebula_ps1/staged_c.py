@@ -10,7 +10,11 @@ from .flexible_solver import solve_flexible_supply_relaxation
 from .instance import Instance
 from .portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from .prune import prune_submission
-from .staged import _scenario_b_cost_contributing_activities, solve_staged_scenario
+from .staged import (
+    _run_strict_score_preserving_hedge,
+    _scenario_b_cost_contributing_activities,
+    solve_staged_scenario,
+)
 from .submission import relabel_submission_scenario
 
 
@@ -125,6 +129,27 @@ def solve_staged_c_portfolio(
             ),
             "scenario_c_expanded_cost_repair_prune": direct_report.get(
                 "bridge_safe_expanded_cost_repair_prune"
+            ),
+            "strict_buffer_overlap_clean": direct_report.get(
+                "strict_buffer_overlap_clean"
+            ),
+            "scenario_c_strict_hedge_conflicts_before": direct_report.get(
+                "strict_hedge_conflicts_before", []
+            ),
+            "scenario_c_strict_hedge_conflicts_after": direct_report.get(
+                "strict_hedge_conflicts_after", []
+            ),
+            "scenario_c_strict_hedge_activities": direct_report.get(
+                "strict_hedge_activities", []
+            ),
+            "scenario_c_strict_hedge_telemetry": direct_report.get(
+                "strict_hedge_telemetry"
+            ),
+            "scenario_c_strict_hedge_prune": direct_report.get(
+                "strict_hedge_prune"
+            ),
+            "scenario_c_strict_hedge_promoted": direct_report.get(
+                "strict_hedge_promoted", False
             ),
         }
         (audit_output / "STAGED_C.json").write_text(
@@ -335,18 +360,57 @@ def solve_staged_c_portfolio(
                     selected_stage = "scenario_c_expanded_cost_repair"
                     selected_dir = expanded_cost_repair_pruned
                     selected = expanded_repaired
+
+    strict_hedge_activities: list[str] = []
+    strict_hedge_telemetry = None
+    strict_hedge_prune = None
+    strict_hedge_promoted = False
+    selected_access, selected_occupancy, _ = load_submission(selected_dir)
+    strict_hedge_conflicts_before = tuple(
+        screen_closures(
+            instance,
+            selected_access,
+            selected_occupancy,
+            forbid_buffer_overlap=True,
+        )
+    )
+    strict_hedge_conflicts_after = strict_hedge_conflicts_before
+    if not forbid_buffer_overlap and a_local_repair_time_limit_seconds > 0:
+        (
+            selected_dir,
+            selected,
+            strict_hedge_conflicts_before,
+            strict_hedge_conflicts_after,
+            strict_hedge_activities,
+            strict_hedge_telemetry,
+            strict_hedge_prune,
+            strict_hedge_promoted,
+        ) = _run_strict_score_preserving_hedge(
+            instance,
+            selected_dir,
+            selected,
+            "C",
+            audit_output,
+            time_limit_seconds=min(a_local_repair_time_limit_seconds, 10.0),
+            workers=workers,
+            seed=seed + 2,
+            closure_round_limit=closure_round_limit,
+        )
+        if strict_hedge_promoted:
+            selected_stage = "scenario_c_strict_score_preserving_hedge"
     _copy_submission(selected_dir, output)
 
     final = evaluate_submission(instance, output, "C")
     access, occupancy, _ = load_submission(output)
-    strict_conflicts = (
-        screen_closures(instance, access, occupancy, forbid_buffer_overlap=True)
-        if forbid_buffer_overlap
-        else ()
+    final_strict_conflicts = screen_closures(
+        instance,
+        access,
+        occupancy,
+        forbid_buffer_overlap=True,
     )
     if (
         not final.internally_feasible
-        or strict_conflicts
+        or (forbid_buffer_overlap and final_strict_conflicts)
         or final.submission_hash != selected.submission_hash
     ):
         raise RuntimeError("staged C final-copy verification failed")
@@ -363,6 +427,7 @@ def solve_staged_c_portfolio(
         "verified_objective_score": verified.objective_score,
         "selection_rule": "strictly lower fully checked C objective; otherwise preserve the checked incumbent",
         "strict_buffer_overlap_checked": forbid_buffer_overlap,
+        "strict_buffer_overlap_clean": not final_strict_conflicts,
         "reference_validator_confirmed": False,
         "submission_files": list(SUBMISSION_FILES),
         "scenario_a_staged_report": a_report,
@@ -387,6 +452,22 @@ def solve_staged_c_portfolio(
             if expanded_cost_repair_prune is not None
             else None
         ),
+        "scenario_c_strict_hedge_conflicts_before": [
+            asdict(conflict) for conflict in strict_hedge_conflicts_before
+        ],
+        "scenario_c_strict_hedge_conflicts_after": [
+            asdict(conflict) for conflict in strict_hedge_conflicts_after
+        ],
+        "scenario_c_strict_hedge_activities": strict_hedge_activities,
+        "scenario_c_strict_hedge_telemetry": (
+            asdict(strict_hedge_telemetry)
+            if strict_hedge_telemetry is not None
+            else None
+        ),
+        "scenario_c_strict_hedge_prune": (
+            asdict(strict_hedge_prune) if strict_hedge_prune is not None else None
+        ),
+        "scenario_c_strict_hedge_promoted": strict_hedge_promoted,
     }
     (audit_output / "STAGED_C.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n",

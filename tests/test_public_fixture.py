@@ -24,6 +24,7 @@ from nebula_ps1.prune import prune_submission
 from nebula_ps1.solver import SolveTelemetry, _contract_costs
 from nebula_ps1.staged import (
     _scenario_b_cost_contributing_activities,
+    _strict_conflict_repair_activities,
     solve_staged_scenario,
 )
 from nebula_ps1.staged_c import solve_staged_c_portfolio
@@ -612,6 +613,13 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertEqual(telemetry["best_bound"], 31.0)
         self.assertEqual(telemetry["primary_bound_scope"], "frozen_access_neighborhood")
+        self.assertEqual(
+            _strict_conflict_repair_activities(
+                instance,
+                ROOT / "runs" / "c_irregular_renamed_s3_seed5_production",
+            ),
+            ["Z528", "Z572", "Z596"],
+        )
 
     def test_post_contract_precedence_holdout_is_frozen_before_repair(self) -> None:
         data = ROOT / "fixtures" / "independent_post_contract_precedence_v1"
@@ -1747,12 +1755,16 @@ class PublicFixtureTests(unittest.TestCase):
                 heuristic_attempts=1,
                 fallback_attempts=2,
             )
-        self.assertEqual(solve.call_count, 4)
+        self.assertEqual(solve.call_count, 5)
+        self.assertTrue(solve.call_args_list[-1].kwargs["forbid_buffer_overlap"])
+        self.assertTrue(solve.call_args_list[-1].kwargs["freeze_access_hint"])
         self.assertEqual(
             Path(solve.call_args_list[1].kwargs["sample_hint_dir"]).name,
             "heuristic_attempt_1_raw",
         )
-        self.assertEqual(report["selected_stage"], "bridge_safe_fallback")
+        self.assertEqual(report["selected_stage"], "strict_score_preserving_hedge")
+        self.assertTrue(report["strict_hedge_promoted"])
+        self.assertTrue(report["strict_buffer_overlap_clean"])
         self.assertEqual(report["bridge_safe_fallback_selected_attempt"], 1)
         self.assertAlmostEqual(report["selected_objective_score"], 137.9)
         self.assertIsNone(report["heuristic_telemetry"])
@@ -1803,7 +1815,9 @@ class PublicFixtureTests(unittest.TestCase):
                 audit_output_dir=Path(temp_dir) / "audit",
                 heuristic_attempts=3,
             )
-        self.assertEqual(solve.call_count, 5)
+        self.assertEqual(solve.call_count, 6)
+        self.assertTrue(solve.call_args_list[-1].kwargs["forbid_buffer_overlap"])
+        self.assertTrue(solve.call_args_list[-1].kwargs["freeze_access_hint"])
         self.assertEqual(report["heuristic_selected_attempt"], 2)
         self.assertEqual(len(report["heuristic_attempts"]), 3)
         self.assertTrue(solve.call_args_list[0].kwargs["use_structural_hints"])
@@ -2179,6 +2193,79 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertEqual(report["selected_stage"], "scenario_c_expanded_cost_repair")
         self.assertEqual(final.objective_score, 0.0)
+
+    def test_staged_c_portfolio_promotes_equal_score_strict_hedge(self) -> None:
+        data = ROOT / "fixtures" / "independent_irregular_partial_v1_renamed_s3"
+        incumbent = ROOT / "runs" / "c_irregular_renamed_s3_seed5_production"
+        hedge = ROOT / "runs" / "c_irregular_renamed_s3_strict_repair_pruned"
+        instance = load_instance(data)
+
+        def fake_staged(instance, output_dir, scenario, **kwargs):
+            _copy_submission(incumbent, Path(output_dir))
+            return {"selected_objective_score": 31.0}
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            source = hedge if kwargs["forbid_buffer_overlap"] else incumbent
+            _copy_submission(source, Path(output_dir))
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="OPTIMAL",
+                objective_score=31.0,
+                best_bound=31.0,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=1,
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+                primary_score_proven_optimal=True,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged_c.solve_staged_scenario", side_effect=fake_staged
+        ), patch(
+            "nebula_ps1.staged_c.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ) as solve, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ) as strict_solve:
+            report = solve_staged_c_portfolio(
+                instance,
+                Path(temp_dir) / "submission",
+                audit_output_dir=Path(temp_dir) / "audit",
+                a_local_repair_time_limit_seconds=1.0,
+                c_heuristic_time_limit_seconds=1.0,
+                c_verification_time_limit_seconds=1.0,
+                c_heuristic_attempts=1,
+                workers=1,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+            access, occupancy, _ = load_submission(Path(temp_dir) / "submission")
+        self.assertGreaterEqual(solve.call_count, 3)
+        self.assertEqual(strict_solve.call_count, 1)
+        self.assertTrue(strict_solve.call_args_list[-1].kwargs["forbid_buffer_overlap"])
+        self.assertEqual(
+            strict_solve.call_args_list[-1].kwargs["freeze_access_except"],
+            {"Z528", "Z572", "Z596"},
+        )
+        self.assertEqual(
+            report["selected_stage"], "scenario_c_strict_score_preserving_hedge"
+        )
+        self.assertTrue(report["scenario_c_strict_hedge_promoted"])
+        self.assertTrue(report["strict_buffer_overlap_clean"])
+        self.assertEqual(final.objective_score, 31.0)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
 
     def test_staged_c_uses_checked_direct_path_only_after_a_failure(self) -> None:
         failure = RuntimeError(
