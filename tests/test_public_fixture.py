@@ -2188,6 +2188,52 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(checked.objective_score, expected_scores[scenario])
             self.assertEqual(rescored.objective_score, expected_scores[scenario])
 
+    def test_coupled_b_deadline_oracle_separates_workload_and_capacity_bounds(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_coupled_b_deadline_v1"
+        oracle = ROOT / "fixtures" / "independent_coupled_b_deadline_v1_oracle"
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, oracle, "B")
+        independent = independently_score(data, oracle)
+        access, occupancy, _ = load_submission(oracle)
+        self.assertEqual(
+            instance.dataset_hash,
+            "cf9aba4cc7f8dbc7ef7774a0c9f50d4fbca13e5185735b9c9ee904028d06b4c2",
+        )
+        self.assertEqual(len(instance.activities), 3)
+        self.assertEqual(len(instance.locations), 3)
+        self.assertEqual(
+            sorted(
+                instance.projects[activity.contract_number].access_type
+                for activity in instance.activities.values()
+            ),
+            ["C", "PC", "PC"],
+        )
+        self.assertTrue(
+            all(activity.total_accesses == 3 for activity in instance.activities.values())
+        )
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 72.0)
+        self.assertEqual(independent.objective_score, 72.0)
+        self.assertEqual(sum(row.eclo for row in access), 6)
+        self.assertEqual(evaluation.excess_access_nights_total, 6)
+        self.assertEqual(_scenario_b_workload_lower_bound_tenths(instance), 300)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        groups: dict[tuple[int, str], set[str]] = defaultdict(set)
+        for row in occupancy:
+            groups[(row.week, row.location_id)].add(row.co_share_group)
+        self.assertEqual(set(map(len, groups.values())), {2})
+        self.assertEqual(len(groups), 6)
+
     def test_invalid_complete_structural_hint_is_not_promoted(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_v1"
         instance = load_instance(data)

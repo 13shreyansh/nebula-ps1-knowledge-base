@@ -1,0 +1,4 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+BPC1,KBPC1,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3
+BPC2,KBPC2,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3
+BC3,KBC3,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3
