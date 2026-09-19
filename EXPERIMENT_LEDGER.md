@@ -1077,3 +1077,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Retained-corpus replay: the exact repeated operator promotes none of 19 retained Scenario C incumbents. The two structurally applicable finals check no new files: one is already at score zero and the scaled C=`262` incumbent skips seven same-window candidates. Public C remains structurally inapplicable and unchanged.
 - Integrity: official scores and files are unchanged. Per the user's explicit instruction, remaining portal attempts A=`3/5`, B=`4/5`, C=`4/5` are frozen until a specific run is authorized.
 - Regression status: 86 tests pass.
+
+### E114: Unfiltered enumeration finds no ECLO-window filter counterexample
+
+- Timestamp: 2026-09-19 08:57:13 +08
+- Method: enumerate all 24 orders of the four frozen two-line activity blocks. At every recursively reached improving state, materialize every structural three-to-two ECLO transformation without the production prefilter, then apply the full evaluator and strict closure screen.
+- Result: the ranked production sequence equals the best exhaustively reachable score in 24/24 orders. Exhaustive state graphs visit up to nine unique schedules and materialize up to 72 candidates per order. All 288 unique candidates that production would filter because their affected line already has ECLO are infeasible.
+- Cross-line Live check: the retained eight-job C=`262` final exposes seven unique same-window candidates. All seven are infeasible under unfiltered materialization; exhaustive best remains the source hash and score.
+- Boundary: this supports the filter under serialized schedules but is not a proof for arbitrary non-serialized schedules, where the operator does not run. No official portal attempt was used.
+- Regression status: 87 tests pass.

@@ -715,6 +715,14 @@ Confidence labels:
 - **Limitation:** This operator still requires a globally gap-free one-activity-per-week incumbent and only transforms three standard accesses into two ECLO accesses. It is a safe targeted improvement, not a general Scenario C optimiser.
 - **Confidence:** High in checked multipass behavior; medium in how often hidden schedules meet the narrow structural precondition.
 
+### `R088` Existing-window filtering survives unfiltered sequence enumeration
+
+- **Status:** Confirmed on all 24 block orders of the frozen two-line holdout plus a cross-line Live case.
+- **Finding:** An independent audit materializes every structural transformation without applying the existing-window filter and recursively visits every improving state. The ranked production sequence matches the best reachable score in all 24 orders. Across those state graphs, 288 unique candidates that production would filter are all infeasible. On the eight-job Live final, all seven unique filtered candidates are also infeasible and the exhaustive best remains C=`262`.
+- **Consequence:** The filter removes only candidates that violate the already occupied two-week line window in the tested serialized regimes. It cuts repeated file generation without changing the reachable result.
+- **Limitation:** This is exhaustive for four activities and one retained eight-job Live state, not a formal proof over arbitrary topology. Full candidate validation remains the acceptance gate for every unfiltered line.
+- **Confidence:** High for serialized Non-live independent lines and the tested all-line Live crossover; medium beyond these structures.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

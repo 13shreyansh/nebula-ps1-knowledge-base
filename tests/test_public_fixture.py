@@ -826,6 +826,33 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(ranked["independent_score"], ranked["selected_score"])
         self.assertEqual(exhaustive["strict_conflicts"], 0)
 
+    def test_eclo_window_filter_matches_unfiltered_sequence_enumeration(
+        self,
+    ) -> None:
+        audit = json.loads(
+            (ROOT / "runs" / "eclo_filter_falsification.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(audit["permutation_count"], 24)
+        self.assertTrue(audit["all_ranked_scores_match_exhaustive"])
+        self.assertEqual(
+            audit["total_unique_candidates_filtered_by_window"], 288
+        )
+        self.assertEqual(audit["total_feasible_candidates_filtered_by_window"], 0)
+        self.assertTrue(
+            all(
+                record["score_matches_exhaustive"]
+                and record["feasible_candidates_filtered_by_window"] == 0
+                for record in audit["permutations"]
+            )
+        )
+        live = audit["live_cross_line_case"]
+        self.assertEqual(live["source_score"], 262.0)
+        self.assertEqual(live["best_score"], 262.0)
+        self.assertEqual(live["unique_candidates_filtered_by_window"], 7)
+        self.assertEqual(live["feasible_candidates_filtered_by_window"], 0)
+
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"
         oracle = ROOT / "fixtures" / "independent_scaled_m20_oracle"

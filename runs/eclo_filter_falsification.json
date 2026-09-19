@@ -1,0 +1,451 @@
+{
+  "all_ranked_scores_match_exhaustive": true,
+  "dataset_hash": "71da72ce6966516d9ff1188c745b3729e1987b52425e1fb005bfaaac3378e8cd",
+  "live_cross_line_case": {
+    "best_score": 262.0,
+    "best_submission_hash": "2eebc28bd7805410e7571aa3faa0bb8b5732901ba6503e31da3153ea47ec4268",
+    "dataset_hash": "8a3be5829570b659a574cbad29e4b42712d2e3787376c2605f0b0cd8714ee58e",
+    "feasible_candidates_filtered_by_window": 0,
+    "materialized_candidates": 17,
+    "source_score": 262.0,
+    "states_visited": 1,
+    "unique_candidates_filtered_by_window": 7
+  },
+  "permutation_count": 24,
+  "permutations": [
+    {
+      "exhaustive_best_score": 18220.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX1",
+        "MX2",
+        "MY1",
+        "MY2"
+      ],
+      "ranked_hash": "126952457188299ce1498e68a386131814b5e28403b14b04d651897c46f569d0",
+      "ranked_promotions": 2,
+      "ranked_score": 18220.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 18220.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX1",
+        "MX2",
+        "MY2",
+        "MY1"
+      ],
+      "ranked_hash": "225d2b8f7605f8e1186a62040d81300bf766aa4ba70c0ea9c96f130b91d1af7d",
+      "ranked_promotions": 2,
+      "ranked_score": 18220.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX1",
+        "MY1",
+        "MX2",
+        "MY2"
+      ],
+      "ranked_hash": "8c3cf8450e05943e43ba68cedcc5749461c393eaf22f8c1a269a2c44f12e7d85",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX1",
+        "MY1",
+        "MY2",
+        "MX2"
+      ],
+      "ranked_hash": "57efd9e8a199cd075eadead85cdc76b93b0e4a092461b9103a76045f2beb10e0",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX1",
+        "MY2",
+        "MX2",
+        "MY1"
+      ],
+      "ranked_hash": "e8191a01fb833953865156a6765fd9f4723f37111d06e56bae16d531833e6ccb",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX1",
+        "MY2",
+        "MY1",
+        "MX2"
+      ],
+      "ranked_hash": "e27a0e0ec593cba00c4dddb17b66e5bddc4db1f0e10c33b6720c48bd3e1c035b",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 18220.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX2",
+        "MX1",
+        "MY1",
+        "MY2"
+      ],
+      "ranked_hash": "96cabb90b0c9a5aaab1a8b5c692d4fbe7587b3dc9a3a061bb51fae658371b0f7",
+      "ranked_promotions": 2,
+      "ranked_score": 18220.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 18220.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX2",
+        "MX1",
+        "MY2",
+        "MY1"
+      ],
+      "ranked_hash": "94a9ae5f78a505448cad35badd2add0e0d306436872eb5bd72fb0c68ec213bf9",
+      "ranked_promotions": 2,
+      "ranked_score": 18220.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX2",
+        "MY1",
+        "MX1",
+        "MY2"
+      ],
+      "ranked_hash": "8ac3d9a6485417f80944c3044f3d979af216fdcd19a635bc462b52621bf41446",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX2",
+        "MY1",
+        "MY2",
+        "MX1"
+      ],
+      "ranked_hash": "09ecd173d155cf8116d591234a3835754065ef6d5fc0f819acb702a530e88b7c",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX2",
+        "MY2",
+        "MX1",
+        "MY1"
+      ],
+      "ranked_hash": "058f07086e084a74dea7b01a6fa76b4d5cdd2eff307680308c866d380737c5dd",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MX2",
+        "MY2",
+        "MY1",
+        "MX1"
+      ],
+      "ranked_hash": "fb68e369ed5c801d43b37976a8867475cee8d9335d86d469202dab8d21cffa31",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY1",
+        "MX1",
+        "MX2",
+        "MY2"
+      ],
+      "ranked_hash": "e966974d1e0aac2682585eb1d26a375de1aa45e42c45f325dd7fc4748411e050",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY1",
+        "MX1",
+        "MY2",
+        "MX2"
+      ],
+      "ranked_hash": "2260f80704a320a528037271a261028fc680020687c14fa2d0cd29c3f914d9f5",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY1",
+        "MX2",
+        "MX1",
+        "MY2"
+      ],
+      "ranked_hash": "bed0552b6f6adf3d93394eede6ce9d3697c4e2c38a372156be86b03cf01a329d",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY1",
+        "MX2",
+        "MY2",
+        "MX1"
+      ],
+      "ranked_hash": "b028fca056a4e2723994af86d61beecdbf73c31f69fb618e047b024fe276270f",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 18220.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY1",
+        "MY2",
+        "MX1",
+        "MX2"
+      ],
+      "ranked_hash": "4542863af9fff88a9881a9aceae2faf2d10cf9e5b3d94763e9fbb98e7d70d89e",
+      "ranked_promotions": 2,
+      "ranked_score": 18220.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 18220.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY1",
+        "MY2",
+        "MX2",
+        "MX1"
+      ],
+      "ranked_hash": "9b0b8a2be64c2adccc42c6ac1fcecbd60da36ab4939deb045da9706c647012d0",
+      "ranked_promotions": 2,
+      "ranked_score": 18220.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY2",
+        "MX1",
+        "MX2",
+        "MY1"
+      ],
+      "ranked_hash": "097f70885927d385a059a9bce2da2802bffbbf3783900a6d57de8e54a41aa65c",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY2",
+        "MX1",
+        "MY1",
+        "MX2"
+      ],
+      "ranked_hash": "400f655373350e2ab334a8f98a51d9497ac3b2c57f27f0418d87d65854c832c0",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY2",
+        "MX2",
+        "MX1",
+        "MY1"
+      ],
+      "ranked_hash": "a98adfe7eea7bdeea0be22aec895f0e7616e73a77c72e2c2b4e4f1673fa56551",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 17310.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY2",
+        "MX2",
+        "MY1",
+        "MX1"
+      ],
+      "ranked_hash": "fc0b774176ac06fab9d1519e091aca674fa067a189078ae898b6c55d0c2e7b36",
+      "ranked_promotions": 2,
+      "ranked_score": 17310.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 18220.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY2",
+        "MY1",
+        "MX1",
+        "MX2"
+      ],
+      "ranked_hash": "c0679b176f4ba2886a99656f3a16be9e50880d2d280b043b59a19b35c71915ab",
+      "ranked_promotions": 2,
+      "ranked_score": 18220.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    },
+    {
+      "exhaustive_best_score": 18220.0,
+      "feasible_candidates_filtered_by_window": 0,
+      "materialized_candidates": 72,
+      "order": [
+        "MY2",
+        "MY1",
+        "MX2",
+        "MX1"
+      ],
+      "ranked_hash": "764adc3158b904c8b4eabd9b64b174bc922bccd41dd503b93dd6cf37dad59704",
+      "ranked_promotions": 2,
+      "ranked_score": 18220.0,
+      "score_matches_exhaustive": true,
+      "source_score": 23660.0,
+      "states_visited": 9,
+      "unique_candidates_filtered_by_window": 12
+    }
+  ],
+  "total_feasible_candidates_filtered_by_window": 0,
+  "total_unique_candidates_filtered_by_window": 288
+}
