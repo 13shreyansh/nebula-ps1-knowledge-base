@@ -1650,3 +1650,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Stronger challenge: a separate monolithic resume starts from the checked decomposed incumbent, disables fresh heuristics, and runs verification for 30 seconds. It preserves the exact C=`145920` bytes but still cannot prove them after 1,430,184 branches. This failure does not weaken the additive proof; it shows why exploiting genuine separability matters.
 - Public boundary: all A/B/C public-data policy combinations form one 54-activity component, so decomposition cannot improve the already protected public scores. It is a general-instance robustness/runtime gain, not an official numerical score change.
 - Limitations: the scale input repeats one motif; observed 1.89/17.81-second timing is a single-host comparison with unequal total theoretical solver allowances and must not be generalized as a universal speedup. No portal interaction occurred.
+
+### E174: Heterogeneous decomposition holdout precommit
+
+- Timestamp: 2026-09-19 12:27:00 +08.
+- Construction: a generic composer namespaces and date-normalizes six previously frozen non-Live fixtures without reading their outputs. It preserves each source's relative dates, topology, supplies, contracts, access types, priorities, predecessor links, and buffer rule values while making identifiers and buffer-rule names disjoint.
+- Frozen structure: dataset hash `84a00bdb…`, 28 activities, 24 contracts, 10 lines, 119 locations, PC/C/PM access, priorities 1/2/3, four predecessor links, 12 namespaced buffer rules, and no Live crossover. Strict Scenario C yields seven components of sizes 8, 6, 5, 3, 2, 2, and 2.
+- Precommit boundary: the composer, raw input, hash, and structural assertions are committed before any solver sees the composition. There is no answer key, target score, output, or claim that every component will prove within budget.
+- Falsification target: require every heterogeneous component to pass full proof, merged hard/strict feasibility, independent scoring, and additive equality. Preserve a timeout or partial proof without changing the fixture.

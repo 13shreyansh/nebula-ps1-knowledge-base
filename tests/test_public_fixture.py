@@ -188,6 +188,46 @@ class PublicFixtureTests(unittest.TestCase):
                     self.assertEqual(len(components), 1)
                     self.assertEqual(set(components[0]), set(self.instance.activities))
 
+    def test_heterogeneous_nonlive_fixture_is_frozen_before_solving(self) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_nonlive_v1"
+        instance = load_instance(data)
+        self.assertEqual(
+            instance.dataset_hash,
+            "84a00bdbd9d4d51b24928cdbc3858e27ecded025961777f16dec2497215b81a7",
+        )
+        self.assertEqual(len(instance.activities), 28)
+        self.assertEqual(len(instance.projects), 24)
+        self.assertEqual(len(instance.lines), 10)
+        self.assertEqual(len(instance.locations), 119)
+        self.assertEqual(
+            {project.access_type for project in instance.projects.values()},
+            {"C", "PC", "PM"},
+        )
+        self.assertEqual(
+            {project.contract_priority for project in instance.projects.values()},
+            {1, 2, 3},
+        )
+        self.assertEqual(
+            sum(
+                activity.predecessor_activity_id is not None
+                for activity in instance.activities.values()
+            ),
+            4,
+        )
+        self.assertFalse(
+            any(
+                affects_interchange_cross_line(instance, activity)
+                for activity in instance.activities.values()
+            )
+        )
+        components = independent_activity_components(
+            instance,
+            "C",
+            forbid_buffer_overlap=True,
+        )
+        self.assertEqual(sorted(map(len, components), reverse=True), [8, 6, 5, 3, 2, 2, 2])
+        self.assertFalse((data / "RESULTS.csv").exists())
+
     def test_decomposed_solver_matches_monolithic_exact_two_line_result(self) -> None:
         data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
         monolithic = (
