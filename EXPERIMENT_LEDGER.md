@@ -1947,3 +1947,17 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Public C boundary: the input remains one component; protected C-001 is selected at proved `62.7`, monolithic runs first, decomposition is skipped, and all three published CSVs are byte-identical to the official incumbent.
 - Release gate: 196 regressions, 19 isolated-validator checks, canonical archive `495d4ef7…`, and all 30 final-package checks pass under the serial gate.
 - Decision: retain additive-first because it improves or rescues score/proof robustness across permuted and scaled cases, while recording that it can be substantially slower on an easy monolithic B instance. No portal interaction or official package change occurred.
+
+### E207: Fast B control is a solver proof, not an algebraic preflight
+
+- Timestamp: 2026-09-19 13:31:44 +08.
+- Inspection: the 0.469-second unpermuted B control selected bridge-safe fallback, then verified a 2,255-variable/4,315-constraint full-instance model. Verification took 0.060 seconds; the preceding fallback proof took 0.279 seconds. No complete structural hint or zero-model algebraic path was used.
+- Consequence: do not call this result a deterministic workload proof or place an allegedly algebraic shortcut ahead of decomposition. Its speed can vary with branching, as the identifier-permuted failure demonstrates.
+
+### E208: Bounded Scenario B proof-probe precommit
+
+- Timestamp: 2026-09-19 13:32:19 +08.
+- Frozen cases: small irregular B, equal-module scale B, unpermuted heterogeneous B, and its identifier/row-order permutation. Dataset hashes and seeds are fixed before outcomes.
+- Probe policy: strict closure, one worker, one attempt, and 0.1/0.1/0.5/0.2-second heuristic/repair/fallback/verification limits. Every emitted candidate must pass the full evaluator and independent raw-CSV scorer; only a full-instance proof can terminate later portfolio search.
+- Falsification target: recover the fast unpermuted proof within bounded overhead while failing quickly on the permuted hard branch. Preserve any opposite or unstable result; do not change cases or budgets after execution.
+- Scope: benchmark only. The production portfolio is unchanged until the probe shows useful proof coverage without score suppression.
