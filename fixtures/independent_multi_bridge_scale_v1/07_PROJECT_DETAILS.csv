@@ -1,0 +1,9 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+K401,Scaled interacting Live job 1,2030-06-01,Synthetic,Live,3,2031-06-22,2031-01-19,1,PM,1
+K402,Scaled interacting Live job 2,2030-06-01,Synthetic,Live,2,2031-06-22,2031-02-02,1,PM,1
+K403,Scaled interacting Live job 3,2030-06-01,Synthetic,Live,1,2031-06-22,2031-02-16,1,PM,1
+K404,Scaled interacting Live job 4,2030-06-01,Synthetic,Live,3,2031-06-22,2031-03-02,1,PM,1
+K405,Scaled interacting Live job 5,2030-06-01,Synthetic,Live,2,2031-06-22,2031-03-16,1,PM,1
+K406,Scaled interacting Live job 6,2030-06-01,Synthetic,Live,1,2031-06-22,2031-03-30,1,PM,1
+K407,Scaled interacting Live job 7,2030-06-01,Synthetic,Live,3,2031-06-22,2031-04-13,1,PM,1
+K408,Scaled interacting Live job 8,2030-06-01,Synthetic,Live,2,2031-06-22,2031-04-27,1,PM,1

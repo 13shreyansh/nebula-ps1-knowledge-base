@@ -1,0 +1,29 @@
+location_id,location_kind,line_code,bound,supply_capacity
+PLAT:LNX:X1:EB,platform,LNX,EB,1
+PLAT:LNX:X1:WB,platform,LNX,WB,1
+PLAT:LNX:X2:EB,platform,LNX,EB,1
+PLAT:LNX:X2:WB,platform,LNX,WB,1
+PLAT:LNX:X3:EB,platform,LNX,EB,1
+PLAT:LNX:X3:WB,platform,LNX,WB,1
+PLAT:LNX:N4:EB,platform,LNX,EB,1
+PLAT:LNX:N4:WB,platform,LNX,WB,1
+SEC:LNX:X1_X2:EB,tunnel sector,LNX,EB,1
+SEC:LNX:X1_X2:WB,tunnel sector,LNX,WB,1
+SEC:LNX:X2_X3:EB,tunnel sector,LNX,EB,1
+SEC:LNX:X2_X3:WB,tunnel sector,LNX,WB,1
+SEC:LNX:X3_N4:EB,tunnel sector,LNX,EB,1
+SEC:LNX:X3_N4:WB,tunnel sector,LNX,WB,1
+PLAT:LNY:X1:EB,platform,LNY,EB,1
+PLAT:LNY:X1:WB,platform,LNY,WB,1
+PLAT:LNY:X2:EB,platform,LNY,EB,1
+PLAT:LNY:X2:WB,platform,LNY,WB,1
+PLAT:LNY:X3:EB,platform,LNY,EB,1
+PLAT:LNY:X3:WB,platform,LNY,WB,1
+PLAT:LNY:S4:EB,platform,LNY,EB,1
+PLAT:LNY:S4:WB,platform,LNY,WB,1
+SEC:LNY:X1_X2:EB,tunnel sector,LNY,EB,1
+SEC:LNY:X1_X2:WB,tunnel sector,LNY,WB,1
+SEC:LNY:X2_X3:EB,tunnel sector,LNY,EB,1
+SEC:LNY:X2_X3:WB,tunnel sector,LNY,WB,1
+SEC:LNY:X3_S4:EB,tunnel sector,LNY,EB,1
+SEC:LNY:X3_S4:WB,tunnel sector,LNY,WB,1
