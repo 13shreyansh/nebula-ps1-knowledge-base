@@ -1550,3 +1550,14 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Preserve: runtime counterexample, monolithic fallback, symmetric proof contradiction, exact public routing, and no-portal boundary. Improve: add a cheap deadline/workload proof probe before full decomposition only if it cannot consume or bias solver search; do not reintroduce identifier-sensitive routing.
 - Confidence: very high in public incumbent protection; high in additive-first score robustness under encoded rules; medium in runtime policy; low in hidden runtime/organizer semantics.
 - Next experiment and immediate action: determine whether the fast Scenario B proof path can be invoked as a non-searching algebraic preflight before decomposition. It may recover the 0.469-second case without reintroducing monolithic branching sensitivity. Require exact proof scope and fallback on any non-proof.
+
+## 2026-09-19 13:32:52 +08
+
+- Interval: 2 minutes 30 seconds since the previous inspection; triggered early by a completed falsification. Official A=`137.9`, B=`30.0`, C=`62.7`; official change=`0.0`; no portal interaction.
+- Assumption corrected: the fast B control is not algebraic or zero-model. It is a bounded CP-SAT proof. The terminology and proposed mechanism were corrected before production change.
+- Probe evidence: a fixed sub-second policy proves three B cases at `122`, `80`, and `349`; it fails closed on the identifier-permuted `349` structure in 0.541 seconds. Full validation and independent scoring gate every accepted output.
+- What could be wrong: a 0.5-second fallback limit is near the 0.465-second end-to-end unpermuted result and may be load-sensitive. Four cases do not establish tail latency. A probe that returns a valid unproved candidate must not suppress decomposition or full monolithic fallback.
+- Cheating audit: case hashes and budgets were committed first; the probe sees no target score, portal feedback, expected hash, or dataset-name rule in production. The benchmark seeds are fixed and the failure remains visible.
+- Preserve: additive-first default after non-proof, full monolithic fallback, all probe artifacts, and the slower B counterexample. Improve: integrate as B-only proof probe with bounded limits derived downward from caller budgets, distinct audit/policy labels, and symmetric contradiction checks.
+- Confidence: very high in official state; high in observed probe behavior; medium in runtime generality; low in organizer runtime semantics.
+- Next experiment and immediate action: implement probe → decomposition → full-monolithic order for multi-component B. Stop only on a full proof, retain unproved candidates, and fault-test every transition before real replay.

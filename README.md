@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.119
+version: 0.8.120
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -772,3 +772,4 @@ When sources conflict:
 | `0.8.117` | 2026-09-19 | Added one serial release-gate command after concurrent validator rebuilds produced a transient false hash mismatch; the isolated rerun passed. |
 | `0.8.118` | 2026-09-19 | Precommitted additive-proof-first portfolio execution for genuine multi-component inputs, with symmetric proof-contradiction abort and monolithic fallback. |
 | `0.8.119` | 2026-09-19 | Real controls preserve two B proofs, accelerate the scale-C winning path, retain one slower B counterexample, and leave official public C bytes exact. |
+| `0.8.120` | 2026-09-19 | A frozen sub-second B probe proves 3/4 cases, including the prior 0.465-second `349`, and fails closed on the permutation in 0.541 seconds. |

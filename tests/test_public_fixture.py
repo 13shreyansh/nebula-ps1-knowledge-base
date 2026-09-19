@@ -1315,6 +1315,30 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(final_case["attempts"][1]["objective_score"], 250.0)
         self.assertTrue(final_case["attempts"][1]["global_optimality_proved"])
 
+    def test_scenario_b_monolithic_probe_benchmark_is_pinned(self) -> None:
+        report = json.loads(
+            (
+                ROOT / "artifacts" / "scenario-b-monolithic-probe-v1.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(report["status"], "complete")
+        self.assertFalse(report["portal_used"])
+        self.assertEqual(len(report["cases"]), 4)
+        results = [case["result"] for case in report["cases"]]
+        self.assertEqual(
+            [result["status"] for result in results],
+            ["accepted", "accepted", "accepted", "failed"],
+        )
+        self.assertEqual(
+            [result.get("objective_score") for result in results],
+            [122.0, 80.0, 349.0, None],
+        )
+        self.assertTrue(
+            all(result["global_optimality_proved"] for result in results[:3])
+        )
+        self.assertLess(results[2]["wall_time_seconds"], 0.5)
+        self.assertLess(results[3]["wall_time_seconds"], 0.6)
+
     def test_each_decomposition_edge_reason_has_a_mutation_killing_witness(self) -> None:
         witness_specs = {
             "predecessor": (

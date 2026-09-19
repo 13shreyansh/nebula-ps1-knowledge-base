@@ -1961,3 +1961,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Probe policy: strict closure, one worker, one attempt, and 0.1/0.1/0.5/0.2-second heuristic/repair/fallback/verification limits. Every emitted candidate must pass the full evaluator and independent raw-CSV scorer; only a full-instance proof can terminate later portfolio search.
 - Falsification target: recover the fast unpermuted proof within bounded overhead while failing quickly on the permuted hard branch. Preserve any opposite or unstable result; do not change cases or budgets after execution.
 - Scope: benchmark only. The production portfolio is unchanged until the probe shows useful proof coverage without score suppression.
+
+### E209: Bounded probe recovers easy proofs and rejects the hard permutation
+
+- Timestamp: 2026-09-19 13:32:52 +08.
+- Proofs: small irregular B=`122` in 0.028 seconds, equal-module scale B=`80` in 0.045 seconds, and unpermuted heterogeneous B=`349` in 0.465 seconds. All are strict-clean, dual-scored, and full-instance proved.
+- Failure control: identifier/row-order-permuted heterogeneous B produces no safe incumbent in 0.541 seconds. The failure is retained and emits no accepted candidate; its unchanged additive path separately proves `349`.
+- Portfolio implication: a proof-only probe can recover the 11.6× additive-first slowdown on the easy B case. On the hard permutation it adds about 0.54 seconds before decomposition rather than spending the old five-second full monolithic failure.
+- Integrity boundary: this is four fixed cases and seed behavior can vary. Production must retain the probe's valid candidate if unproved, run decomposition after failure/non-proof, and retain full monolithic fallback if neither earlier policy proves.

@@ -1,0 +1,73 @@
+{
+  "cases": [
+    {
+      "audit": "runs/scenario_b_monolithic_probe_v1/independent_irregular_coupled_b_v1_b_probe_seed31_w1_audit",
+      "dataset_hash": "2ceb2a7c769ea594e36d5b42a622626e9e512b03b5dea87179e6b77ab2a422da",
+      "fixture": "independent_irregular_coupled_b_v1",
+      "output": "runs/scenario_b_monolithic_probe_v1/independent_irregular_coupled_b_v1_b_probe_seed31_w1",
+      "result": {
+        "global_optimality_proved": true,
+        "objective_score": 122.0,
+        "status": "accepted",
+        "submission_hash": "0167ab506ba7e8f2056b37de6ef895139e6a0ba7e8902bb53f6c987c6a57fe48",
+        "wall_time_seconds": 0.02756541600683704
+      },
+      "seed": 31
+    },
+    {
+      "audit": "runs/scenario_b_monolithic_probe_v1/independent_scaled_m8_b_probe_seed31_w1_audit",
+      "dataset_hash": "4f28846aabe8ba18a9f2c146e441929641782b50a2728789c7cae459937defc2",
+      "fixture": "independent_scaled_m8",
+      "output": "runs/scenario_b_monolithic_probe_v1/independent_scaled_m8_b_probe_seed31_w1",
+      "result": {
+        "global_optimality_proved": true,
+        "objective_score": 80.0,
+        "status": "accepted",
+        "submission_hash": "daf5bd0965796a1821ab9b71fc2864493af0bbe06dfa54f7410d7bb1017980a2",
+        "wall_time_seconds": 0.04469429099117406
+      },
+      "seed": 31
+    },
+    {
+      "audit": "runs/scenario_b_monolithic_probe_v1/independent_heterogeneous_b_v1_b_probe_seed1_w1_audit",
+      "dataset_hash": "9f457c848f337da76b54d88887b2c9eaef8d718a79f41fc08e606fe281770be4",
+      "fixture": "independent_heterogeneous_b_v1",
+      "output": "runs/scenario_b_monolithic_probe_v1/independent_heterogeneous_b_v1_b_probe_seed1_w1",
+      "result": {
+        "global_optimality_proved": true,
+        "objective_score": 349.0,
+        "status": "accepted",
+        "submission_hash": "7407bddd670598e820336bf7ece37f594a6bc67400bb34ae7aae5af114924fe0",
+        "wall_time_seconds": 0.46520804200554267
+      },
+      "seed": 1
+    },
+    {
+      "audit": "runs/scenario_b_monolithic_probe_v1/independent_heterogeneous_b_v1_permuted_s23_b_probe_seed31_w1_audit",
+      "dataset_hash": "2aad7853acbd3dfc945d8b8600bcf3d44e7776c95b7c760f9e949080e6dc71f5",
+      "fixture": "independent_heterogeneous_b_v1_permuted_s23",
+      "output": "runs/scenario_b_monolithic_probe_v1/independent_heterogeneous_b_v1_permuted_s23_b_probe_seed31_w1",
+      "result": {
+        "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+        "error_type": "RuntimeError",
+        "status": "failed",
+        "wall_time_seconds": 0.5408677499945043
+      },
+      "seed": 31
+    }
+  ],
+  "policy": {
+    "closure_round_limit": 1000,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 0.5,
+    "forbid_buffer_overlap": true,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 0.1,
+    "local_repair_time_limit_seconds": 0.1,
+    "verification_time_limit_seconds": 0.2,
+    "workers": 1
+  },
+  "portal_used": false,
+  "protocol": "four preselected multi-component B cases; strict closure; 0.1/0.1/0.5/0.2-second stages; one worker; fixed per-case seeds",
+  "status": "complete"
+}
