@@ -1,0 +1,4 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+SYNK108,SYN Independent synthetic K108,2039-05-28,Synthetic,SYN Non-live (Others),1,2040-06-17,2040-02-05,1,C,2
+SYNK102,SYN Independent synthetic K102,2039-05-28,Synthetic,SYN Non-live (Consist),2,2040-06-17,2040-02-05,1,PC,2
+SYNK106,SYN Independent synthetic K106,2039-05-28,Synthetic,SYN Non-live (Others),3,2040-06-17,2040-04-01,1,C,2

@@ -1937,3 +1937,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Symmetric integrity: either policy's full-instance proof is checked against every already gated candidate. A lower candidate contradicts the proof and aborts before publication; proof status never overrides score validation.
 - Selection remains unchanged: lowest fully gated primary objective wins; exact ties preserve the initial incumbent, then monolithic, then decomposed. Execution order does not alter tie priority.
 - Tests frozen before real controls: lower unproved decomposition followed by monolithic comparison, malformed decomposition fallback, one-component skip, decomposed proof short-circuit, contradictory additive proof abort, and unexpected programmer-error propagation.
+
+### E206: Additive-first controls preserve score and expose one runtime regression
+
+- Timestamp: 2026-09-19 13:30:22 +08.
+- B unpermuted: decomposition proves B=`349` and skips monolithic, but takes 5.451 seconds versus the retained monolithic-first control's 0.469 seconds. The selected hash changes from monolithic `7407bddd…` to the previously validated decomposed `8987ba2e…`. This is a real local runtime regression with no score/proof regression.
+- B permuted: decomposition proves B=`349` in 5.416 seconds and skips the seed-31 monolithic path that previously failed after 5.037 seconds. Selected hash `e3cd8a67…` matches the frozen decomposed benchmark output.
+- C scale: decomposition proves C=`145,920` in 1.990 seconds and skips the retained 18.035-second monolithic path that returned unproved `234,780`. Selected hash `0dac01d9…` matches the prior proved decomposed result.
+- Public C boundary: the input remains one component; protected C-001 is selected at proved `62.7`, monolithic runs first, decomposition is skipped, and all three published CSVs are byte-identical to the official incumbent.
+- Release gate: 196 regressions, 19 isolated-validator checks, canonical archive `495d4ef7…`, and all 30 final-package checks pass under the serial gate.
+- Decision: retain additive-first because it improves or rescues score/proof robustness across permuted and scaled cases, while recording that it can be substantially slower on an easy monolithic B instance. No portal interaction or official package change occurred.

@@ -1,0 +1,8 @@
+line_code,line_name
+ICBLIB,ICB Irregular coupled line
+CBDLCB,CBD Coupled deadline line
+SYNLNX,SYN Synthetic North
+PCPLNY,PCP Synthetic South
+CAPLBG,CAP B excess budget line
+SYNLNY,SYN Synthetic South
+PCPLNX,PCP Synthetic North

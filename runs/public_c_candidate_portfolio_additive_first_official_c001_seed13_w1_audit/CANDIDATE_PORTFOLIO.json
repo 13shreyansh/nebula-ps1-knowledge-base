@@ -1,0 +1,41 @@
+{
+  "attempts": [
+    {
+      "global_optimality_proved": false,
+      "objective_score": 62.7,
+      "policy": "initial_incumbent",
+      "status": "accepted",
+      "submission_hash": "30247f5773477ca3e26a0e0d1704ef2f7aecd1fb8efbda15c6f0aa9bb4047733"
+    },
+    {
+      "global_optimality_proved": true,
+      "objective_score": 62.7,
+      "outer_wall_time_seconds": 4.940322167007253,
+      "policy": "monolithic",
+      "status": "accepted",
+      "submission_hash": "30247f5773477ca3e26a0e0d1704ef2f7aecd1fb8efbda15c6f0aa9bb4047733"
+    },
+    {
+      "policy": "decomposed",
+      "reason": "one component; identical staged policy adds no search diversity",
+      "status": "skipped"
+    }
+  ],
+  "component_count": 1,
+  "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+  "execution_order": [
+    "monolithic",
+    "decomposed"
+  ],
+  "publication_status": "published",
+  "reference_validator_confirmed": false,
+  "scenario": "C",
+  "selected_global_optimality_proved": true,
+  "selected_objective_score": 62.7,
+  "selected_optimality_proof_policies": [
+    "monolithic"
+  ],
+  "selected_policy": "initial_incumbent",
+  "selected_submission_hash": "30247f5773477ca3e26a0e0d1704ef2f7aecd1fb8efbda15c6f0aa9bb4047733",
+  "selection_rule": "lowest fully gated objective; exact ties preserve initial incumbent, then monolithic, then decomposed"
+}

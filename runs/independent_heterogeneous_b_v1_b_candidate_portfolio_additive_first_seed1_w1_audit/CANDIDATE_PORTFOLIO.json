@@ -1,0 +1,36 @@
+{
+  "attempts": [
+    {
+      "global_optimality_proved": true,
+      "objective_score": 349.0,
+      "outer_wall_time_seconds": 5.450697124993894,
+      "policy": "decomposed",
+      "status": "accepted",
+      "submission_hash": "8987ba2e90f2ca2ea8512af955e5d1fa91fbf04ce4e4f8a26f63440b506631d1"
+    },
+    {
+      "policy": "monolithic",
+      "proof_policy": "decomposed",
+      "proved_objective_score": 349.0,
+      "reason": "decomposed full-instance additive proof leaves no lower primary objective for monolithic search to find",
+      "status": "skipped"
+    }
+  ],
+  "component_count": 9,
+  "dataset_hash": "9f457c848f337da76b54d88887b2c9eaef8d718a79f41fc08e606fe281770be4",
+  "execution_order": [
+    "decomposed",
+    "monolithic"
+  ],
+  "publication_status": "published",
+  "reference_validator_confirmed": false,
+  "scenario": "B",
+  "selected_global_optimality_proved": true,
+  "selected_objective_score": 349.0,
+  "selected_optimality_proof_policies": [
+    "decomposed"
+  ],
+  "selected_policy": "decomposed",
+  "selected_submission_hash": "8987ba2e90f2ca2ea8512af955e5d1fa91fbf04ce4e4f8a26f63440b506631d1",
+  "selection_rule": "lowest fully gated objective; exact ties preserve initial incumbent, then monolithic, then decomposed"
+}
