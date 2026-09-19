@@ -1244,3 +1244,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Correction: point scoring now calculates only the requested contract/week value. Measured runtime returns to 1.54 seconds, 0.25 seconds, and 0.39 seconds respectively.
 - Verification: all 108 tests pass; every public contract cost curve matches the compatibility alias and the official A delay equals the independent scorer. Full replay preserves 256/256 unconstrained and 768/768 constrained branching matches, zero retained-corpus promotions/hash changes, and final readiness for A/B/C.
 - Official protection: no portal interaction or attempt was used.
+
+### E132: Final packages match exact confirmed-upload contents
+
+- Timestamp: 2026-09-19 09:58:04 +08
+- Reference chain: A-002 archive SHA-256 `76bf26e1…`, B-001 `1ef95698…`, and C-001 `ee6b09cc…` match the append-only upload ledger.
+- Result: every preserved reference archive contains exactly the three required root CSVs, and every member hash equals the corresponding deterministic final-package member. All ten readiness checks pass for each scenario; aggregate `all_ready` remains true.
+- Interpretation: different final ZIP hashes come only from deterministic repacking metadata/compression. The evaluated CSV bytes are unchanged.
+- Regression status: all 108 tests pass.
+- Official protection: no portal interaction or attempt was used.

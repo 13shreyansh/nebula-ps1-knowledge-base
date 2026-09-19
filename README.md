@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.54
+version: 0.8.55
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -348,7 +348,7 @@ The protected public answer keys are in `deliverables/public/A`, `B`, and `C`. E
 
 Upload-ready copies are generated only in `deliverables/final-submission`. Its manifest proves that every archived member matches the protected official incumbent bytes. Do not use the historical generic ZIPs under `deliverables/validator`: `A.zip` is the failed A-001 artifact, and the unnumbered B/C archives are not the confirmed uploads. Packaging does not authorize or perform a portal submission.
 
-Before any user-authorized upload, run `PYTHONPATH=src .venv/bin/python scripts/audit_final_submission_readiness.py` and require `deliverables/final-submission/READINESS.json` to report `all_ready: true`. This is local verification only and consumes no portal attempt.
+Before any user-authorized upload, run `PYTHONPATH=src .venv/bin/python scripts/audit_final_submission_readiness.py` and require `deliverables/final-submission/READINESS.json` to report `all_ready: true`. The gate also verifies the preserved official-upload archive hashes and proves that their contained CSV bytes equal the final package. This is local verification only and consumes no portal attempt.
 
 <a id="improvement"></a>
 
@@ -693,3 +693,4 @@ When sources conflict:
 | `0.8.52` | 2026-09-19 | Rechecked the organizer's upstream specification; `main` remains the locally verified commit `966c976` with no pending rule update. |
 | `0.8.53` | 2026-09-19 | Corrected the idle-normalization predictor's stale Scenario C excess coefficient from `20` to the confirmed `7`; full candidate validation had prevented score corruption, while the fix restores trusted pruning. |
 | `0.8.54` | 2026-09-19 | Centralized production scoring constants and contract-delay arithmetic, removed the dead per-activity scorer, retained the independent scorer, and rejected an initially correct but 4–5× slower implementation. |
+| `0.8.55` | 2026-09-19 | Extended final readiness to verify the exact A-002/B-001/C-001 archive SHA-256 values and byte-for-byte equality between their CSV members and the final packages. |

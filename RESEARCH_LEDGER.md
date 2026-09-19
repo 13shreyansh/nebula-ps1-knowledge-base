@@ -886,6 +886,14 @@ Confidence labels:
 - **Accepted implementation:** Compute only the requested contract/week cost for prediction. Rerun timings return to about 1.54 seconds for 59 gaps and 0.25 seconds for ranked 120-activity ECLO; scores, hashes, candidate counts, and mismatch counts remain unchanged.
 - **Confidence:** Very high in arithmetic equivalence; high in restored measured performance.
 
+### `R107` Final bytes are traceable to the exact confirmed portal uploads
+
+- **Status:** Confirmed locally from preserved immutable archives and official ledger hashes.
+- **Chain:** Final A/B/C members equal the protected public files; those same bytes equal every member in A-002, B-001, and C-001 respectively. Each preserved upload archive itself matches the SHA-256 recorded at upload time.
+- **Readiness:** Ten checks per scenario now cover final archive structure/hash, protected member/submission hashes, confirmed-upload archive/member hashes, both scores, hard feasibility, and strict closure cleanliness. All 30 checks pass.
+- **Boundary:** Repacking changes ZIP metadata and therefore the final ZIP hash, but not any CSV byte. The preserved numbered archives remain the evidence of what the portal evaluated.
+- **Confidence:** Very high.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
