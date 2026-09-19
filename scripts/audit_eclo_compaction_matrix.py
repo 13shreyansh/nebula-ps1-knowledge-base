@@ -25,6 +25,7 @@ def main() -> None:
                 ROOT / submission_rel,
                 scratch / f"case_{index}",
                 forbid_buffer_overlap=True,
+                exhaustive=True,
             )
             records.append(
                 {

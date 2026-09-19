@@ -689,6 +689,15 @@ Confidence labels:
 - **Limitation:** Deduplication reduces redundant work but worst-case file generation remains proportional to the number of unique eligible transformations times submission size. Large serialized hidden instances still need a specific runtime stress test.
 - **Confidence:** High in state preservation, deduplication, and fail-safe selection; medium in worst-case scale.
 
+### `R085` Exact score ordering removes serialized-compaction scale overhead
+
+- **Status:** Confirmed on a precommitted 120-activity, 360-week fixture.
+- **Finding:** A zero-score serialized incumbent initially spent 8.34 seconds checking 120 candidates although Scenario C's objective cannot be negative. A nonnegative-floor exit reduces this to 0.035 seconds. On a separately frozen reverse ordering with score `2,880,360`, exhaustive validation checks 120 unique candidates in 8.29 seconds; exact in-memory score ordering checks the best-ranked candidate in 0.24 seconds and selects the same `2,864,830` result.
+- **Safety:** The ranker recomputes contract completion, official priority weights and activity nudges, and ECLO count under the exact transformation. The one-activity-per-week precondition proves excess access remains zero. Exhaustive mode reports zero prediction mismatches over all 120 candidates and remains available for audits. Every promoted candidate is still serialized and passed through the full evaluator and requested strict closure screen.
+- **Production replay:** The unmocked eight-job controller checks one of eight unique transformations, prunes seven only after its predicted and serialized scores agree, and returns the same strict-clean C=`262.0` hash. Sound verification retains the incumbent.
+- **Limitation:** Ranking is exact only under the operator's serialization preconditions. Signature generation and score calculation remain quadratic in the number of access rows, although measured overhead is small at 120 activities.
+- **Confidence:** High in the score-order equivalence and measured speedup; medium beyond the tested scale.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

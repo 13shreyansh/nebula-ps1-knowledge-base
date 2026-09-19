@@ -170,19 +170,67 @@ def _candidate_signature(
     return (*transformed_access, *transformed_occupancy)
 
 
+def _predicted_objective(
+    instance: Instance,
+    access: list[AccessRow],
+    activity_id: str,
+    removed_week: int,
+) -> float:
+    """Return the exact C objective if this serialized transform is feasible."""
+
+    occupied_weeks = sorted({row.week for row in access})
+    week_map = {
+        week: week - int(week > removed_week)
+        for week in occupied_weeks
+        if week != removed_week
+    }
+    completion_by_activity: dict[str, int] = defaultdict(int)
+    eclo_total = 0
+    for row in access:
+        if row.activity_id == activity_id and row.week == removed_week:
+            continue
+        completion_by_activity[row.activity_id] = max(
+            completion_by_activity[row.activity_id], week_map[row.week]
+        )
+        eclo_total += int(row.activity_id == activity_id or row.eclo == 1)
+
+    completion_by_contract: dict[str, int] = defaultdict(int)
+    for current_activity, week in completion_by_activity.items():
+        contract = instance.activities[current_activity].contract_number
+        completion_by_contract[contract] = max(completion_by_contract[contract], week)
+    contract_weight = {1: 100.0, 2: 10.0, 3: 1.0}
+    activity_nudge = {1: 0.3, 2: 0.2, 3: 0.0}
+    delay_score = 0.0
+    for contract, project in instance.projects.items():
+        completion = instance.completion_date(completion_by_contract[contract])
+        delay_days = max(0, (completion - project.planned_completion_date).days)
+        for current_activity in instance.activities.values():
+            if current_activity.contract_number != contract:
+                continue
+            delay_score += (
+                delay_days
+                * contract_weight[project.contract_priority]
+                * (1.0 + activity_nudge[current_activity.activity_priority])
+            )
+    return round(delay_score + 5.0 * eclo_total, 10)
+
+
 def best_single_lane_eclo_compaction(
     instance: Instance,
     source_dir: str | Path,
     candidates_dir: str | Path,
     *,
     forbid_buffer_overlap: bool = False,
+    exhaustive: bool = False,
 ) -> tuple[Path | None, Evaluation | None, dict[str, object]]:
     """Try a checked two-week ECLO compression on a serialized single lane.
 
     The transformation is deliberately narrow and never constrains search. It
     applies only when the incumbent has one activity per occupied week and no
-    gaps, then evaluates every legal three-standard-to-two-ECLO compaction from
-    the generated files. The caller may promote only a strictly lower result.
+    gaps. It ranks legal three-standard-to-two-ECLO transformations by their
+    exact serialized score, then fully checks the first potentially optimal
+    candidate. The caller may promote only a strictly lower checked result;
+    exhaustive mode evaluates every unique transformation for audits.
     """
 
     source = Path(source_dir)
@@ -196,10 +244,14 @@ def best_single_lane_eclo_compaction(
     report: dict[str, object] = {
         "source_score": source_evaluation.objective_score,
         "strict_buffer_overlap_required": forbid_buffer_overlap,
+        "exhaustive": exhaustive,
         "applicable": False,
         "reason": "",
         "candidates_checked": 0,
         "duplicate_candidates_skipped": 0,
+        "unique_candidates_ranked": 0,
+        "candidates_pruned_by_exact_score_order": 0,
+        "score_prediction_mismatches": 0,
         "feasible_candidates": 0,
         "improving_candidates": 0,
         "selected_activity": None,
@@ -219,8 +271,11 @@ def best_single_lane_eclo_compaction(
         report["reason"] = "source occupied weeks are not contiguous"
         return None, None, report
     report["applicable"] = True
+    if source_evaluation.objective_score <= 0:
+        report["reason"] = "source already attains the nonnegative objective floor"
+        return None, None, report
 
-    by_activity: dict[str, list[object]] = defaultdict(list)
+    by_activity: dict[str, list[AccessRow]] = defaultdict(list)
     for row in access:
         by_activity[row.activity_id].append(row)
     best_dir: Path | None = None
@@ -229,6 +284,7 @@ def best_single_lane_eclo_compaction(
     candidate_records: list[dict[str, object]] = []
     seen_signatures: set[tuple[tuple[object, ...], ...]] = set()
     duplicate_candidates_skipped = 0
+    candidate_specs: list[tuple[float, str, int]] = []
     for activity_id in sorted(by_activity):
         rows = sorted(by_activity[activity_id], key=lambda row: row.week)
         if len(rows) != 3 or any(row.eclo for row in rows):
@@ -251,61 +307,99 @@ def best_single_lane_eclo_compaction(
                 duplicate_candidates_skipped += 1
                 continue
             seen_signatures.add(signature)
-            candidate_dir = root / f"{activity_id}_remove_week_{removed.week}"
-            _write_candidate(
-                instance,
-                access,
-                occupancy,
-                candidate_dir,
-                activity_id,
-                removed.week,
-            )
-            evaluation = evaluate_submission(instance, candidate_dir, "C")
-            candidate_access, candidate_occupancy, _ = load_submission(candidate_dir)
-            strict_conflicts = screen_closures(
-                instance,
-                candidate_access,
-                candidate_occupancy,
-                forbid_buffer_overlap=True,
-            )
-            candidate_is_feasible = evaluation.internally_feasible and not (
-                forbid_buffer_overlap and strict_conflicts
-            )
-            report["candidates_checked"] = int(report["candidates_checked"]) + 1
-            if candidate_is_feasible:
-                report["feasible_candidates"] = int(report["feasible_candidates"]) + 1
-            if (
-                candidate_is_feasible
-                and evaluation.objective_score < source_evaluation.objective_score
-            ):
-                report["improving_candidates"] = int(report["improving_candidates"]) + 1
-            candidate_records.append(
-                {
-                    "activity_id": activity_id,
-                    "removed_week": removed.week,
-                    "score": evaluation.objective_score,
-                    "hard_violations": list(evaluation.hard_violations),
-                    "strict_conflicts": [asdict(conflict) for conflict in strict_conflicts],
-                    "submission_hash": evaluation.submission_hash,
-                }
-            )
-            candidate_key = (activity_id, removed.week)
-            if (
-                candidate_is_feasible
-                and evaluation.objective_score < source_evaluation.objective_score
-                and (
-                    best is None
-                    or evaluation.objective_score < best.objective_score
-                    or (
-                        evaluation.objective_score == best.objective_score
-                        and candidate_key < (best_key or candidate_key)
-                    )
+            candidate_specs.append(
+                (
+                    _predicted_objective(
+                        instance,
+                        access,
+                        activity_id,
+                        removed.week,
+                    ),
+                    activity_id,
+                    removed.week,
                 )
-            ):
-                best_dir = candidate_dir
-                best = evaluation
-                best_key = candidate_key
+            )
+    candidate_specs.sort()
     report["duplicate_candidates_skipped"] = duplicate_candidates_skipped
+    report["unique_candidates_ranked"] = len(candidate_specs)
+    prediction_mismatch = False
+    for candidate_index, (predicted_score, activity_id, removed_week) in enumerate(
+        candidate_specs
+    ):
+        candidate_dir = root / f"{activity_id}_remove_week_{removed_week}"
+        _write_candidate(
+            instance,
+            access,
+            occupancy,
+            candidate_dir,
+            activity_id,
+            removed_week,
+        )
+        evaluation = evaluate_submission(instance, candidate_dir, "C")
+        candidate_access, candidate_occupancy, _ = load_submission(candidate_dir)
+        strict_conflicts = screen_closures(
+            instance,
+            candidate_access,
+            candidate_occupancy,
+            forbid_buffer_overlap=True,
+        )
+        candidate_is_feasible = evaluation.internally_feasible and not (
+            forbid_buffer_overlap and strict_conflicts
+        )
+        report["candidates_checked"] = int(report["candidates_checked"]) + 1
+        if candidate_is_feasible:
+            report["feasible_candidates"] = int(report["feasible_candidates"]) + 1
+        if (
+            candidate_is_feasible
+            and evaluation.objective_score < source_evaluation.objective_score
+        ):
+            report["improving_candidates"] = int(report["improving_candidates"]) + 1
+        candidate_records.append(
+            {
+                "activity_id": activity_id,
+                "removed_week": removed_week,
+                "predicted_score": predicted_score,
+                "score": evaluation.objective_score,
+                "score_prediction_matches": evaluation.objective_score
+                == predicted_score,
+                "hard_violations": list(evaluation.hard_violations),
+                "strict_conflicts": [asdict(conflict) for conflict in strict_conflicts],
+                "submission_hash": evaluation.submission_hash,
+            }
+        )
+        if evaluation.objective_score != predicted_score:
+            prediction_mismatch = True
+            report["score_prediction_mismatches"] = (
+                int(report["score_prediction_mismatches"]) + 1
+            )
+        candidate_key = (activity_id, removed_week)
+        if (
+            candidate_is_feasible
+            and evaluation.objective_score < source_evaluation.objective_score
+            and (
+                best is None
+                or evaluation.objective_score < best.objective_score
+                or (
+                    evaluation.objective_score == best.objective_score
+                    and candidate_key < (best_key or candidate_key)
+                )
+            )
+        ):
+            best_dir = candidate_dir
+            best = evaluation
+            best_key = candidate_key
+        if (
+            not exhaustive
+            and not prediction_mismatch
+            and (
+                best is not None
+                or predicted_score >= source_evaluation.objective_score
+            )
+        ):
+            report["candidates_pruned_by_exact_score_order"] = (
+                len(candidate_specs) - candidate_index - 1
+            )
+            break
     report["candidates"] = candidate_records
     if best is not None and best_key is not None:
         report["selected_activity"] = best_key[0]

@@ -244,11 +244,35 @@ class PublicFixtureTests(unittest.TestCase):
                 (),
             )
             self.assertTrue(report["applicable"])
-            self.assertEqual(report["candidates_checked"], 8)
+            self.assertEqual(report["unique_candidates_ranked"], 8)
+            self.assertEqual(report["candidates_checked"], 1)
             self.assertEqual(report["duplicate_candidates_skipped"], 8)
-            self.assertEqual(report["feasible_candidates"], 8)
-            self.assertEqual(report["improving_candidates"], 7)
+            self.assertEqual(report["candidates_pruned_by_exact_score_order"], 7)
+            self.assertEqual(report["score_prediction_mismatches"], 0)
+            self.assertEqual(report["feasible_candidates"], 1)
+            self.assertEqual(report["improving_candidates"], 1)
             self.assertEqual(report["selected_score"], 262.0)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            exhaustive_dir, exhaustive_selected, exhaustive_report = (
+                best_single_lane_eclo_compaction(
+                    instance,
+                    source,
+                    Path(temp_dir) / "candidates",
+                    forbid_buffer_overlap=True,
+                    exhaustive=True,
+                )
+            )
+            self.assertIsNotNone(exhaustive_dir)
+            self.assertIsNotNone(exhaustive_selected)
+            assert exhaustive_selected is not None
+            self.assertEqual(
+                exhaustive_selected.submission_hash, selected.submission_hash
+            )
+            self.assertEqual(exhaustive_report["candidates_checked"], 8)
+            self.assertEqual(exhaustive_report["feasible_candidates"], 8)
+            self.assertEqual(exhaustive_report["improving_candidates"], 7)
+            self.assertEqual(exhaustive_report["score_prediction_mismatches"], 0)
 
         with tempfile.TemporaryDirectory() as temp_dir:
             second_dir, second, second_report = best_single_lane_eclo_compaction(
@@ -260,6 +284,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertIsNone(second_dir)
         self.assertIsNone(second)
         self.assertEqual(second_report["source_score"], 262.0)
+        self.assertEqual(second_report["unique_candidates_ranked"], 7)
         self.assertEqual(second_report["candidates_checked"], 7)
         self.assertEqual(second_report["duplicate_candidates_skipped"], 10)
         self.assertEqual(second_report["feasible_candidates"], 0)
@@ -636,6 +661,32 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertTrue(
             all(record["selected_score"] is None for record in audit["cases"])
         )
+
+    def test_eclo_compaction_score_order_matches_120_job_exhaustive_audit(
+        self,
+    ) -> None:
+        benchmark = json.loads(
+            (ROOT / "runs" / "eclo_compaction_scale_benchmark.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(benchmark["activity_count"], 120)
+        self.assertEqual(benchmark["horizon_weeks"], 360)
+        by_name = {record["case"]: record for record in benchmark["cases"]}
+        floor = by_name["zero_score_floor"]
+        ranked = by_name["reverse_positive_score"]
+        exhaustive = by_name["reverse_positive_score_exhaustive"]
+        self.assertEqual(floor["source_score"], 0.0)
+        self.assertEqual(floor["candidates_checked"], 0)
+        self.assertFalse(floor["selected"])
+        self.assertEqual(ranked["unique_candidates_ranked"], 120)
+        self.assertEqual(ranked["candidates_checked"], 1)
+        self.assertEqual(ranked["candidates_pruned_by_exact_score_order"], 119)
+        self.assertEqual(exhaustive["candidates_checked"], 120)
+        self.assertEqual(exhaustive["score_prediction_mismatches"], 0)
+        self.assertEqual(ranked["selected_score"], exhaustive["selected_score"])
+        self.assertEqual(ranked["minimum_candidate_score"], 2864830.0)
+        self.assertEqual(ranked["source_score"], 2880360.0)
 
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"

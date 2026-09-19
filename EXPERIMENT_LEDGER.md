@@ -1046,3 +1046,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Production replay: the corrected unmocked one-worker strict path again selects `scenario_c_eclo_compaction`, both scorers return `262.0`, both closure screens are clean, and sound verification retains `262.0` with bound `21.0`.
 - Retained-corpus audit: `scripts/audit_eclo_compaction_matrix.py` rechecks all 19 proof-matrix C incumbents under the strict screen in 0.19 seconds. Two meet the structural precondition, seven unique candidates are checked, eight duplicates are skipped, and no proven incumbent is displaced.
 - Regression status: 82 tests pass. Official hashes and scores remain unchanged; no portal attempt was used.
+
+### E111: A 120-job audit validates exact compaction ranking
+
+- Timestamp: 2026-09-19 08:46:36 +08
+- Precommit protocol: the 120-activity, 360-week single-line input and its feasible zero-score serialization were committed as `5f27eb7`; a reverse-order positive-score serialization was committed separately as `d25c2c8`. Both precede exposure to the ranked operator. Dataset hash is `9b8dd3824421989e5aae11044d8a5c40699a3a705accf2bb8bd7de8086bc6431`.
+- Baseline failure: before the zero-floor guard, the zero-score source materialized 120 unique candidates and skipped 240 duplicates in 8.34 seconds even though improvement was impossible.
+- Zero-floor result: the same source now checks zero candidates in 0.035 seconds and returns no selection.
+- Positive-score exhaustive result: the reverse source is dual-scored and strict-clean at `2,880,360`. Exhaustive mode checks 120 feasible improving candidates, observes zero predicted-versus-serialized score mismatches, and selects `2,864,830` in 8.29 seconds.
+- Positive-score ranked result: production mode ranks the same 120 transformations, fully validates one, prunes 119 only after exact score agreement, and selects the same `2,864,830` result in 0.24 seconds.
+- Real-controller replay: the eight-job strict controller checks one of eight ranked candidates, selects the same C=`262.0` hash `2eebc28b…`, remains dual-scored and strict-clean, and passes the candidate to sound verification. Its audit directory contains one candidate and is 344 KB, down from 20 candidates and 580 KB before hardening.
+- Regression status: 83 tests pass. No official artifact, score, or portal quota changed.
