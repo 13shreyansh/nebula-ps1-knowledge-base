@@ -1100,6 +1100,16 @@ Confidence labels:
 - **Boundary:** The timing comparison is one deterministic-policy host pair and is not a universal runtime law. The rejection rests more strongly on unchanged score, unresolved closure conflicts, and larger repair formulation.
 - **Confidence:** Very high that this change should not be adopted; medium in broader runtime ratios.
 
+### `R131` Bridge-safe verification generalizes to asymmetric mixed-type coupling
+
+- **Status:** Confirmed on a fixture and oracle committed before production solving, across five seeds.
+- **Structure:** Four single-sector PC activities occupy adjacent but unequal local footprints. Three two-sector C bridges connect their possession components through different local groups. Only the three shared boundary platforms require two groups; all other chain locations require one. A spatially disjoint PM activity is released in week 3 and forced into weeks 3–4, while the PC/C chain is forced into weeks 1–2.
+- **Independent bound:** Every activity needs three workload units in two eligible weeks, forcing 16 ECLO rows and cost `80`. At each of three boundary platforms, two PC activities require distinct groups in each of weeks 1–2; supply one therefore forces six excess group-nights and cost `42`. The explicit oracle realizes both floors at B=`122`, is hard-feasible and strict-clean, and agrees with the independent scorer.
+- **Blind result:** The unchanged controller reaches strict-clean B=`122` in all five seeds, in 0.024–0.027 seconds each. The direct stage's complete structural hint is checked and rejected on the asymmetric topology, so it cannot be promoted. CP-SAT repairs the candidate, after which the bridge-safe verifier proves objective and full-instance bound `122` in every run.
+- **Anti-copy evidence:** No oracle path is supplied. The selected candidate hash differs from the precommitted oracle, and both access and occupancy files differ byte-for-byte. All five seeds converge to the same solver candidate, which is evidence of stability here rather than broad stochastic diversity.
+- **Boundary:** The instance remains small, has zero external buffers, and separates PM work spatially and temporally. It does not cover Live opposite-bound closures, interchanges, precedence, or large irregular graphs. The constructor's rejected complete hint is a retained limitation, not a success claim.
+- **Confidence:** Very high in the exact fixture optimum and five retained runs; high in bridge-safe repair on this asymmetric regime; medium-low in larger irregular hidden instances.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

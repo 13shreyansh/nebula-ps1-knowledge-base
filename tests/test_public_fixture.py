@@ -3266,6 +3266,53 @@ class PublicFixtureTests(unittest.TestCase):
             },
         )
 
+        run_root = (
+            ROOT
+            / "runs"
+            / "independent_irregular_coupled_b_v1_blind_seeds1_5_w1"
+        )
+        matrix = json.loads((run_root / "SEED_MATRIX.json").read_text())
+        self.assertEqual(matrix["successes"], 5)
+        self.assertEqual(matrix["failures"], 0)
+        self.assertEqual(matrix["requested_seeds"], [1, 2, 3, 4, 5])
+        self.assertEqual(
+            {record["score"] for record in matrix["runs"]}, {122.0}
+        )
+        self.assertEqual(
+            {record["strict_conflicts"] for record in matrix["runs"]}, {0}
+        )
+        self.assertEqual(
+            {record["selected_stage"] for record in matrix["runs"]},
+            {"heuristic_incumbent"},
+        )
+        candidate_hashes = {
+            record["submission_hash"] for record in matrix["runs"]
+        }
+        self.assertEqual(len(candidate_hashes), 1)
+        self.assertNotIn(evaluation.submission_hash, candidate_hashes)
+        for seed in matrix["requested_seeds"]:
+            candidate = run_root / f"b_seed_{seed}"
+            candidate_evaluation = evaluate_submission(instance, candidate, "B")
+            candidate_independent = independently_score(data, candidate)
+            report = json.loads(
+                (run_root / f"b_seed_{seed}_audit" / "STAGED.json").read_text()
+            )
+            self.assertEqual(candidate_evaluation.hard_violations, ())
+            self.assertEqual(candidate_evaluation.objective_score, 122.0)
+            self.assertEqual(candidate_independent.objective_score, 122.0)
+            heuristic = report["heuristic_attempts"][0]
+            verifier = report["verification_telemetry"]
+            self.assertTrue(heuristic["structural_hint_complete"])
+            self.assertTrue(heuristic["structural_hint_checked"])
+            self.assertFalse(heuristic["structural_hint_feasible"])
+            self.assertFalse(heuristic["primary_score_proven_optimal"])
+            self.assertFalse(report["verification_skipped_primary_proven"])
+            self.assertEqual(verifier["status"], "PRIMARY_OPTIMAL_SAFE_INCUMBENT")
+            self.assertEqual(verifier["objective_score"], 122.0)
+            self.assertEqual(verifier["best_bound"], 122.0)
+            self.assertTrue(verifier["primary_score_proven_optimal"])
+            self.assertEqual(verifier["primary_bound_scope"], "full_instance")
+
     def test_official_a002_contract_score_is_reproduced(self) -> None:
         candidate = ROOT / "runs" / "a_official_a001_local_repair_pruned"
         evaluation = evaluate_submission(self.instance, candidate, scenario="A")

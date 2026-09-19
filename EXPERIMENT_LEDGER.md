@@ -1496,3 +1496,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Decision: reject and revert the group-floor candidate. It neither lowers score nor strengthens proof; it converts an intended cheap failure into a larger conflicting model and a slower repair. Preserve both runs and their telemetry as regression evidence.
 - Integrity gates: all 128 regressions pass in 8.876 seconds, including dual rescoring and exact path/model-size checks for both retained runs. The final-readiness audit remains 30/30 true.
 - Official protection: no portal interaction, upload, or attempt occurred; A-002/B-001/C-001 and quotas remain unchanged.
+
+### E157: Irregular mixed-type coupled B reaches and proves `122` across five seeds
+
+- Timestamp: 2026-09-19 11:42:29 +08.
+- Precommit: generator, eight-activity input, independent oracle, dataset hash `2ceb2a7c…`, and analytical regression were committed at `4b558e4` before any production solve.
+- Structure and bound: four PC activities, three C bridges, and one disjoint PM activity use asymmetric one- and two-sector footprints. The PC/C chain is forced into weeks 1–2 and PM into weeks 3–4. Sixteen forced ECLO rows cost `80`; two unavoidable groups at three shared platforms over two weeks create six excess group-nights costing `42`; exact B=`122`.
+- Blind matrix: seeds 1–5 under the unchanged one-worker 2/1/3/2-second policy succeed 5/5 at B=`122`, zero strict conflicts, in 0.024–0.027 seconds. Both scorers agree for every output.
+- Adverse constructor evidence: the complete 8-activity/16-row structural hint is checked but infeasible on the asymmetric topology. It is not promoted and cannot claim a bound. The direct solver returns a safe incumbent, and the full bridge-safe verifier reports score/bound `122` with `primary_bound_scope=full_instance` for every seed.
+- Anti-copy evidence: selected hash `0167ab50…` differs from oracle `3d004c9d…`; access and occupancy bytes both differ. No oracle path, target score, protected hash, public identifier, or portal signal is available to the solver.
+- Boundary: small zero-buffer fixture; no Live/interchange/precedence interaction. Seed stability does not establish topology diversity.
+- Official protection: no portal interaction or attempt occurred; protected public artifacts and quotas are unchanged.

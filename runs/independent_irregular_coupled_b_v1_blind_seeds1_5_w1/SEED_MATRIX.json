@@ -1,0 +1,87 @@
+{
+  "data": "fixtures/independent_irregular_coupled_b_v1",
+  "dataset_hash": "2ceb2a7c769ea594e36d5b42a622626e9e512b03b5dea87179e6b77ab2a422da",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "production_c": false,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "B"
+  ],
+  "requested_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 122.0,
+      "seed": 1,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "0167ab506ba7e8f2056b37de6ef895139e6a0ba7e8902bb53f6c987c6a57fe48",
+      "wall_seconds": 0.02722529199672863
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 122.0,
+      "seed": 2,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "0167ab506ba7e8f2056b37de6ef895139e6a0ba7e8902bb53f6c987c6a57fe48",
+      "wall_seconds": 0.024569041008362547
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 122.0,
+      "seed": 3,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "0167ab506ba7e8f2056b37de6ef895139e6a0ba7e8902bb53f6c987c6a57fe48",
+      "wall_seconds": 0.02521470900683198
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 122.0,
+      "seed": 4,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "0167ab506ba7e8f2056b37de6ef895139e6a0ba7e8902bb53f6c987c6a57fe48",
+      "wall_seconds": 0.024128834003931843
+    },
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 122.0,
+      "seed": 5,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "0167ab506ba7e8f2056b37de6ef895139e6a0ba7e8902bb53f6c987c6a57fe48",
+      "wall_seconds": 0.024691874990821816
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 5
+}
