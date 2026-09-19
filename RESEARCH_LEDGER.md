@@ -920,6 +920,14 @@ Confidence labels:
 - **Falsification:** On a copied two-line serialized fixture with one used location changed to supply zero, the source has six excess nights. Ranked and exhaustive selection now have zero prediction mismatches and identical selected score/hash. The 120-activity benchmark remains zero-mismatch and measures 0.244 seconds ranked versus 8.381 seconds exhaustive in the recorded rerun.
 - **Confidence:** High in the corrected serialized precondition; candidate files remain the final authority.
 
+### `R111` Evaluator and solver legal-mix rules are extensionally equivalent
+
+- **Status:** Confirmed over every non-empty PM/PC/C count triple with zero through five activities of each type.
+- **Method:** Compare the evaluator predicate with the independent algebraic form used by both CP-SAT models: at most one PM and one PC, `C ≤ 4 − PC`, and `PC + C ≤ 4(1 − PM)`.
+- **Result:** All 215 combinations agree, covering valid `PM`, `PC + 0..3C`, and `1..4C` groups plus multi-PM, multi-PC, mixed-PM, and over-capacity rejections.
+- **Boundary:** This proves equivalence of the implemented count rules, not the organizer's hidden validator. Input parsing still controls which access-type strings can reach either implementation.
+- **Confidence:** Very high in solver/evaluator equivalence for the enumerated domain.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

@@ -1285,3 +1285,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Performance guard: precomputing zero-supply footprint units restores the 120-activity ranked benchmark to 0.244 seconds; exhaustive checks all 120 candidates in 8.381 seconds. Scores, hashes, and mismatch counts are unchanged.
 - Regression status: all 110 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E136: Exhaustive legal-mix equivalence finds no divergence
+
+- Timestamp: 2026-09-19 10:12:40 +08
+- Search space: every non-empty `(PM, PC, C)` count triple from zero through five, 215 combinations total.
+- Oracle comparison: the evaluator's explicit legal-mix predicate versus the solver inequalities `PM ≤ 1`, `PC ≤ 1`, `C ≤ 4 − PC`, and `PC + C ≤ 4(1 − PM)`.
+- Result: 215/215 acceptance decisions match. This extends the artifact mutations beyond `5C` and `PC + 4C` to multiple-PM, multiple-PC, and every mixed boundary in the enumerated range.
+- Regression status: all 111 tests pass.
+- Official protection: no portal interaction or attempt was used.
