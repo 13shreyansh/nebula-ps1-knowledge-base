@@ -753,8 +753,11 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(audit["case_count"], 19)
         self.assertEqual(audit["applicable_count"], 2)
         self.assertEqual(audit["improved_count"], 0)
-        self.assertEqual(audit["total_candidates_checked"], 7)
-        self.assertEqual(audit["total_duplicate_candidates_skipped"], 8)
+        self.assertEqual(audit["total_candidates_checked"], 0)
+        self.assertEqual(audit["total_duplicate_candidates_skipped"], 0)
+        self.assertEqual(
+            audit["total_candidates_skipped_existing_eclo_window"], 7
+        )
         self.assertEqual(
             {record["case"] for record in audit["cases"]},
             {row["case"] for row in retained_c},

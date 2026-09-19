@@ -428,7 +428,14 @@ def best_single_lane_eclo_compaction(
         report["selected_score"] = best.objective_score
         report["selected_submission_hash"] = best.submission_hash
     elif not candidate_records:
-        report["reason"] = "no three-standard-access activity yielded a two-week window"
+        if int(report["candidates_skipped_existing_eclo_window"]):
+            report["reason"] = (
+                "all remaining candidates affect an existing ECLO line window"
+            )
+        else:
+            report["reason"] = (
+                "no three-standard-access activity yielded a two-week window"
+            )
     else:
         report["reason"] = "no fully checked candidate improved the source"
     return best_dir, best, report
@@ -479,6 +486,8 @@ def best_serialized_eclo_compaction_sequence(
         "selected_submission_hash": current.submission_hash if promotions else None,
         "promotions": promotions,
         "rounds": rounds,
+        "applicable": bool(rounds and rounds[0]["applicable"]),
+        "reason": str(rounds[-1]["reason"]) if rounds else "no audit round ran",
         "candidates_checked": sum(int(item["candidates_checked"]) for item in rounds),
         "duplicate_candidates_skipped": sum(
             int(item["duplicate_candidates_skipped"]) for item in rounds
@@ -491,6 +500,12 @@ def best_serialized_eclo_compaction_sequence(
         ),
         "score_prediction_mismatches": sum(
             int(item["score_prediction_mismatches"]) for item in rounds
+        ),
+        "feasible_candidates": sum(
+            int(item["feasible_candidates"]) for item in rounds
+        ),
+        "improving_candidates": sum(
+            int(item["improving_candidates"]) for item in rounds
         ),
     }
     return selected_dir, (current if promotions else None), report

@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 
 from build_benchmark_matrix import CASES, ROOT
-from nebula_ps1.eclo_compact import best_single_lane_eclo_compaction
+from nebula_ps1.eclo_compact import best_serialized_eclo_compaction_sequence
 from nebula_ps1.instance import load_instance
 
 
@@ -20,7 +20,7 @@ def main() -> None:
                 continue
             instance = load_instance(ROOT / data_rel)
             started = time.perf_counter()
-            _, selected, report = best_single_lane_eclo_compaction(
+            _, selected, report = best_serialized_eclo_compaction_sequence(
                 instance,
                 ROOT / submission_rel,
                 scratch / f"case_{index}",
@@ -33,9 +33,13 @@ def main() -> None:
                     "source_score": report["source_score"],
                     "applicable": report["applicable"],
                     "reason": report["reason"],
+                    "promotions": report["promotions"],
                     "candidates_checked": report["candidates_checked"],
                     "duplicate_candidates_skipped": report[
                         "duplicate_candidates_skipped"
+                    ],
+                    "candidates_skipped_existing_eclo_window": report[
+                        "candidates_skipped_existing_eclo_window"
                     ],
                     "feasible_candidates": report["feasible_candidates"],
                     "improving_candidates": report["improving_candidates"],
@@ -54,6 +58,10 @@ def main() -> None:
         ),
         "total_duplicate_candidates_skipped": sum(
             int(record["duplicate_candidates_skipped"]) for record in records
+        ),
+        "total_candidates_skipped_existing_eclo_window": sum(
+            int(record["candidates_skipped_existing_eclo_window"])
+            for record in records
         ),
         "cases": records,
     }

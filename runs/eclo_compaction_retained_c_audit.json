@@ -5,11 +5,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "public_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.010619,
+      "elapsed_seconds": 0.020459,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 62.7
@@ -17,11 +19,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "prefix040_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.008085,
+      "elapsed_seconds": 0.015756,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 52.7
@@ -29,11 +33,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "structural_demand_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.009608,
+      "elapsed_seconds": 0.018131,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 10.0
@@ -41,11 +47,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.000624,
+      "elapsed_seconds": 0.001174,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 7.0
@@ -53,11 +61,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_three_line_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.000632,
+      "elapsed_seconds": 0.001109,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 7.0
@@ -65,11 +75,13 @@
     {
       "applicable": true,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_multi_bridge_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.000326,
+      "elapsed_seconds": 0.000552,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source already attains the nonnegative objective floor",
       "selected_score": null,
       "source_score": 0.0
@@ -77,35 +89,41 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_multi_bridge_congestion_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.00041,
+      "elapsed_seconds": 0.000711,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source occupied weeks are not contiguous",
       "selected_score": null,
       "source_score": 10.0
     },
     {
       "applicable": true,
-      "candidates_checked": 7,
+      "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 7,
       "case": "independent_multi_bridge_scale_C",
-      "duplicate_candidates_skipped": 8,
-      "elapsed_seconds": 0.016809,
+      "duplicate_candidates_skipped": 0,
+      "elapsed_seconds": 0.002557,
       "feasible_candidates": 0,
       "improving_candidates": 0,
-      "reason": "no fully checked candidate improved the source",
+      "promotions": 0,
+      "reason": "all remaining candidates affect an existing ECLO line window",
       "selected_score": null,
       "source_score": 262.0
     },
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_scaled_m20_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.09878,
+      "elapsed_seconds": 0.196649,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 140.0
@@ -113,11 +131,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_dense_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.003975,
+      "elapsed_seconds": 0.008418,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 0.0
@@ -125,11 +145,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_dense_holdout_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.005597,
+      "elapsed_seconds": 0.010648,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 0.0
@@ -137,11 +159,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_tradeoff_holdout_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.005833,
+      "elapsed_seconds": 0.011128,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 7.0
@@ -149,11 +173,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_coupled_tradeoff_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.00533,
+      "elapsed_seconds": 0.01018,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 920.0
@@ -161,11 +187,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_irregular_partial_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.005643,
+      "elapsed_seconds": 0.010647,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 31.0
@@ -173,11 +201,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_multimodule_tradeoff_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.01178,
+      "elapsed_seconds": 0.022699,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 76.0
@@ -185,11 +215,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_predecessor_tradeoff_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.000277,
+      "elapsed_seconds": 0.00045,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source occupied weeks are not contiguous",
       "selected_score": null,
       "source_score": 0.0
@@ -197,11 +229,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_footprint_dependency_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.000288,
+      "elapsed_seconds": 0.000543,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source occupied weeks are not contiguous",
       "selected_score": null,
       "source_score": 0.0
@@ -209,11 +243,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_post_precedence_contract_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.000322,
+      "elapsed_seconds": 0.000598,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 0.0
@@ -221,11 +257,13 @@
     {
       "applicable": false,
       "candidates_checked": 0,
+      "candidates_skipped_existing_eclo_window": 0,
       "case": "independent_post_contract_precedence_C",
       "duplicate_candidates_skipped": 0,
-      "elapsed_seconds": 0.000336,
+      "elapsed_seconds": 0.000757,
       "feasible_candidates": 0,
       "improving_candidates": 0,
+      "promotions": 0,
       "reason": "source is not a one-activity-per-week serialization",
       "selected_score": null,
       "source_score": 0.0
@@ -234,6 +272,7 @@
   "improved_count": 0,
   "scope": "retained Scenario C benchmark incumbents",
   "strict_buffer_overlap_required": true,
-  "total_candidates_checked": 7,
-  "total_duplicate_candidates_skipped": 8
+  "total_candidates_checked": 0,
+  "total_candidates_skipped_existing_eclo_window": 7,
+  "total_duplicate_candidates_skipped": 0
 }
