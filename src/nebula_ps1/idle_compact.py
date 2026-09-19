@@ -159,6 +159,7 @@ def best_idle_week_compaction_sequence(
                     excess_total=current.excess_access_nights_total,
                     eclo_total=current.eclo_nights_total,
                 ),
+                int(gap < occupied[0]),
                 gap,
             )
             for gap in gaps
@@ -173,7 +174,11 @@ def best_idle_week_compaction_sequence(
         }
         round_best_dir: Path | None = None
         round_best: Evaluation | None = None
-        for candidate_index, (predicted_score, gap_week) in enumerate(ranked):
+        for candidate_index, (
+            predicted_score,
+            _,
+            gap_week,
+        ) in enumerate(ranked):
             score_cannot_qualify = (
                 predicted_score > current.objective_score
                 if allow_equal

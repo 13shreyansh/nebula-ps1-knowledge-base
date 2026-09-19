@@ -23,6 +23,7 @@ from nebula_ps1.eclo_compact import (
 from nebula_ps1.evaluate import evaluate_submission, load_submission
 from nebula_ps1.flexible_solver import solve_flexible_supply_relaxation
 from nebula_ps1.independent_score import independently_score
+from nebula_ps1.idle_compact import best_idle_week_compaction_sequence
 from nebula_ps1.instance import load_instance
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from nebula_ps1.prune import prune_submission
@@ -1118,6 +1119,42 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(leading["final_independent_score"], 18220.0)
         self.assertEqual(leading["final_strict_conflicts"], 0)
         self.assertEqual(leading["eclo_promotions"], 2)
+        tie = audit["equal_score_gap_tie"]
+        self.assertEqual(tie["source_score"], 2730.0)
+        self.assertEqual(tie["idle_score"], 1820.0)
+        self.assertEqual(tie["idle_report"]["rounds"][0]["selected_gap_week"], 5)
+        self.assertEqual(tie["final_score"], 920.0)
+        self.assertEqual(tie["final_independent_score"], 920.0)
+        self.assertEqual(tie["final_strict_conflicts"], 0)
+        self.assertEqual(tie["eclo_promotions"], 1)
+
+    def test_idle_gap_tie_prioritizes_internal_eclo_unlock(self) -> None:
+        data = ROOT / "fixtures" / "independent_idle_tie_v1"
+        source = ROOT / "fixtures" / "independent_idle_tie_v1_source_c"
+        instance = load_instance(data)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            idle_dir, idle, idle_report = best_idle_week_compaction_sequence(
+                instance,
+                source,
+                root / "idle",
+                forbid_buffer_overlap=True,
+                allow_equal=True,
+            )
+            self.assertIsNotNone(idle_dir)
+            self.assertIsNotNone(idle)
+            self.assertEqual(idle_report["rounds"][0]["selected_gap_week"], 5)
+            self.assertEqual(idle.objective_score, 1820.0)
+            final_dir, final, _ = best_serialized_eclo_compaction_sequence(
+                instance,
+                idle_dir,
+                root / "eclo",
+                forbid_buffer_overlap=True,
+            )
+            self.assertIsNotNone(final_dir)
+            self.assertIsNotNone(final)
+            self.assertEqual(final.objective_score, 920.0)
+            self.assertEqual(independently_score(data, final_dir).objective_score, 920.0)
 
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"

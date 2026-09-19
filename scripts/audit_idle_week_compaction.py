@@ -20,6 +20,8 @@ UNLOCK_DATA = ROOT / "fixtures" / "independent_idle_unlock_v1"
 UNLOCK_SOURCE = ROOT / "fixtures" / "independent_idle_unlock_v1_source_c"
 LEADING_DATA = ROOT / "fixtures" / "independent_leading_idle_v1"
 LEADING_SOURCE = ROOT / "fixtures" / "independent_leading_idle_v1_source_c"
+TIE_DATA = ROOT / "fixtures" / "independent_idle_tie_v1"
+TIE_SOURCE = ROOT / "fixtures" / "independent_idle_tie_v1_source_c"
 
 
 def main() -> None:
@@ -145,6 +147,38 @@ def main() -> None:
         leading_independent_score = independently_score(
             LEADING_DATA, leading_final_dir
         ).objective_score
+
+        tie_instance = load_instance(TIE_DATA)
+        tie_source = evaluate_submission(tie_instance, TIE_SOURCE, "C")
+        tie_idle_dir, tie_idle, tie_idle_report = best_idle_week_compaction_sequence(
+            tie_instance,
+            TIE_SOURCE,
+            scratch / "tie_idle",
+            forbid_buffer_overlap=True,
+            allow_equal=True,
+        )
+        if tie_idle_dir is None or tie_idle is None:
+            raise RuntimeError("idle tie audit produced no normalization")
+        tie_final_dir, tie_final, tie_eclo_report = (
+            best_serialized_eclo_compaction_sequence(
+                tie_instance,
+                tie_idle_dir,
+                scratch / "tie_eclo",
+                forbid_buffer_overlap=True,
+            )
+        )
+        if tie_final_dir is None or tie_final is None:
+            raise RuntimeError("internal-gap tie-break did not unlock ECLO")
+        tie_access, tie_occupancy, _ = load_submission(tie_final_dir)
+        tie_strict_conflicts = screen_closures(
+            tie_instance,
+            tie_access,
+            tie_occupancy,
+            forbid_buffer_overlap=True,
+        )
+        tie_independent_score = independently_score(
+            TIE_DATA, tie_final_dir
+        ).objective_score
     payload = {
         "dataset_hash": instance.dataset_hash,
         "source_score": source.objective_score,
@@ -196,6 +230,19 @@ def main() -> None:
             "final_independent_score": leading_independent_score,
             "final_strict_conflicts": len(leading_strict_conflicts),
             "eclo_promotions": leading_eclo_report["promotions"],
+        },
+        "equal_score_gap_tie": {
+            "dataset_hash": tie_instance.dataset_hash,
+            "source_score": tie_source.objective_score,
+            "source_submission_hash": tie_source.submission_hash,
+            "idle_score": tie_idle.objective_score,
+            "idle_submission_hash": tie_idle.submission_hash,
+            "idle_report": tie_idle_report,
+            "final_score": tie_final.objective_score,
+            "final_submission_hash": tie_final.submission_hash,
+            "final_independent_score": tie_independent_score,
+            "final_strict_conflicts": len(tie_strict_conflicts),
+            "eclo_promotions": tie_eclo_report["promotions"],
         },
     }
     output = ROOT / "runs" / "idle_week_compaction_audit.json"

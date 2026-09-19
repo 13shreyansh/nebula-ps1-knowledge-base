@@ -761,6 +761,16 @@ Confidence labels:
 - **Limitation:** The evidence covers global empty-week deletion, not left-shifting one activity into capacity that is only locally idle.
 - **Confidence:** High in leading-gap detection, composition, and incumbent preservation.
 
+### `R093` Equal-score normalization ties require structural ordering
+
+- **Status:** A frozen counterexample disproved the original gap-number tie-break; a generic correction is implemented and regression-tested.
+- **Failure:** The source has a leading gap at week 1 and an internal gap at week 5. Either deletion lowers C=`2,730` to `1,820`. Choosing week 1 first leaves an internal gap; the remaining shift violates the second activity's planned start, so ECLO never runs and the controller stops at `1,820`.
+- **Correction:** For equal predicted scores, checked internal-gap deletions rank before leading-gap deletions. Choosing week 5 makes occupied weeks contiguous without moving the first activity, after which one checked ECLO promotion reaches C=`920`.
+- **Evidence:** Source, intermediate, and final artifacts are fully evaluated; the final main and independent scores agree at `920`, and the strict closure screen is clean. The source fixture was committed before the ranker was changed.
+- **Scope:** This is a structure-derived tie-break, not an identifier rule or expected-score branch. Score remains the primary ordering key, and every candidate remains subject to full validation.
+- **Limitation:** The correction does not exhaustively branch over equal-score internal gaps. If several internal deletions are individually valid but cannot all compose, downstream outcomes could still differ.
+- **Confidence:** High in this failure and correction; medium in completeness over more complex equal-score normalization graphs.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

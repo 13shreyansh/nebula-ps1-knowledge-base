@@ -1,7 +1,49 @@
 {
   "dataset_hash": "b97377374407c80a91b4fa8f3f16dce00ca0204b3a0b88a6cc28cc30287bbc85",
   "eclo_promotions": 2,
-  "elapsed_seconds": 0.231835,
+  "elapsed_seconds": 0.239499,
+  "equal_score_gap_tie": {
+    "dataset_hash": "60efa1c7b3e23b4c33949a29334b17a3445c768a5291ec48c0d75f66abb488e9",
+    "eclo_promotions": 1,
+    "final_independent_score": 920.0,
+    "final_score": 920.0,
+    "final_strict_conflicts": 0,
+    "final_submission_hash": "6df8f1b736a49d72d8237f8cc283be7c0c628c62558abb547477068a7a2a702b",
+    "idle_report": {
+      "allow_equal": true,
+      "candidates_checked": 2,
+      "promotions": 1,
+      "reason": "no checked idle-week shift improved the source",
+      "rounds": [
+        {
+          "candidates_checked": 1,
+          "gap_count": 2,
+          "reason": "",
+          "selected_gap_week": 5,
+          "selected_score": 1820.0,
+          "source_score": 2730.0
+        },
+        {
+          "candidates_checked": 1,
+          "gap_count": 1,
+          "reason": "no checked idle-week shift improved the source",
+          "selected_gap_week": null,
+          "selected_score": null,
+          "source_score": 1820.0
+        }
+      ],
+      "score_prediction_mismatches": 0,
+      "score_prediction_untrusted": false,
+      "selected_score": 1820.0,
+      "selected_submission_hash": "f0827b6b76ab68d7b2aac56b082d72794675b2881abecdfc0006dcd8fbc80e6f",
+      "source_score": 2730.0,
+      "strict_improvement": true
+    },
+    "idle_score": 1820.0,
+    "idle_submission_hash": "f0827b6b76ab68d7b2aac56b082d72794675b2881abecdfc0006dcd8fbc80e6f",
+    "source_score": 2730.0,
+    "source_submission_hash": "a851ad8dee58e2eb0b0bdaad92d76b536e87b5715b31bb4c300e12fc8070851b"
+  },
   "equal_score_unlock": {
     "dataset_hash": "4949748995b83d5db1700476f176812fbbb3b679acf31f218206b42d750b878c",
     "eclo_promotions": 1,
