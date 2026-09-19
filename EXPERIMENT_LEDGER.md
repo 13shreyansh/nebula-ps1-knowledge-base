@@ -1274,3 +1274,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Correlated-risk note: this validates our evaluator against direct mutations and published thresholds, not against an unused official run. Some capacity mutations deliberately retain unrelated closure conflicts, so the assertions inspect rule-specific diagnostics rather than claiming whole-submission feasibility.
 - Regression status: all 109 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E135: Zero-supply mutation falsifies incomplete ECLO score prediction
+
+- Timestamp: 2026-09-19 10:11:21 +08
+- Finding: the Scenario C ECLO ranker included delay and ECLO cost but omitted excess cost. This is invisible on the positive-supply fixtures used so far, but the input loader and solver permit a location with supply zero.
+- Safety analysis: serialized candidates were still evaluated in full; an actual/predicted mismatch disabled pruning. No wrong incumbent or official artifact resulted.
+- Mutation: copy the two-line multipass fixture, change one used location from supply one to zero, and leave the source submission unchanged. It remains within Scenario C's one-extra-group allowance and has six excess nights.
+- Result: after adding exact excess arithmetic, ranked and exhaustive modes report zero prediction mismatches and select the same score and submission hash.
+- Performance guard: precomputing zero-supply footprint units restores the 120-activity ranked benchmark to 0.244 seconds; exhaustive checks all 120 candidates in 8.381 seconds. Scores, hashes, and mismatch counts are unchanged.
+- Regression status: all 110 tests pass.
+- Official protection: no portal interaction or attempt was used.

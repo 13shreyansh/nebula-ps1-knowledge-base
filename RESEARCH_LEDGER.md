@@ -911,6 +911,15 @@ Confidence labels:
 - **Boundary:** Some group-splitting mutations also create closure conflicts. The assertions isolate the capacity and legal-mix diagnostics; they do not misreport those mutated submissions as globally feasible.
 - **Confidence:** High in the local evaluator's thresholds and their agreement with the published rules; official hidden-validator equivalence remains unproved.
 
+### `R110` ECLO ranking must include excess even under global serialization
+
+- **Status:** Corrected and falsified on a zero-supply Scenario C mutation.
+- **Finding:** The ECLO ranker described its prediction as exact but omitted the `7 × excess` term. One-activity-per-week serialization normally makes excess zero when supply is positive, but the schema permits supply zero; removing one access can then reduce paid excess.
+- **Safety boundary:** Every materialized candidate was fully evaluated. The first mismatch disabled pruning, so the omission caused exhaustive fallback rather than a false promotion. It could still waste runtime or invalidate the exact-order claim.
+- **Correction:** Add the exact per-activity zero-supply footprint contribution to every remaining access. Precompute this value once per activity to avoid repeating topology expansion for every candidate.
+- **Falsification:** On a copied two-line serialized fixture with one used location changed to supply zero, the source has six excess nights. Ranked and exhaustive selection now have zero prediction mismatches and identical selected score/hash. The 120-activity benchmark remains zero-mismatch and measures 0.244 seconds ranked versus 8.381 seconds exhaustive in the recorded rerun.
+- **Confidence:** High in the corrected serialized precondition; candidate files remain the final authority.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
