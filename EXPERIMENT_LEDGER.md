@@ -1673,6 +1673,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 
 - Timestamp: 2026-09-19 12:31:27 +08.
 - Scenario A: eight components prove scores `4012.4`, `0`, `91`, `7`, `6370`, `6370`, `0`, and `0`. The merged hard-feasible, strict-clean result is A=`16850.4`; both scorers agree, additive proof is complete, and outer wall time is 0.280 seconds.
-- Scenario B refusal: the fifth component contains `MPAMX1` and `MPAMX2`. Each needs three accesses, permits one access per week, and has planned completion in week 1. B makes that planned date a hard deadline, so each can host at most one of three accesses. Direct and bridge-safe formulations both return `INFEASIBLE`; no submission or decomposition report is emitted.
+- Scenario B refusal: the fifth component contains `MPAMX1` and `MPAMX2`. Each needs three workload units and has only week 1 before B's hard planned-completion deadline. At most one access row is allowed per activity/week, and even ECLO supplies only 1.5 units, so each can receive at most 1.5 of three required units. Direct and bridge-safe formulations both return `INFEASIBLE`; no submission or decomposition report is emitted.
 - Interpretation: the B failure is a valid input-level contradiction inherited from the precommitted C-oriented source, not a scheduling-quality regression. It also demonstrates fail-closed behavior after four earlier components had already been solved.
 - Next boundary: B decomposition still needs a separate precommitted B-feasible heterogeneous fixture. Reusing or weakening the current B deadline to make this test pass would invalidate the holdout.
+
+### E177: Corrected the Scenario B infeasibility proof
+
+- Timestamp: 2026-09-19 12:33:32 +08.
+- Retraction: E176 initially attributed infeasibility to `number_of_maximum_access_per_week=1` and described capacity as one of three accesses. That was imprecise: the field limits possession groups, not workload nights.
+- Exact proof: output schema permits at most one access row per activity/week. A standard row supplies one workload unit and ECLO supplies 1.5. With only week 1 available, maximum supplied half-units are 3; each activity requires 6. The infeasibility conclusion remains correct, but for this workload-row bound.
+- Integrity consequence: solver `INFEASIBLE` status was never the sole evidence, and the mistaken explanation is explicitly corrected before constructing the B-specific holdout.

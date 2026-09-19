@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.92
+version: 0.8.93
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -744,4 +744,5 @@ When sources conflict:
 | `0.8.89` | 2026-09-19 | Rejected a location-only decomposition proof after finding the global Live-interchange C-window dependency; corrected the graph and matched a separate monolithic C=`9120` proof on a genuine two-component control. |
 | `0.8.90` | 2026-09-19 | On a precommitted 64-activity non-Live scale holdout, corrected decomposition proves C=`145920` in 1.89 seconds; the same-budget monolith returns unproved C=`234780`, and even a 30-second monolithic replay cannot prove the decomposed incumbent. |
 | `0.8.91` | 2026-09-19 | A precommitted heterogeneous holdout exposed and fixed proof-provenance aggregation for zero-floor components; seven mixed components now prove and merge C=`11432`, while the same-budget monolith produces no safe incumbent. |
-| `0.8.92` | 2026-09-19 | The same heterogeneous input proves additive A=`16850.4`; Scenario B correctly fails closed because two three-access activities can fit only one access before B's hard planned-completion deadline. |
+| `0.8.92` | 2026-09-19 | The same heterogeneous input proves additive A=`16850.4`; Scenario B correctly fails closed because two three-unit activities can receive at most one access row before B's hard planned-completion deadline. |
+| `0.8.93` | 2026-09-19 | Corrected the B infeasibility explanation: one weekly ECLO row supplies at most 1.5 of three required workload units; the weekly-group limit was not the proof. |

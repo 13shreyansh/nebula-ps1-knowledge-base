@@ -754,8 +754,8 @@ class PublicFixtureTests(unittest.TestCase):
                 project.planned_completion_date
             )
             self.assertLess(
-                last_week * project.number_of_maximum_access_per_week,
-                activity.total_accesses,
+                3 * last_week,
+                2 * activity.total_accesses,
             )
         self.assertTrue((b_audit / "EXPECTED_INFEASIBLE.md").exists())
         self.assertEqual(
