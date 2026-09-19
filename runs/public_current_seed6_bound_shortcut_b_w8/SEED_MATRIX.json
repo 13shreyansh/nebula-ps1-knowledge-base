@@ -1,0 +1,39 @@
+{
+  "data": "current-problem-statement/PS1/01_data",
+  "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 30.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 30.0,
+    "local_repair_time_limit_seconds": 10.0,
+    "production_c": false,
+    "verification_time_limit_seconds": 10.0,
+    "workers": 8
+  },
+  "requested_scenarios": [
+    "B"
+  ],
+  "requested_seeds": [
+    6
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 30.0,
+      "seed": 6,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 6,
+      "submission_hash": "f97ea1408395172fae155ed3e5006547914b76c57800c2555de3fce3f6530fdf",
+      "wall_seconds": 21.175257750001037
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 1
+}

@@ -27,6 +27,7 @@ from nebula_ps1.eclo_compact import (
 from nebula_ps1.evaluate import _legal_possession_mix, evaluate_submission, load_submission
 from nebula_ps1.flexible_solver import (
     _group_limit,
+    _scenario_b_strict_improvement_excess_budget,
     _scenario_b_workload_lower_bound_tenths,
     _write_submission_rows,
     solve_flexible_supply_relaxation,
@@ -2036,6 +2037,149 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(
             evaluation.submission_hash, expected["initial_submission_hash"]
         )
+
+    def test_checked_b_workload_bound_skips_model_construction(self) -> None:
+        source = ROOT / "deliverables" / "public" / "B"
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "nebula_ps1.flexible_solver.cp_model.CpModel",
+            side_effect=AssertionError("checked B lower-bound incumbent built a model"),
+        ):
+            output = Path(temporary) / "candidate"
+            telemetry = solve_flexible_supply_relaxation(
+                self.instance,
+                output,
+                "B",
+                time_limit_seconds=2.0,
+                workers=1,
+                seed=9,
+                closure_round_limit=500,
+                sample_hint_dir=source,
+                separator_mode="bridge_safe",
+            )
+            evaluation = evaluate_submission(self.instance, output, "B")
+            independent = independently_score(PACK / "01_data", output)
+        self.assertEqual(
+            telemetry.formulation,
+            "scenario_b_checked_workload_lower_bound_incumbent",
+        )
+        self.assertEqual(telemetry.status, "PRIMARY_OPTIMAL_SAFE_INCUMBENT")
+        self.assertEqual(telemetry.objective_score, 30.0)
+        self.assertEqual(telemetry.best_bound, 30.0)
+        self.assertEqual(telemetry.model_variables, 0)
+        self.assertEqual(telemetry.model_constraints, 0)
+        self.assertEqual(telemetry.solve_rounds, 0)
+        self.assertTrue(telemetry.primary_score_proven_optimal)
+        self.assertFalse(telemetry.tie_break_proven_optimal)
+        self.assertEqual(
+            telemetry.primary_bound_scope,
+            "full_instance_workload_eclo_lower_bound",
+        )
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 30.0)
+        self.assertEqual(independent.objective_score, 30.0)
+
+    def test_b_strict_improvement_excess_budget_is_algebraic(self) -> None:
+        self.assertEqual(
+            _scenario_b_strict_improvement_excess_budget(self.instance, 300),
+            0,
+        )
+        coupled = load_instance(
+            ROOT / "fixtures" / "independent_coupled_b_deadline_v1"
+        )
+        irregular = load_instance(
+            ROOT / "fixtures" / "independent_irregular_coupled_b_v1"
+        )
+        scaled = load_instance(
+            ROOT / "fixtures" / "independent_coupled_b_deadline_n4_v1"
+        )
+        self.assertEqual(
+            _scenario_b_strict_improvement_excess_budget(coupled, 720), 5
+        )
+        self.assertEqual(
+            _scenario_b_strict_improvement_excess_budget(irregular, 1220), 5
+        )
+        self.assertEqual(
+            _scenario_b_strict_improvement_excess_budget(scaled, 1960), 17
+        )
+        with self.assertRaisesRegex(ValueError, "below the workload lower bound"):
+            _scenario_b_strict_improvement_excess_budget(self.instance, 299)
+
+    def test_b_strict_improvement_excess_budget_reduces_group_model(self) -> None:
+        data = ROOT / "fixtures" / "targeted_b_excess_budget_v1"
+        oracle = ROOT / "fixtures" / "targeted_b_excess_budget_v1_oracle"
+        instance = load_instance(data)
+        oracle_evaluation = evaluate_submission(instance, oracle, "B")
+        oracle_independent = independently_score(data, oracle)
+        access, occupancy, _ = load_submission(oracle)
+        self.assertEqual(
+            instance.dataset_hash,
+            "2656297d4f3a88d05292fded20b58edc413158e8db294b098ac60d4af89bdb57",
+        )
+        self.assertEqual(oracle_evaluation.hard_violations, ())
+        self.assertEqual(oracle_evaluation.objective_score, 21.0)
+        self.assertEqual(oracle_independent.objective_score, 21.0)
+        self.assertEqual(oracle_evaluation.eclo_nights_total, 0)
+        self.assertEqual(oracle_evaluation.excess_access_nights_total, 3)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertEqual(_scenario_b_workload_lower_bound_tenths(instance), 0)
+        self.assertEqual(
+            _scenario_b_strict_improvement_excess_budget(instance, 210), 2
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            capped = solve_flexible_supply_relaxation(
+                instance,
+                root / "capped",
+                "B",
+                time_limit_seconds=5.0,
+                workers=1,
+                seed=1,
+                closure_round_limit=50,
+                sample_hint_dir=oracle,
+                separator_mode="bridge_safe",
+            )
+            with patch(
+                "nebula_ps1.flexible_solver._scenario_b_strict_improvement_excess_budget",
+                return_value=100,
+            ):
+                uncapped = solve_flexible_supply_relaxation(
+                    instance,
+                    root / "uncapped",
+                    "B",
+                    time_limit_seconds=5.0,
+                    workers=1,
+                    seed=1,
+                    closure_round_limit=50,
+                    sample_hint_dir=oracle,
+                    separator_mode="bridge_safe",
+                )
+            for candidate in (root / "capped", root / "uncapped"):
+                evaluation = evaluate_submission(instance, candidate, "B")
+                independent = independently_score(data, candidate)
+                self.assertEqual(evaluation.hard_violations, ())
+                self.assertEqual(evaluation.objective_score, 21.0)
+                self.assertEqual(independent.objective_score, 21.0)
+        for telemetry in (capped, uncapped):
+            self.assertEqual(telemetry.status, "PRIMARY_OPTIMAL_SAFE_INCUMBENT")
+            self.assertEqual(telemetry.objective_score, 21.0)
+            self.assertEqual(telemetry.best_bound, 21.0)
+            self.assertTrue(telemetry.primary_score_proven_optimal)
+            self.assertEqual(telemetry.primary_bound_scope, "full_instance")
+        self.assertEqual(capped.model_variables, 455)
+        self.assertEqual(capped.model_constraints, 661)
+        self.assertEqual(uncapped.model_variables, 665)
+        self.assertEqual(uncapped.model_constraints, 946)
+        self.assertLess(capped.model_variables, uncapped.model_variables)
+        self.assertLess(capped.model_constraints, uncapped.model_constraints)
+        self.assertIn("excess budget (2)", capped.limitation)
 
     def test_structural_zero_floor_preflight_respects_strict_policy(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_m40"

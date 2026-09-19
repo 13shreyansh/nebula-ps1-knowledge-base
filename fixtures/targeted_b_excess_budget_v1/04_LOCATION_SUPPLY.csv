@@ -1,0 +1,4 @@
+location_id,location_kind,line_code,bound,supply_capacity
+SEC:LBG:G1_G2:EB,tunnel sector,LBG,EB,6
+PLAT:LBG:G1:EB,platform,LBG,EB,6
+PLAT:LBG:G2:EB,platform,LBG,EB,6

@@ -1120,6 +1120,26 @@ Confidence labels:
 - **Boundary:** Both score implementations still encode our interpretation of the published formula, and feasibility remains correlated with production's evaluator. This package cannot reveal hidden portal rules, prove official acceptance, or prove optimality. It is a preflight and diagnostic tool only.
 - **Confidence:** Very high in reproducible packaging and fail-closed local behavior; high in published-instance score agreement; low in unobserved official-parser equivalence.
 
+### `R133` A checked Scenario B incumbent can inherit the workload lower-bound proof
+
+- **Status:** Confirmed by algebra, model-construction fault injection, a public fixed-policy replay, full regression, and release-readiness checks.
+- **Rule:** Let a fully checked Scenario B incumbent cost `U` tenths and the resource-independent forced-ECLO lower bound be `L`. If `U=L`, no schedule can score lower, so verification can return the incumbent with a full-instance primary proof without constructing CP-SAT. If `U>L`, any strict improvement has at most `floor((U-1-L)/70)` total excess group units; a single location-week therefore cannot need more than `supply + that budget` group labels.
+- **Safety:** The bound uses only published B objective terms. ECLO can never cost below `L`; excess units are nonnegative and cost 70 tenths each. The shortcut requires complete evaluator and selected-closure-policy acceptance. It does not prove the row-count tie-breaker.
+- **Public result:** A model-constructor fault injection proves protected B=`30.0` returns before model construction with bound `30.0`, zero variables/constraints/solve rounds, and explicit `full_instance_workload_eclo_lower_bound` scope. In the exact seed-6 30/10/30/10-second replay, verification takes 0.020 seconds and B cost repair 0.013 seconds instead of building models.
+- **End-to-end boundary:** Total B time improves only 22.567→21.175 seconds, about 6.2%, because direct construction still takes 10.711 seconds and an optional strict hedge spends 10.036 seconds. The new local candidate has six audit-only strict conflicts and does not replace the strict-clean official B artifact.
+- **Remaining falsification:** Resolved for implementation behavior by `R134`; broad runtime benefit still needs non-targeted scale evidence.
+- **Confidence:** Very high in the equality shortcut; high in the cap's algebra and binding implementation; medium-low in broad practical benefit.
+
+### `R134` The strict-improvement excess budget safely shrinks a binding B model
+
+- **Status:** Confirmed on a transparent targeted regression; not a blind holdout.
+- **Construction:** Seven mutually incompatible PC activities and six C bridge activities are forced into one week on one three-location footprint. Supply is six at each location. Legal transitive bridging makes seven local groups closure-safe, so exactly one excess group at each of three locations is unavoidable. With no forced ECLO, exact B=`3 × 7 = 21`.
+- **Bound:** A strict improvement below 210 tenths can afford at most `floor(209/70)=2` total excess units. Therefore no one location-week can use more than `supply + 2 = 8` groups, even though 13 activities are candidates. This cap cannot remove a strict improvement.
+- **Controlled result:** Using the same checked B=`21` oracle, seed, worker, five-second budget, bridge-safe formulation, and strict objective cutoff, the capped model proves `21` with 455 variables and 661 constraints. Patching only the budget to a nonbinding value produces 665 variables and 946 constraints and proves the same `21`. Both emitted incumbents are hard-feasible, strict-clean, and independently score `21`.
+- **Observed timing:** 0.0075 versus 0.0103 seconds in one local pair. This tiny targeted timing is not reported as a general speed-up; model-size and proof preservation are the durable evidence.
+- **Boundary:** The case was designed after the rule and has one week, one footprint, no ECLO, and regular bridge structure. It tests implementation and soundness pressure, not generalization.
+- **Confidence:** Very high in cap application and proof preservation on the target; high in algebraic global safety; medium-low in large-instance performance benefit.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

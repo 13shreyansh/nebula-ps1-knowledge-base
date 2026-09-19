@@ -1,0 +1,2 @@
+sector_id,line_code,from_station_id,to_station_id,seq,is_shared
+SEC:LBG:G1_G2,LBG,G1,G2,1,0

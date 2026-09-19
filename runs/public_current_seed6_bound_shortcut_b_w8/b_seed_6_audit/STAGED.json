@@ -1,0 +1,459 @@
+{
+  "bridge_safe_cost_repair_activities": [
+    "A036",
+    "A059"
+  ],
+  "bridge_safe_cost_repair_prune": {
+    "final_access_rows": 189,
+    "final_score": 30.0,
+    "final_submission_hash": "f97ea1408395172fae155ed3e5006547914b76c57800c2555de3fce3f6530fdf",
+    "initial_access_rows": 189,
+    "initial_score": 30.0,
+    "initial_submission_hash": "f97ea1408395172fae155ed3e5006547914b76c57800c2555de3fce3f6530fdf",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "B",
+    "strict_buffer_overlap_checked": false
+  },
+  "bridge_safe_cost_repair_telemetry": {
+    "best_bound": 30.0,
+    "branches": 0,
+    "closure_rounds": 0,
+    "conflicts": 0,
+    "deterministic_time_seconds": 0.0,
+    "formulation": "scenario_b_checked_workload_lower_bound_incumbent",
+    "interleave_search": false,
+    "limitation": "The checked Scenario B incumbent passed the full evaluator and selected closure policy at the resource-independent workload/ECLO lower bound. No CP-SAT model was built; row-count tie optimality is not claimed.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 0.0,
+    "model_constraints": 0,
+    "model_variables": 0,
+    "objective_score": 30.0,
+    "primary_bound_scope": "full_instance_workload_eclo_lower_bound",
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 5.0,
+    "seed": 6,
+    "solve_rounds": 0,
+    "status": "PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.012740250007482246,
+    "workers": 8
+  },
+  "bridge_safe_expanded_cost_repair_activities": [],
+  "bridge_safe_expanded_cost_repair_prune": null,
+  "bridge_safe_expanded_cost_repair_telemetry": null,
+  "bridge_safe_fallback_attempts": [],
+  "bridge_safe_fallback_prune": null,
+  "bridge_safe_fallback_selected_attempt": null,
+  "bridge_safe_fallback_telemetry": null,
+  "bridge_safe_local_repair_activities": [],
+  "bridge_safe_local_repair_prune": null,
+  "bridge_safe_local_repair_telemetry": null,
+  "bridge_safe_repair_hint_source_attempt": null,
+  "eclo_compaction": null,
+  "eclo_compaction_promoted": false,
+  "heuristic_attempts": [
+    {
+      "best_bound": null,
+      "branches": 111040,
+      "closure_rounds": 19,
+      "conflicts": 0,
+      "deterministic_time_seconds": 38.64987863492021,
+      "formulation": "scenario_b_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+      "interleave_search": false,
+      "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+      "max_deterministic_time_per_solve": null,
+      "maximum_round_time_seconds": 1.0,
+      "model_constraints": 34369,
+      "model_variables": 17113,
+      "objective_score": 30.0,
+      "primary_bound_scope": "full_instance",
+      "primary_score_proven_optimal": false,
+      "remaining_closure_conflicts": 0,
+      "round_time_limit_seconds": 1.0,
+      "seed": 6,
+      "solve_rounds": 20,
+      "status": "HEURISTIC_SAFE_INCUMBENT",
+      "structural_hint_access_count": 114,
+      "structural_hint_activity_count": 36,
+      "structural_hint_checked": false,
+      "structural_hint_complete": false,
+      "structural_hint_feasible": false,
+      "structural_hint_objective_score": null,
+      "structural_hints_used": true,
+      "tie_break_proven_optimal": false,
+      "time_limit_seconds": 30.0,
+      "unknown_retries": 0,
+      "wall_time_seconds": 10.71111866600404,
+      "workers": 8
+    }
+  ],
+  "heuristic_prune": {
+    "final_access_rows": 189,
+    "final_score": 30.0,
+    "final_submission_hash": "f97ea1408395172fae155ed3e5006547914b76c57800c2555de3fce3f6530fdf",
+    "initial_access_rows": 189,
+    "initial_score": 30.0,
+    "initial_submission_hash": "f97ea1408395172fae155ed3e5006547914b76c57800c2555de3fce3f6530fdf",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "B",
+    "strict_buffer_overlap_checked": false
+  },
+  "heuristic_selected_attempt": 1,
+  "heuristic_telemetry": {
+    "best_bound": null,
+    "branches": 111040,
+    "closure_rounds": 19,
+    "conflicts": 0,
+    "deterministic_time_seconds": 38.64987863492021,
+    "formulation": "scenario_b_iterative_direct_heuristic_sample_consistent_closure_relaxation",
+    "interleave_search": false,
+    "limitation": "Direct-component cuts are an over-restrictive candidate-generation heuristic; solver bounds and optimality statuses are suppressed. Every returned candidate still passes the full implemented checker. The row-count tie-breaker cannot alter the official penalty objective.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 1.0,
+    "model_constraints": 34369,
+    "model_variables": 17113,
+    "objective_score": 30.0,
+    "primary_bound_scope": "full_instance",
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 1.0,
+    "seed": 6,
+    "solve_rounds": 20,
+    "status": "HEURISTIC_SAFE_INCUMBENT",
+    "structural_hint_access_count": 114,
+    "structural_hint_activity_count": 36,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": true,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 30.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 10.71111866600404,
+    "workers": 8
+  },
+  "idle_week_compaction": null,
+  "idle_week_compaction_promoted": false,
+  "idle_week_compaction_used_as_seed": false,
+  "postselection_compaction": null,
+  "postselection_compaction_promoted": false,
+  "reference_validator_confirmed": false,
+  "scenario": "B",
+  "selected_objective_score": 30.0,
+  "selected_stage": "heuristic_incumbent",
+  "selected_submission_hash": "f97ea1408395172fae155ed3e5006547914b76c57800c2555de3fce3f6530fdf",
+  "selection_rule": "strictly lower fully checked objective; an equal-score candidate may replace the incumbent only as a standard-feasible, strict-clean final hedge",
+  "strict_buffer_overlap_checked": false,
+  "strict_buffer_overlap_clean": false,
+  "strict_hedge_activities": [
+    "A001",
+    "A002",
+    "A003",
+    "A004",
+    "A006",
+    "A007",
+    "A008",
+    "A009",
+    "A011",
+    "A012",
+    "A013",
+    "A014",
+    "A017",
+    "A019",
+    "A020",
+    "A021",
+    "A023",
+    "A025",
+    "A035",
+    "A036",
+    "A037",
+    "A038",
+    "A039",
+    "A040",
+    "A041",
+    "A042",
+    "A043",
+    "A046",
+    "A047",
+    "A048",
+    "A049",
+    "A050",
+    "A051",
+    "A054",
+    "A055",
+    "A056",
+    "A057",
+    "A065",
+    "A066",
+    "A069",
+    "A070",
+    "A071",
+    "A075"
+  ],
+  "strict_hedge_conflicts_after": [
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008"
+      ],
+      "week": 20
+    },
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008",
+        "A038"
+      ],
+      "week": 21
+    },
+    {
+      "first_activities": [
+        "A006",
+        "A069"
+      ],
+      "locations": [
+        "SEC:ALP:H02_S05:WB"
+      ],
+      "second_activities": [
+        "A013"
+      ],
+      "week": 22
+    },
+    {
+      "first_activities": [
+        "A049"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:WB"
+      ],
+      "second_activities": [
+        "A051"
+      ],
+      "week": 26
+    },
+    {
+      "first_activities": [
+        "A049"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:WB"
+      ],
+      "second_activities": [
+        "A051"
+      ],
+      "week": 27
+    },
+    {
+      "first_activities": [
+        "A021"
+      ],
+      "locations": [
+        "SEC:BET:S13_S14:WB"
+      ],
+      "second_activities": [
+        "A075"
+      ],
+      "week": 28
+    }
+  ],
+  "strict_hedge_conflicts_before": [
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008"
+      ],
+      "week": 20
+    },
+    {
+      "first_activities": [
+        "A007",
+        "A017",
+        "A040",
+        "A057"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:EB"
+      ],
+      "second_activities": [
+        "A008",
+        "A038"
+      ],
+      "week": 21
+    },
+    {
+      "first_activities": [
+        "A006",
+        "A069"
+      ],
+      "locations": [
+        "SEC:ALP:H02_S05:WB"
+      ],
+      "second_activities": [
+        "A013"
+      ],
+      "week": 22
+    },
+    {
+      "first_activities": [
+        "A049"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:WB"
+      ],
+      "second_activities": [
+        "A051"
+      ],
+      "week": 26
+    },
+    {
+      "first_activities": [
+        "A049"
+      ],
+      "locations": [
+        "SEC:BET:S16_S17:WB"
+      ],
+      "second_activities": [
+        "A051"
+      ],
+      "week": 27
+    },
+    {
+      "first_activities": [
+        "A021"
+      ],
+      "locations": [
+        "SEC:BET:S13_S14:WB"
+      ],
+      "second_activities": [
+        "A075"
+      ],
+      "week": 28
+    }
+  ],
+  "strict_hedge_promoted": false,
+  "strict_hedge_prune": null,
+  "strict_hedge_telemetry": {
+    "best_bound": null,
+    "branches": 35982,
+    "closure_rounds": 7,
+    "conflicts": 0,
+    "deterministic_time_seconds": 53.664824118405214,
+    "formulation": "scenario_b_iterative_bridge_safe_strict_buffer_closure_relaxation_partially_frozen_access",
+    "interleave_search": false,
+    "limitation": "Closure and buffer conflicts use the stricter published buffer-to-buffer rule, which contradicts four cases in the organizer's stated-feasible sample. This is a conservative hedge and may exclude validator-feasible schedules. The row-count tie-breaker cannot alter the official penalty objective. The reported bound and optimality status apply only to the frozen-access neighborhood.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 5.0,
+    "model_constraints": 143223,
+    "model_variables": 56330,
+    "objective_score": 30.0,
+    "primary_bound_scope": "frozen_access_neighborhood",
+    "primary_score_proven_optimal": false,
+    "remaining_closure_conflicts": 15,
+    "round_time_limit_seconds": 5.0,
+    "seed": 8,
+    "solve_rounds": 8,
+    "status": "UNKNOWN",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 10.035979958993266,
+    "workers": 8
+  },
+  "submission_files": [
+    "SCHEDULE_ACCESS.csv",
+    "SCHEDULE_OCCUPANCY.csv",
+    "RESULTS.csv"
+  ],
+  "verification_prune": {
+    "final_access_rows": 189,
+    "final_score": 30.0,
+    "final_submission_hash": "f97ea1408395172fae155ed3e5006547914b76c57800c2555de3fce3f6530fdf",
+    "initial_access_rows": 189,
+    "initial_score": 30.0,
+    "initial_submission_hash": "f97ea1408395172fae155ed3e5006547914b76c57800c2555de3fce3f6530fdf",
+    "reference_validator_confirmed": false,
+    "removed_accesses": [],
+    "scenario": "B",
+    "strict_buffer_overlap_checked": false
+  },
+  "verification_round_time_limit_seconds": 5.0,
+  "verification_skipped_primary_proven": false,
+  "verification_telemetry": {
+    "best_bound": 30.0,
+    "branches": 0,
+    "closure_rounds": 0,
+    "conflicts": 0,
+    "deterministic_time_seconds": 0.0,
+    "formulation": "scenario_b_checked_workload_lower_bound_incumbent",
+    "interleave_search": false,
+    "limitation": "The checked Scenario B incumbent passed the full evaluator and selected closure policy at the resource-independent workload/ECLO lower bound. No CP-SAT model was built; row-count tie optimality is not claimed.",
+    "max_deterministic_time_per_solve": null,
+    "maximum_round_time_seconds": 0.0,
+    "model_constraints": 0,
+    "model_variables": 0,
+    "objective_score": 30.0,
+    "primary_bound_scope": "full_instance_workload_eclo_lower_bound",
+    "primary_score_proven_optimal": true,
+    "remaining_closure_conflicts": 0,
+    "round_time_limit_seconds": 5.0,
+    "seed": 6,
+    "solve_rounds": 0,
+    "status": "PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+    "structural_hint_access_count": 0,
+    "structural_hint_activity_count": 0,
+    "structural_hint_checked": false,
+    "structural_hint_complete": false,
+    "structural_hint_feasible": false,
+    "structural_hint_objective_score": null,
+    "structural_hints_used": false,
+    "tie_break_proven_optimal": false,
+    "time_limit_seconds": 10.0,
+    "unknown_retries": 0,
+    "wall_time_seconds": 0.019698125004651956,
+    "workers": 8
+  }
+}

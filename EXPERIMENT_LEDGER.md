@@ -1517,3 +1517,22 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Portable evidence: deterministic zipapp hash `495d4ef7…` and source archive hash `a9684487…`; both include only standard-library modules and run under isolated system Python 3.9.6. Five replays reproduce sample A=`137.9`, reject A-001 with five closure failures, and accept A-002/B-001/C-001 at `137.9/30.0/62.7`. Extracted source reproduces C=`62.7`.
 - Regression: 19 focused validator tests and all 148 repository tests pass. The verifier regenerates the build, reports, hashes, test counts, and isolated evidence in one command.
 - Boundary: local validation, not a portal attempt, score improvement, official acceptance, or hidden-rule proof. Protected public files and quotas are unchanged.
+
+### E159: Checked public B proof bypasses verification models
+
+- Timestamp: 2026-09-19 11:50:00 +08.
+- Change: before model construction, fully evaluate a supplied Scenario B incumbent and its selected closure policy. If its score equals the independently computed forced-ECLO lower bound, copy the checked rows and return a full-instance primary proof. For higher incumbents, derive a sound strict-improvement excess-unit budget for group-domain capping.
+- Fault injection: patching `CpModel` to raise still returns protected B=`30.0`, with zero variables, constraints, and solve rounds; evaluator and independent scorer both reproduce `30.0`. Algebra tests cover equality, three positive coupled cases, and impossible below-bound input.
+- Public replay: exact seed 6, eight workers, 30/10/30/10-second policy reaches local B=`30.0` in 21.175 seconds versus the preserved 22.567-second baseline. Verification falls to 0.020 seconds and cost repair to 0.013 seconds. Direct heuristic remains 10.711 seconds; the optional strict hedge consumes 10.036 seconds and fails to remove six audit-only strict conflicts.
+- Selection boundary: candidate hash `f97ea140…` is local-only and not strict-clean. It does not replace official B-001 hash `0b38e83c…`, which is already score-optimal and strict-clean.
+- Integrity gates: all 150 regressions pass in 9.444 seconds and all 30 final-readiness checks remain true. No portal interaction or attempt occurred.
+- Follow-up: the positive excess-budget group cap is exercised end to end in E160.
+
+### E160: Binding B excess-budget cap preserves the exact proof
+
+- Timestamp: 2026-09-19 11:53:00 +08.
+- Targeted fixture: seven PC plus six C bridge activities, one forced week, three common locations, supply six, no ECLO. Seven groups are locally necessary and transitively closure-safe, forcing three total excess units and exact B=`21`. Dataset hash is `2656297d…`.
+- Strict-improvement cap: checked incumbent 210 tenths, workload floor zero, and excess cost 70 imply budget `floor(209/70)=2`; each local domain is capped at eight labels rather than 13 candidates.
+- Controlled comparison: same hint, seed 1, one worker, five-second bridge-safe solve, and score `<21` cutoff. Capped model uses 455 variables/661 constraints; a patched nonbinding budget uses 665/946. Both prove the checked B=`21` incumbent as full-instance optimal and emit hard-feasible, strict-clean, dual-scored files.
+- Timing boundary: observed 0.0075 versus 0.0103 seconds once; no general speed claim. The fixture is implementation-derived, small, and regular.
+- Integrity gates: all 151 regressions pass in 9.312 seconds and all 30 final-readiness checks remain true. No protected artifact or portal quota changed.

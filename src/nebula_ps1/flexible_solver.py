@@ -506,6 +506,22 @@ def _scenario_b_workload_lower_bound_tenths(instance: Instance) -> int:
     return ECLO_COST_TENTHS * required_eclo_rows
 
 
+def _scenario_b_strict_improvement_excess_budget(
+    instance: Instance,
+    incumbent_score_tenths: int,
+) -> int:
+    """Maximum total excess units affordable below a checked B incumbent."""
+
+    workload_lower_bound = _scenario_b_workload_lower_bound_tenths(instance)
+    if incumbent_score_tenths < workload_lower_bound:
+        raise ValueError(
+            "checked Scenario B incumbent is below the workload lower bound"
+        )
+    if incumbent_score_tenths == workload_lower_bound:
+        return 0
+    return (incumbent_score_tenths - 1 - workload_lower_bound) // EXCESS_COST_TENTHS
+
+
 def solve_flexible_supply_relaxation(
     instance: Instance,
     output_dir: str | Path,
@@ -560,6 +576,7 @@ def solve_flexible_supply_relaxation(
         raise ValueError("max_deterministic_time_per_solve must be positive")
 
     checked_hint_started = time.monotonic()
+    scenario_b_excess_budget: int | None = None
     if sample_hint_dir is not None:
         checked_hint_root = Path(sample_hint_dir)
         checked_hint_evaluation = evaluate_submission(
@@ -574,9 +591,12 @@ def solve_flexible_supply_relaxation(
             checked_hint_occupancy,
             forbid_buffer_overlap=forbid_buffer_overlap,
         )
-        if (
+        checked_hint_is_safe = (
             checked_hint_evaluation.internally_feasible
             and not checked_hint_conflicts
+        )
+        if (
+            checked_hint_is_safe
             and checked_hint_evaluation.objective_score == 0.0
         ):
             _write_submission_rows(
@@ -622,6 +642,64 @@ def solve_flexible_supply_relaxation(
                 telemetry.as_json() + "\n", encoding="utf-8"
             )
             return telemetry
+        if scenario == "B" and checked_hint_is_safe:
+            checked_hint_score_tenths = int(
+                round(checked_hint_evaluation.objective_score * 10)
+            )
+            scenario_b_lower_bound_tenths = (
+                _scenario_b_workload_lower_bound_tenths(instance)
+            )
+            scenario_b_excess_budget = (
+                _scenario_b_strict_improvement_excess_budget(
+                    instance,
+                    checked_hint_score_tenths,
+                )
+            )
+            if checked_hint_score_tenths == scenario_b_lower_bound_tenths:
+                _write_submission_rows(
+                    instance,
+                    output_dir,
+                    scenario,
+                    list(checked_hint_access),
+                    list(checked_hint_occupancy),
+                )
+                telemetry = SolveTelemetry(
+                    formulation="scenario_b_checked_workload_lower_bound_incumbent",
+                    status="PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+                    objective_score=checked_hint_evaluation.objective_score,
+                    best_bound=scenario_b_lower_bound_tenths / 10,
+                    wall_time_seconds=time.monotonic() - checked_hint_started,
+                    deterministic_time_seconds=0.0,
+                    conflicts=0,
+                    branches=0,
+                    seed=seed,
+                    workers=workers,
+                    time_limit_seconds=time_limit_seconds,
+                    model_variables=0,
+                    model_constraints=0,
+                    limitation=(
+                        "The checked Scenario B incumbent passed the full evaluator "
+                        "and selected closure policy at the resource-independent "
+                        "workload/ECLO lower bound. No CP-SAT model was built; "
+                        "row-count tie optimality is not claimed."
+                    ),
+                    closure_rounds=0,
+                    remaining_closure_conflicts=0,
+                    round_time_limit_seconds=effective_round_limit,
+                    solve_rounds=0,
+                    maximum_round_time_seconds=0.0,
+                    unknown_retries=0,
+                    primary_score_proven_optimal=True,
+                    tie_break_proven_optimal=False,
+                    primary_bound_scope="full_instance_workload_eclo_lower_bound",
+                    max_deterministic_time_per_solve=max_deterministic_time_per_solve,
+                    interleave_search=interleave_search,
+                )
+                output_root = Path(output_dir)
+                (output_root / "TELEMETRY.json").write_text(
+                    telemetry.as_json() + "\n", encoding="utf-8"
+                )
+                return telemetry
 
     structural_preflight_used = (
         use_structural_hints
@@ -936,7 +1014,14 @@ def solve_flexible_supply_relaxation(
         # B's direct heuristic starts near nominal supply to control symmetry.
         # The bridge-safe fallback remains unrestricted and is the only B path
         # allowed to certify infeasibility or a protected incumbent.
-        return _group_limit(scenario, separator_mode, candidates, supply)
+        limit = _group_limit(scenario, separator_mode, candidates, supply)
+        if scenario == "B" and scenario_b_excess_budget is not None:
+            # The model below searches only for a strict improvement over a
+            # checked incumbent. Even if ECLO attains its global minimum, such a
+            # solution cannot afford more total excess units than this budget;
+            # therefore no single location-week can use more extra groups.
+            limit = min(limit, supply + scenario_b_excess_budget)
+        return limit
 
     member: dict[tuple[str, int, str, int], cp_model.IntVar] = {}
     used: dict[tuple[str, int, int], cp_model.IntVar] = {}
@@ -1443,6 +1528,13 @@ def solve_flexible_supply_relaxation(
                 "accepted A-002/B-001/C-001; hidden-instance equivalence is not guaranteed."
             )
             + " The row-count tie-breaker cannot alter the official penalty objective."
+            + (
+                " Scenario B group domains are capped by the maximum total excess "
+                f"budget ({scenario_b_excess_budget}) affordable by any strict "
+                "improvement over the fully checked incumbent."
+                if scenario_b_excess_budget is not None
+                else ""
+            )
             + (
                 " The reported bound and optimality status apply only to the frozen-access "
                 "neighborhood."
