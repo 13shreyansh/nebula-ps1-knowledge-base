@@ -89,25 +89,23 @@ No API key is needed to explore the published reference plan, analytics, schedul
 ## Architecture
 
 ```mermaid
-flowchart LR
-    A[Eight input CSVs] --> B[Strict ZIP and schema checks]
-    B --> C[Instance parser and topology model]
-    C --> D[Scenario policy]
-    D --> E[OR-Tools CP-SAT optimizer]
-    E --> F[Primary evaluator]
-    F --> G[Independent raw-CSV scorer]
-    G -->|agree| H[Schedule, analytics, and export]
-    G -->|disagree| X[Block publication]
-
-    I[Operator disruption] --> J[Validated capacity override]
-    J --> K[Freeze completed history]
+graph LR
+    A["Eight input CSVs"] --> B["Input validation"]
+    B --> C["Railway instance model"]
+    C --> D["Scenario policy"]
+    D --> E["CP-SAT optimizer"]
+    E --> F["Primary evaluator"]
+    F --> G["Independent scorer"]
+    G --> H["Schedule and analytics"]
+    G --> X["Block invalid output"]
+    I["Operator disruption"] --> J["Capacity override"]
+    J --> K["Freeze completed history"]
     K --> E
-
-    L[Text or voice request] --> M[OpenAI assistant]
-    M --> N[Structured proposal]
+    L["Text or voice request"] --> M["OpenAI assistant"]
+    M --> N["Structured proposal"]
     N --> J
-    H --> O[Human review]
-    O -->|adopt| P[New active baseline]
+    H --> O["Human review"]
+    O --> P["Adopted baseline"]
 ```
 
 ### Technology stack
