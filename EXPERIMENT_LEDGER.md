@@ -1469,3 +1469,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Sensitivity: removing mandatory PM exclusion gives A=`130.9`; forcing A075 on time gives A=`173.6`; at most five B ECLO rows is infeasible. Removing C's two-week ECLO window gives C=`30.0`; at most three C ECLO rows gives `98.2`, and forcing A036 on time is infeasible. These are counterfactual diagnostics, not candidate submissions.
 - Race correction: the scheduler added these four necessity checks while the first certificate review was in progress. Their source and artifacts were therefore re-reviewed and the exact committed script was rerun after the race was noticed; all assertions passed. The later rerun, not the earlier partial review, is the accepted evidence.
 - Protection: scope is the exact current public input, no portal interaction occurred, and no protected file was changed.
+
+### E154: Certificate regeneration closes the saved-evidence gap
+
+- Timestamp: 2026-09-19 11:33:00 +08.
+- Failure mode addressed: parsing a saved certificate can confirm only that a JSON file contains expected claims; it cannot establish that current inputs and proof code still produce them.
+- Change: `audit.py` now accepts `NEBULA_PS1_OPTIMALITY_AUDIT_OUT` for generated evidence while resolving repository inputs independently from the script path. Production files and the committed certificate remain read-only during isolated verification.
+- Regression: launch the exact audit in a fresh temporary directory and compare all stable input, analytical, exhaustive, solver-bound, infeasibility, witness, and sensitivity facts with committed evidence. Ignore timestamps and wall time only.
+- Result: isolated regeneration passes in 1.340 seconds. No portal interaction, schedule mutation, or protected-artifact replacement occurs.

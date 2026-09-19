@@ -5,7 +5,10 @@ import csv
 import hashlib
 import itertools
 import json
+import os
 import shutil
+import subprocess
+import sys
 import tempfile
 import zipfile
 from collections import defaultdict
@@ -3014,6 +3017,71 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertEqual(sensitivity["C_at_most_three_eclo"]["score"], 98.2)
         self.assertEqual(sensitivity["C_A036_on_time"]["status"], "INFEASIBLE")
+
+    def test_public_optimality_certificate_is_reproducible_in_isolation(self) -> None:
+        audit_root = (
+            ROOT / "artifacts" / "public-optimality-audit-2026-09-19"
+        )
+        committed = json.loads(
+            (audit_root / "CERTIFICATE.json").read_text(encoding="utf-8")
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            environment = dict(os.environ)
+            environment["NEBULA_PS1_OPTIMALITY_AUDIT_OUT"] = temporary
+            completed = subprocess.run(
+                [sys.executable, str(audit_root / "audit.py")],
+                cwd=ROOT,
+                env=environment,
+                capture_output=True,
+                text=True,
+                timeout=30,
+                check=False,
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            regenerated = json.loads(
+                (Path(temporary) / "CERTIFICATE.json").read_text(encoding="utf-8")
+            )
+        for key in (
+            "analytical_lower_bounds",
+            "enumerated_contract_relaxations",
+            "exact_optima",
+            "exhaustive_a_pair",
+            "input_audit",
+        ):
+            self.assertEqual(regenerated[key], committed[key], key)
+        for scenario in ("A", "B", "C"):
+            for key in (
+                "status",
+                "score",
+                "best_bound",
+                "no_hints",
+                "no_frozen_activities",
+                "pm_exclusion_included",
+                "c_line_windows_included",
+            ):
+                self.assertEqual(
+                    regenerated["independent_cp_relaxations"][scenario][key],
+                    committed["independent_cp_relaxations"][scenario][key],
+                    (scenario, key),
+                )
+            self.assertEqual(
+                regenerated["strictly_better_infeasibility_checks"][scenario][
+                    "status"
+                ],
+                "INFEASIBLE",
+            )
+        for case, expected in {
+            "A_without_pm_closure": ("OPTIMAL", 130.9),
+            "A_keep_A075_on_time": ("OPTIMAL", 173.6),
+            "B_at_most_five_eclo": ("INFEASIBLE", None),
+            "C_without_two_week_eclo_window": ("OPTIMAL", 30.0),
+            "C_at_most_three_eclo": ("OPTIMAL", 98.2),
+            "C_A036_on_time": ("INFEASIBLE", None),
+        }.items():
+            record = regenerated["sensitivity"][case]
+            self.assertEqual(record["status"], expected[0], case)
+            if expected[1] is not None:
+                self.assertEqual(record["score"], expected[1], case)
 
     def test_official_a002_contract_score_is_reproduced(self) -> None:
         candidate = ROOT / "runs" / "a_official_a001_local_repair_pruned"

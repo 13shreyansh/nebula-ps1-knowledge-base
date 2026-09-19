@@ -11,6 +11,7 @@ import csv
 import hashlib
 import itertools
 import json
+import os
 import sys
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta, timezone
@@ -19,8 +20,10 @@ from pathlib import Path
 import ortools
 from ortools.sat.python import cp_model
 
-OUT = Path(__file__).resolve().parent
-ROOT = OUT.parent.parent
+SCRIPT_DIR = Path(__file__).resolve().parent
+OUT = Path(os.environ.get("NEBULA_PS1_OPTIMALITY_AUDIT_OUT", SCRIPT_DIR))
+OUT.mkdir(parents=True, exist_ok=True)
+ROOT = SCRIPT_DIR.parent.parent
 DATA = ROOT / "current-problem-statement/PS1/01_data"
 
 

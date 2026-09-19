@@ -1072,6 +1072,15 @@ Confidence labels:
 - **Boundary:** The certificate covers the exact published bytes and confirmed semantics only. Because the model is intentionally relaxed, it does not construct general schedules or predict hidden-instance quality. Portal validation established witness feasibility and score, not optimality.
 - **Confidence:** Very high after source inspection, byte-hash pinning, stored model exports/responses, and an independent successful rerun.
 
+### `R128` A saved certificate is evidence only if its generator still reproduces it
+
+- **Status:** Confirmed by isolated end-to-end regeneration.
+- **Risk:** A regression that merely parses committed `CERTIFICATE.json` can pass after the proof script, dependencies, or input semantics drift. Stored solver summaries are inspectable but not self-refreshing.
+- **Control:** The audit accepts a dedicated output directory while resolving repository inputs from its own fixed location. A regression launches the exact committed script in a fresh temporary directory, then compares input hashes, analytical contract curves, exhaustive A pair enumeration, relaxed scores/bounds, strict-better infeasibility, and all six sensitivity outcomes against the committed certificate. Nondeterministic timestamps and wall times are excluded.
+- **Result:** Isolated regeneration succeeds in 1.340 seconds and reproduces every stable proof fact without altering committed artifacts or protected submissions.
+- **Boundary:** This is reproducibility under the current Python, OR-Tools, platform, and input bytes; it is not a formally checked proof trace independent of the CP-SAT implementation.
+- **Confidence:** Very high in local reproducibility and stale-certificate detection; high in the combined analytical/computational certificate.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
