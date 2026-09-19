@@ -425,7 +425,10 @@ def solve_staged_c_portfolio(
         "fallback_objective_score": fallback.objective_score,
         "heuristic_best_objective_score": heuristic_best.objective_score,
         "verified_objective_score": verified.objective_score,
-        "selection_rule": "strictly lower fully checked C objective; otherwise preserve the checked incumbent",
+        "selection_rule": (
+            "strictly lower fully checked C objective; an equal-score candidate may replace "
+            "the incumbent only as a standard-feasible, strict-clean final hedge"
+        ),
         "strict_buffer_overlap_checked": forbid_buffer_overlap,
         "strict_buffer_overlap_clean": not final_strict_conflicts,
         "reference_validator_confirmed": False,

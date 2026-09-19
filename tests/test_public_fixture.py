@@ -2472,6 +2472,48 @@ class PublicFixtureTests(unittest.TestCase):
                     expected["submission_hash"],
                 )
 
+    def test_public_incumbents_bypass_strict_hedge_unchanged(self) -> None:
+        manifest = json.loads(
+            (ROOT / "deliverables" / "public" / "MANIFEST.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        for scenario in ("A", "B", "C"):
+            with self.subTest(scenario=scenario), tempfile.TemporaryDirectory() as temp_dir:
+                source = ROOT / "deliverables" / "public" / scenario
+                selected = evaluate_submission(self.instance, source, scenario)
+                (
+                    returned_dir,
+                    returned,
+                    conflicts_before,
+                    conflicts_after,
+                    activities,
+                    telemetry,
+                    prune_report,
+                    promoted,
+                ) = _run_strict_score_preserving_hedge(
+                    self.instance,
+                    source,
+                    selected,
+                    scenario,
+                    Path(temp_dir),
+                    time_limit_seconds=10.0,
+                    workers=8,
+                    seed=9,
+                    closure_round_limit=500,
+                )
+                self.assertEqual(returned_dir, source)
+                self.assertEqual(conflicts_before, ())
+                self.assertEqual(conflicts_after, ())
+                self.assertEqual(activities, [])
+                self.assertIsNone(telemetry)
+                self.assertIsNone(prune_report)
+                self.assertFalse(promoted)
+                self.assertEqual(
+                    returned.submission_hash,
+                    manifest["scenarios"][scenario]["submission_hash"],
+                )
+
 
 if __name__ == "__main__":
     unittest.main()

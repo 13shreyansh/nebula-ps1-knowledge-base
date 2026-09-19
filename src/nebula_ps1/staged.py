@@ -760,7 +760,10 @@ def solve_staged_scenario(
         "strict_buffer_overlap_clean": not final_strict_conflicts,
         "reference_validator_confirmed": False,
         "submission_files": list(SUBMISSION_FILES),
-        "selection_rule": "strictly lower fully checked objective; otherwise preserve incumbent",
+        "selection_rule": (
+            "strictly lower fully checked objective; an equal-score candidate may replace "
+            "the incumbent only as a standard-feasible, strict-clean final hedge"
+        ),
         "heuristic_telemetry": asdict(heuristic) if heuristic is not None else None,
         "heuristic_attempts": attempt_telemetry,
         "heuristic_selected_attempt": selected_heuristic_attempt,

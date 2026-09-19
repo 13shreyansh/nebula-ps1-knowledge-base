@@ -985,3 +985,9 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Counterexample: the permutation-3 C=`31.0` incumbent has one strict-only conflict. A separately checked strict-clean C=`112.0` candidate, hash `b40235fb95bfdebdb71e8f21475f1ccdfb8cfd9b994d42ff3cf7bb1164a2d4a3`, conditionally proves its frozen-neighborhood score.
 - Result: the hedge gate rejects C=`112.0`, returns the original C=`31.0` directory and evaluation, keeps promotion false, and reports one final strict conflict. Candidate telemetry and prune evidence remain available.
 - Correction: `strict_hedge_conflicts_after` now describes the selected artifact, not a rejected candidate. The full suite passes 73 tests.
+
+### E104: Official incumbents bypass the hedge byte-for-byte
+
+- Timestamp: 2026-09-19 08:07:33 +08
+- Result: public A, B, and C each have zero strict conflicts before the hedge. No repair activities are selected, no solver or pruning stage runs, promotion is false, and returned hashes remain exactly `8ecab02f…`, `0b38e83c…`, and `30247f57…`.
+- Regression: the behavior is recomputed from the protected directories and manifest; all 74 tests pass.
