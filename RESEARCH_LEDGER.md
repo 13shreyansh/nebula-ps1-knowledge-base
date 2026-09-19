@@ -655,6 +655,14 @@ Confidence labels:
 - **Limitation:** The fixture is compact, has only two lines, and does not test a branching interchange graph or simultaneous interacting Live jobs.
 - **Confidence:** High for adjacent bridge composition; medium for dense multi-bridge transfer.
 
+### `R081` Cross-line Live congestion changes the optimal lever by scenario
+
+- **Status:** Confirmed on a precommitted public-independent two-bridge trade-off.
+- **Finding:** Two opposing Live PM activities each span both adjacent bridges and cannot work in the same week. The urgent three-unit activity needs three standard weeks, forcing seven days of Priority-1 delay in A (`700.0`), but two ECLO weeks cover its workload in B/C (`10.0`) while preserving the later activity's deadline.
+- **Relevance:** The production formulation jointly handles crossover closure, one-access-per-activity-week, hard B dates, A's ECLO prohibition, and C's two-week per-line ECLO window. It does not apply a fixed qualitative lever order.
+- **Limitation:** Two activities make the analytical lower bound simple; this does not measure large congested search performance.
+- **Confidence:** High for the encoded interaction and full-instance proofs; medium for scaled transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

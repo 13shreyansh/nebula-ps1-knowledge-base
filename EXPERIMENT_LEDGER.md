@@ -1008,3 +1008,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - No-hint result: one-worker staged production paths prove full-instance A=`0.0`, B=`0.0`, and C=`0.0` in under one second combined. All three outputs are dual-scored and clean under both closure screens; hashes are `4853d08d…`, `5e2adee3…`, and `a92fb00c…`.
 - Evidence update: the proof matrix grows from 37 to 40 cases; 34 are full-instance and six are restricted-neighborhood proofs. The suite passes 76 tests.
 - Boundary: this isolates topology composition rather than scale or congestion. Zero score is a correctness result, not evidence of difficult-search performance.
+
+### E107: Congested adjacent bridges reproduce the analytical ECLO trade-off
+
+- Timestamp: 2026-09-19 08:19:28 +08
+- Precommit protocol: generator, input, and separate A/B/C oracles were committed as `4b569e5` before solver exposure. Dataset hash is `07d5fb97a92c194da5ff70bfec984f3b4dc44c1d701502fc08eabcb0d54aa105`.
+- Bound: opposing Live PM activities cannot share a week. `R001` needs three standard weeks, so A cannot finish before week 3 and incurs seven Priority-1 days = `700.0`. In B/C, two ECLO rows deliver its three work units for the unavoidable minimum penalty `2×5=10.0`; `R002` then finishes on time.
+- Result: unchanged one-worker production paths prove full-instance A=`700.0`, B=`10.0`, and C=`10.0` in under one second combined. Both scorers agree, both closure screens are clean, and the solver schedules two ECLO nights in B/C exactly as the bound requires.
+- Evidence update: the proof matrix grows from 40 to 43 cases; 37 are full-instance and six are restricted-neighborhood proofs. The suite passes 77 tests.
+- Boundary: this validates a nonzero topology/objective interaction on two activities, not runtime scaling or a dense hidden distribution.

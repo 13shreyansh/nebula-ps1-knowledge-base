@@ -1,0 +1,6 @@
+activity_id,access_seq,week,eclo,access_night
+R001,1,1,1,1
+R001,2,2,1,1
+R002,1,3,0,1
+R002,2,4,0,1
+R002,3,6,0,1

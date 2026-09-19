@@ -167,10 +167,55 @@ class PublicFixtureTests(unittest.TestCase):
             hashes.add(evaluation.submission_hash)
         self.assertEqual(len(hashes), 3)
 
+    def test_multi_bridge_congestion_proves_eclo_tradeoff(self) -> None:
+        data = ROOT / "fixtures" / "independent_multi_bridge_congestion_v1"
+        instance = load_instance(data)
+        self.assertEqual(
+            instance.dataset_hash,
+            "07d5fb97a92c194da5ff70bfec984f3b4dc44c1d701502fc08eabcb0d54aa105",
+        )
+        expected = {"A": (700.0, 0), "B": (10.0, 2), "C": (10.0, 2)}
+        for scenario, (score, eclo_nights) in expected.items():
+            oracle = ROOT / "fixtures" / f"independent_multi_bridge_congestion_v1_oracle_{scenario.lower()}"
+            oracle_evaluation = evaluate_submission(instance, oracle, scenario)
+            oracle_independent = independently_score(data, oracle)
+            self.assertEqual(oracle_evaluation.hard_violations, ())
+            self.assertEqual(oracle_evaluation.objective_score, score)
+            self.assertEqual(oracle_independent.objective_score, score)
+
+            submission = ROOT / "runs" / f"independent_multi_bridge_congestion_v1_{scenario.lower()}"
+            audit = submission.with_name(f"{submission.name}_audit")
+            telemetry_root = (
+                audit / "verification_raw"
+                if scenario != "C"
+                else audit / "stages" / "scenario_c_verification_raw"
+            )
+            evaluation = evaluate_submission(instance, submission, scenario)
+            independent = independently_score(data, submission)
+            access, occupancy, _ = load_submission(submission)
+            telemetry = json.loads(
+                (telemetry_root / "TELEMETRY.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(evaluation.hard_violations, ())
+            self.assertEqual(evaluation.objective_score, score)
+            self.assertEqual(independent.objective_score, score)
+            self.assertEqual(evaluation.eclo_nights_total, eclo_nights)
+            self.assertEqual(
+                screen_closures(
+                    instance,
+                    access,
+                    occupancy,
+                    forbid_buffer_overlap=True,
+                ),
+                (),
+            )
+            self.assertEqual(telemetry["best_bound"], score)
+            self.assertEqual(telemetry["primary_bound_scope"], "full_instance")
+
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 40)
+        self.assertEqual(len(matrix["cases"]), 43)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -207,12 +252,12 @@ class PublicFixtureTests(unittest.TestCase):
                     / f"independent_three_line_v1_{row['scenario'].lower()}"
                 )
             elif row["case"].startswith("independent_multi_bridge_"):
-                data = ROOT / "fixtures" / "independent_multi_bridge_v1"
-                submission = (
-                    ROOT
-                    / "runs"
-                    / f"independent_multi_bridge_v1_{row['scenario'].lower()}"
-                )
+                if row["case"].startswith("independent_multi_bridge_congestion_"):
+                    fixture = "independent_multi_bridge_congestion_v1"
+                else:
+                    fixture = "independent_multi_bridge_v1"
+                data = ROOT / "fixtures" / fixture
+                submission = ROOT / "runs" / f"{fixture}_{row['scenario'].lower()}"
             elif row["case"].startswith("independent_dense_"):
                 if row["case"].startswith("independent_dense_holdout_"):
                     data = ROOT / "fixtures" / "independent_dense_holdout_v1"

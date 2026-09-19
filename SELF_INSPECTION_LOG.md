@@ -962,3 +962,14 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Falsification result: the hypothesis that crossover logic only handles one bridge is rejected for two adjacent bridges. The broader hypothesis of arbitrary interchange-graph robustness remains unproved.
 - Confidence: very high in official incumbents; high in adjacent-bridge topology handling and artifact integrity; medium in unseen dense multi-bridge transfer.
 - Immediate next action: commit the complete evidence, then build a congested interacting-Live variant or, if model size grows too quickly, quantify that failure without modifying the protected controller.
+
+## 2026-09-19 08:19:28 +08
+
+- Interval: 3 minutes 7 seconds since the previous inspection; triggered early by completion of the precommitted interacting-Live falsification.
+- Best independently validated public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- What improved: the unchanged one-worker production paths match full-instance analytical and solver bounds A=`700.0`, B=`10.0`, C=`10.0` on two opposing Live PM activities spanning adjacent bridges. B/C choose exactly two ECLO nights; all finals are dual-scored and clean under both closure policies. The matrix now has 43 cases and 77 tests pass.
+- What failed or remains unverified: nothing failed on this compact instance. That ease is itself a warning: two activities do not exercise model growth, co-sharing, predecessor chains, or competing ECLO windows. A passing toy can hide a scaling cliff.
+- Cheating and overfit audit: the input and all three oracles were committed before solver exposure; the solver received no oracle or schedule hint; expected scores were derived from one-access-per-week and crossover incompatibility; no candidate replaced an official artifact.
+- Falsification result: the controller does not merely parse multiple bridges; it selects different optimal levers across A versus B/C under cross-line congestion. The hypothesis that this interaction is mishandled is rejected at compact scale.
+- Confidence: very high in official incumbents; high in the compact trade-off proof; medium in multi-bridge semantic transfer; low-to-medium in dense multi-bridge runtime.
+- Immediate next action: preserve and commit the evidence, then scale repeated interacting-Live bridge modules under a fixed time budget to locate the feasibility/runtime failure knee without tuning on individual failures.
