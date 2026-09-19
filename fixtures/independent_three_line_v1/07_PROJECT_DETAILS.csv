@@ -1,0 +1,10 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+K101,Independent synthetic K101,2030-06-01,Synthetic,Non-live (Others),3,2031-06-22,2031-01-19,1,C,2
+K102,Independent synthetic K102,2030-06-01,Synthetic,Non-live (Consist),2,2031-06-22,2031-02-09,1,PC,2
+K103,Independent synthetic K103,2030-06-01,Synthetic,Live,1,2031-06-22,2031-02-16,1,PM,1
+K104,Independent synthetic K104,2030-06-01,Synthetic,Non-live (Consist),2,2031-06-22,2031-03-09,1,C,2
+K105,Independent synthetic K105,2030-06-01,Synthetic,Live,1,2031-06-22,2031-03-23,1,PC,2
+K106,Independent synthetic K106,2030-06-01,Synthetic,Non-live (Others),3,2031-06-22,2031-04-06,1,C,2
+K107,Independent synthetic K107,2030-06-01,Synthetic,Non-live (Others),2,2031-06-22,2031-04-13,1,PM,1
+K108,Independent synthetic K108,2030-06-01,Synthetic,Non-live (Others),1,2031-06-22,2031-02-09,1,C,2
+K109,Independent third-line extension,2030-06-01,Synthetic,Non-live (Others),2,2031-06-22,2031-04-20,1,C,2

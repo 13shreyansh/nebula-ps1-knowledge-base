@@ -991,3 +991,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Timestamp: 2026-09-19 08:07:33 +08
 - Result: public A, B, and C each have zero strict conflicts before the hedge. No repair activities are selected, no solver or pruning stage runs, promotion is false, and returned hashes remain exactly `8ecab02f…`, `0b38e83c…`, and `30247f57…`.
 - Regression: the behavior is recomputed from the protected directories and manifest; all 74 tests pass.
+
+### E105: Three-line topology proves A/B/C without public identifiers
+
+- Timestamp: 2026-09-19 08:09:37 +08
+- Fixture: extend the independent two-line synthetic network with line `LNZ`, a matching `X1–X2` interchange bridge, two unique stations, one contract, and one activity. Dataset hash is `71e1e417e3ede8385a5d957368f7b963fa65b89f703c859438bded342654e0da`.
+- Independent oracle: A=`7.0`, dual-scored and hard-feasible. The Live bridge activity on `LNX` derives 12 crossover locations: sector and platform locations in both bounds on `LNY` and `LNZ`.
+- No-hint results: staged one-worker solves prove full-instance A=`7.0`, B=`10.0`, and C=`7.0`; all three finals are strict-clean. The proof matrix grows from 34 to 37 cases and the suite passes 75 tests.
+- Boundary: the fixture changes line cardinality but remains compact and structurally related to the independent two-line generator.

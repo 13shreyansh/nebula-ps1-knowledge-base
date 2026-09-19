@@ -639,6 +639,14 @@ Confidence labels:
 - **Protection:** Keep candidate telemetry and prune evidence, but compute selected-state fields from the promoted artifact only. If promotion fails, final conflict status remains the incumbent's status.
 - **Confidence:** High.
 
+### `R079` Line cardinality is data-driven, including Live crossover propagation
+
+- **Status:** Confirmed on a public-independent three-line fixture.
+- **Finding:** A Live bridge on one line maps to 12 affected locations across two other lines. No-hint staged solving then proves A=`7.0`, B=`10.0`, and C=`7.0` on the full three-line instance.
+- **Relevance:** Production topology and Scenario C ECLO-window logic iterate instance lines rather than assuming the public two-line shape.
+- **Limitation:** One compact third-line extension does not cover arbitrary interchange graphs or large multi-line density.
+- **Confidence:** High in cardinality handling; medium in larger-network transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

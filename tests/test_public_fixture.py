@@ -65,10 +65,59 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(len(self.instance.locations), 76)
         self.assertEqual(self.instance.horizon_weeks, 30)
 
+    def test_three_line_fixture_proves_all_scenarios_and_cross_line_topology(self) -> None:
+        data = ROOT / "fixtures" / "independent_three_line_v1"
+        oracle = ROOT / "fixtures" / "independent_three_line_v1_oracle"
+        instance = load_instance(data)
+        oracle_evaluation = evaluate_submission(instance, oracle, "A")
+        oracle_independent = independently_score(data, oracle)
+        self.assertEqual(
+            instance.dataset_hash,
+            "71e1e417e3ede8385a5d957368f7b963fa65b89f703c859438bded342654e0da",
+        )
+        self.assertEqual(set(instance.lines), {"LNX", "LNY", "LNZ"})
+        self.assertEqual(len(instance.activities), 10)
+        self.assertEqual(oracle_evaluation.hard_violations, ())
+        self.assertEqual(oracle_evaluation.objective_score, 7.0)
+        self.assertEqual(oracle_independent.objective_score, 7.0)
+        crossover = interchange_cross_line_locations(instance, instance.activities["Q003"])
+        self.assertEqual(len(crossover), 12)
+        self.assertEqual({location.split(":")[1] for location in crossover}, {"LNY", "LNZ"})
+
+        expected_scores = {"A": 7.0, "B": 10.0, "C": 7.0}
+        hashes = set()
+        for scenario, expected_score in expected_scores.items():
+            submission = ROOT / "runs" / f"independent_three_line_v1_{scenario.lower()}"
+            audit = submission.with_name(f"{submission.name}_audit")
+            evaluation = evaluate_submission(instance, submission, scenario)
+            independent = independently_score(data, submission)
+            access, occupancy, _ = load_submission(submission)
+            telemetry = json.loads(
+                (audit / "verification_raw" / "TELEMETRY.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(evaluation.hard_violations, ())
+            self.assertEqual(evaluation.objective_score, expected_score)
+            self.assertEqual(independent.objective_score, expected_score)
+            self.assertEqual(
+                screen_closures(
+                    instance,
+                    access,
+                    occupancy,
+                    forbid_buffer_overlap=True,
+                ),
+                (),
+            )
+            self.assertEqual(telemetry["best_bound"], expected_score)
+            self.assertEqual(telemetry["primary_bound_scope"], "full_instance")
+            hashes.add(evaluation.submission_hash)
+        self.assertEqual(len(hashes), 3)
+
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 34)
+        self.assertEqual(len(matrix["cases"]), 37)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -96,6 +145,13 @@ class PublicFixtureTests(unittest.TestCase):
                     / "runs"
                     / "independent_scaled_m20_seed_matrix5_w1"
                     / f"{row['scenario'].lower()}_seed_1"
+                )
+            elif row["case"].startswith("independent_three_line_"):
+                data = ROOT / "fixtures" / "independent_three_line_v1"
+                submission = (
+                    ROOT
+                    / "runs"
+                    / f"independent_three_line_v1_{row['scenario'].lower()}"
                 )
             elif row["case"].startswith("independent_dense_"):
                 if row["case"].startswith("independent_dense_holdout_"):
