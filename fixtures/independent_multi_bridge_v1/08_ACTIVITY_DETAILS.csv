@@ -1,0 +1,5 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+M001,K201,Synthetic,SEC:LNX:X1_X2:EB,SEC:LNX:X2_X3:EB,1,2031-01-06,,3
+M002,K202,Synthetic,SEC:LNY:X1_X2:WB,SEC:LNY:X1_X2:WB,1,2031-01-06,,3
+M003,K203,Synthetic,SEC:LNY:X2_X3:EB,SEC:LNY:X2_X3:EB,1,2031-01-20,,3
+M004,K204,Synthetic,SEC:LNX:X2_X3:WB,SEC:LNX:X2_X3:WB,1,2031-01-20,,3

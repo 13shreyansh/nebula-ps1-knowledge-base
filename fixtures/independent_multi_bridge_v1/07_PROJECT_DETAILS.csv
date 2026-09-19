@@ -1,0 +1,5 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+K201,Independent multi-bridge K201,2030-06-01,Synthetic,Live,1,2031-02-23,2031-01-12,1,PM,1
+K202,Independent multi-bridge K202,2030-06-01,Synthetic,Non-live (Others),3,2031-02-23,2031-01-19,1,C,2
+K203,Independent multi-bridge K203,2030-06-01,Synthetic,Live,1,2031-02-23,2031-01-26,1,PM,1
+K204,Independent multi-bridge K204,2030-06-01,Synthetic,Non-live (Others),3,2031-02-23,2031-02-02,1,C,2
