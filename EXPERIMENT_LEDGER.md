@@ -1142,3 +1142,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Official protection: public C stays exactly `62.7`, hash `30247f57…`, with zero strict conflicts.
 - Scope note: `prefix040_C` and `structural_demand_C` already contain strict-only diagnostic conflicts and remain byte-identical. The audit distinguishes an unchanged historical source from a promoted unsafe candidate.
 - Regression status: 99 tests pass. No official attempt was used.
+
+### E121: Idle normalization exits at the nonnegative score floor
+
+- Timestamp: 2026-09-19 09:30:15 +08
+- Proof: the Scenario C objective is a sum of nonnegative delay, excess, and ECLO terms. An equal-score normalization at zero cannot seed a strict negative result, so candidate serialization cannot improve the protected incumbent.
+- Result: the retained idle audit still reports nine removable weeks but checks three candidates instead of eight. The final-selection audit checks three idle candidates instead of nine. Both retain zero promotions and zero hash changes.
+- Runtime: the final-selection audit takes 1.220 seconds with a 0.515-second maximum case, essentially unchanged because independent rescoring and closure checks dominate. The accepted claim is lower candidate/file volume, not wall-time speedup.
+- Regression status: 99 tests pass. Official scores, hashes, and portal quotas are unchanged.

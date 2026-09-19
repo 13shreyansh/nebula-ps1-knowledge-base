@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.43
+version: 0.8.44
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -677,3 +677,4 @@ When sources conflict:
 | `0.8.41` | 2026-09-19 | Compared greedy idle normalization plus ECLO against every reachable non-worsening normalization state on 16 controlled schedules; all final scores matched exhaustive composition. |
 | `0.8.42` | 2026-09-19 | Added a shared final-selection Scenario C post-processing gate to both controllers; a frozen verification winner now improves from `23,660` to checked `22,760`. |
 | `0.8.43` | 2026-09-19 | Audited final post-processing on all 19 retained C incumbents; nine idle candidates were checked, no score/hash changed, and total runtime was 1.21 seconds. |
+| `0.8.44` | 2026-09-19 | Added a sound zero-objective floor exit to idle normalization; retained candidate generation falls from nine to three with every score and hash preserved. |

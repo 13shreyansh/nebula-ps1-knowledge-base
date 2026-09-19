@@ -799,6 +799,15 @@ Confidence labels:
 - **Scope correction:** Two historical benchmark incumbents begin with strict-only diagnostic conflicts and remain byte-identical. This does not represent an unsafe promotion; production strict mode would not admit those sources as final incumbents.
 - **Confidence:** High in retained-corpus safety and measured overhead; medium in unseen large serialized candidates.
 
+### `R097` Zero-score normalization cannot unlock a strict gain
+
+- **Status:** Confirmed by the nonnegative Scenario C objective and retained-corpus replay.
+- **Reasoning:** Idle deletion can be useful as an equal-score seed only when a later transformation can make the final score strictly lower. From score zero, no legitimate Scenario C result can be lower, so serializing any idle candidate is provably unnecessary.
+- **Implementation:** The idle normalizer still records the number of removable gaps, but emits no candidate when the current score is zero. This applies after any earlier strict promotion also reaches zero.
+- **Replay:** The retained C corpus still exposes nine removable weeks, but fully checked idle files fall from eight to three in the dedicated idle audit and from nine to three in the final-selection audit. Promotions, hashes, independent scores, and strict results are unchanged.
+- **Runtime note:** Total retained-audit wall time remains about 1.22 seconds because source loading, dual scoring, and closure checks dominate these small cases; the benefit is reduced file generation rather than a claimed timing speedup.
+- **Confidence:** Very high in soundness; high in candidate-count reduction.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

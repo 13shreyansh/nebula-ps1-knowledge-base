@@ -172,6 +172,12 @@ def best_idle_week_compaction_sequence(
             "selected_score": None,
             "reason": "",
         }
+        if current.objective_score <= 0:
+            round_record["reason"] = (
+                "source already attains the nonnegative objective floor"
+            )
+            rounds.append(round_record)
+            break
         round_best_dir: Path | None = None
         round_best: Evaluation | None = None
         for candidate_index, (

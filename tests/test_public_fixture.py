@@ -939,7 +939,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(audit["case_count"], 19)
         self.assertEqual(audit["promoted_count"], 0)
         self.assertEqual(audit["hash_changed_count"], 0)
-        self.assertEqual(audit["total_idle_candidates_checked"], 9)
+        self.assertEqual(audit["total_idle_candidates_checked"], 3)
         self.assertEqual(audit["total_eclo_candidates_checked"], 0)
         public = next(case for case in audit["cases"] if case["case"] == "public_C")
         self.assertEqual(public["source_score"], 62.7)
@@ -1265,7 +1265,7 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(audit["retained_case_count"], 19)
         self.assertEqual(audit["retained_promoted_count"], 0)
         self.assertEqual(audit["retained_total_initial_gaps"], 9)
-        self.assertEqual(audit["retained_total_candidates_checked"], 8)
+        self.assertEqual(audit["retained_total_candidates_checked"], 3)
         unlock = audit["equal_score_unlock"]
         self.assertEqual(unlock["source_score"], 910.0)
         self.assertEqual(unlock["idle_score"], 910.0)

@@ -1,7 +1,7 @@
 {
   "dataset_hash": "b97377374407c80a91b4fa8f3f16dce00ca0204b3a0b88a6cc28cc30287bbc85",
   "eclo_promotions": 2,
-  "elapsed_seconds": 0.239499,
+  "elapsed_seconds": 0.238861,
   "equal_score_gap_tie": {
     "dataset_hash": "60efa1c7b3e23b4c33949a29334b17a3445c768a5291ec48c0d75f66abb488e9",
     "eclo_promotions": 1,
@@ -256,7 +256,7 @@
       "source_score": 0.0
     },
     {
-      "candidates_checked": 1,
+      "candidates_checked": 0,
       "case": "independent_dense_holdout_C",
       "initial_gap_count": 1,
       "promotions": 0,
@@ -301,7 +301,7 @@
       "source_score": 76.0
     },
     {
-      "candidates_checked": 1,
+      "candidates_checked": 0,
       "case": "independent_predecessor_tradeoff_C",
       "initial_gap_count": 1,
       "promotions": 0,
@@ -310,7 +310,7 @@
       "source_score": 0.0
     },
     {
-      "candidates_checked": 1,
+      "candidates_checked": 0,
       "case": "independent_footprint_dependency_C",
       "initial_gap_count": 2,
       "promotions": 0,
@@ -319,7 +319,7 @@
       "source_score": 0.0
     },
     {
-      "candidates_checked": 1,
+      "candidates_checked": 0,
       "case": "independent_post_precedence_contract_C",
       "initial_gap_count": 1,
       "promotions": 0,
@@ -328,7 +328,7 @@
       "source_score": 0.0
     },
     {
-      "candidates_checked": 1,
+      "candidates_checked": 0,
       "case": "independent_post_contract_precedence_C",
       "initial_gap_count": 1,
       "promotions": 0,
@@ -338,7 +338,7 @@
     }
   ],
   "retained_promoted_count": 0,
-  "retained_total_candidates_checked": 8,
+  "retained_total_candidates_checked": 3,
   "retained_total_initial_gaps": 9,
   "source_independent_score": 26390.0,
   "source_score": 26390.0,
