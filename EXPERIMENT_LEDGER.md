@@ -1418,3 +1418,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Scale profile: direct A constructs 284,048 variables and 457,994 constraints. In a fresh profile, two flexible-solver calls consume 2.900 of 3.479 seconds; CP-SAT itself takes 0.130 seconds, while 225,330 hint additions consume 0.496 seconds. Full model construction is now the dominant avoidable cost after the constructor has already produced a checked score-zero candidate.
 - Integrity gates: the dedicated regression and all 121 tests pass in 8.736 seconds. The fixture and oracle were committed before the first solve.
 - Boundary: repeated dense structure and a zero lower bound remain easier than unknown coupled positive-score instances. No official artifact or score changed, and no portal attempt was used.
+
+### E149: Pre-model structural validation removes zero-floor model assembly
+
+- Timestamp: 2026-09-19 11:10:59 +08.
+- Change: extract the deterministic structural constructor from CP-SAT. When it is complete, serialize and run the full evaluator and requested closure policy before building any model. Return early only at exact score zero; otherwise reuse the same rows as ordinary model hints.
+- Dense results: the 164-activity A/B/C replay preserves hashes `a524ccfd…`/`c6a153f4…`/`a3cd3733…` while improving 0.580/0.679/1.407 to 0.084/0.090/0.224 seconds. The 324-activity replay preserves `1dd716d0…`/`48cd2b2a…`/`3a574f82…` while improving 2.363/2.774/5.478 to 0.199/0.220/0.536.
+- Rejected intermediate: a first implementation duplicated constructor work before the unchanged model path. The 720-activity positive replay remained correct but slowed to 11.648/6.802/28.860 seconds. The duplication was removed; this run remains retained as contradictory performance evidence.
+- Positive-score guard: post-refactor 360-activity scores/hashes remain `280/400/280` and 720-activity scores/hashes remain `560/800/560`, all strict-clean. These cases cannot take the zero-floor return and continue through the full solver.
+- Fault injection: deleting occupancy prevents promotion; a synthetic strict-only conflict under strict mode forces model construction. A separate test patches model construction to raise and proves a valid strict-clean zero candidate returns first with zero variables, constraints, or solve rounds.
+- Integrity gates: all 123 tests pass in 7.932 seconds and all 30 final-readiness checks remain true. No protected artifact changed and no portal attempt was used.

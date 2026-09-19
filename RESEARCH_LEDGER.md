@@ -1024,6 +1024,16 @@ Confidence labels:
 - **Boundary:** This generator still has repeated dense modules and an easy zero optimum. It tests scale and trust gates, not arbitrary coupling or positive-score optimality.
 - **Confidence:** High in measured transfer and diagnosis; medium in extrapolation beyond this family.
 
+### `R123` Validate a complete structural zero-floor candidate before model assembly
+
+- **Status:** Confirmed after fault injection and positive-score replay.
+- **Finding:** Once a deterministic constructor has produced a complete candidate at objective zero, CP-SAT cannot improve the nonnegative primary objective. Building hundreds of thousands of variables only to rediscover that floor is avoidable.
+- **Implementation:** The constructor is model-independent. A complete candidate is serialized and must pass the full evaluator plus the requested closure policy. Only an exact zero score returns before model construction; incomplete, invalid, strict-conflicting, or positive-score candidates continue to the original model path.
+- **Evidence:** The 164-activity A/B/C aggregate falls `2.666→0.398` seconds and the 324-activity aggregate `10.615→0.955`, with every stage, score, strict count, and hash preserved. Positive-score 360/720 replays preserve all six hashes and scores.
+- **Falsification:** A missing occupancy row is rejected. Patching model construction to raise proves a strict-clean zero candidate never builds a model; injecting a strict-only conflict under strict mode instead reaches the model path. An initial duplicated-constructor implementation slowed the 720-activity replay and was refactored rather than accepted.
+- **Boundary:** The floor proof covers the primary score only, not row-count tie optimality. Wall timings are local, and zero-floor structure is not evidence for arbitrary positive-score dense cases.
+- **Confidence:** Very high in the mathematical floor and validation gate; high in implementation safety across retained regimes.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

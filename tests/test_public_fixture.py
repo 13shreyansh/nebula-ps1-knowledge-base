@@ -1580,6 +1580,14 @@ class PublicFixtureTests(unittest.TestCase):
                 / "SEED_MATRIX.json"
             ).read_text(encoding="utf-8")
         )
+        preflight = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_scaled_m40_preflight_seed7_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
 
         self.assertEqual(baseline["dataset_hash"], optimized["dataset_hash"])
         self.assertEqual(baseline["policy"], optimized["policy"])
@@ -1587,23 +1595,29 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(optimized["policy"], cached["policy"])
         self.assertEqual(cached["dataset_hash"], current["dataset_hash"])
         self.assertEqual(cached["policy"], current["policy"])
+        self.assertEqual(current["dataset_hash"], preflight["dataset_hash"])
+        self.assertEqual(current["policy"], preflight["policy"])
         self.assertEqual(baseline["successes"], 3)
         self.assertEqual(optimized["successes"], 3)
         self.assertEqual(cached["successes"], 3)
         self.assertEqual(current["successes"], 3)
+        self.assertEqual(preflight["successes"], 3)
         self.assertEqual(baseline["failures"], 0)
         self.assertEqual(optimized["failures"], 0)
         self.assertEqual(cached["failures"], 0)
         self.assertEqual(current["failures"], 0)
+        self.assertEqual(preflight["failures"], 0)
 
         baseline_runs = {row["scenario"]: row for row in baseline["runs"]}
         optimized_runs = {row["scenario"]: row for row in optimized["runs"]}
         cached_runs = {row["scenario"]: row for row in cached["runs"]}
         current_runs = {row["scenario"]: row for row in current["runs"]}
+        preflight_runs = {row["scenario"]: row for row in preflight["runs"]}
         self.assertEqual(set(baseline_runs), {"A", "B", "C"})
         self.assertEqual(set(optimized_runs), {"A", "B", "C"})
         self.assertEqual(set(cached_runs), {"A", "B", "C"})
         self.assertEqual(set(current_runs), {"A", "B", "C"})
+        self.assertEqual(set(preflight_runs), {"A", "B", "C"})
         self.assertEqual(
             {scenario: row["score"] for scenario, row in optimized_runs.items()},
             {"A": 280.0, "B": 400.0, "C": 280.0},
@@ -1615,6 +1629,7 @@ class PublicFixtureTests(unittest.TestCase):
                 after = optimized_runs[scenario]
                 after_cache = cached_runs[scenario]
                 current_row = current_runs[scenario]
+                preflight_row = preflight_runs[scenario]
                 for field in (
                     "status",
                     "score",
@@ -1626,6 +1641,14 @@ class PublicFixtureTests(unittest.TestCase):
                     self.assertEqual(after[field], after_cache[field])
                 for field in ("status", "score", "selected_stage", "strict_conflicts"):
                     self.assertEqual(after_cache[field], current_row[field])
+                for field in (
+                    "status",
+                    "score",
+                    "selected_stage",
+                    "strict_conflicts",
+                    "submission_hash",
+                ):
+                    self.assertEqual(current_row[field], preflight_row[field])
                 self.assertEqual(after["status"], "SUCCESS")
                 self.assertEqual(after["strict_conflicts"], 0)
                 self.assertGreaterEqual(
@@ -1677,15 +1700,28 @@ class PublicFixtureTests(unittest.TestCase):
                 / "SEED_MATRIX.json"
             ).read_text(encoding="utf-8")
         )
+        preflight = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_scaled_m80_preflight_refactor_seed4_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
         self.assertEqual(matrix["dataset_hash"], instance.dataset_hash)
         self.assertEqual(matrix["successes"], 3)
         self.assertEqual(matrix["failures"], 0)
         self.assertEqual(matrix["dataset_hash"], current["dataset_hash"])
         self.assertEqual(matrix["policy"], current["policy"])
+        self.assertEqual(current["dataset_hash"], preflight["dataset_hash"])
+        self.assertEqual(current["policy"], preflight["policy"])
         self.assertEqual(current["successes"], 3)
         self.assertEqual(current["failures"], 0)
+        self.assertEqual(preflight["successes"], 3)
+        self.assertEqual(preflight["failures"], 0)
         historical_runs = {row["scenario"]: row for row in matrix["runs"]}
         runs = {row["scenario"]: row for row in current["runs"]}
+        preflight_runs = {row["scenario"]: row for row in preflight["runs"]}
         self.assertEqual(
             {scenario: row["score"] for scenario, row in runs.items()},
             {"A": 560.0, "B": 800.0, "C": 560.0},
@@ -1698,6 +1734,14 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(runs["C"]["selected_stage"], "scenario_c_fallback")
         for scenario, row in runs.items():
             with self.subTest(scenario=scenario):
+                for field in (
+                    "status",
+                    "score",
+                    "selected_stage",
+                    "strict_conflicts",
+                    "submission_hash",
+                ):
+                    self.assertEqual(row[field], preflight_runs[scenario][field])
                 self.assertEqual(row["status"], "SUCCESS")
                 self.assertEqual(row["strict_conflicts"], 0)
                 submission = (
@@ -1769,6 +1813,14 @@ class PublicFixtureTests(unittest.TestCase):
                 / "SEED_MATRIX.json"
             ).read_text(encoding="utf-8")
         )
+        preflight = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m20_preflight_seed2_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
         self.assertEqual(failed["dataset_hash"], recovered["dataset_hash"])
         self.assertEqual(failed["policy"], recovered["policy"])
         self.assertEqual(failed["successes"], 0)
@@ -1779,6 +1831,10 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(recovered["policy"], zero_floor["policy"])
         self.assertEqual(zero_floor["successes"], 3)
         self.assertEqual(zero_floor["failures"], 0)
+        self.assertEqual(zero_floor["dataset_hash"], preflight["dataset_hash"])
+        self.assertEqual(zero_floor["policy"], preflight["policy"])
+        self.assertEqual(preflight["successes"], 3)
+        self.assertEqual(preflight["failures"], 0)
 
         oracle_access, _, _ = load_submission(
             ROOT / "fixtures" / "independent_dense_m20_oracle"
@@ -1788,10 +1844,12 @@ class PublicFixtureTests(unittest.TestCase):
             for row in oracle_access
         }
         recovered_runs = {row["scenario"]: row for row in recovered["runs"]}
+        preflight_runs = {row["scenario"]: row for row in preflight["runs"]}
         for row in zero_floor["runs"]:
             scenario = row["scenario"]
             with self.subTest(scenario=scenario):
                 prior = recovered_runs[scenario]
+                preflight_row = preflight_runs[scenario]
                 for field in (
                     "status",
                     "score",
@@ -1803,13 +1861,24 @@ class PublicFixtureTests(unittest.TestCase):
                 self.assertGreaterEqual(
                     prior["wall_seconds"] / row["wall_seconds"], 1.5
                 )
+                for field in (
+                    "status",
+                    "score",
+                    "strict_conflicts",
+                    "selected_stage",
+                    "submission_hash",
+                ):
+                    self.assertEqual(row[field], preflight_row[field])
+                self.assertGreaterEqual(
+                    row["wall_seconds"] / preflight_row["wall_seconds"], 5.0
+                )
                 self.assertEqual(row["score"], 0.0)
                 self.assertEqual(row["strict_conflicts"], 0)
                 submission = (
                     ROOT
                     / "runs"
-                    / "independent_dense_m20_zero_floor_seed1_w1"
-                    / f"{scenario.lower()}_seed_1"
+                    / "independent_dense_m20_preflight_seed2_w1"
+                    / f"{scenario.lower()}_seed_2"
                 )
                 evaluation = evaluate_submission(instance, submission, scenario)
                 independent = independently_score(data, submission)
@@ -1848,9 +1917,21 @@ class PublicFixtureTests(unittest.TestCase):
                 / "SEED_MATRIX.json"
             ).read_text(encoding="utf-8")
         )
+        preflight = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m40_preflight_seed2_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
         self.assertEqual(matrix["dataset_hash"], instance.dataset_hash)
         self.assertEqual(matrix["successes"], 3)
         self.assertEqual(matrix["failures"], 0)
+        self.assertEqual(matrix["dataset_hash"], preflight["dataset_hash"])
+        self.assertEqual(matrix["policy"], preflight["policy"])
+        self.assertEqual(preflight["successes"], 3)
+        self.assertEqual(preflight["failures"], 0)
 
         oracle_access, _, _ = load_submission(oracle)
         oracle_keys = {
@@ -1862,9 +1943,22 @@ class PublicFixtureTests(unittest.TestCase):
             "B": "heuristic_incumbent",
             "C": "scenario_c_fallback",
         }
+        preflight_runs = {row["scenario"]: row for row in preflight["runs"]}
         for row in matrix["runs"]:
             scenario = row["scenario"]
             with self.subTest(scenario=scenario):
+                preflight_row = preflight_runs[scenario]
+                for field in (
+                    "status",
+                    "score",
+                    "selected_stage",
+                    "strict_conflicts",
+                    "submission_hash",
+                ):
+                    self.assertEqual(row[field], preflight_row[field])
+                self.assertGreaterEqual(
+                    row["wall_seconds"] / preflight_row["wall_seconds"], 8.0
+                )
                 submission = (
                     ROOT
                     / "runs"
@@ -1894,6 +1988,98 @@ class PublicFixtureTests(unittest.TestCase):
                 self.assertEqual(strict, ())
                 self.assertNotEqual(candidate_keys, oracle_keys)
 
+    def test_structural_zero_floor_preflight_skips_model_construction(self) -> None:
+        data = ROOT / "fixtures" / "independent_dense_m40"
+        instance = load_instance(data)
+        expected = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m40_seed1_w1"
+                / "a_seed_1_audit"
+                / "HEURISTIC_ATTEMPT_1_PRUNE.json"
+            ).read_text(encoding="utf-8")
+        )
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "nebula_ps1.flexible_solver.cp_model.CpModel",
+            side_effect=AssertionError("zero-floor preflight built a model"),
+        ):
+            output = Path(temporary) / "candidate"
+            telemetry = solve_flexible_supply_relaxation(
+                instance,
+                output,
+                "A",
+                time_limit_seconds=2.0,
+                workers=1,
+                seed=9,
+                closure_round_limit=500,
+                separator_mode="direct_heuristic",
+                forbid_buffer_overlap=True,
+            )
+            evaluation = evaluate_submission(instance, output, "A")
+            independent = independently_score(data, output)
+        self.assertEqual(telemetry.status, "PRIMARY_OPTIMAL_SAFE_INCUMBENT")
+        self.assertEqual(telemetry.model_variables, 0)
+        self.assertEqual(telemetry.model_constraints, 0)
+        self.assertEqual(telemetry.solve_rounds, 0)
+        self.assertTrue(telemetry.structural_hint_complete)
+        self.assertTrue(telemetry.structural_hint_checked)
+        self.assertTrue(telemetry.structural_hint_feasible)
+        self.assertEqual(telemetry.structural_hint_objective_score, 0.0)
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 0.0)
+        self.assertEqual(independent.objective_score, 0.0)
+        self.assertEqual(
+            evaluation.submission_hash, expected["initial_submission_hash"]
+        )
+
+    def test_structural_zero_floor_preflight_respects_strict_policy(self) -> None:
+        data = ROOT / "fixtures" / "independent_dense_m40"
+        instance = load_instance(data)
+        source = (
+            ROOT
+            / "runs"
+            / "independent_dense_m40_seed1_w1"
+            / "a_seed_1_audit"
+            / "heuristic_attempt_1_raw"
+        )
+        access, occupancy, _ = load_submission(source)
+        hinted_weeks: dict[str, list[int]] = defaultdict(list)
+        for row in access:
+            hinted_weeks[row.activity_id].append(row.week)
+
+        def strict_only_screen(
+            checked_instance,
+            access_rows,
+            occupancy_rows,
+            *,
+            forbid_buffer_overlap=False,
+        ):
+            return ("synthetic strict-only conflict",) if forbid_buffer_overlap else ()
+
+        with tempfile.TemporaryDirectory() as temporary, patch(
+            "nebula_ps1.flexible_solver._construct_structural_candidate",
+            return_value=(hinted_weeks, list(access), list(occupancy)),
+        ), patch(
+            "nebula_ps1.flexible_solver.screen_closures",
+            side_effect=strict_only_screen,
+        ), patch(
+            "nebula_ps1.flexible_solver.cp_model.CpModel",
+            side_effect=RuntimeError("strict conflict reached model path"),
+        ):
+            with self.assertRaisesRegex(
+                RuntimeError, "strict conflict reached model path"
+            ):
+                solve_flexible_supply_relaxation(
+                    instance,
+                    Path(temporary) / "candidate",
+                    "A",
+                    time_limit_seconds=2.0,
+                    workers=1,
+                    separator_mode="direct_heuristic",
+                    forbid_buffer_overlap=True,
+                )
+
     def test_invalid_complete_structural_hint_is_not_promoted(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_v1"
         instance = load_instance(data)
@@ -1906,7 +2092,9 @@ class PublicFixtureTests(unittest.TestCase):
             occupancy_rows,
         ) -> None:
             rows = occupancy_rows
-            if Path(output_dir).name.startswith("nebula-structural-hint-"):
+            if Path(output_dir).name.startswith(
+                ("nebula-structural-preflight-", "nebula-structural-hint-")
+            ):
                 rows = occupancy_rows[:-1]
             _write_submission_rows(
                 checked_instance,
