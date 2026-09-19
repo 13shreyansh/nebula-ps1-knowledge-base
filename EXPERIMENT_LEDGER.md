@@ -1066,3 +1066,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Falsification result: exhaustive mode checks all six unique transformations, skips 12 duplicates, and records zero predicted-versus-serialized score mismatches. Ranked mode validates one, prunes five, and selects the same strict-clean hash `2d37c2fa…` at C=`21,990`.
 - Boundary: this is independent synthetic evidence for local arithmetic, not official portal confirmation. No protected official artifact or portal quota changed.
 - Regression status: 84 tests pass.
+
+### E113: Repeated line-local compaction captures a missed second gain
+
+- Timestamp: 2026-09-19 08:54:03 +08
+- Precommit protocol: the two-line, four-activity source and generator were committed as `3b55d40` before the compaction helper saw them. Dataset hash is `71da72ce6966516d9ff1188c745b3729e1987b52425e1fb005bfaaac3378e8cd`.
+- Blind result: the first checked compaction lowers C=`23,660` to `20,030`; calling the unchanged helper again on the selected files lowers it to `18,220`. A third call finds no legal improvement.
+- Implementation: both production controllers now repeat fully validated strict improvements up to the original access-row count. Existing ECLO line windows safely filter incompatible serialized candidates before file generation, including all-line blocking for Live crossover work.
+- Audit: ranked mode checks two candidates; exhaustive mode checks six. Both promote twice, select hash `12695245…` at C=`18,220`, match the independent scorer, remain strict-clean, and report zero score-prediction mismatches. The generic staged production integration reproduces both promotions before verification.
+- Integrity: official scores and files are unchanged. Per the user's explicit instruction, remaining portal attempts A=`3/5`, B=`4/5`, C=`4/5` are frozen until a specific run is authorized.
+- Regression status: 86 tests pass.

@@ -1,0 +1,51 @@
+{
+  "activity_count": 4,
+  "dataset_hash": "71da72ce6966516d9ff1188c745b3729e1987b52425e1fb005bfaaac3378e8cd",
+  "exhaustive": {
+    "candidates_checked": 6,
+    "candidates_pruned_by_exact_score_order": 0,
+    "candidates_skipped_existing_eclo_window": 3,
+    "duplicate_candidates_skipped": 12,
+    "elapsed_seconds": 0.007195,
+    "exhaustive": true,
+    "independent_score": 18220.0,
+    "promotions": 2,
+    "round_count": 3,
+    "round_scores": [
+      20030.0,
+      18220.0,
+      null
+    ],
+    "score_prediction_mismatches": 0,
+    "selected_score": 18220.0,
+    "selected_submission_hash": "126952457188299ce1498e68a386131814b5e28403b14b04d651897c46f569d0",
+    "source_score": 23660.0,
+    "strict_conflicts": 0
+  },
+  "line_count": 2,
+  "ranked": {
+    "candidates_checked": 2,
+    "candidates_pruned_by_exact_score_order": 4,
+    "candidates_skipped_existing_eclo_window": 3,
+    "duplicate_candidates_skipped": 12,
+    "elapsed_seconds": 0.004795,
+    "exhaustive": false,
+    "independent_score": 18220.0,
+    "promotions": 2,
+    "round_count": 3,
+    "round_scores": [
+      20030.0,
+      18220.0,
+      null
+    ],
+    "score_prediction_mismatches": 0,
+    "selected_score": 18220.0,
+    "selected_submission_hash": "126952457188299ce1498e68a386131814b5e28403b14b04d651897c46f569d0",
+    "source_score": 23660.0,
+    "strict_conflicts": 0
+  },
+  "source_hard_violations": [],
+  "source_independent_score": 23660.0,
+  "source_score": 23660.0,
+  "source_submission_hash": "46fef54e61ea734ce931032d3b2ecdf0819dbdcd7cbc25e7345bcc4759c67d4c"
+}

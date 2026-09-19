@@ -16,7 +16,10 @@ from unittest.mock import patch
 
 from nebula_ps1.cli import main as cli_main
 from nebula_ps1.closure import _blocked_locations, _external_buffer_sectors, screen_closures
-from nebula_ps1.eclo_compact import best_single_lane_eclo_compaction
+from nebula_ps1.eclo_compact import (
+    best_serialized_eclo_compaction_sequence,
+    best_single_lane_eclo_compaction,
+)
 from nebula_ps1.evaluate import evaluate_submission, load_submission
 from nebula_ps1.flexible_solver import solve_flexible_supply_relaxation
 from nebula_ps1.independent_score import independently_score
@@ -284,10 +287,55 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertIsNone(second_dir)
         self.assertIsNone(second)
         self.assertEqual(second_report["source_score"], 262.0)
-        self.assertEqual(second_report["unique_candidates_ranked"], 7)
-        self.assertEqual(second_report["candidates_checked"], 7)
-        self.assertEqual(second_report["duplicate_candidates_skipped"], 10)
+        self.assertEqual(second_report["unique_candidates_ranked"], 0)
+        self.assertEqual(second_report["candidates_checked"], 0)
+        self.assertEqual(second_report["duplicate_candidates_skipped"], 0)
+        self.assertEqual(
+            second_report["candidates_skipped_existing_eclo_window"], 7
+        )
         self.assertEqual(second_report["feasible_candidates"], 0)
+
+    def test_serialized_eclo_compaction_repeats_across_independent_lines(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
+        source = ROOT / "fixtures" / "independent_eclo_multipass_v1_source_c"
+        instance = load_instance(data)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            selected_dir, selected, report = (
+                best_serialized_eclo_compaction_sequence(
+                    instance,
+                    source,
+                    Path(temp_dir) / "candidates",
+                    forbid_buffer_overlap=True,
+                )
+            )
+            self.assertIsNotNone(selected_dir)
+            self.assertIsNotNone(selected)
+            assert selected_dir is not None
+            assert selected is not None
+            independent = independently_score(data, selected_dir)
+            access, occupancy, _ = load_submission(selected_dir)
+            self.assertEqual(selected.hard_violations, ())
+            self.assertEqual(selected.objective_score, 18220.0)
+            self.assertEqual(independent.objective_score, 18220.0)
+            self.assertEqual(report["source_score"], 23660.0)
+            self.assertEqual(report["selected_score"], 18220.0)
+            self.assertEqual(report["promotions"], 2)
+            self.assertEqual(len(report["rounds"]), 3)
+            self.assertEqual(report["score_prediction_mismatches"], 0)
+            self.assertEqual(
+                report["candidates_skipped_existing_eclo_window"], 3
+            )
+            self.assertEqual(
+                screen_closures(
+                    instance,
+                    access,
+                    occupancy,
+                    forbid_buffer_overlap=True,
+                ),
+                (),
+            )
 
         public_hashes = {
             name: hashlib.sha256(
@@ -451,6 +499,59 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report["eclo_compaction"]["selected_score"], 262.0)
         self.assertEqual(report["selected_stage"], "eclo_compaction_incumbent")
         self.assertEqual(final.objective_score, 262.0)
+
+    def test_generic_staged_c_applies_all_independent_line_compactions(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
+        source = ROOT / "fixtures" / "independent_eclo_multipass_v1_source_c"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            selected_source = source if calls == 1 else Path(kwargs["sample_hint_dir"])
+            _copy_submission(selected_source, Path(output_dir))
+            evaluation = evaluate_submission(instance, output_dir, scenario)
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=evaluation.objective_score,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=kwargs["workers"],
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation",
+            side_effect=fake_solve,
+        ):
+            report = solve_staged_scenario(
+                instance,
+                Path(temp_dir) / "submission",
+                "C",
+                audit_output_dir=Path(temp_dir) / "audit",
+                local_repair_time_limit_seconds=0.0,
+                heuristic_attempts=1,
+                fallback_attempts=1,
+                workers=1,
+                forbid_buffer_overlap=True,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+        self.assertEqual(calls, 2)
+        self.assertTrue(report["eclo_compaction_promoted"])
+        self.assertEqual(report["eclo_compaction"]["promotions"], 2)
+        self.assertEqual(report["eclo_compaction"]["selected_score"], 18220.0)
+        self.assertEqual(final.objective_score, 18220.0)
 
     def test_staged_c_portfolio_promotes_checked_eclo_compaction_before_verification(
         self,

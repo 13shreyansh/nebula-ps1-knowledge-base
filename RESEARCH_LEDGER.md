@@ -706,6 +706,15 @@ Confidence labels:
 - **Limitation:** This falsifies errors in contract maximum-completion aggregation and priority nudges for the covered combinations. It does not independently confirm the locally reconstructed formula against the portal on hidden data.
 - **Confidence:** High in implementation equivalence under the operator preconditions; low-to-medium in untested official-validator semantics.
 
+### `R087` Scenario C serialized compaction must iterate across line windows
+
+- **Status:** Confirmed on a precommitted two-line holdout and integrated into both production controllers.
+- **Finding:** A one-pass controller lowers the strict-clean source from C=`23,660` to `20,030` but leaves a legal independent-line compaction. Repeating checked improvements reaches C=`18,220`; ranked and exhaustive sequences select the same hash with zero prediction mismatches.
+- **Safety:** Every round writes a complete candidate and requires a strict score decrease after full validation. The sequence is bounded by the original access-row count. Activities whose affected lines already contain ECLO are skipped because disjoint serialized activity blocks cannot share that line's two-week window; cross-line Live work marks every affected line.
+- **Efficiency:** Ranked mode checks two candidates across three rounds; exhaustive mode checks six. Both promote twice and stop when the remaining lines are occupied.
+- **Limitation:** This operator still requires a globally gap-free one-activity-per-week incumbent and only transforms three standard accesses into two ECLO accesses. It is a safe targeted improvement, not a general Scenario C optimiser.
+- **Confidence:** High in checked multipass behavior; medium in how often hidden schedules meet the narrow structural precondition.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

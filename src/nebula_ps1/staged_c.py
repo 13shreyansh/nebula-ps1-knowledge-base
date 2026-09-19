@@ -5,7 +5,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .closure import screen_closures
-from .eclo_compact import best_single_lane_eclo_compaction
+from .eclo_compact import best_serialized_eclo_compaction_sequence
 from .evaluate import Evaluation, evaluate_submission, load_submission
 from .flexible_solver import solve_flexible_supply_relaxation
 from .instance import Instance
@@ -226,7 +226,7 @@ def solve_staged_c_portfolio(
         heuristic_attempt_records.append(attempt_record)
 
     compacted_dir, compacted, eclo_compaction_report = (
-        best_single_lane_eclo_compaction(
+        best_serialized_eclo_compaction_sequence(
             instance,
             heuristic_best_dir,
             stages / "scenario_c_eclo_compaction_candidates",

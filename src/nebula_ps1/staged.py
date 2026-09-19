@@ -5,7 +5,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .closure import screen_closures
-from .eclo_compact import best_single_lane_eclo_compaction
+from .eclo_compact import best_serialized_eclo_compaction_sequence
 from .evaluate import Evaluation, evaluate_submission, load_submission
 from .flexible_solver import solve_flexible_supply_relaxation
 from .instance import Instance
@@ -549,7 +549,7 @@ def solve_staged_scenario(
     eclo_compaction_promoted = False
     if scenario == "C":
         compacted_dir, compacted, eclo_compaction_report = (
-            best_single_lane_eclo_compaction(
+            best_serialized_eclo_compaction_sequence(
                 instance,
                 incumbent_dir,
                 audit_output / "eclo_compaction_candidates",

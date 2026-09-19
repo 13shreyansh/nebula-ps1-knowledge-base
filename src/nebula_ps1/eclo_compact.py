@@ -14,6 +14,15 @@ from .evaluate import (
     load_submission,
 )
 from .instance import Instance
+from .topology import affects_interchange_cross_line, split_sector_location
+
+
+def _affected_eclo_lines(instance: Instance, activity_id: str) -> set[str]:
+    activity = instance.activities[activity_id]
+    line, _, _ = split_sector_location(activity.start_location_id)
+    if affects_interchange_cross_line(instance, activity):
+        return set(instance.lines)
+    return {line}
 
 
 def _write(
@@ -249,6 +258,7 @@ def best_single_lane_eclo_compaction(
         "reason": "",
         "candidates_checked": 0,
         "duplicate_candidates_skipped": 0,
+        "candidates_skipped_existing_eclo_window": 0,
         "unique_candidates_ranked": 0,
         "candidates_pruned_by_exact_score_order": 0,
         "score_prediction_mismatches": 0,
@@ -278,6 +288,12 @@ def best_single_lane_eclo_compaction(
     by_activity: dict[str, list[AccessRow]] = defaultdict(list)
     for row in access:
         by_activity[row.activity_id].append(row)
+    existing_eclo_lines = {
+        line
+        for row in access
+        if row.eclo == 1
+        for line in _affected_eclo_lines(instance, row.activity_id)
+    }
     best_dir: Path | None = None
     best: Evaluation | None = None
     best_key: tuple[str, int] | None = None
@@ -288,6 +304,11 @@ def best_single_lane_eclo_compaction(
     for activity_id in sorted(by_activity):
         rows = sorted(by_activity[activity_id], key=lambda row: row.week)
         if len(rows) != 3 or any(row.eclo for row in rows):
+            continue
+        if _affected_eclo_lines(instance, activity_id) & existing_eclo_lines:
+            report["candidates_skipped_existing_eclo_window"] = (
+                int(report["candidates_skipped_existing_eclo_window"]) + 1
+            )
             continue
         for removed in rows:
             retained_weeks = [
@@ -411,3 +432,65 @@ def best_single_lane_eclo_compaction(
     else:
         report["reason"] = "no fully checked candidate improved the source"
     return best_dir, best, report
+
+
+def best_serialized_eclo_compaction_sequence(
+    instance: Instance,
+    source_dir: str | Path,
+    candidates_dir: str | Path,
+    *,
+    forbid_buffer_overlap: bool = False,
+    exhaustive: bool = False,
+) -> tuple[Path | None, Evaluation | None, dict[str, object]]:
+    """Apply checked serialized compactions until no strict improvement remains."""
+
+    source = Path(source_dir)
+    root = Path(candidates_dir)
+    source_evaluation = evaluate_submission(instance, source, "C")
+    source_access, _, _ = load_submission(source)
+    current_dir = source
+    current = source_evaluation
+    rounds: list[dict[str, object]] = []
+    selected_dir: Path | None = None
+    promotions = 0
+    for round_number in range(1, len(source_access) + 1):
+        candidate_dir, candidate, round_report = best_single_lane_eclo_compaction(
+            instance,
+            current_dir,
+            root / f"round_{round_number:03d}",
+            forbid_buffer_overlap=forbid_buffer_overlap,
+            exhaustive=exhaustive,
+        )
+        rounds.append(round_report)
+        if candidate_dir is None or candidate is None:
+            break
+        if candidate.objective_score >= current.objective_score:
+            raise RuntimeError("ECLO compaction sequence accepted a non-improving round")
+        selected_dir = candidate_dir
+        current_dir = candidate_dir
+        current = candidate
+        promotions += 1
+    else:
+        raise RuntimeError("ECLO compaction sequence exceeded its access-row bound")
+
+    report: dict[str, object] = {
+        "source_score": source_evaluation.objective_score,
+        "selected_score": current.objective_score if promotions else None,
+        "selected_submission_hash": current.submission_hash if promotions else None,
+        "promotions": promotions,
+        "rounds": rounds,
+        "candidates_checked": sum(int(item["candidates_checked"]) for item in rounds),
+        "duplicate_candidates_skipped": sum(
+            int(item["duplicate_candidates_skipped"]) for item in rounds
+        ),
+        "candidates_skipped_existing_eclo_window": sum(
+            int(item["candidates_skipped_existing_eclo_window"]) for item in rounds
+        ),
+        "candidates_pruned_by_exact_score_order": sum(
+            int(item["candidates_pruned_by_exact_score_order"]) for item in rounds
+        ),
+        "score_prediction_mismatches": sum(
+            int(item["score_prediction_mismatches"]) for item in rounds
+        ),
+    }
+    return selected_dir, (current if promotions else None), report
