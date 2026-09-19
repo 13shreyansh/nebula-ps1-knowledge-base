@@ -742,6 +742,15 @@ Confidence labels:
 - **Limitation:** Rows are contiguous within serialized activity blocks. Irregular interleaving is outside the current operator's global one-activity-per-week use case.
 - **Confidence:** High for access-length arithmetic, workload preservation, and candidate ranking through seven rows.
 
+### `R091` Non-worsening idle normalization can unlock a strict compound gain
+
+- **Status:** Confirmed on two precommitted idle-week holdouts and integrated before ECLO compaction in both production controllers.
+- **Finding:** Deleting a globally empty week preserves access rows, ECLO flags, possession groups, workload, and relative order while shifting later work left. On the delayed holdout it strictly improves C=`26,390` to `23,660`, after which ECLO reaches `18,220`. On the counterexample, deleting week 4 leaves C=`910` unchanged but makes the schedule contiguous; ECLO then reaches strict-clean C=`10`.
+- **Selection rule:** A fully checked equal-score normalization may be used only as an internal ECLO seed. It is not promoted by itself. The protected incumbent changes only when the composed final artifact is strictly better and fully checked.
+- **Predictor hardening:** The ranker always serializes at least the first gap. Any predicted-versus-serialized mismatch disables early stopping and forces evaluation of all remaining gaps. Six gaps across 19 retained C incumbents were materially checked with zero mismatches and zero promotions.
+- **Limitation:** Only globally empty internal weeks are removed. Local idle capacity and partial left shifts remain solver responsibilities.
+- **Confidence:** High in the two compound cases, retained-corpus no-regression result, and fail-safe selection boundary.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

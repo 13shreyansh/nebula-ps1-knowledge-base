@@ -8,6 +8,7 @@ from .closure import screen_closures
 from .eclo_compact import best_serialized_eclo_compaction_sequence
 from .evaluate import Evaluation, evaluate_submission, load_submission
 from .flexible_solver import solve_flexible_supply_relaxation
+from .idle_compact import best_idle_week_compaction_sequence
 from .instance import Instance
 from .portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from .prune import prune_submission
@@ -545,13 +546,44 @@ def solve_staged_scenario(
         incumbent_dir = best_fallback_dir
 
     incumbent = evaluate_submission(instance, incumbent_dir, scenario)
+    idle_week_compaction_report: dict[str, object] | None = None
+    idle_week_compaction_promoted = False
     eclo_compaction_report: dict[str, object] | None = None
     eclo_compaction_promoted = False
+    idle_week_compaction_used_as_seed = False
     if scenario == "C":
+        idle_dir, idle_compacted, idle_week_compaction_report = (
+            best_idle_week_compaction_sequence(
+                instance,
+                incumbent_dir,
+                audit_output / "idle_week_compaction_candidates",
+                forbid_buffer_overlap=forbid_buffer_overlap,
+                allow_equal=True,
+            )
+        )
+        compaction_source_dir = incumbent_dir
+        if (
+            idle_dir is not None
+            and idle_compacted is not None
+            and idle_compacted.internally_feasible
+            and idle_compacted.objective_score <= incumbent.objective_score
+        ):
+            compaction_source_dir = idle_dir
+            idle_week_compaction_used_as_seed = True
+        if (
+            idle_dir is not None
+            and idle_compacted is not None
+            and _candidate_is_better(idle_compacted, incumbent)
+        ):
+            incumbent_stage = "idle_week_compaction_incumbent"
+            improvement_stage = "idle_week_compaction_bridge_safe_improvement"
+            incumbent_dir = idle_dir
+            incumbent = idle_compacted
+            idle_week_compaction_promoted = True
         compacted_dir, compacted, eclo_compaction_report = (
             best_serialized_eclo_compaction_sequence(
                 instance,
-                incumbent_dir,
+                compaction_source_dir,
                 audit_output / "eclo_compaction_candidates",
                 forbid_buffer_overlap=forbid_buffer_overlap,
             )
@@ -802,6 +834,9 @@ def solve_staged_scenario(
         "bridge_safe_fallback_attempts": fallback_attempt_telemetry,
         "bridge_safe_fallback_selected_attempt": selected_fallback_attempt,
         "bridge_safe_fallback_prune": asdict(fallback_prune) if fallback_prune is not None else None,
+        "idle_week_compaction": idle_week_compaction_report,
+        "idle_week_compaction_promoted": idle_week_compaction_promoted,
+        "idle_week_compaction_used_as_seed": idle_week_compaction_used_as_seed,
         "eclo_compaction": eclo_compaction_report,
         "eclo_compaction_promoted": eclo_compaction_promoted,
         "verification_telemetry": asdict(verification) if verification is not None else None,

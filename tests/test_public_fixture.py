@@ -553,6 +553,115 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(report["eclo_compaction"]["selected_score"], 18220.0)
         self.assertEqual(final.objective_score, 18220.0)
 
+    def test_generic_staged_c_removes_idle_week_before_eclo_compaction(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_idle_week_v1"
+        source = ROOT / "fixtures" / "independent_idle_week_v1_source_c"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            selected_source = source if calls == 1 else Path(kwargs["sample_hint_dir"])
+            _copy_submission(selected_source, Path(output_dir))
+            evaluation = evaluate_submission(instance, output_dir, scenario)
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=evaluation.objective_score,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=kwargs["workers"],
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation",
+            side_effect=fake_solve,
+        ):
+            report = solve_staged_scenario(
+                instance,
+                Path(temp_dir) / "submission",
+                "C",
+                audit_output_dir=Path(temp_dir) / "audit",
+                local_repair_time_limit_seconds=0.0,
+                heuristic_attempts=1,
+                fallback_attempts=1,
+                workers=1,
+                forbid_buffer_overlap=True,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+        self.assertEqual(calls, 2)
+        self.assertTrue(report["idle_week_compaction_promoted"])
+        self.assertEqual(report["idle_week_compaction"]["selected_score"], 23660.0)
+        self.assertTrue(report["eclo_compaction_promoted"])
+        self.assertEqual(report["eclo_compaction"]["selected_score"], 18220.0)
+        self.assertEqual(final.objective_score, 18220.0)
+
+    def test_generic_staged_c_uses_equal_idle_normalization_only_as_seed(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_idle_unlock_v1"
+        source = ROOT / "fixtures" / "independent_idle_unlock_v1_source_c"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            selected_source = source if calls == 1 else Path(kwargs["sample_hint_dir"])
+            _copy_submission(selected_source, Path(output_dir))
+            evaluation = evaluate_submission(instance, output_dir, scenario)
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=evaluation.objective_score,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=kwargs["workers"],
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation",
+            side_effect=fake_solve,
+        ):
+            report = solve_staged_scenario(
+                instance,
+                Path(temp_dir) / "submission",
+                "C",
+                audit_output_dir=Path(temp_dir) / "audit",
+                local_repair_time_limit_seconds=0.0,
+                heuristic_attempts=1,
+                fallback_attempts=1,
+                workers=1,
+                forbid_buffer_overlap=True,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+        self.assertEqual(calls, 2)
+        self.assertFalse(report["idle_week_compaction_promoted"])
+        self.assertTrue(report["idle_week_compaction_used_as_seed"])
+        self.assertEqual(report["idle_week_compaction"]["selected_score"], 910.0)
+        self.assertTrue(report["eclo_compaction_promoted"])
+        self.assertEqual(report["eclo_compaction"]["selected_score"], 10.0)
+        self.assertEqual(final.objective_score, 10.0)
+
     def test_staged_c_portfolio_promotes_checked_eclo_compaction_before_verification(
         self,
     ) -> None:
@@ -615,6 +724,64 @@ class PublicFixtureTests(unittest.TestCase):
         )
         self.assertEqual(report["selected_stage"], "scenario_c_eclo_compaction")
         self.assertEqual(final.objective_score, 262.0)
+
+    def test_staged_c_portfolio_composes_equal_idle_seed_with_eclo(self) -> None:
+        data = ROOT / "fixtures" / "independent_idle_unlock_v1"
+        source = ROOT / "fixtures" / "independent_idle_unlock_v1_source_c"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_staged(instance, output_dir, scenario, **kwargs):
+            self.assertEqual(scenario, "A")
+            relabel_submission_scenario(instance, source, Path(output_dir), "A")
+            return {"selected_objective_score": 910.0}
+
+        def fake_c_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            selected_source = source if calls == 1 else Path(kwargs["sample_hint_dir"])
+            _copy_submission(selected_source, Path(output_dir))
+            evaluation = evaluate_submission(instance, output_dir, scenario)
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=evaluation.objective_score,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=kwargs["workers"],
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged_c.solve_staged_scenario", side_effect=fake_staged
+        ), patch(
+            "nebula_ps1.staged_c.solve_flexible_supply_relaxation",
+            side_effect=fake_c_solve,
+        ):
+            report = solve_staged_c_portfolio(
+                instance,
+                Path(temp_dir) / "submission",
+                audit_output_dir=Path(temp_dir) / "audit",
+                a_local_repair_time_limit_seconds=0.0,
+                c_heuristic_attempts=1,
+                workers=1,
+                forbid_buffer_overlap=True,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+        self.assertEqual(calls, 2)
+        self.assertFalse(report["scenario_c_idle_week_compaction_promoted"])
+        self.assertTrue(report["scenario_c_idle_week_compaction_used_as_seed"])
+        self.assertTrue(report["scenario_c_eclo_compaction_promoted"])
+        self.assertEqual(report["scenario_c_eclo_compaction"]["selected_score"], 10.0)
+        self.assertEqual(report["selected_stage"], "scenario_c_eclo_compaction")
+        self.assertEqual(final.objective_score, 10.0)
 
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
@@ -914,6 +1081,35 @@ class PublicFixtureTests(unittest.TestCase):
                 exhaustive["independent_score"], exhaustive["selected_score"]
             )
             self.assertEqual(exhaustive["strict_conflicts"], 0)
+
+    def test_idle_week_compaction_unlocks_checked_eclo_sequence(self) -> None:
+        audit = json.loads(
+            (ROOT / "runs" / "idle_week_compaction_audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(audit["source_score"], 26390.0)
+        self.assertEqual(audit["source_independent_score"], 26390.0)
+        self.assertEqual(audit["idle_score"], 23660.0)
+        self.assertEqual(audit["idle_report"]["promotions"], 1)
+        self.assertEqual(audit["idle_report"]["candidates_checked"], 1)
+        self.assertEqual(audit["idle_report"]["score_prediction_mismatches"], 0)
+        self.assertEqual(audit["final_score"], 18220.0)
+        self.assertEqual(audit["final_independent_score"], 18220.0)
+        self.assertEqual(audit["final_strict_conflicts"], 0)
+        self.assertEqual(audit["eclo_promotions"], 2)
+        self.assertEqual(audit["retained_case_count"], 19)
+        self.assertEqual(audit["retained_promoted_count"], 0)
+        self.assertEqual(audit["retained_total_initial_gaps"], 6)
+        self.assertEqual(audit["retained_total_candidates_checked"], 6)
+        unlock = audit["equal_score_unlock"]
+        self.assertEqual(unlock["source_score"], 910.0)
+        self.assertEqual(unlock["idle_score"], 910.0)
+        self.assertFalse(unlock["idle_report"]["strict_improvement"])
+        self.assertEqual(unlock["final_score"], 10.0)
+        self.assertEqual(unlock["final_independent_score"], 10.0)
+        self.assertEqual(unlock["final_strict_conflicts"], 0)
+        self.assertEqual(unlock["eclo_promotions"], 1)
 
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"

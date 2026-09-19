@@ -8,6 +8,7 @@ from .closure import screen_closures
 from .eclo_compact import best_serialized_eclo_compaction_sequence
 from .evaluate import Evaluation, evaluate_submission, load_submission
 from .flexible_solver import solve_flexible_supply_relaxation
+from .idle_compact import best_idle_week_compaction_sequence
 from .instance import Instance
 from .portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from .prune import prune_submission
@@ -156,6 +157,15 @@ def solve_staged_c_portfolio(
             "scenario_c_eclo_compaction_promoted": direct_report.get(
                 "eclo_compaction_promoted", False
             ),
+            "scenario_c_idle_week_compaction": direct_report.get(
+                "idle_week_compaction"
+            ),
+            "scenario_c_idle_week_compaction_promoted": direct_report.get(
+                "idle_week_compaction_promoted", False
+            ),
+            "scenario_c_idle_week_compaction_used_as_seed": direct_report.get(
+                "idle_week_compaction_used_as_seed", False
+            ),
         }
         (audit_output / "STAGED_C.json").write_text(
             json.dumps(report, indent=2, sort_keys=True) + "\n",
@@ -225,10 +235,40 @@ def solve_staged_c_portfolio(
                 selected_heuristic_attempt = attempt_number
         heuristic_attempt_records.append(attempt_record)
 
+    idle_dir, idle_compacted, idle_week_compaction_report = (
+        best_idle_week_compaction_sequence(
+            instance,
+            heuristic_best_dir,
+            stages / "scenario_c_idle_week_compaction_candidates",
+            forbid_buffer_overlap=forbid_buffer_overlap,
+            allow_equal=True,
+        )
+    )
+    idle_week_compaction_promoted = False
+    idle_week_compaction_used_as_seed = False
+    compaction_source_dir = heuristic_best_dir
+    if (
+        idle_dir is not None
+        and idle_compacted is not None
+        and idle_compacted.internally_feasible
+        and idle_compacted.objective_score <= heuristic_best.objective_score
+    ):
+        compaction_source_dir = idle_dir
+        idle_week_compaction_used_as_seed = True
+    if (
+        idle_dir is not None
+        and idle_compacted is not None
+        and _candidate_is_better(idle_compacted, heuristic_best)
+    ):
+        heuristic_best = idle_compacted
+        heuristic_best_dir = idle_dir
+        heuristic_best_stage = "scenario_c_idle_week_compaction"
+        idle_week_compaction_promoted = True
+
     compacted_dir, compacted, eclo_compaction_report = (
         best_serialized_eclo_compaction_sequence(
             instance,
-            heuristic_best_dir,
+            compaction_source_dir,
             stages / "scenario_c_eclo_compaction_candidates",
             forbid_buffer_overlap=forbid_buffer_overlap,
         )
@@ -463,6 +503,9 @@ def solve_staged_c_portfolio(
         "fallback_prune": asdict(fallback_prune),
         "scenario_c_heuristic_attempts": heuristic_attempt_records,
         "scenario_c_heuristic_selected_attempt": selected_heuristic_attempt,
+        "scenario_c_idle_week_compaction": idle_week_compaction_report,
+        "scenario_c_idle_week_compaction_promoted": idle_week_compaction_promoted,
+        "scenario_c_idle_week_compaction_used_as_seed": idle_week_compaction_used_as_seed,
         "scenario_c_eclo_compaction": eclo_compaction_report,
         "scenario_c_eclo_compaction_promoted": eclo_compaction_promoted,
         "scenario_c_verification_telemetry": asdict(verification_telemetry),

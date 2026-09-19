@@ -1106,3 +1106,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Efficiency: ranked mode checks exactly two candidates per case. Exhaustive checks grow from 6 to 30 and duplicate signatures from 12 to 180; measured ranked runtime remains below 0.01 seconds at length 7.
 - Boundary: this is locally generated structural evidence, not portal confirmation. No official attempt or protected artifact changed.
 - Regression status: 89 tests pass.
+
+### E117: Idle-week normalization unlocks strict and equal-score compound gains
+
+- Timestamp: 2026-09-19 09:09:00 +08
+- Strict case: the precommitted `b9737737…` source has one globally empty week and scores C=`26,390`. One checked shift restores hash `46fef54e…` at `23,660`; repeated ECLO then reaches the previously audited hash `12695245…` at `18,220`.
+- Equal-score counterexample: fixture `49497489…` was committed as `e37ad8a` while the pipeline remained stuck at C=`910`. Deleting its idle week is fully valid but still scores `910`; using that artifact only as a seed unlocks one ECLO promotion to strict-clean, dual-scored C=`10`, hash `40934472…`.
+- Fail-safe correction: the initial idle ranker could trust a non-improving prediction without materializing a candidate. It now checks the first gap, disables early stopping after any mismatch, and evaluates all later gaps if prediction becomes untrusted.
+- Retained replay: all six internal gaps across 19 retained C incumbents are serialized and checked. Prediction mismatches and promotions are both zero; the official C artifact has no gap and remains unchanged.
+- Regression status: 93 tests pass, including both production controllers. No official portal attempt was used.
