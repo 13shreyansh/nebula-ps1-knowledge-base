@@ -1,778 +1,514 @@
----
-document_id: NH-PS1-KB
-version: 0.8.121
-last_verified: 2026-09-19
-research_status: reconciled
-implementation_status: active
-official_spec: https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/blob/main/PS1/PS1_README.md
----
+<div align="center">
 
-# Nebula Hack PS1: Team Knowledge Base
+# NightShift
 
-> **Critical update, 19 September 2026: official A/B/C scores are now all 0.0, feasible.** Four user-authorized controlled uploads disproved the universal one-access-per-activity-per-week assumption. Exact accepted archives are in [`deliverables/official-zero`](deliverables/official-zero/MANIFEST.json); remaining attempts are A=1, B=1, C=2. The older 137.9/30.0/62.7 optimum claims and associated bounds below are superseded. The NightShift web engine, local evaluator, and independent scorer now support distinct repeated accesses within a week. The web app computes fresh schedules from uploaded inputs and exposes the accepted zero-score archives separately as references. Historical CLI portfolio modes and the old final-submission pipeline retain their earlier scope; do not overwrite the accepted zero-score archives with outputs from that legacy pipeline. See [`artifacts/controlled-probes-2026-09-19/RESULTS.md`](artifacts/controlled-probes-2026-09-19/RESULTS.md).
+### Railway possession planning that stays feasible when reality changes
 
-This document records the team’s verified clarifications, interpretations, and decisions for Problem Statement 1. It complements the [official PS1 specification](https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/blob/main/PS1/PS1_README.md); it does not repeat its rules, schemas, formulas, or deliverables.
+NightShift turns eight railway planning CSVs into a validated possession schedule, an explainable operating picture, and a reviewable recovery plan when the network changes.
 
-If the two conflict, the current official specification and reference validator govern. Record the conflict before changing implementation.
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Open_NightShift-16a085?style=for-the-badge)](https://nightshift-hmhb4fs4qa-uc.a.run.app/)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![OR-Tools CP-SAT](https://img.shields.io/badge/OR--Tools-CP--SAT-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/optimization/cp/cp_solver)
+[![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Cloud Run](https://img.shields.io/badge/Google_Cloud-Run-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)](https://cloud.google.com/run)
 
-<a id="index"></a>
+[Launch the live app](https://nightshift-hmhb4fs4qa-uc.a.run.app/) · [Take the 90-second tour](#try-nightshift-in-90-seconds) · [Understand the architecture](#architecture) · [Run it locally](#run-locally) · [Inspect the evidence](#results-and-evidence)
 
-## Index
+</div>
 
-| Topic | Section |
-|---|---|
-| What problem we are solving | [`CORE`](#core) |
-| Real operational conflict | [`OPERATIONS`](#operations) |
-| Users and product role | [`USERS`](#users) |
-| Organiser Q&A clarifications | [`QNA`](#qna) |
-| Meaning of “same data” | [`DATA`](#data) |
-| Optimisation, AI, and human roles | [`SYSTEM`](#system) |
-| Product direction | [`PRODUCT`](#product) |
-| Algorithm and constraint model | [`ALGORITHM`](#algorithm) |
-| Score improvement loop | [`IMPROVEMENT`](#improvement) |
-| Build order | [`BUILD`](#build) |
-| Judging and evidence | [`JUDGING`](#judging) |
-| Demo narrative | [`DEMO`](#demo) |
-| Decisions | [`DECISIONS`](#decisions) |
-| Open questions | [`OPEN`](#open) |
-| Sources and transcription quality | [`SOURCES`](#sources) |
-| Maintenance rules | [`MAINTENANCE`](#maintenance) |
+![NightShift network control overview](docs/assets/nightshift-overview.png)
 
-### Confidence labels
+> **Verified public-instance result:** the exact retained archives in [`deliverables/official-zero`](deliverables/official-zero/MANIFEST.json) were accepted by the organizer portal as feasible with a **0.0 penalty in Scenarios A, B, and C**. Since every published penalty term is nonnegative, 0.0 is the mathematical floor of that metric. This is evidence for the published public instance, not a claim that every hidden or future instance will solve to zero.
 
-- **Official:** stated in the current specification or demonstrated by the current validator.
-- **Q&A:** clearly stated in the organiser conversation and not contradicted by the official source.
-- **Decision:** chosen by the team.
-- **Derived:** a reasoned consequence, not a direct organiser statement.
-- **Open:** requires evidence or a team decision.
+## Why NightShift exists
 
-<a id="core"></a>
+Railway maintenance teams need enough nighttime access to complete work safely and on time. Several contracts may need the same corridor, platform, sector, or buffer location in the same week. A locally sensible decision can create a conflict elsewhere through closures, predecessor relationships, workfront limits, or shared capacity.
 
-## 1. Core understanding
+A spreadsheet can describe the work, but it cannot reliably reason across all of those interactions. A language model can explain a plan, but it should not invent a safety-critical timetable. NightShift separates those jobs:
 
-PS1 is a railway track-access and possession-scheduling problem. Maintenance and project programmes compete for limited nighttime access to railway locations. The system must produce a complete, safe, validator-compliant schedule and explain significant trade-offs to a works controller.
+- **CP-SAT decides** which feasible combination of visits, weeks, access types, and sharing groups best satisfies the selected scenario.
+- **Deterministic validation decides** whether an output may be released.
+- **The operations interface explains** workload, pressure points, contract delivery, and the effect of a proposed disruption.
+- **The AI assistant translates intent** into a structured proposal. The backend validates the proposal and computes its actual impact before an operator can adopt anything.
 
-The activities’ required corridors are inputs. Optimisation selects timing and compatible co-sharing; it does not choose alternative railway routes.
+The result is a planning workspace for Possession Planning Officers and operations teams, not a black-box timetable generator.
 
-The mandatory scope is scheduling for the three official scenarios. Disruption-driven replanning is a bonus.
+## At a glance
 
-<a id="operations"></a>
-
-## 2. Real operational conflict
-
-The core difficulty is not entering work into a calendar. It is prioritising several legitimate claims on the same access window:
-
-- Operator maintenance may be driven by defects, inspections, safety, or asset condition.
-- LTA and project work may be driven by renewal programmes, dependencies, contract milestones, and completion dates.
-- Contractors need predictable access to deliver committed work.
-- Physical and possession rules make many combinations illegal.
-- Late changes can invalidate an otherwise optimal plan.
-
-The planner must decide:
-
-> When maintenance, project delivery, safety, capacity, and contractual considerations collide, which work receives access, which work moves, and how can that decision be defended?
-
-### Recurring conflict types
-
-| Conflict | Required answer |
-|---|---|
-| Competing access | Which activity receives the constrained location or possession opportunity? |
-| Safety or compatibility | Why can apparently efficient work not coexist? |
-| Programme dependency | What is blocked, and what is the downstream effect? |
-| Schedule versus access cost | Which trade-off is correct for the active scenario? |
-| Unexpected change | What breaks, what can remain unchanged, and what is the best recovery? |
-
-The organiser’s concrete disruption example was a thunderstorm preventing planned work on an exposed viaduct. This is the strongest evidence for a replanning bonus.
-
-<a id="users"></a>
-
-## 3. Users and product role
-
-The intended users are railway access planners and works controllers within or supporting:
-
-- Public Transport Operators (PTOs)
-- Operators such as SMRT and SBS Transit
-- LTA and project teams
-
-Contractors are affected stakeholders and potential consumers of allocation explanations. Judges evaluate the product but are not its operational persona.
-
-The product should help a controller:
-
-1. Generate and validate a schedule.
-2. See conflicts, bottlenecks, delays, and displaced work.
-3. Understand why an allocation was made.
-4. Compare the official scenarios without mixing their policies.
-5. Export the required files.
-6. Optionally assess and recover from a disruption.
-
-The interface should use professional operational language while remaining usable by someone who did not build the solver.
-
-<a id="qna"></a>
-
-## 4. Organiser Q&A clarifications
-
-| ID | Clarification | Consequence |
-|---|---|---|
-| `Q1` | The base task is to solve the official scheduling problem for all three scenarios. Replanning is bonus innovation. | Finish static scheduling and validation before disruption recovery. |
-| `Q2` | Likely users include PTOs, SMRT, SBS Transit, LTA, and project stakeholders who need a holistic schedule view. | Build decision support for planners and controllers, not a commuter product. |
-| `Q3` | Contractor negotiation, depot or engineering-train logistics, digital twin, and similar items are examples, not required subproblems. | Choose a focused bonus instead of covering every example. |
-| `Q4` | Contractor negotiation support means giving an operator or authority better evidence or leverage in discussions with contractors. It is not central to the core solver. | Treat it as an optional use of schedule evidence. |
-| `Q5` | Digital twin means modelling and resolving clashes before physical execution: “design twice, build once.” | A truthful what-if and conflict sandbox is sufficient; 3D/BIM is not implied. |
-| `Q6` | Maintenance and project work have different constraints and considerations. The practical challenge is prioritising them when access conflicts. | Explanations must expose the binding reason and displaced alternative. |
-| `Q7` | A perfect plan can fail after unexpected change; thunderstorm disruption of viaduct work was the example. | Prefer impact assessment and minimal-change replanning as the first bonus. |
-| `Q8` | The organiser said judging would use the same validator available to participants. | Validator results are the shared evidence boundary. |
-| `Q9` | No cross-problem-statement prize formula was provided. The organiser redirected the team to the published rubric. | Do not optimise for an invented cross-track threshold. |
-
-<a id="data"></a>
-
-## 5. Meaning of “same data”
-
-The Q&A contains a brief “same” after a question about final data. The team interprets this as the same **input contract**: schemas, semantics, rule system, and validator expectations. It does not mean identical public rows.
-
-This interpretation is required because the current official specification describes hidden or undisclosed instances.
-
-### Engineering consequence
-
-The application must:
-
-- Parse any valid instance following the official contract.
-- Derive topology, horizon, demand, and constraints from uploaded data.
-- Avoid hard-coded IDs, row counts, dates, names, or public-sample answers.
-- Report malformed inputs clearly.
-- Remain reproducible enough to diagnose hidden-instance failures.
-
-<a id="system"></a>
-
-## 6. Optimisation, AI, and human roles
-
-| Layer | Responsibility |
-|---|---|
-| Constraint or optimisation engine | Feasibility, complete scheduling, scenario objectives, and reproducible output. |
-| Reference validator | Independent evidence of compliance and score. |
-| AI assistance | Evidence-grounded explanations, questions over the schedule, impact summaries, and comparison of solver-generated alternatives. |
-| Human controller | Final operational judgment and acceptance of trade-offs. |
-
-An LLM must not invent the possession schedule or claim feasibility. Any explanation presented as fact must trace to input data, solver state, or validator output.
-
-Useful AI functions include:
-
-- Explain why an activity moved.
-- Identify the binding rule or bottleneck.
-- Summarise downstream effects of lost access.
-- Produce a handover or contractor discussion brief.
-- Compare validated alternatives.
-
-<a id="product"></a>
-
-## 7. Product direction
-
-### Product thesis
-
-> An explainable, human-supervised railway access decision-support system that converts competing programmes into validated schedules and makes the consequences of each allocation understandable.
-
-### Four questions the product must answer
-
-1. Is this schedule feasible?
-2. Why did this allocation or delay occur?
-3. Where is the plan congested or fragile?
-4. What changes when an access opportunity is lost?
-
-### Product principles
-
-- Feasibility before novelty.
-- Complete workload before visual polish.
-- Validator evidence before claims.
-- Explanation alongside the schedule.
-- General input handling rather than sample-specific logic.
-- One strong bonus after the core works.
-
-### Preferred bonus
-
-Impact assessment and minimal-change replanning after a late disruption.
-
-A credible implementation should show:
-
-1. A validated baseline.
-2. A specific disruption.
-3. Direct and downstream effects.
-4. A revised validated schedule.
-5. Which work changed and which remained stable.
-6. Why the recovery was selected.
-
-### Digital-twin interpretation
-
-If used, “digital twin” means a what-if planning layer over real solver state: network and timeline views, possession overlays, conflicts, capacity, and disruption comparison. Do not imply physical simulation or BIM integration unless implemented.
-
-<a id="algorithm"></a>
-
-## 8. Algorithm and constraint model
-
-### Solver choice
-
-Use **OR-Tools CP-SAT** as the primary optimiser.
-
-The problem is discrete and dominated by assignment, precedence, packing, conditional compatibility, and cardinality constraints. CP-SAT supports these directly, returns feasible incumbents and bounds under a time limit, accepts hints, and contains portfolio and large-neighbourhood-search machinery.
-
-This is a benchmarked choice, not a permanent assumption. Keep a small MILP comparison model and consider weighted MaxSAT only if the Boolean model scales better on generated hidden-style instances. Recent possession research has found CP, structure-aware ALNS, and MaxSAT effective in different settings; no solver family dominates every scale.
-
-### Precomputed structures
-
-Before solving, derive:
-
-- Week indices for every date.
-- Ordered sectors and platforms for every activity corridor.
-- Each access occurrence’s physical work footprint.
-- Buffer and mirrored closure footprints by nature of work.
-- Pairwise co-sharing and closure compatibility.
-- Predecessor graph, cycle check, earliest feasible week, and critical-chain slack.
-- Location-week capacity and contract/type weekly limits.
-
-For a corridor containing `n` tunnel sectors, occupancy contains those `n` sectors plus `n+1` platforms. This expansion reproduces the public sample’s 928 occupancy rows exactly.
-
-### Primary formulation
-
-| Variable | Meaning |
-|---|---|
-| `access[a,w]` | Activity `a` has one access in week `w`. |
-| `eclo[a,w]` | That access uses ECLO; it implies `access[a,w]`. |
-| `night[a,w,n]` | The access uses contract-local `access_night` index `n`. |
-| `member[a,w,l,g]` | The activity belongs to local possession group `g` at occupied location `l`. Groups can differ by location. |
-| `used[w,l,g]` | Local group `g` exists and counts against location supply. |
-| `completion[a/c]` | Last scheduled week for an activity or contract. |
-| `overrun[c]` | Contract completion beyond its planned completion date; the validator charges that delay through every activity-priority nudge in the contract. |
-| `excess[l,w]` | Possession groups above nominal location capacity. |
-| `eclo_window[line]` | Scenario C’s two-week ECLO window position. |
-
-Use half-units for workload: `2 × sum(access) + sum(eclo) >= 2 × total_accesses`. The independent checker must retain the official `>=` rule. The optimiser should remove dominated extra rows with a post-score row-count tie-break rather than incorrectly replacing the rule with equality.
-
-Local group membership must be indexed by location. The public sample contains activity pairs that share at one common location and use different groups at another in the same week, so one global group per activity-week is invalid.
-
-Start with direct local slots and symmetry breaking:
-
-- Use consecutive labels only: `used[g+1] <= used[g]`.
-- Canonically renumber labels in exported files.
-- Let CP-SAT detect remaining matrix symmetry; benchmark stronger value-precedence constraints before retaining them.
-- Restrict access variables to eligible weeks and group variables to the activity footprint.
-
-Do not pre-enumerate every legal batch initially. On the public instance, week-filtered batch enumeration creates about 72,683 candidates, while direct local slots require under 16,000 membership booleans in the largest scenario. Retain batch columns as a fallback for weak-propagation hotspots.
-
-### Hard-constraint encoding
-
-| Area | Encoding requirement |
-|---|---|
-| Workload | Schedule every activity to at least its required half-unit workload; allow at most one activity access per week. |
-| Sequence | Derive consecutive `access_seq` values deterministically after sorting selected weeks. |
-| Start and horizon | No occurrence precedes the planned start week or exceeds the declared horizon. |
-| Predecessor | The successor’s first week is strictly later than the predecessor’s final week. |
-| Occupancy | Every scheduled occurrence occupies all tunnel and platform locations in its corridor. |
-| Closures | Apply same-bound buffers, Live opposite-bound mirroring, and Live cross-line interchange effects. |
-| Possession mix | Each occupied location/week/group is exactly one PM, one PC with at most three C, or at most four C. |
-| Co-sharing | Closure exemption applies only within the same location, week, and group. |
-| Capacity | Count occupied groups per location/week, then apply the scenario’s hard or soft capacity policy. |
-| Weekly allocation | Distinct local night indices stay within the contract/type weekly allowance. |
-| Workfront | Activities sharing a contract/type/night stay within the workfront count. |
-| ECLO | Forbidden in A; permitted in B; restricted to each line’s continuous two-week window in C. Cross-line Live ECLO must fit both windows. |
-| Results | Contract completion is the latest activity finish; overrun is measured against planned completion. |
-
-Official run A-001 established two missing closure details: a possession closure includes its occupied work footprint, and a Live interchange closure plus its configured buffer propagates onto the other line. Co-sharing remains transitive through same-location/group bridges. The corrected checker reproduced all five A-001 violations exactly; A-002 and the first B/C runs then passed officially. Protected outputs also pass the stricter buffer-to-buffer screen.
-
-### Scenario objectives
-
-Optimise the validator’s exact penalty, after achieving feasibility:
-
-| Scenario | Hard policy | Primary objective |
-|---|---|---|
-| A | Nominal capacity; no ECLO | Priority-weighted activity overrun |
-| B | No planned-completion overrun | `7 × excess access-nights + 5 × ECLO nights` |
-| C | At most one excess group per location/week; two-week ECLO windows | A’s overrun term plus B’s excess and ECLO terms |
-
-The prose ordering of ECLO versus excess access can disagree with the arithmetic because ECLO yields only half an additional work unit per access. The optimiser must compare complete counterfactual schedules using the formula, not encode a fixed “ECLO first” heuristic. Confirm the validator’s implementation before freezing this logic.
-
-When all scenarios use the same input, solve A first and use its validated schedule as C’s guaranteed hard-feasible incumbent. Use targeted compression of A’s late activities to seed B. Do not transfer B directly into C because B can violate C’s excess and ECLO-window limits.
-
-### Symmetry control and scale
-
-Possession groups and local nights are interchangeable labels. Break symmetry by using the lowest available label first and ordering equivalent groups. Build conflict cliques and aggregate possession lower bounds instead of relying only on pairwise implications. If one monolithic model stalls, decompose week assignment from local packing, but never accept a master incumbent until detailed packing passes the independent checker.
-
-### Public-instance benchmark
-
-The supplied instance contains:
-
-| Measure | Value |
+| Public planning instance | Verified value |
 |---|---:|
-| Horizon | 30 weeks |
+| Planning horizon | 30 weeks |
 | Contracts | 14 |
 | Activities | 54 |
-| Access workload | 192 standard-night units |
-| Locations | 76 |
-| Predecessor links | 6 |
-| Access-week Boolean upper bound after planned starts | 994 |
-| Activity-location-week presences | 4,908 |
-| Direct group-membership Boolean upper bound | 10,966 in A; 15,874 in C |
+| Required standard work units | 192 |
+| Network locations | 76 |
+| Explicit predecessor links | 6 |
+| Organizer-accepted Scenario A penalty | **0.0** |
+| Organizer-accepted Scenario B penalty | **0.0** |
+| Organizer-accepted Scenario C penalty | **0.0** |
 
-The tightest raw tunnel demand is around Beta eastbound `H01–H02`, `H02–S15`, and `S15–S16`. Raw demand does not account for timing or co-sharing, so use it to seed search and diagnostics, not as a feasibility conclusion.
+## Try NightShift in 90 seconds
 
-The supplied Scenario A schedule is a feasible regression fixture with 192 accesses and no ECLO. Under the validator-confirmed contract-completion aggregation, its score is `137.9`.
+1. Open the [live NightShift deployment](https://nightshift-hmhb4fs4qa-uc.a.run.app/). The organizer-accepted Scenario A reference plan is ready to explore immediately.
+2. Move the week control across the 30-week horizon. The network view shows the live footprint, shared possessions, and weekly capacity pressure.
+3. Open **Work schedule** to search by activity or contract and inspect every planned visit, location, access type, and completion date.
+4. Open **Delivery insights** to see contracts on time, activity progress, workload distribution, and the score decomposition.
+5. Select **Report disruption** and reduce capacity at a location and week. NightShift preserves the completed past, solves the remaining problem, and presents the changed activities and before/after score.
+6. Ask the assistant a plan question by text or voice. For example: “Capacity at this platform is unavailable in week 12. What changes?” The assistant creates a proposal, while the scheduling engine computes the plan.
+7. Review the candidate. The active baseline changes only when the operator explicitly adopts it. Downloaded output contains exactly the three required submission CSVs.
 
-Resource-independent workload timing plus the confirmed closure interaction give exact public-instance lower bounds:
+No API key is needed to explore the published reference plan, analytics, schedule, or network view. Voice and free-form assistant features require server-side OpenAI configuration.
 
-| Scenario | Lower bound | Cause |
-|---|---:|---|
-| A | `137.9` | C006 contributes `85.4`, C010 `45.5`, and the unavoidable A036/A075 closure trade-off adds C014 `7.0`. |
-| B | `30.0` | Six ECLO nights are necessary to meet every hard date; the full model proves no lower score. |
-| C | `62.7` | Two ECLO nights each for A036/A059 cost `20.0`; A036 still forces seven days of C006 delay worth `42.7`. |
+## What it does
 
-Each protected public answer matches its bound and has passed the official validator.
-
-### Current executable evidence
-
-- The schema-driven footprint expander reproduces all 928 public activity-location-week occupancy keys without activity-specific rules.
-- **A-002:** officially feasible at `137.9`; 28 overrun days across three contracts, zero excess, zero ECLO. It reaches the structural lower bound.
-- **B-001:** officially feasible at `30.0`; zero overrun/excess and six ECLO nights. The full bridge-safe model proves `<30.0` infeasible.
-- **C-001:** officially feasible at `62.7`; seven overrun days in C006, zero excess, four ECLO nights. The full model and workload argument prove the same lower bound.
-- The organizer's upstream `main` was rechecked at 2026-09-19 10:03 +08 and remains commit `966c976`. All 14 public PS1 files, excluding `.DS_Store`, are byte-identical to the files fetched directly from that exact commit.
-- Combined public penalty is `230.6`. Lower is better; the portal does not publish a cross-scenario combined metric.
-- The current controller reconstructed all three optimum scores from scratch in 15/15 fixed-policy runs across five seeds: A 15.425–25.742 seconds, B 9.902–23.039, and production C 17.360–37.354. Every schedule hash differed and only local validation applies, so the official ZIPs remain the release artifacts.
-- Both local scorers reproduce every official score exactly. The earlier activity-completion proxy was rejected after A-002 exposed the correct contract-completion aggregation.
-- `deliverables/local-validator/nebula-ps1-validator.pyz` is a standard-library-only local preflight tool, not the organiser's validator. Its feasibility engine packages the tested evaluator and accepts a result only when a separate raw-CSV scorer agrees. The deterministic build and isolated Python 3.9 replay reproduce the organiser sample, the five A-001 failures, and accepted A-002/B-001/C-001 scores without portal access.
-- The corrected closure checker reproduces the five A-001 violations exactly and accepts all three official incumbents under both standard and strict buffer screens.
-- All 196 regressions pass. They pin official scores/hashes, A-001 violations, contract aggregation, arbitrary-line topology-derived interchange crossover, workload, packing, ECLO windows, pruning, incumbent protection, full heuristic-portfolio execution, guarded B/C cost-contributor repair, Scenario C delay-only, alternating contract/precedence/footprint dependency repairs, both production integrations of the terminal precedence revisit, two-tier repair escalation, its five-seed irregular matrix, three identifier-permuted irregular recoveries with explicit no-proof and strict-conflict boundaries, equal-score strict-hedge promotion, higher-score hedge rejection, selected-artifact conflict reporting, exact no-op behavior on all official incumbents, conditional-bound scope telemetry, independent C construction behind a protected A fallback, complete-versus-partial structural-hint policy, independently constructed two- and three-line oracles, dense no-hint construction, guarded dense C fallback, additive, coupled, irregular, cross-module, and precommitted three-line Live-interchange trade-offs plus their identifier/order and eight-component scale falsifications, corrected constraint-complete decomposition with a retained rejected proof and independent exact control, checked idle-week and ECLO compaction with incumbent-state preservation, duplicate elimination, exact score ordering including zero-supply excess, multi-activity contract aggregation, exhaustive legal-mix and scenario-capacity equivalence, malformed-submission rejection, repeated independent-line gains, exhaustive ECLO-window filter falsification, access-length generalization through seven rows, equal-score normalization composition, internal-gap tie handling, constrained exhaustive normalization comparisons, confirmed Scenario C prediction arithmetic, core constraint boundary mutations, final-selection post-processing in both production controllers, exact official-C no-op behavior, retained-corpus hash preservation, final archive byte integrity, aggregate pre-upload readiness, the exact-output 360-activity replay, incremental full-versus-week-local closure equivalence, 720-activity modular and positive/zero-score dense holdouts, checked complete-hint promotion with fault-injected rejection, pre-model zero-floor validation with strict-policy refusal, coupled B proof-scope and fallback-scale cases, isolated public-certificate regeneration, the preserved same-seed rejected heuristic comparison, five-seed asymmetric mixed-type B proof, fail-closed portable-validator packaging and dual-score checks, checked B lower-bound model bypass, binding strict-improvement excess-budget capping, protected-incumbent resume, invalid-incumbent refusal, fail-closed independent-score admission, A/C timeout/proof preservation, fail-before-write decomposed B refusal, full-run missing-component-proof injection, validation-before-publication on decomposed merges, atomic three-file publication with fault-injected cleanup, fail-safe candidate-portfolio selection, malformed-candidate rejection, programmer-error propagation, proof-safe additive-first portfolio execution, seven-structure cross-activity dependency auditing, versioned machine-readable coupling provenance, a 56-dataset/3.16-million-pair corpus audit, six mutation-killing edge witnesses, and a pinned graph-conservatism audit, plus a current-code public reconstruction that cannot replace protected artifacts and recomputation of the benchmark matrix.
-- On a frozen 360-activity, 320-contract independent fixture, one-worker A/B/C construction preserves the exact scores, stages, hashes, and zero strict conflicts after week-local structural-hint screening. Recorded runtime falls from 110.705/118.942/232.015 seconds to 15.140/15.162/39.090 seconds, a 5.94–7.84× speed-up. This is one local seed, not an official or general runtime guarantee.
-- A second replay before footprint caching reproduces the same hashes in 14.776/14.873/38.586 seconds. Caching immutable activity footprints per loaded instance then preserves the same A/B/C outputs in 3.014/1.308/11.218 seconds, another 3.44–11.37× improvement. Profiling reduces 544,500 footprint calls and 18.875 cumulative seconds to below the top-25 call sites; the original-to-current aggregate replay improves 29.7×. These are local timings, not score changes.
-- A precommitted 720-activity, 640-contract scale holdout succeeds 3/3 at A=`560`, B=`800`, C=`560` with zero strict conflicts in 13.395/4.782/27.517 seconds. A's two-second direct heuristic returns `UNKNOWN`; the three-second unrestricted fallback then proves `560`. This is a fail-safe portfolio success and a warning that heuristic construction alone no longer clears the doubled model.
-- A precommitted 164-activity shared-bottleneck holdout first failed 0/3 because complete structural hints never became solver incumbents within the fixed budget. Complete hints are now canonicalized, serialized, and fully checked before use as protected incumbents. The unchanged replay reaches A/B/C=`0.0` with zero strict conflicts; corrupting one occupancy row causes explicit rejection and no emitted submission.
-- A checked zero-score incumbent now returns immediately at the global nonnegative objective floor instead of rebuilding a model. The dense replay preserves exact hashes while improving 1.070/12.321/2.596 seconds to 0.580/0.679/1.407; positive-score candidates still use the full solver path.
-- Fresh positive-score replays under the checked-complete-hint controller preserve 360-activity scores `280/400/280` and 720-activity scores `560/800/560`, all dual-scored with zero strict conflicts. A/C hashes change because a different checked equal-score schedule is selected; B remains byte-identical. The 720-activity A stage improves from fallback to its validated constructor incumbent.
-- A fresh public-data seed-6 replay of the current controller locally reconstructs A=`137.9`, B=`30.0`, and C=`62.7`; both scorers agree and all confirmed hard constraints pass. Its audit-only strict-buffer screen reports A=`4`, B=`0`, C=`9` conflicts, so these new hashes do not replace the strict-clean, officially confirmed incumbents. No portal attempt was used.
-- A separately frozen 324-activity, 324-contract shared-bottleneck holdout succeeds 3/3 at the global score floor `0.0`. Moving its complete candidate check ahead of CP-SAT preserves every score, stage, strict count, and hash while reducing 2.363/2.774/5.478 seconds to 0.199/0.220/0.536. The 164-activity dense replay similarly falls from 2.666 seconds aggregate to 0.398. Positive-score 360/720-activity replays retain all results and still use the full model.
-- Adding one independent three-unit, two-week-deadline activity to the frozen 324-activity dense case creates proved A/C=`7.0` and B=`10.0` optima. The original fixed policy reaches strict-clean A/C=`7.0` but fails B after its unrestricted fallback expands to 13.18 million variables. The generic constructor now emits the minimum deadline-forced ECLO rows, fully checks the candidate, and may return before model construction only when its score equals a resource-independent workload lower bound. B recovers at `10.0` in 0.155 seconds, and a fresh A/B/C replay reaches strict-clean `7.0/10.0/7.0`. The original 2/3 failure and an interrupted proof-unaware intermediate are preserved.
-- A precommitted coupled B fixture separates workload and capacity proofs: two PC and one C activity each require two ECLO rows before week 2, while their transitive legal packing forces two groups at each of three locations in both weeks. The independent optimum is `30` ECLO plus `42` excess, or `72`. Production correctly refuses the workload-only `30` bound, runs full verification, and proves `72` in 0.015 seconds with a solver-generated hash different from the oracle.
-- [`artifacts/public-optimality-audit-2026-09-19/CERTIFICATE.json`](artifacts/public-optimality-audit-2026-09-19/CERTIFICATE.json) independently certifies the public optima from raw CSVs. A no-hint, no-frozen-activity CP-SAT relaxation deliberately omits nonnegative capacity cost and several hard constraints yet still optimizes to A=`137.9`, B=`30.0`, C=`62.7`; separate models prove thresholds `137.8/29.9/62.6` infeasible. The executable audit also enumerates all 5,842 A036/A075 access-subset pairs and rechecks the unchanged official witness bytes three ways. This is a local mathematical certificate, not a portal optimality statement.
-- The certificate is regenerated inside an isolated temporary directory during the test suite. Stable input hashes, analytical enumerations, relaxed optima/bounds, strict-better infeasibility results, and six sensitivity outcomes must match the committed evidence; wall times and timestamps are deliberately excluded from equality.
-- Scaling the coupled B fixture to four PC groups linked by three C bridges forces 14 ECLO rows and 18 excess access-nights, for exact B=`196`. The deliberately restricted direct heuristic is infeasible at its two-group domain; the unrestricted bridge-safe fallback independently constructs and proves `196` in 0.127 seconds. Its hash differs from the frozen oracle, and both closure policies pass.
-- On the altered-capacity/priority fixture, no-hint standard construction reaches A=`4599.7` with a 0.87% bound gap, and proves B=`30.0` and C=`59.9`. The stricter buffer-to-buffer hedge fails to construct B after 240 seconds while the validator-confirmed standard rule solves it in 18.7 seconds; strict overlap is therefore audit-only on unseen inputs.
-- On a separately generated two-line topology with novel identifiers and no public-submission input, the staged solver reconstructs and proves A=`7.0`, B=`10.0`, and C=`7.0`. The independent oracle is generated with separate footprint/result logic; B pays two necessary ECLO nights while C rationally accepts seven points of delay instead.
-- Experimental `solve-flexible-relaxation` flags expose per-solve deterministic time and OR-Tools interleaved search. Two structural-B repetitions were byte-identical at `30.0`, but took 98.8–104.9 seconds versus 16.6–21.2 seconds for successful ordinary portfolio seeds. Keep this as an audit mode, not the default score path.
-- [`BENCHMARK_MATRIX.json`](BENCHMARK_MATRIX.json) is the machine-readable cross-regime evidence table. All 46 retained A/B/C cases are hard-feasible, dual-scored, and match recorded proof bounds; 40 are full-instance proofs, six are frozen-neighborhood proofs, and only the three public rows are reference-validator-confirmed. A three-line fixture and three adjacent-bridge fixtures test topology-derived Live crossover without public identifiers. The compact congested case proves A=`700.0`, B=`10.0`, C=`10.0`; the eight-job scaled case proves A=`273.0`, B=`80.0`, and enumerated C=`262.0` after a generic checked ECLO compaction closes the blind controller's C=`273.0` gap. The largest independent fixture has 180 activities; five one-worker seeds per scenario all reached the same proved A=`140.0`, B=`200.0`, and C=`140.0` scores under a two-second heuristic budget. A compact 84-activity shared-bottleneck fixture initially failed 15/15 runs; generic legal-batch and closure-screened chain hints then reached proved score `0.0` in all 15 runs without oracle input. A 106-activity held-out dense variant first exposed multi-contract and direct-C gaps; after preserving that blind result, generic workfront-aware chain placement plus the intended A-as-C controller reached proved `0.0` in all 15 production-path runs. A pre-generated additive trade-off reached A=`7.0`, B=`10.0`, C=`7.0` blindly. A coupled follow-up first exposed poor A/C timing and complete B failure; deadline-aware non-binding hints plus a reported ten-second repair budget then reached analytical A=`1820.0`, B=`20.0`, C=`920.0` in all 15 runs. An irregular partial-hint fixture exposed workfront, nondeterminism, and A-seed suppression errors; the corrected eight-worker controller reaches proved B=`30.0` and C=`31.0`. C recovered `31.0` across five seeds with the 30-second production repair budget; the 10-second compressed policy failed at `63.0` on fresh seed 5. A frozen 72-activity cross-module holdout reached and proved C=`76.0` blindly. Four successive alternating dependency holdouts reached C=`0.0` after preserving their narrower conditional-proof failures.
-- A production-budget irregular seed-5 replay exercised the guarded-A failure branch end to end. Narrow repair recovered C=`31.0` from C=`63.0`; expanded repair preserved it. Both scorers and both closure screens accept hash `18b6eee516d8239407a52172ae7c5f66bbd0f53bd59a526284bdd22c4079711c`.
-- A serial five-seed repair matrix independently repeated the same narrow-then-expanded policy from the checked C=`63.0` incumbent. All five narrow tiers reached C=`31.0`; all expanded tiers retained it; every final was dual-scored and clean under both closure policies. Five distinct hashes show schedule diversity, not one copied answer.
-- Generalisation remains the main risk: timed no-hint construction varies across seeds and hidden topology/scale are unknown. No official run is spent on an unvalidated candidate.
-
-The append-only evidence, hashes, parameters, failures, and limitations are in `EXPERIMENT_LEDGER.md`. Executable code is under `src/nebula_ps1`; regression tests are under `tests`.
-
-The protected public answer keys are in `deliverables/public/A`, `B`, and `C`. Each directory contains exactly the three required CSV files. `deliverables/public/MANIFEST.json` pins their official scores, run IDs, and hashes.
-
-Upload-ready copies are generated only in `deliverables/final-submission`. Its manifest proves that every archived member matches the protected official incumbent bytes. Do not use the historical generic ZIPs under `deliverables/validator`: `A.zip` is the failed A-001 artifact, and the unnumbered B/C archives are not the confirmed uploads. Packaging does not authorize or perform a portal submission.
-
-Before any user-authorized upload, run `PYTHONPATH=src .venv/bin/python scripts/run_release_gates.py`. It serially runs the portable-validator verification and final-package audit; require 19 isolated checks, 30 package checks, the pinned archive hash, and `all_ready: true`. Serial execution is mandatory because concurrent validator rebuilds can race. This is local verification only and consumes no portal attempt.
-
-<a id="improvement"></a>
-
-## 9. Score improvement loop
-
-### Solve in stages
-
-1. **Feasibility:** ignore soft score and find any complete valid schedule.
-2. **Primary score:** optimise the exact scenario objective.
-3. **Tie-break:** after fixing the best primary score, minimise unnecessary churn, fragmented work, and arbitrary label use. Tie-breakers must not weaken the official score.
-
-The executable staged path uses the fast direct-component formulation only to generate candidates. It runs every requested heuristic attempt, suppresses those models' bounds, and rejects candidates that fail the full checker or requested strict screen. When complete candidates remain unsafe, the controller ranks them by conflict count and score, derives the best candidate's conflict activities, freezes unaffected access decisions, and tries a bounded bridge-safe local repair. Local failure is inconclusive and falls through to repair-hinted and unhinted broad construction. Every safe candidate is pruned and fully checked before protected bridge-safe improvement. Scenario B then repairs direct ECLO/excess contributors. Scenario C first repairs the narrower neighborhood formed by overdue contracts, ECLO/excess contributors, same-contract activities, precedence components, and footprint competitors. It then runs a separately reported ten-second expansion that revisits precedence after footprint expansion, adds contract peers only for newly reached dependencies, and closes precedence once more around those peers. This preserves the narrow search's measured recovery power while covering three precommitted conditional-proof failures. Unrelated access decisions remain frozen, and failure is inconclusive. Telemetry labels bounds from these repairs as neighborhood-conditional rather than full-instance proofs. Scenario C protects an A-derived fallback but tests its first C construction independently so a feasible, poor A schedule cannot suppress C-specific trade-offs. Checked idle-week normalization may seed repeated ECLO compaction before verification and once more after the final solver/repair/hedge selection. An equal-score normalization is never itself promoted, and only a strictly lower checked final result can replace the incumbent. Audit artifacts stay outside the final three-CSV directory.
-
-The first candidate-generation attempt also receives a deterministic structural hint: interchangeable same-footprint C/PC work is packed into legal possession batches, and remaining singleton predecessor chains are placed backward only when the closure screen stays clean. The hint never constrains the model or establishes feasibility. Incomplete hints are cleared for A but retained for B/C; complete hints remain available in every scenario. Later heuristic attempts remain unhinted to preserve search diversity.
-
-### Initial solution
-
-Construct a warm start using the following signals:
-
-- Earliest feasible week and predecessor criticality.
-- Contract priority and activity priority.
-- Deadline slack.
-- Buffer size and Live/PM restrictiveness.
-- Corridor scarcity and hotspot demand.
-- PC anchors that can host compatible C work.
-- Access demand and workfront limits.
-
-Use the public sample schedule as a regression fixture, not as a template for hidden rows.
-
-### Improvement operators
-
-Run multiple time-bounded CP-SAT searches with different seeds and worker counts. Keep the best independently validated incumbent and its best bound. Use targeted large-neighbourhood search around:
-
-- Late or high-penalty activities.
-- Congested location-weeks.
-- Predecessor chains.
-- Poor PC/C packing.
-- Weeks using excess capacity.
-- ECLO selections and Scenario C window placement.
-
-Destroy only the affected assignments and repair with the exact model. A hint is only a starting suggestion; it does not require the solver to stay close.
-
-Let the search adapt online. Track each destroy/repair operator’s feasibility result, score gain, bound gain, and deterministic time. Use a simple multi-armed-bandit policy to balance exploration and exploitation within the current instance. Normalise rewards within each scenario, because A, B, and C have different score scales. This is the first self-improvement mechanism; it needs no offline training corpus.
-
-### Validator-guided self-improvement
-
-For every candidate:
-
-1. Run the internal checker.
-2. Generate all three output files deterministically.
-3. Run the reference validator.
-4. Reject any hard violation.
-5. Compare score components with the internal calculation.
-6. Convert every mismatch into a regression test.
-7. Store the best feasible result by dataset hash, scenario, code commit, seed, time limit, score, and validator version.
-
-Prioritise the largest validated penalty contributor when choosing the next neighbourhood. Never modify rules to fit one public result.
-
-### Training decision
-
-Do not train a scheduling model initially. We have one public instance, no representative labelled corpus, and hard constraints that require guarantees.
-
-Self-improvement should first mean:
-
-- Better feasible warm starts.
-- CP-SAT portfolio, parameter, seed, and worker-count comparison.
-- Validator-driven regression repair.
-- Structure-aware large-neighbourhood search with online operator selection.
-- Synthetic instances for robustness and performance testing.
-
-A learned heuristic may be considered only after the exact solver and checker are stable and a diverse synthetic corpus exists. Its permissible role is to predict branching order, promising weeks, or neighbourhoods. Every learned proposal must still pass the exact model and validator.
-
-The training gate is representative generalisation: held-out seeds are insufficient. Hold out topology, scale, priority mix, supply pressure, predecessor density, and hotspot concentration. Do not train an end-to-end schedule generator on the single public instance.
-
-### Benchmark protocol
-
-For every formulation or search change, use fixed time budgets and record:
-
-- Internal and reference-validator feasibility.
-- Time to first feasible solution.
-- Best validated score over time.
-- Best bound, optimality gap, and gap integral when available.
-- Deterministic time, wall time, worker count, seed, solver version, model size, and peak memory.
-
-Compare medians and tail behaviour across seeds and generated structural regimes. Use the best validated run for submission, but do not choose the method from one lucky seed.
-
-### Verification suite
-
-- One minimal passing and failing case for each hard rule.
-- Boundary tests for dates, capacities, workfronts, legal mixes, and ECLO windows.
-- Cross-contract predecessor and cycle tests.
-- Exact corridor-expansion comparison with the supplied occupancy file.
-- Property and metamorphic tests: row order and consistent ID/group renaming must not change results; increased supply cannot invalidate a fixed schedule.
-- Differential tests between the internal checker and reference validator.
-- Determinism tests for output generation.
-- Performance tests at increasing synthetic sizes.
-
-The full controlled validator experiment matrix is preserved in `RESEARCH_LEDGER.md`. Run one semantic question per case so one hard failure cannot mask another.
-
-### Replanning objective
-
-Warm-starting is not minimal-change replanning. For a disruption, use a lexicographic recovery objective:
-
-1. Restore hard feasibility and minimise the official scenario penalty.
-2. Minimise the number of moved activity accesses.
-3. Minimise total week displacement.
-4. Minimise changed ECLO and local-night decisions.
-5. Compare possession changes by membership, not arbitrary group-label strings.
-
-<a id="build"></a>
-
-## 10. Build order
-
-| Gate | Required outcome |
+| Capability | What the operator gets |
 |---|---|
-| `P0: Semantics` | Parse arbitrary valid input, reproduce all 928 public activity-location-week occupancy keys, build an independent checker and deterministic serializer, and retain explicit tests for every uncertain rule. |
-| `P1: Core solver` | Implement week-indexed CP-SAT with location-specific groups for A/B/C; generate complete output without manual editing and preserve incumbent/bound telemetry. |
-| `P2: Validator closure` | Run the reference validator, eliminate hard violations, record scores, and preserve regressions. |
-| `P3: Score engine` | Establish lower bounds, A-to-C/B warm starts, multi-start LNS, online operator selection, and fair score-versus-time benchmarks. |
-| `P4: Controller experience` | Provide upload, solve, inspect, explain, validate, and export in one usable flow. |
-| `P5: Replanning bonus` | Apply a disruption, identify impact, produce a lexicographically low-churn recovery, and validate it. |
-| `P6: Extensions` | Add natural-language analysis, negotiation briefs, fragility views, or richer simulation only if earlier gates are secure. |
+| Fresh schedule generation | Upload the eight required CSVs and select Scenario A, B, or C. NightShift builds a new CP-SAT model from those files. |
+| Scenario-aware optimization | Hard constraints and penalty terms change with the selected operating scenario. |
+| Safety gate | A candidate must pass the primary evaluator and an independent score recomputation before it is downloadable. |
+| Search observability | Streaming progress shows solver status, incumbent objective, bound, model size, runtime, and validation state. |
+| Network visualization | Inspect the planned footprint and possession pressure by week and location. |
+| Delivery analytics | Trace contract completion, delayed work, excess use, ECLO use, and activity-level details. |
+| Disruption replanning | Change capacity for a location and week, freeze completed history, solve the remaining horizon, and compare the candidate with the baseline. |
+| Natural-language querying | Ask questions about the active plan without reading raw CSVs. |
+| Voice control | Use an OpenAI Live WebRTC session to discuss the plan and prepare a disruption proposal. |
+| Human approval | The assistant may propose and the solver may calculate, but only the operator can adopt a new active plan. |
+| Submission export | Download a ZIP containing `SCHEDULE_ACCESS.csv`, `SCHEDULE_OCCUPANCY.csv`, and `RESULTS.csv`. |
 
-Current gate: P0–P3 are complete for the public instance. All scenarios are officially feasible and match proved lower bounds. Current engineering priority is hidden-instance construction reliability, runtime benchmarking, and the controller experience.
+<table>
+  <tr>
+    <td width="50%"><img src="docs/assets/nightshift-schedule.png" alt="NightShift searchable work schedule"></td>
+    <td width="50%"><img src="docs/assets/nightshift-insights.png" alt="NightShift contract delivery insights"></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Trace every planned visit</strong></td>
+    <td align="center"><strong>Explain delivery and penalty</strong></td>
+  </tr>
+</table>
 
-### Required product states
+## Architecture
 
-The interface must distinguish:
+```mermaid
+flowchart LR
+    A[Eight input CSVs] --> B[Strict ZIP and schema checks]
+    B --> C[Instance parser and topology model]
+    C --> D[Scenario policy]
+    D --> E[OR-Tools CP-SAT optimizer]
+    E --> F[Primary evaluator]
+    F --> G[Independent raw-CSV scorer]
+    G -->|agree| H[Schedule, analytics, and export]
+    G -->|disagree| X[Block publication]
 
-`input loaded → solving → files generated → validating → feasible/infeasible → exported`
+    I[Operator disruption] --> J[Validated capacity override]
+    J --> K[Freeze completed history]
+    K --> E
 
-Producing files is not the same as passing validation.
+    L[Text or voice request] --> M[OpenAI assistant]
+    M --> N[Structured proposal]
+    N --> J
+    H --> O[Human review]
+    O -->|adopt| P[New active baseline]
+```
 
-### Explanation structure
+### Technology stack
 
-For a significant decision, show:
-
-`decision → binding reason → evidence → displaced alternative → consequence`
-
-<a id="judging"></a>
-
-## 11. Judging and evidence
-
-The official judging dimensions are **Problem Fit**, **Technical Execution**, and **Ease of Use**.
-
-| Dimension | Evidence we should present |
-|---|---|
-| Problem Fit | Correct scenario handling, complete outputs, understandable trade-offs, and a bonus tied to the real disruption problem. |
-| Technical Execution | Reference-validator results, hidden-instance-ready ingestion, reproducible solving, and regression tests. |
-| Ease of Use | A complete upload-to-export flow, clear schedule inspection, explanations, and honest failure states. |
-
-### Claim boundary
-
-Do not claim that the solver is feasible, hidden-instance-ready, faster, or operationally effective until the corresponding test exists. Public-instance validation proves only that result on that instance.
-
-<a id="demo"></a>
-
-## 12. Demo narrative
-
-### Core
-
-1. Upload an instance that is not hard-coded.
-2. Generate one official scenario.
-3. Run the reference validator.
-4. Inspect a contested location or delayed programme.
-5. Explain the trade-off from real evidence.
-6. Export the official output files.
-
-### Bonus
-
-1. Begin with a validated baseline.
-2. Remove a viaduct access opportunity because of a thunderstorm.
-3. Show affected work and downstream risk.
-4. Generate a low-churn recovery.
-5. Compare changed and unchanged work.
-6. Validate the recovered schedule.
-
-Any activity count, score, time saving, or improvement stated in the demo must come from the implemented run.
-
-<a id="decisions"></a>
-
-## 13. Decision register
-
-| ID | Date | Decision |
+| Layer | Technology | Role |
 |---|---|---|
-| `D1` | 2026-09-18 | Keep one canonical, complementary knowledge document; the official specification and validator remain authoritative. |
-| `D2` | 2026-09-18 | Design for works controllers, operator planners, and LTA/project stakeholders. |
-| `D3` | 2026-09-18 | Treat A/B/C scheduling as core and disruption replanning as bonus. |
-| `D4` | 2026-09-18 | Interpret “same data” as the same schema, semantics, and validator contract, not identical public rows. |
-| `D5` | 2026-09-18 | Use formal optimisation for scheduling; restrict AI to evidence-grounded assistance. |
-| `D6` | 2026-09-18 | Use disruption impact assessment and minimal-change replanning as the preferred first bonus. |
-| `D7` | 2026-09-18 | Treat digital twin as a truthful what-if and conflict-planning layer, not a required 3D replica. |
-| `D8` | 2026-09-18 | Do not describe a generated schedule as feasible until the reference validator passes. |
-| `D9` | 2026-09-18 | Keep the repository private during active development unless the team deliberately changes visibility. |
-| `D10` | 2026-09-18 | Use OR-Tools CP-SAT as the primary scheduling optimiser. |
-| `D11` | 2026-09-18 | Optimise the validator’s exact objective; use prose guidance only as a search hint. |
-| `D12` | 2026-09-18 | Use staged feasibility, score optimisation, and tie-breaking rather than one blended objective. |
-| `D13` | 2026-09-18 | Use validator-guided regression, multi-start search, and large-neighbourhood search for self-improvement. |
-| `D14` | 2026-09-18 | Do not train a scheduling model until the exact solver, checker, and diverse benchmark corpus exist. |
-| `D15` | 2026-09-18 | Use week-indexed optional access rows and location-specific possession membership as the first formulation. |
-| `D16` | 2026-09-18 | Start with canonical direct group slots; retain set-partitioning columns, MILP, and MaxSAT as measured fallbacks. |
-| `D17` | 2026-09-18 | Use an online bandit over structure-aware LNS operators before any offline learned heuristic. |
-| `D18` | 2026-09-18 | Use A as C’s warm start on shared inputs and compress A’s late work to seed B. |
-| `D19` | 2026-09-18 | Benchmark feasibility and score over time across seeds and structural regimes; never select a method from one final run. |
-| `D20` | 2026-09-18 | Define replanning churn explicitly; a solution hint alone is not a stability guarantee. |
-| `D21` | 2026-09-19 | Protect A as Scenario C's fallback, but always test an independent C construction and repair checked ECLO/excess contributors before selection. |
-| `D22` | 2026-09-19 | Use no remaining official portal attempt unless the user explicitly authorizes that specific validator run. Continue improvement with local checks, independent scoring, and frozen synthetic holdouts. |
+| Optimization | Python, Google OR-Tools CP-SAT | Discrete scheduling, feasibility, and scenario objectives |
+| Domain model | Typed Python modules | CSV parsing, topology, closures, policies, outputs, and validation |
+| API | FastAPI, Uvicorn | Solving, streaming progress, replanning, assistant, readiness, and references |
+| Interface | HTML, CSS, vanilla JavaScript | Fast operator console without a heavy client framework |
+| Conversational layer | OpenAI Responses API and Live WebRTC | Plan questions, structured disruption proposals, and voice interaction |
+| Deployment | Docker, Google Cloud Run | Public HTTPS service with bounded concurrency and isolated temporary workspaces |
+| Quality | pytest, independent scorer, retained audit artifacts | Regression protection and inspectable evidence |
 
-<a id="open"></a>
+## From CSVs to a trustworthy plan
 
-## 14. Open questions
+### 1. A strict input contract
 
-| ID | Priority | Question | Resolution |
-|---|---:|---|---|
-| `O1` | Resolved | Where is the reference validator? | The authenticated participant portal exposes five runs per scenario; exact results are preserved in `OFFICIAL_VALIDATOR_LEDGER.md`. No local executable was released. Remaining attempts are A=`3/5`, B=`4/5`, C=`4/5`, frozen under `D22`. |
-| `O2` | High | What runtime and instance-size limits apply to hidden evaluation? | Find official limits; otherwise benchmark generated scale cases. |
-| `O3` | Resolved | How is overrun aggregated? | Contract completion delay is charged through every activity-priority nudge in that contract. A-002, B-001, and C-001 exactly match the corrected scorers. |
-| `O5` | Medium | Which controller view is most useful in the short demo? | Decide after real solver conflict data is available. |
-| `O7` | Low | What is the final product name? | Decide after the core direction is stable. |
-| `O8` | Resolved for public data | What closure model matches the validator? | Transitive possession components, footprint-inclusive closure, and topology-derived cross-line Live buffering reproduce A-001 exactly and pass A-002/B-001/C-001. |
-| `O9` | High | Is the declared horizon a validator-enforced hard bound, and what does `access_seq` enforce? | Run `V002` and `V009`. |
-| `O10` | High | Are all scenarios evaluated against one shared instance or scenario-specific input rows? | Confirm from the released validator/portal; condition cross-scenario warm starts on shared input hashes. |
+NightShift accepts one ZIP with exactly these eight files at its root:
 
-<a id="sources"></a>
+```text
+01_LINES.csv
+02_STATIONS.csv
+03_SECTORS.csv
+04_LOCATION_SUPPLY.csv
+05_BUFFER_LOCATION.csv
+06_PARAMETERS.csv
+07_PROJECT_DETAILS.csv
+08_ACTIVITY_DETAILS.csv
+```
 
-## 15. Sources and transcription quality
+The upload boundary rejects missing or duplicate files, nested paths, directories, symlinks, encrypted archives, oversized members, invalid schemas, and unsafe extraction patterns. Processing happens in a temporary workspace. The current limits are 32 MiB uploaded, 64 MiB extracted, and 32 MiB for a generated result archive.
 
-| ID | Source | Use | Limitation |
-|---|---|---|---|
-| `E1` | [Official PS1 repository](https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/tree/main/PS1), locally verified against commit `966c976` | Technical specification and public fixture | Recheck for upstream updates. |
-| `E2` | `AUDIO-2026-09-18-19-50-30.m4a`, approximately 10m31s | Organiser intent and clarification | Room audio and overlapping speech reduce verbatim accuracy. |
-| `E3` | User-supplied Wispr Flow transcript | Improved recovery of the full conversation | Speaker numbers are inconsistent; several domain terms are mistranscribed. |
-| `E4` | Independent local transcription passes | Cross-check of Q&A meaning | One failed middle-section pass was discarded and reprocessed. |
-| `E5` | [`RESEARCH_LEDGER.md`](RESEARCH_LEDGER.md), 91 research entries plus failure and validator-test registers | Full paper trail, experiments, alternatives, and limitations | Evidence archive; this README contains the reconciled decisions. |
+### 2. A normalized railway model
 
-Combined confidence:
+The parser converts lines, stations, sectors, platforms, buffers, weekly supply, contracts, and activities into one canonical instance. Each activity keeps its fixed continuous corridor. Optimization selects its timing and compatible sharing; it does not invent another railway route.
 
-- Substantive meaning: approximately 90–95%.
-- Exact wording: approximately 80–85%.
-- Speaker labels: unreliable.
+Before solving, NightShift derives:
 
-Corrections that affect interpretation:
+- the complete footprint of every activity;
+- weekly standard access supply by location;
+- closure, buffer, and live-line effects;
+- contract/type access limits and local night mappings;
+- predecessor relationships and earliest starts;
+- workfront and allocation limits;
+- scenario-specific deadlines, capacity behavior, and penalty weights.
 
-| Transcript | Intended term |
+### 3. A CP-SAT scheduling model
+
+The engine represents the schedule with discrete decision variables rather than generated prose.
+
+| Decision | Meaning |
 |---|---|
-| `LTE` | `LTA` |
-| distorted `SBST` | `SBS Transit` |
-| `by that` / `VyDAT` | `viaduct` |
-| `valid data` | `validator` |
-| `README work` | likely `renewal work` |
-| `digital prism` | `digital twin` |
-| final garbled judging phrase | use the official rubric names |
+| Visit placement | Whether an activity receives a work visit in a given week and local night |
+| Access type | Standard possession or ECLO, where the scenario permits it |
+| Work completion | The week in which the activity and its contract finish |
+| Sharing assignment | Compatible activities grouped within the same location-week occupation |
+| Capacity use | Standard occupation groups compared with available supply |
+| Excess use | Capacity above nominal supply where the scenario permits a priced excess |
 
-<a id="maintenance"></a>
+The current web engine supports distinct visits by the same activity within one week. Each visit has its own local night and ECLO choice. This corrects the earlier one-visit-per-week interpretation that prevented the team from finding the accepted zero-penalty construction.
 
-## 16. Maintenance protocol
+### 4. Hard constraints
 
-Add information only when it changes understanding, implementation, evidence, or a likely future ambiguity.
+A plan is eligible for release only when it satisfies the implemented hard rules, including:
 
-For each material update:
+- every activity receives its exact required workload;
+- visits remain inside the planning horizon and respect earliest starts;
+- predecessors finish before dependent work begins;
+- every visit occupies the activity's complete required corridor;
+- incompatible closures, buffers, platforms, sectors, and live-line effects do not overlap;
+- sharing groups contain only compatible work;
+- weekly capacity, contract allocation, workfront, and possession-mix rules hold for the scenario;
+- local night values, sequences, ECLO windows, and output summaries remain internally consistent;
+- a replanned schedule does not rewrite completed history before the incident week.
 
-1. Identify its confidence label and source.
-2. State the consequence, not the full thought process.
-3. Update an existing section instead of adding a parallel explanation.
-4. Add a decision only when the team commits to a direction.
-5. Keep an open question only when resolving it could change the work.
-6. Remove stale detail that no longer prevents confusion.
+### 5. Scenario-specific objectives
 
-When sources conflict:
+| Scenario | Optimization behavior |
+|---|---|
+| A | Use nominal access and minimize priority-weighted delivery delay. |
+| B | Enforce the scenario deadline and minimize priced excess access plus ECLO use. |
+| C | Balance priority-weighted delay, excess access, and ECLO use under its capacity and window rules. |
 
-1. Prefer the current official specification, then validator behaviour, then current written organiser clarification, then recorded Q&A, then team interpretation.
-2. Check whether an update date explains the conflict.
-3. Record only the resolution and any ambiguity likely to recur.
+The web solver tries the zero-penalty feasibility problem first. If zero is unavailable within the search, it spends the remaining time optimizing the permitted trade-offs. A valid zero proves the floor of the nonnegative implemented objective. A positive incumbent is a feasible result, not automatically a proof of global optimality.
 
-### Handoff instruction
+### 6. Two checks before release
 
-> Use this document as the team’s interpretation and decision layer. Use the official PS1 README as the technical specification. Before changing implementation, identify the relevant decision and open question. Do not claim feasibility without validator evidence, and do not convert an inference into an official rule.
+Solver status alone is not enough. NightShift serializes the candidate into the exact output CSV format, runs the primary evaluator, then independently recomputes feasibility-sensitive score inputs from the raw CSVs. It publishes a ZIP only when those checks agree.
 
-## Revision history
+This gate catches mistakes that can hide between an internal model and an exported file: missing rows, duplicate work credit, mismatched completion dates, incorrect scenario labels, stale score summaries, and serialization errors.
 
-| Version | Date | Change |
+## Replanning when the railway changes
+
+The replanning flow is designed around an operator question: **what changed, why, and what must I approve?**
+
+1. The active validated plan becomes the baseline.
+2. The operator identifies the disrupted location, week, and revised capacity through the form, text, or voice.
+3. The backend validates the location and horizon, applies the capacity override, and computes the affected activities from the active plan.
+4. Visits before the incident week are preserved as completed history.
+5. CP-SAT solves the remaining horizon under the changed capacity.
+6. The same evaluator and independent scorer gate the candidate.
+7. The UI presents moved activities, changed contract dates, and before/after penalty components.
+8. The candidate stays separate until the operator chooses **Adopt plan**.
+
+NightShift currently reports a valid repaired candidate, but it does not claim that the candidate has the mathematically smallest possible number of changes. `minimum_change_proven` remains false until that secondary objective is formally proven.
+
+## How the assistant stays in its lane
+
+Natural language makes the product easier to operate, but it is not the source of scheduling truth.
+
+- The assistant can explain the active plan and convert a disruption statement into structured fields.
+- Location identifiers, weeks, capacities, and referenced activities are checked against the active instance.
+- The backend recomputes affected activities instead of trusting names generated by the model.
+- The assistant does not fabricate a schedule, score, validator result, or successful adoption.
+- Any action that changes the plan remains a visible proposal until the operator calculates and adopts it.
+- API credentials stay on the server and are never embedded in browser JavaScript or a repository file.
+
+This boundary lets NightShift combine conversational usability with deterministic operational control.
+
+## How we built it
+
+The final system came from repeated attempts to disprove our own interpretation, not from one clean solver run.
+
+### Phase 1: Translate the brief into executable rules
+
+We mapped the organizer's CSVs into railway locations, continuous activity footprints, supply, contracts, predecessors, closure effects, sharing, workfronts, and scenario policies. We wrote a local evaluator and a separate scorer so a promising objective could not bypass feasibility.
+
+### Phase 2: Build protected optimization pipelines
+
+The first CP-SAT implementation used safe fallbacks, closure separation, pruning, multiple seeds, shuffled inputs, and restricted improvement neighborhoods. It found reproducible feasible schedules, but the best penalties were still positive. At that point we had multiple implementations that agreed with each other, which looked reassuring and was ultimately misleading.
+
+### Phase 3: Treat portal violations as experimental evidence
+
+We replayed teammate submissions and compared their portal diagnostics with our checker. That exposed a closure endpoint-platform omission and showed why a score alone was not enough. We retained exact uploaded ZIPs and diagnostics so each rule hypothesis could be checked against bytes rather than memory.
+
+### Phase 4: Use four controlled probes
+
+With a strict four-upload budget, we changed one behavior at a time. A repeated same-week visit was accepted. We then replaced the remaining ECLO visits with standard visits using distinct local nights. The portal accepted the resulting schedule at 0.0 in Scenario C, then accepted the same schedule under Scenarios A and B.
+
+The experiment disproved the assumption that each activity could have at most one visit per week. That assumption had been shared by the optimizer, evaluator, independent scorer, and a separate proof model. Multiple code paths were independent in implementation but correlated in interpretation.
+
+### Phase 5: Rebuild the product around the corrected model
+
+We updated the live scheduling engine to support repeated visits, integrated the closure correction, removed public-input result substitution from the fresh solve path, added streaming proof and validation metadata, and kept organizer-accepted archives behind explicit reference controls.
+
+### Phase 6: Turn the solver into an operating experience
+
+The result became NightShift 3.0: a network control view, searchable schedule, delivery analytics, disruption replanning, candidate comparison, downloadable outputs, and a voice-capable assistant whose proposals still pass through deterministic scheduling and human review.
+
+## Challenges and how we overcame them
+
+| Challenge | What failed | What changed |
 |---|---|---|
-| `0.1.0` | 2026-09-18 | Initial comprehensive draft. |
-| `0.2.0` | 2026-09-18 | Removed low-value branches and repetition; retained only actionable knowledge and likely ambiguity guards. |
-| `0.3.0` | 2026-09-18 | Added the CP-SAT model, constraint encoding, validator-guided improvement loop, benchmark facts, and training decision. |
-| `0.4.0` | 2026-09-18 | Reconciled the research ledger into the formulation, lower bounds, adaptive-search plan, benchmark protocol, validator risks, and revised build order. |
-| `0.5.0` | 2026-09-18 | Added executable evidence, the quarantined `25.2` relaxation, the protected `32.2` Scenario A repair, and the remaining validator boundary. |
-| `0.6.0` | 2026-09-18 | Added exact B/C objectives, iterative inferred-closure separation, protected A=`32.2`, B=`30.0`, C=`26.1` incumbents, and cross-seed evidence. |
-| `0.7.0` | 2026-09-19 | Added strict buffer-overlap hedging, dual-policy release checks, validator-gated pruning, and exact three-file answer-key packaging. |
-| `0.8.0` | 2026-09-19 | Added official A/B/C validation, corrected contract-completion scoring and Live cross-line closure, official-score manifests, exact lower bounds, and 39 passing regressions. |
-| `0.8.1` | 2026-09-19 | Added full heuristic portfolios, a guarded Scenario B cost-contributor repair, prefix-40 A/B/C proofs, wall-time instability evidence, and 42 passing regressions. |
-| `0.8.2` | 2026-09-19 | Added a fully synthetic two-line oracle and no-hint A/B/C proof benchmark, plus explicit separation between independent and public-derived metamorphic evidence. |
-| `0.8.3` | 2026-09-19 | Added the reproducible 12-case benchmark matrix, strict-hedge diagnostics, and a regression that recomputes every retained score and feasibility result. |
-| `0.8.4` | 2026-09-19 | Added a public-independent 180-activity scale fixture, unfiltered five-seed A/B/C distributions, 15-case proof matrix, and 45 passing regressions. |
-| `0.8.5` | 2026-09-19 | Added the dense shared-bottleneck falsification, generic legal-batch and closure-screened chain hints, 18-case proof matrix, and 46 passing regressions. |
-| `0.8.6` | 2026-09-19 | Preserved the frozen-hint holdout failure, added workfront-aware multi-contract chains and production-C benchmarking, and expanded to 21 proved cases with 47 regressions. |
-| `0.8.7` | 2026-09-19 | Added a pre-generated nonzero dense trade-off, blind 15/15 A/B/C transfer at analytical optima, 24 proof cases, and 48 regressions. |
-| `0.8.8` | 2026-09-19 | Preserved the coupled-window blind failure, added deadline-aware structural hints and budget-sensitivity evidence, and expanded to 27 proof cases with 49 regressions. |
-| `0.8.9` | 2026-09-19 | Added hint-coverage telemetry, rejected two plausible but harmful fixes, gated incomplete hints by scenario, and validated 15/15 public optimum reconstructions with 51 regressions. |
-| `0.8.10` | 2026-09-19 | Added the irregular partial-hint falsification, full-budget UNKNOWN handling, independent Scenario C construction, guarded B/C cost repair, 29 proof cases, and 53 regressions. |
-| `0.8.11` | 2026-09-19 | Preserved the seed-3 narrow-neighborhood failure, expanded Scenario C repair through affected footprint competitors without dense or coupled regressions, and added a 54th regression. |
-| `0.8.12` | 2026-09-19 | Recorded the one/two/four-worker construction boundary and five-seed irregular C recovery, including the seed-5 ten-second budget failure and existing 30-second production-budget success. |
-| `0.8.13` | 2026-09-19 | Added a frozen cross-module workfront holdout, preserved the spatial-only repair failure, expanded Scenario C repair through direct contributors' contract peers, and reached 30 proof cases with 56 regressions. |
-| `0.8.14` | 2026-09-19 | Preserved a delay-only empty-neighborhood failure, seeded Scenario C repair from overdue contracts, and added a 57th regression with cross-regime checks. |
-| `0.8.15` | 2026-09-19 | Preserved a cross-contract predecessor failure, expanded Scenario C repair through precedence components, and reached 59 regressions without widening existing benchmark neighborhoods. |
-| `0.8.16` | 2026-09-19 | Made the scope of frozen-access bounds and optimality claims explicit, documented fixed-point neighborhood growth, and reached 60 regressions. |
-| `0.8.17` | 2026-09-19 | Preserved a footprint-introduced dependency failure, added a bounded post-footprint precedence pass, and reached 32 proof cases with 62 regressions. |
-| `0.8.18` | 2026-09-19 | Preserved a post-precedence contract failure and a broader-neighborhood recovery regression, then replaced one broad default with a protected narrow-plus-expanded repair portfolio. |
-| `0.8.19` | 2026-09-19 | Verified the two-tier controller end to end on irregular seed 5 and normalized repair telemetry across guarded-A success and failure report branches. |
-| `0.8.20` | 2026-09-19 | Added a reproducible serial five-seed two-tier repair matrix; all seeds reached the analytical C=`31.0` optimum with distinct checked schedules. |
-| `0.8.21` | 2026-09-19 | Preserved a predecessor-of-final-contract-peer failure, added one terminal precedence closure with zero retained-regime growth, and reached 34 proof cases with 67 regressions. |
-| `0.8.22` | 2026-09-19 | Pinned the terminal precedence revisit in both Scenario C production controllers, completed fallback prune aliases, and reached 69 regressions. |
-| `0.8.23` | 2026-09-19 | Rejected search-weak fixed-point repair, added a residual-frontier audit, and retained a no-oracle identifier-permutation recovery with 70 regressions. |
-| `0.8.24` | 2026-09-19 | Extended identifier permutation to three runs, preserved a strict-only conflict, and added a score-preserving final strict hedge with 72 regressions. |
-| `0.8.25` | 2026-09-19 | Audited broad hedge runtime, rejected a strict-clean C=`112` candidate behind C=`31`, corrected selected-state reporting, and reached 73 regressions. |
-| `0.8.26` | 2026-09-19 | Pinned strict-hedge no-op behavior on all three official incumbents and reached 74 regressions without changing any protected hash. |
-| `0.8.27` | 2026-09-19 | Added a public-independent three-line topology, proved A/B/C from scratch, expanded the matrix to 37 cases, and reached 75 regressions. |
-| `0.8.28` | 2026-09-19 | Added a frozen two-adjacent-bridge topology, proved A/B/C from scratch, expanded the matrix to 40 cases, and reached 76 regressions. |
-| `0.8.29` | 2026-09-19 | Added a precommitted congested two-bridge trade-off, proved its A/B/C optima from scratch, expanded the matrix to 43 cases, and reached 77 regressions. |
-| `0.8.30` | 2026-09-19 | Preserved the scaled multi-bridge C failure, added checked single-lane ECLO compaction to both production controllers, proved C=`262.0` by enumeration, expanded the matrix to 46 cases, and reached 81 regressions. |
-| `0.8.31` | 2026-09-19 | Corrected non-target ECLO preservation, deduplicated equivalent compaction candidates, replayed the real controller and all retained C cases, and reached 82 regressions. |
-| `0.8.32` | 2026-09-19 | Added a 120-job scale audit, nonnegative-floor exit, exhaustive score-prediction check, and exact candidate ordering that preserves C=`262.0` while validating one candidate. |
-| `0.8.33` | 2026-09-19 | Falsified exact compaction score ordering against a precommitted multi-activity, mixed-priority contract holdout; all six predictions matched serialized evaluation. |
-| `0.8.34` | 2026-09-19 | Repeated checked Scenario C compaction across independent line windows, reducing the frozen two-line case from `23,660` to `18,220`, and froze all remaining portal attempts pending explicit approval. |
-| `0.8.35` | 2026-09-19 | Differentially falsified repeated compaction across all 24 two-line activity orders and a cross-line Live case; ranked results matched unfiltered exhaustive search and no filtered candidate was feasible. |
-| `0.8.36` | 2026-09-19 | Generalized checked ECLO compaction beyond three-row activities; a precommitted four-access two-line holdout improved from `32,760` to `27,320` with ranked/exhaustive agreement. |
-| `0.8.37` | 2026-09-19 | Swept serialized activities from three through seven accesses; ranked and exhaustive compaction matched at every length with dual scoring and zero prediction mismatches. |
-| `0.8.38` | 2026-09-19 | Added checked idle-week normalization before ECLO compaction, including an equal-score seed that unlocks a frozen C=`910` schedule to C=`10` without promoting the intermediate. |
-| `0.8.39` | 2026-09-19 | Extended checked idle-week normalization to leading empty weeks; a precommitted delayed source now composes from C=`27,300` through `23,660` to strict-clean C=`18,220`. |
-| `0.8.40` | 2026-09-19 | Corrected equal-score idle-gap tie ordering after a frozen counterexample; preferring an internal gap unlocks a checked C=`920` result instead of stopping at `1,820`. |
-| `0.8.41` | 2026-09-19 | Compared greedy idle normalization plus ECLO against every reachable non-worsening normalization state on 16 controlled schedules; all final scores matched exhaustive composition. |
-| `0.8.42` | 2026-09-19 | Added a shared final-selection Scenario C post-processing gate to both controllers; a frozen verification winner now improves from `23,660` to checked `22,760`. |
-| `0.8.43` | 2026-09-19 | Audited final post-processing on all 19 retained C incumbents; nine idle candidates were checked, no score/hash changed, and total runtime was 1.21 seconds. |
-| `0.8.44` | 2026-09-19 | Added a sound zero-objective floor exit to idle normalization; retained candidate generation falls from nine to three with every score and hash preserved. |
-| `0.8.45` | 2026-09-19 | Stress-tested the complete final Scenario C post-processor on 120 activities: zero-score input remains byte-identical, while a reverse-order source improves by `15,530` through one checked candidate. |
-| `0.8.46` | 2026-09-19 | Preserved internal-gap tie preference even after a score-prediction mismatch forces exhaustive idle-candidate checking. |
-| `0.8.47` | 2026-09-19 | Added a 60-activity, 59-gap scale audit; final checked post-processing lowers C=`1,116,689` to `733,120` in about 1.54 seconds with zero prediction mismatch or strict conflict. |
-| `0.8.48` | 2026-09-19 | Exhaustively compared greedy normalization plus ECLO against every reachable normalization state across all 256 four-activity, two-line gap patterns; every final score matched. |
-| `0.8.49` | 2026-09-19 | Extended full branching comparison to 768 cases with staggered starts, a precedence chain, and both constraints together; every greedy final score matched the oracle. |
-| `0.8.50` | 2026-09-19 | Added deterministic final A/B/C ZIPs whose archived bytes match the protected, officially confirmed incumbents; explicitly quarantined stale historical validator archives. |
-| `0.8.51` | 2026-09-19 | Added a one-command local pre-upload audit covering archive structure and hashes, both scorers, hard feasibility, strict closures, official run IDs, and official scores. |
-| `0.8.52` | 2026-09-19 | Rechecked the organizer's upstream specification; `main` remains the locally verified commit `966c976` with no pending rule update. |
-| `0.8.53` | 2026-09-19 | Corrected the idle-normalization predictor's stale Scenario C excess coefficient from `20` to the confirmed `7`; full candidate validation had prevented score corruption, while the fix restores trusted pruning. |
-| `0.8.54` | 2026-09-19 | Centralized production scoring constants and contract-delay arithmetic, removed the dead per-activity scorer, retained the independent scorer, and rejected an initially correct but 4–5× slower implementation. |
-| `0.8.55` | 2026-09-19 | Extended final readiness to verify the exact A-002/B-001/C-001 archive SHA-256 values and byte-for-byte equality between their CSV members and the final packages. |
-| `0.8.56` | 2026-09-19 | Verified all 14 local PS1 files byte-for-byte against the exact upstream commit after the shallow-clone path failed, without contacting the portal. |
-| `0.8.57` | 2026-09-19 | Added 14 public-artifact mutations around legal-mix, capacity, workload, precedence, allocation, workfront, start, horizon, deadline, and ECLO boundaries; all expected checks fire. |
-| `0.8.58` | 2026-09-19 | Corrected ECLO candidate predictions to include Scenario C excess cost on zero-supply locations, with ranked/exhaustive equality and restored 120-activity runtime. |
-| `0.8.59` | 2026-09-19 | Exhaustively matched evaluator legal-mix acceptance to the solver inequalities across all 215 non-empty PM/PC/C count triples through five of each. |
-| `0.8.60` | 2026-09-19 | Exhaustively pinned A/B/C solver group domains across 66 supply/candidate pairs, preserving unrestricted exact B and explicitly bounded heuristic B. |
-| `0.8.61` | 2026-09-19 | Added ten complete-submission mutations proving rejection of duplicate/gapped access, missing/extra/duplicate occupancy, empty groups, and missing/false/mismatched results. |
-| `0.8.62` | 2026-09-19 | Added a frozen 360-activity scale replay and exact-output regression; week-local structural-hint screening preserves all A/B/C results while reducing recorded runtime 5.94–7.84×. |
-| `0.8.63` | 2026-09-19 | Differentially matched full-schedule and affected-week closure decisions across 1,152 incremental candidates, including conflicting standard and strict-buffer rejections. |
-| `0.8.64` | 2026-09-19 | Added per-instance activity-footprint caching after profiling 544,500 repeated calls; the 360-activity A/B/C replay remains byte-identical and gains another 3.44–11.37×. |
-| `0.8.65` | 2026-09-19 | Added a precommitted 720-activity scale holdout; all scenarios succeed with zero strict conflicts, while A exposes the two-second direct-heuristic limit and recovers through the sound fallback. |
-| `0.8.66` | 2026-09-19 | Preserved a 0/3 dense-scale failure, then added full-gate promotion of complete structural candidates; the same holdout recovers 3/3, while a fault-injected invalid candidate fails closed. |
-| `0.8.67` | 2026-09-19 | Added a fully checked zero-objective floor path; dense A/B/C hashes stay exact while end-to-end runtime falls from 15.988 to 2.666 seconds. |
-| `0.8.68` | 2026-09-19 | Replayed positive-score 360- and 720-activity holdouts after checked-hint promotion; all six scores and strict gates persist, while equal-score A/C schedules legitimately change hashes. |
-| `0.8.69` | 2026-09-19 | Reconstructed all three public optima with the current controller, retained the stricter audit boundary, and pinned non-replacement of the officially confirmed incumbents with 120 regressions. |
-| `0.8.70` | 2026-09-19 | Doubled the dense shared-bottleneck holdout to 324 activities, retained 3/3 zero-score recovery with independent checks, and identified model construction as the remaining direct-path scale cost. |
-| `0.8.71` | 2026-09-19 | Moved complete structural zero-floor validation before CP-SAT construction, preserved all dense and positive-scale results, rejected a duplicate-construction regression, and reached 123 regressions. |
-| `0.8.72` | 2026-09-19 | Froze a 325-activity positive dense holdout and preserved its 2/3 result, including the ECLO-required B construction failure and 13.18-million-variable fallback. |
-| `0.8.73` | 2026-09-19 | Added deadline-forced ECLO construction and a checked Scenario B workload lower-bound return, recovering the frozen dense B optimum in 0.155 seconds while preserving the failed and interrupted predecessors. |
-| `0.8.74` | 2026-09-19 | Falsified workload-only proof promotion on a precommitted coupled B case; production refuses the `30` lower bound and independently proves the resource-constrained `72` optimum. |
-| `0.8.75` | 2026-09-19 | Added and independently reran a raw-CSV public optimality certificate: relaxed no-hint models match all three protected scores and prove each next-lower tenth infeasible. |
-| `0.8.76` | 2026-09-19 | Made the public optimality audit reproducible in an isolated output directory and added an end-to-end regeneration regression over every stable proof fact. |
-| `0.8.77` | 2026-09-19 | Scaled the coupled Scenario B test to four PC groups; the restricted heuristic fails as designed, while the safe fallback constructs and proves the exact `196` optimum. |
-| `0.8.78` | 2026-09-19 | Rejected a workload-derived direct-group expansion: it found no better score, retained 28 closure conflicts, and triggered a larger repair that was about 1.98× slower than the restored same-seed fallback. |
-| `0.8.79` | 2026-09-19 | Added a precommitted asymmetric PC/C/PM Scenario B fixture; all five blind seeds reach and prove exact `122`, while a checked but invalid complete constructor hint is correctly refused. |
-| `0.8.80` | 2026-09-19 | Added a reproducible portable local validator, corrected its trust label, and required an independent raw-CSV score cross-check before any local acceptance. |
-| `0.8.81` | 2026-09-19 | Reused the sound Scenario B workload lower bound for checked incumbents: B=`30.0` verification and cost repair now prove optimality without model construction, while protected release bytes stay unchanged. |
-| `0.8.82` | 2026-09-19 | Exercised the positive Scenario B excess-budget cap on a targeted exact case; it preserves the `21` proof while reducing 665→455 variables and 946→661 constraints. |
-| `0.8.83` | 2026-09-19 | Added protected-incumbent resume: a checked initial schedule can skip fresh heuristics, invalid incumbents fail before solving, and equal-score runs preserve exact bytes. |
-| `0.8.84` | 2026-09-19 | Replayed protected A/C resumes: C proves `62.7` quickly, while A honestly retains `137.9` after a short inconclusive `130.9` bound; both preserve exact bytes. |
-| `0.8.85` | 2026-09-19 | Made protected-incumbent resume fail closed unless the primary evaluator and separate raw-CSV scorer agree on scenario, every score component, and row counts before solving. |
-| `0.8.86` | 2026-09-19 | Added a precommitted three-line Live-interchange holdout; strict and sample-consistent runs independently converge to and prove the same C=`207.4` output. |
-| `0.8.87` | 2026-09-19 | Permuted every identifier and input-row order in the Live-interchange holdout before solving; five seeds and exact verification preserve C=`207.4`. |
-| `0.8.88` | 2026-09-19 | Scaled the precommitted Live-interchange regime to 48 activities; fast construction fails, while the sound verifier recovers and proves C=`1659.2`. |
-| `0.8.89` | 2026-09-19 | Rejected a location-only decomposition proof after finding the global Live-interchange C-window dependency; corrected the graph and matched a separate monolithic C=`9120` proof on a genuine two-component control. |
-| `0.8.90` | 2026-09-19 | On a precommitted 64-activity non-Live scale holdout, corrected decomposition proves C=`145920` in 1.89 seconds; the same-budget monolith returns unproved C=`234780`, and even a 30-second monolithic replay cannot prove the decomposed incumbent. |
-| `0.8.91` | 2026-09-19 | A precommitted heterogeneous holdout exposed and fixed proof-provenance aggregation for zero-floor components; seven mixed components now prove and merge C=`11432`, while the same-budget monolith produces no safe incumbent. |
-| `0.8.92` | 2026-09-19 | The same heterogeneous input proves additive A=`16850.4`; Scenario B correctly fails closed because two three-unit activities can receive at most one access row before B's hard planned-completion deadline. |
-| `0.8.93` | 2026-09-19 | Corrected the B infeasibility explanation: one weekly ECLO row supplies at most 1.5 of three required workload units; the weekly-group limit was not the proof. |
-| `0.8.94` | 2026-09-19 | A frozen 42-activity B holdout proves B=`349` by both decomposition and monolithic solving; the monolith is faster, so decomposition remains selective rather than default. |
-| `0.8.95` | 2026-09-19 | A monolithic control independently proves heterogeneous A=`16850.4` with different bytes; decomposition is faster on this one run, supporting a scenario-aware fallback rather than a universal rule. |
-| `0.8.96` | 2026-09-19 | Permuting every identifier and input-row order in the 42-activity B holdout preserves strict, dual-scored, monolithically proved B=`349`. |
-| `0.8.97` | 2026-09-19 | Decomposed Scenario B now rejects a known workload/deadline contradiction before writing artifacts, and a full-run missing-proof injection preserves the valid score while correctly refusing global optimality. |
-| `0.8.98` | 2026-09-19 | Decomposed merges now pass full feasibility, strict closure, independent score, additivity, and proof gates in audit staging before any upload-facing output is published. |
-| `0.8.99` | 2026-09-19 | Decomposed publication now uses checked same-parent staging and atomic rename; injected mid-copy and end-to-end failures expose no partial final output and retain an explicit staged report. |
-| `0.8.100` | 2026-09-19 | Equal summed nominal stage allowances preserve the 32-component C proof, weaken heterogeneous C, and fail heterogeneous B; component count and equal division are rejected as universal routing rules. |
-| `0.8.101` | 2026-09-19 | Added an incumbent-preserving monolithic/decomposed portfolio with independent candidate gates, deterministic tie protection, visible policy failures, one-component skip, and atomic publication. |
-| `0.8.102` | 2026-09-19 | Unmocked portfolio runs preserve a proved B=`349` tie, rescue heterogeneous C=`11432` after monolithic failure, and replace valid unproved C=`234780` with proved C=`145920`. |
-| `0.8.103` | 2026-09-19 | Candidate portfolios now recover only explicit solver/validation failures; injected programmer errors abort before decomposition or publication instead of being silently masked. |
-| `0.8.104` | 2026-09-19 | A real public C portfolio replay preserves exact official bytes, skips one-component decomposition, and correctly transfers the tied monolithic full-instance objective proof to the selected incumbent. |
-| `0.8.105` | 2026-09-19 | Audited every encoded cross-activity coupling family across seven structures, A/B/C, and both closure policies; no coupled pair crosses a decomposition boundary. |
-| `0.8.106` | 2026-09-19 | Added a versioned machine-readable mapping from six decomposition edge reasons to ten encoded constraint families and embedded it in every new decomposition proof report. |
-| `0.8.107` | 2026-09-19 | A precommitted audit checks 56 complete datasets, 336 scenario/policy cases, and 3,160,962 repeated activity pairs with zero encoded coupling crossing a component boundary. |
-| `0.8.108` | 2026-09-19 | Removing each decomposition edge reason individually now splits a targeted required pair; all six graph families have mutation-killing witnesses, including an isolated strict-buffer case. |
-| `0.8.109` | 2026-09-19 | Rechecked the organizer repository; its published `main` remains the verified `966c976` commit, with no portal contact. |
-| `0.8.110` | 2026-09-19 | Precommitted a corpus-wide graph-conservatism audit before observing its overlap and marginal-connectivity results. |
-| `0.8.111` | 2026-09-19 | Quantified decomposition over-connection across 3,160,962 pair checks and retained every safety edge because low corpus marginality failed to generalize to controlled witnesses. |
-| `0.8.112` | 2026-09-19 | Pinned the conservatism artifact and passed 192 regressions, 19 isolated-validator checks, and all 30 final-package checks. |
-| `0.8.113` | 2026-09-19 | Precommitted a proof-safe portfolio short circuit: skip decomposition only after a consistent monolithic full-instance proof, and abort on a lower-incumbent contradiction. |
-| `0.8.114` | 2026-09-19 | Real controls preserve proved B=`349` while reducing policy time 91.9%, and preserve decomposed C=`11,432` rescue after monolithic failure. |
-| `0.8.115` | 2026-09-19 | Precommitted a six-case, structure-stratified monolithic/decomposed order benchmark with fixed inputs, hashes, budgets, worker count, seed, and validation gates. |
-| `0.8.116` | 2026-09-19 | Decomposition proves all 6/6 frozen cases; monolithic proves 4/6, fails one, and loses one score comparison. Proof-first projected time falls 49.6%. |
-| `0.8.117` | 2026-09-19 | Added one serial release-gate command after concurrent validator rebuilds produced a transient false hash mismatch; the isolated rerun passed. |
-| `0.8.118` | 2026-09-19 | Precommitted additive-proof-first portfolio execution for genuine multi-component inputs, with symmetric proof-contradiction abort and monolithic fallback. |
-| `0.8.119` | 2026-09-19 | Real controls preserve two B proofs, accelerate the scale-C winning path, retain one slower B counterexample, and leave official public C bytes exact. |
-| `0.8.120` | 2026-09-19 | A frozen sub-second B probe proves 3/4 cases, including the prior 0.465-second `349`, and fails closed on the permutation in 0.541 seconds. |
-| `0.8.121` | 2026-09-19 | Precommitted multi-component B execution as bounded proof probe, additive proof, then full monolithic fallback, with no stop on an unproved candidate. |
+| Ambiguous weekly access semantics | We encoded one visit per activity per week in every checker and model. | We used controlled portal probes, retained the exact evidence, and rebuilt visits as distinct week/night decisions. |
+| Correlated confidence | Independent implementations agreed because they inherited the same assumption. | We now separate implementation independence from assumption independence and keep an explicit adversarial audit. |
+| Closure propagation | The original checker missed two own-line buffer endpoint-platform effects visible in teammate diagnostics. | We reconstructed the cases from exact archives, added the endpoint behavior, and retained the replay report. |
+| Large combinatorial search | Closure, sharing, capacity, deadlines, and workfronts couple many decisions. | We use zero-first CP-SAT search, safe incumbents, scenario policies, bounded workers, and publication gates. |
+| Scarce official attempts | Blind optimization through the portal would waste the only authoritative experiments. | We predeclared a four-probe sequence, isolated hypotheses, recorded before/after states, and preserved the last accepted result. |
+| Raw solver output was hard to operate | CSVs and objective values did not tell a planner what changed. | We built a weekly network, activity trace, contract insights, score decomposition, and candidate comparison. |
+| Language-model overreach | A conversational model could guess affected work or imply that a plan changed. | The model only produces a proposal. The backend validates fields, computes impact, calls CP-SAT, and waits for explicit adoption. |
+| Replanning trust | A feasible recovery can still be operationally disruptive. | We freeze completed history and show every changed activity and delivery effect before adoption. Formal minimum-change proof remains disclosed as future work. |
+| Long solves in a live service | One compute-heavy request could make the interface appear unavailable. | Cloud Run uses bounded request concurrency, an application solve semaphore, streaming progress, and separate health/readiness endpoints. |
+
+## What we deliberately did not do
+
+- We did not train a model to imitate one public schedule. The scheduling path is an explicit CP-SAT model with programmed constraints.
+- We did not let an LLM generate or validate the timetable.
+- We did not present a stored public result as a fresh solve. Reference archives and computed runs are separate API and UI paths.
+- We did not hide failed interpretations. Earlier scores, teammate violations, controlled probes, and the adversarial audit remain in the repository.
+- We did not claim universal optimality from one public 0.0 result. Hidden or structurally different inputs may need positive penalty or exceed the time budget.
+- We did not equate portal acceptance with complete proof of real-world dispatchability. The occupancy format and physical-night meaning still require organizer clarification, documented below.
+
+## Results and evidence
+
+### Organizer-accepted public results
+
+| Scenario | Feasible | Official penalty | Delay | Excess access | ECLO | Exact archive |
+|---|---:|---:|---:|---:|---:|---|
+| A | Yes | **0.0** | 0 | 0 | 0 | [`A.zip`](deliverables/official-zero/A.zip) |
+| B | Yes | **0.0** | 0 | 0 | 0 | [`B.zip`](deliverables/official-zero/B.zip) |
+| C | Yes | **0.0** | 0 | 0 | 0 | [`C.zip`](deliverables/official-zero/C.zip) |
+
+The [official-zero manifest](deliverables/official-zero/MANIFEST.json) records the observation time, remaining attempts, archive SHA-256 hashes, member hashes, official feasibility, score components, and probe provenance. The final portal state and the full four-step sequence are preserved in the [controlled-probe report](artifacts/controlled-probes-2026-09-19/RESULTS.md).
+
+### Why 0.0 is the lowest possible portal penalty
+
+The published objective adds only nonnegative quantities: positive delay, excess capacity, and ECLO counts multiplied by positive weights. Therefore every valid score is at least zero. The portal accepted a feasible witness with score zero in each scenario. The public-instance optimum under that portal metric is consequently exactly zero.
+
+This proof has a narrow and useful scope. It proves the numeric floor for the accepted public instance and metric. It does not prove that every operational interpretation of co-sharing corresponds to a physical timetable, or that unseen instances can always reach zero.
+
+### Evidence ladder
+
+| Level | Evidence | What it establishes |
+|---|---|---|
+| 1 | CP-SAT solution status | A candidate satisfies the encoded mathematical model. |
+| 2 | Primary evaluator | Exported rows satisfy the implemented scheduling rules. |
+| 3 | Independent raw-CSV scoring | Score inputs and summaries agree through a separate code path. |
+| 4 | Regression and adversarial tests | Known bugs, malformed inputs, ordering changes, and replanning behavior are exercised. |
+| 5 | Organizer portal acceptance | Exact retained public-instance bytes were accepted and scored by the authoritative portal. |
+
+### Known boundary
+
+The [adversarial self-audit](artifacts/adversarial-self-audit-2026-09-19/REPORT.md) found that the accepted CSV representation does not by itself prove a globally consistent physical-night assignment. Similar contradictions appear in the organizer sample, so this may reflect the intended local accounting abstraction rather than a contestant-only exploit. We report the accepted portal result and the operational ambiguity separately. A production railway deployment would require the infrastructure owner to settle that semantic boundary and provide safety assurance beyond a hackathon validator.
+
+## Run locally
+
+### Prerequisites
+
+- Git
+- Python 3.11 or newer
+- Approximately 4 GiB RAM for comfortable local solving
+
+### 1. Clone NightShift
+
+```bash
+git clone https://github.com/13shreyansh/nebula-ps1-knowledge-base.git
+cd nebula-ps1-knowledge-base
+```
+
+### 2. Fetch the official public instance
+
+The official problem-statement repository is intentionally kept outside this repository's tracked source tree.
+
+```bash
+git clone --depth 1 \
+  https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement.git \
+  current-problem-statement
+```
+
+The app will find the public CSVs at `current-problem-statement/PS1/01_data`.
+
+### 3. Install
+
+```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -e '.[test]'
+```
+
+### 4. Configure optional assistant features
+
+Create `.env.local` only if you want text and voice assistance:
+
+```bash
+OPENAI_API_KEY=your_server_side_key
+OPENAI_TEXT_MODEL=gpt-5.6-terra
+OPENAI_VOICE_MODEL=gpt-live-1
+```
+
+`.env.local` is ignored by Git. Schedule generation, validation, visualization, and replanning remain available without an OpenAI key.
+
+### 5. Start the app
+
+```bash
+uvicorn nebula_ps1.web:app --host 127.0.0.1 --port 8080 --reload
+```
+
+Open [http://127.0.0.1:8080](http://127.0.0.1:8080).
+
+### 6. Run the checks
+
+```bash
+pytest -q
+```
+
+Current verified result: **214 tests passed, 137 constraint subtests passed, and 1 historical fixture was skipped**. The skip documents a fixture built around the earlier closure interpretation; it is retained as history rather than silently rewritten.
+
+## API surface
+
+| Method | Route | Purpose |
+|---|---|---|
+| `GET` | `/api/health` | Process liveness |
+| `GET` | `/api/readiness` | Data, solver, and service readiness |
+| `GET` | `/api/example` | Public example input and metadata |
+| `GET` | `/api/reference/{scenario}` | Explicit organizer-accepted reference archive |
+| `POST` | `/api/solve` | Compute and return a fresh schedule |
+| `POST` | `/api/solve-stream` | Compute with server-sent progress events |
+| `POST` | `/api/replan-stream` | Apply a disruption and stream a recovery solve |
+| `GET` | `/api/assistant/status` | Assistant configuration and availability |
+| `POST` | `/api/assistant` | Plan query or structured proposal |
+| `POST` | `/api/voice/session` | Short-lived OpenAI Live session credentials |
+
+The browser uses streaming endpoints so the operator sees the active stage rather than waiting on an opaque request.
+
+## Command-line tools
+
+The package also exposes research and verification commands:
+
+```bash
+nebula-ps1 --help
+nebula-ps1 inspect --data DATA_DIR --submission OUTPUT_DIR --scenario C
+nebula-ps1 audit-score --data DATA_DIR --submission OUTPUT_DIR
+nebula-ps1 solve-flexible-relaxation \
+  --data DATA_DIR \
+  --output OUTPUT_DIR \
+  --scenario C \
+  --time-limit 180
+```
+
+The CLI contains historical portfolio and repair workflows used during development. The web engine is the current product path for fresh scheduling and replanning. Accepted archives under `deliverables/official-zero` are immutable evidence and should not be overwritten by a CLI experiment.
+
+## Deploy to Google Cloud Run
+
+The repository includes a production `Dockerfile`. From an authenticated Google Cloud shell in the repository root:
+
+```bash
+gcloud run deploy nightshift \
+  --source . \
+  --region us-central1 \
+  --port 8080 \
+  --cpu 2 \
+  --memory 4Gi \
+  --timeout 900 \
+  --concurrency 8 \
+  --max-instances 2 \
+  --set-env-vars \
+NEBULA_SOLVER_WORKERS=2,NEBULA_SOLVER_CONCURRENCY=1,NEBULA_SOLVE_SECONDS=180
+```
+
+Add `OPENAI_API_KEY`, `OPENAI_TEXT_MODEL`, and `OPENAI_VOICE_MODEL` through Secret Manager or the Cloud Run service configuration if assistant features are required. Do not place credentials in the image or deployment command history.
+
+See [`CLOUD_HOSTING.md`](CLOUD_HOSTING.md) for the live service configuration, verification record, concurrency model, and rollback notes.
+
+## Repository map
+
+```text
+.
+├── src/nebula_ps1/             Core model, solvers, validation, API, and UI
+├── tests/                      Unit, regression, web, solver, and replan tests
+├── deliverables/
+│   ├── official-zero/          Exact organizer-accepted A/B/C archives
+│   ├── local-validator/        Portable validator and verification bundle
+│   └── frontend-handoff/       Integration contract and packaged solver
+├── artifacts/
+│   ├── controlled-probes-2026-09-19/   Four official experiment records
+│   ├── adversarial-self-audit-2026-09-19/  Falsification report and scripts
+│   ├── friend-portal-audit-2026-09-19/     Teammate violation replay
+│   └── nightshift-v3/          Product demo walkthrough
+├── docs/assets/                Current live product screenshots
+├── Dockerfile                  Production container
+├── pyproject.toml              Package and dependency definition
+├── CLOUD_HOSTING.md            Cloud Run runbook and live verification
+├── EXPERIMENT_LEDGER.md        Chronological optimization experiments
+├── OFFICIAL_VALIDATOR_LEDGER.md Portal evidence and remaining uncertainty
+└── SELF_INSPECTION_LOG.md      Claims, checks, and corrections
+```
+
+## Security and data handling
+
+- Uploaded archives are size-limited and inspected before extraction.
+- ZIP paths, encryption, symlinks, directories, duplicate names, and unexpected files are rejected.
+- Runs use isolated temporary directories and do not rely on client-provided filesystem paths.
+- Generated ZIPs contain only the three required root CSV files.
+- Assistant credentials remain server-side. The browser receives only short-lived session material for voice.
+- Solver concurrency is bounded per container to protect availability.
+- New computed schedules are labeled as locally validated. Organizer-confirmed references are labeled separately.
+
+NightShift is a hackathon prototype and evidence package. A real railway deployment would also need organizational access control, persistent audit identities, infrastructure-owner safety certification, retention policy, monitoring, and integration with authoritative asset and possession systems.
+
+## Limitations and next steps
+
+| Current boundary | Next step |
+|---|---|
+| Physical-night and local sharing semantics remain ambiguous in the published format. | Resolve with the organizer or infrastructure owner, then encode the agreed global night model and add independent conformance fixtures. |
+| A bounded solve may return a feasible positive incumbent without an optimality proof. | Expose a proof-quality mode, explicit optimality gap, and configurable operational time budget. |
+| Replanning preserves completed history but does not prove minimum disruption. | Add a lexicographic secondary objective for changed visits and publish `minimum_change_proven` only when certified. |
+| The public benchmark is one network and can reward instance-specific tuning. | Build structurally different frozen holdouts and report end-to-end compute on each family. |
+| The live service keeps results only for the active browser workflow. | Add authenticated plans, durable audit history, role-based approval, and signed exports. |
+| Assistant quality depends on model availability and spoken railway terminology. | Add a domain lexicon, recorded voice evaluations, failure recovery, and non-voice parity tests. |
+
+## Documentation and audit trail
+
+The repository keeps the detailed reasoning out of the main product flow while making it available for technical judges and reviewers:
+
+- [Official problem statement](https://github.com/aochinwen/NebulaX-Hackathon-ProblemStatement/blob/main/PS1/PS1_README.md)
+- [NightShift 3.0 demo walkthrough](artifacts/nightshift-v3/DEMO_WALKTHROUGH.md)
+- [Controlled official probes](artifacts/controlled-probes-2026-09-19/RESULTS.md)
+- [Official zero-result manifest](deliverables/official-zero/MANIFEST.json)
+- [Adversarial self-audit](artifacts/adversarial-self-audit-2026-09-19/REPORT.md)
+- [Teammate portal-violation audit](artifacts/friend-portal-audit-2026-09-19/REPORT.md)
+- [Public-instance optimality audit](artifacts/public-optimality-audit-2026-09-19/OPTIMALITY_PROOF.md)
+- [Official validator ledger](OFFICIAL_VALIDATOR_LEDGER.md)
+- [Experiment ledger](EXPERIMENT_LEDGER.md)
+- [Self-inspection log](SELF_INSPECTION_LOG.md)
+- [Cloud hosting and verification](CLOUD_HOSTING.md)
+- [Frontend integration contract](deliverables/frontend-handoff/FRONTEND_INTEGRATION.md)
+
+## Acknowledgements
+
+NightShift was built for the NebulaX Hackathon Problem Statement 1. It uses the organizer's public problem specification and instance, Google OR-Tools for constraint programming, FastAPI for the service layer, OpenAI APIs for the optional conversational interface, and Google Cloud Run for the public deployment.
+
+Questions, review findings, and reproducible counterexamples are welcome through [GitHub Issues](https://github.com/13shreyansh/nebula-ps1-knowledge-base/issues).
+
+---
+
+<div align="center">
+
+**[Open NightShift](https://nightshift-hmhb4fs4qa-uc.a.run.app/)**
+
+Built to make a complex railway plan inspectable, repairable, and safe to question.
+
+</div>
