@@ -1,0 +1,7 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+Z503,K502,InterchangeHoldout,SEC:L01:N002_N007:WB,SEC:L01:N002_N007:WB,1,2037-01-12,Z505,2
+Z506,K501,InterchangeHoldout,SEC:L02:N006_N002:WB,SEC:L02:N006_N002:WB,1,2037-01-05,,2
+Z504,K504,InterchangeHoldout,SEC:L02:N002_N004:EB,SEC:L02:N002_N004:EB,2,2037-01-12,,1
+Z505,K505,InterchangeHoldout,SEC:L01:N006_N002:EB,SEC:L01:N006_N002:EB,2,2037-01-05,,3
+Z502,K506,InterchangeHoldout,SEC:L03:N001_N006:WB,SEC:L03:N001_N006:WB,2,2037-01-19,,2
+Z501,K503,InterchangeHoldout,SEC:L03:N006_N002:EB,SEC:L03:N006_N002:EB,3,2037-01-05,,1

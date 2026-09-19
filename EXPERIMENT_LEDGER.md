@@ -1582,3 +1582,10 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Adversarial policy comparison: rerunning the same recipe without strict buffer overlap produces byte-identical output, the same hash `5bd5b24b…`, and the same full proof. The strict hedge does not create the observed score on this fixture.
 - Regression correction: the first retained-output test compared the empty conflict tuple with an empty list and failed before its byte comparison. The expected type was corrected; the focused replay and all 158 regressions then passed in 9.833 seconds. Portable-validator isolation and all 30 release checks remain green.
 - Boundary: six activities and one fixed topology; fast exact proof does not establish scale behavior. This is a local synthetic result, not a portal score or a change to official A/B/C incumbents.
+
+### E166: Interchange identifier/order permutation precommit
+
+- Timestamp: 2026-09-19 12:08:30 +08.
+- Precommit: transform the already frozen input with seed 19 using the existing generic renamer. Line, station, sector, contract, and activity identifiers are bijectively permuted; every input table's row order is independently shuffled. Dataset hash is `2a5f1ad8…`.
+- Invariants before solving: three lines, six activities, and two topology-derived Live crossover activities remain. No answer key or output exists.
+- Falsification target: if the earlier exact success depends on lexical identifiers, input row order, or public-like naming, the unchanged production recipe may return a different score, fail feasibility, or lose the proof. The transformed input is committed before that result is observed.

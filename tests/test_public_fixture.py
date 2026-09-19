@@ -106,6 +106,24 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(instance.activities["SCC"].predecessor_activity_id, "HLC")
         self.assertFalse((data / "RESULTS.csv").exists())
 
+    def test_interchange_holdout_permutation_is_frozen_before_solving(self) -> None:
+        data = ROOT / "fixtures" / "independent_interchange_holdout_v1_permuted_s19"
+        instance = load_instance(data)
+        self.assertEqual(
+            instance.dataset_hash,
+            "2a5f1ad8c6bb575784e0b231365dca5e71f058150b142311a2e9bbb726ed123d",
+        )
+        self.assertEqual(set(instance.lines), {"L01", "L02", "L03"})
+        self.assertEqual(set(instance.activities), {f"Z{index}" for index in range(501, 507)})
+        self.assertEqual(
+            sum(
+                affects_interchange_cross_line(instance, activity)
+                for activity in instance.activities.values()
+            ),
+            2,
+        )
+        self.assertFalse((data / "RESULTS.csv").exists())
+
     def test_interchange_holdout_c_is_exact_and_policy_stable(self) -> None:
         data = ROOT / "fixtures" / "independent_interchange_holdout_v1"
         instance = load_instance(data)
