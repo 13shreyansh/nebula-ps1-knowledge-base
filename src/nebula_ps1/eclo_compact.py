@@ -15,8 +15,8 @@ from .evaluate import (
     load_submission,
 )
 from .instance import Instance
-from .objective import ECLO_COST, delay_score_from_completion_weeks
-from .topology import affects_interchange_cross_line, split_sector_location
+from .objective import ECLO_COST, EXCESS_COST, delay_score_from_completion_weeks
+from .topology import activity_footprint, affects_interchange_cross_line, split_sector_location
 
 
 def _affected_eclo_lines(instance: Instance, activity_id: str) -> set[str]:
@@ -189,11 +189,18 @@ def _predicted_objective(
     }
     completion_by_activity: dict[str, int] = defaultdict(int)
     eclo_total = 0
+    excess_total = 0
     for row in access:
         if row.activity_id == activity_id and row.week == removed_week:
             continue
         completion_by_activity[row.activity_id] = max(
             completion_by_activity[row.activity_id], week_map[row.week]
+        )
+        excess_total += sum(
+            max(0, 1 - instance.locations[location_id].supply_capacity)
+            for location_id in activity_footprint(
+                instance, instance.activities[row.activity_id]
+            )
         )
         eclo_total += int(
             (row.activity_id == activity_id and row.week in eclo_weeks)
@@ -207,7 +214,10 @@ def _predicted_objective(
     delay_score = delay_score_from_completion_weeks(
         instance, completion_by_contract
     )
-    return round(delay_score + ECLO_COST * eclo_total, 10)
+    return round(
+        delay_score + EXCESS_COST * excess_total + ECLO_COST * eclo_total,
+        10,
+    )
 
 
 def best_single_lane_eclo_compaction(

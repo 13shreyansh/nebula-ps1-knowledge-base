@@ -1221,6 +1221,54 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(ranked["independent_score"], ranked["selected_score"])
         self.assertEqual(exhaustive["strict_conflicts"], 0)
 
+    def test_eclo_compaction_prediction_includes_zero_supply_excess(self) -> None:
+        source_data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
+        source_submission = ROOT / "fixtures" / "independent_eclo_multipass_v1_source_c"
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            data = root / "data"
+            shutil.copytree(source_data, data)
+            supply_path = data / "04_LOCATION_SUPPLY.csv"
+            with supply_path.open(newline="", encoding="utf-8") as handle:
+                supply_rows = list(csv.DictReader(handle))
+                fieldnames = list(supply_rows[0])
+            target_location = "PLAT:MPX:MPX1:EB"
+            for row in supply_rows:
+                if row["location_id"] == target_location:
+                    row["supply_capacity"] = "0"
+                    break
+            else:
+                self.fail(f"missing zero-supply mutation target {target_location}")
+            with supply_path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(supply_rows)
+
+            instance = load_instance(data)
+            source = evaluate_submission(instance, source_submission, "C")
+            ranked_dir, ranked, ranked_report = best_single_lane_eclo_compaction(
+                instance,
+                source_submission,
+                root / "ranked",
+                forbid_buffer_overlap=True,
+            )
+            exhaustive_dir, exhaustive, exhaustive_report = best_single_lane_eclo_compaction(
+                instance,
+                source_submission,
+                root / "exhaustive",
+                forbid_buffer_overlap=True,
+                exhaustive=True,
+            )
+            self.assertIsNotNone(ranked_dir)
+            self.assertIsNotNone(exhaustive_dir)
+            self.assertIsNotNone(ranked)
+            self.assertIsNotNone(exhaustive)
+            self.assertEqual(source.excess_access_nights_total, 6)
+            self.assertEqual(ranked_report["score_prediction_mismatches"], 0)
+            self.assertEqual(exhaustive_report["score_prediction_mismatches"], 0)
+            self.assertEqual(ranked.objective_score, exhaustive.objective_score)
+            self.assertEqual(ranked.submission_hash, exhaustive.submission_hash)
+
     def test_eclo_window_filter_matches_unfiltered_sequence_enumeration(
         self,
     ) -> None:
