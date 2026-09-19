@@ -1034,6 +1034,15 @@ Confidence labels:
 - **Boundary:** The floor proof covers the primary score only, not row-count tie optimality. Wall timings are local, and zero-floor structure is not evidence for arbitrary positive-score dense cases.
 - **Confidence:** Very high in the mathematical floor and validation gate; high in implementation safety across retained regimes.
 
+### `R124` Dense positive-score construction fails when one activity requires ECLO
+
+- **Status:** Confirmed on a holdout frozen before solving.
+- **Finding:** Adding one independent three-unit activity with only two on-time weeks to the 324-activity dense case preserves analytical optima A/C=`7.0`, B=`10.0`. The fixed controller reaches A/C but fails B: its constructor emits all 324 standard-only activities and omits the one activity that needs two ECLO rows.
+- **Failure mechanism:** The direct B model has 351,754 variables and returns `UNKNOWN`; the unrestricted fallback expands to 13,179,238 variables because every same-location candidate becomes a potential paid group, then also returns `UNKNOWN`.
+- **Consequence:** Structural construction must represent workload with ECLO when dates are rigid. Expanding the unrestricted model is not an adequate fallback at this density.
+- **Boundary:** The added trade-off is spatially independent of the dense corridor. This isolates ECLO construction but does not yet test an ECLO activity coupled into the bottleneck.
+- **Confidence:** Very high in the recorded failure and analytical optimum; high in the diagnosis.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

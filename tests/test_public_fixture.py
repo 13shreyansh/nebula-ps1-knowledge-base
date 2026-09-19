@@ -2080,6 +2080,39 @@ class PublicFixtureTests(unittest.TestCase):
                     forbid_buffer_overlap=True,
                 )
 
+    def test_positive_dense_scale_holdout_preserves_b_eclo_failure(self) -> None:
+        data = ROOT / "fixtures" / "independent_dense_m40_tradeoff"
+        oracle = ROOT / "fixtures" / "independent_dense_m40_tradeoff_oracle"
+        instance = load_instance(data)
+        oracle_evaluation = evaluate_submission(instance, oracle, "A")
+        oracle_independent = independently_score(data, oracle)
+        matrix = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m40_tradeoff_seed1_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            instance.dataset_hash,
+            "d01e89da12a8ef549e474e0d7e6ce5b232a79369561e8974e9a3f97a61e63034",
+        )
+        self.assertEqual(len(instance.activities), 325)
+        self.assertEqual(oracle_evaluation.hard_violations, ())
+        self.assertEqual(oracle_evaluation.objective_score, 7.0)
+        self.assertEqual(oracle_independent.objective_score, 7.0)
+        self.assertEqual(matrix["dataset_hash"], instance.dataset_hash)
+        self.assertEqual(matrix["successes"], 2)
+        self.assertEqual(matrix["failures"], 1)
+        runs = {row["scenario"]: row for row in matrix["runs"]}
+        self.assertEqual(runs["A"]["score"], 7.0)
+        self.assertEqual(runs["A"]["strict_conflicts"], 0)
+        self.assertEqual(runs["B"]["status"], "FAILURE")
+        self.assertEqual(runs["B"]["error_type"], "RuntimeError")
+        self.assertEqual(runs["C"]["score"], 7.0)
+        self.assertEqual(runs["C"]["strict_conflicts"], 0)
+
     def test_invalid_complete_structural_hint_is_not_promoted(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_v1"
         instance = load_instance(data)

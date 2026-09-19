@@ -1428,3 +1428,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Positive-score guard: post-refactor 360-activity scores/hashes remain `280/400/280` and 720-activity scores/hashes remain `560/800/560`, all strict-clean. These cases cannot take the zero-floor return and continue through the full solver.
 - Fault injection: deleting occupancy prevents promotion; a synthetic strict-only conflict under strict mode forces model construction. A separate test patches model construction to raise and proves a valid strict-clean zero candidate returns first with zero variables, constraints, or solve rounds.
 - Integrity gates: all 123 tests pass in 7.932 seconds and all 30 final-readiness checks remain true. No protected artifact changed and no portal attempt was used.
+
+### E150: Positive dense scale exposes ECLO-required construction failure
+
+- Timestamp: 2026-09-19 11:14:38 +08.
+- Frozen-before-solve input: `independent_dense_m40_tradeoff`, hash `d01e89da…`, adds one independent three-unit activity with weeks 1–2 available before its target to the 324-activity dense fixture. The separately constructed A oracle is hard-feasible and dual-scored at `7.0`; analytical B=`10.0` uses two ECLO rows, while C rationally accepts the cheaper seven-day tier-3 delay.
+- Fixed-policy result: A=`7.0` in 4.899 seconds and C=`7.0` in 16.433, both strict-clean. B fails closed after 77.939 seconds; no output is promoted.
+- Diagnosis: direct B reports 324/325 hinted activities and 644 rows, then returns `UNKNOWN` with 351,754 variables. The omitted activity needs three units in two weeks and cannot be represented by the standard-only constructor. The unrestricted fallback reaches 13,179,238 variables and 13,716,758 constraints before returning `UNKNOWN`.
+- Integrity: the generalized fixture generator, input, and oracle were committed before solving. The oracle is never passed to the solver, the 2/3 failure is retained, and no portal attempt was used.
