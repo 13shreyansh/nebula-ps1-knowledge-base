@@ -1,0 +1,8 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+BPC1,KBPC1,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3
+BPC2,KBPC2,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3
+BPC3,KBPC3,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3
+BPC4,KBPC4,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3
+BC5,KBC5,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3
+BC6,KBC6,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3
+BC7,KBC7,CoupledDeadline,SEC:LCB:CB1_CB2:EB,SEC:LCB:CB1_CB2:EB,3,2034-01-02,,3

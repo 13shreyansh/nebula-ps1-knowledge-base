@@ -22,7 +22,10 @@ def main() -> None:
     )
     parser.add_argument("--output", required=True)
     parser.add_argument("--oracle-output", required=True)
+    parser.add_argument("--pc-count", type=int, default=2)
     args = parser.parse_args()
+    if args.pc_count < 2:
+        raise ValueError("pc-count must be at least 2")
     output = Path(args.output)
     oracle = Path(args.oracle_output)
     if output.exists() and any(output.iterdir()):
@@ -44,7 +47,11 @@ def main() -> None:
         "PLAT:LCB:CB1:EB",
         "PLAT:LCB:CB2:EB",
     )
-    activity_ids = ("BPC1", "BPC2", "BC3")
+    pc_ids = tuple(f"BPC{index}" for index in range(1, args.pc_count + 1))
+    bridge_ids = tuple(
+        f"BC{args.pc_count + index}" for index in range(1, args.pc_count)
+    )
+    activity_ids = (*pc_ids, *bridge_ids)
 
     write(
         output / "01_LINES.csv",
@@ -139,7 +146,7 @@ def main() -> None:
                 "contract_completion_date": week_end(4),
                 "planned_completion_date": week_end(2),
                 "number_of_workfronts": 1,
-                "access_type": "C" if activity_id == "BC3" else "PC",
+                "access_type": "C" if activity_id in bridge_ids else "PC",
                 "number_of_maximum_access_per_week": 1,
             }
             for activity_id in activity_ids
@@ -176,7 +183,14 @@ def main() -> None:
 
     access_rows: list[dict[str, object]] = []
     occupancy_rows: list[dict[str, object]] = []
-    for group, activity_id in enumerate(activity_ids, start=1):
+    for activity_id in activity_ids:
+        if activity_id in pc_ids:
+            primary_group = pc_ids.index(activity_id) + 1
+            secondary_group = primary_group
+        else:
+            bridge_index = bridge_ids.index(activity_id) + 1
+            primary_group = bridge_index
+            secondary_group = bridge_index + 1
         for sequence, week in enumerate((1, 2), start=1):
             access_rows.append(
                 {
@@ -188,9 +202,9 @@ def main() -> None:
                 }
             )
             for location_index, location in enumerate(locations):
-                local_group = group
-                if activity_id == "BC3":
-                    local_group = 2 if location_index == 1 else 1
+                local_group = (
+                    secondary_group if location_index == 1 else primary_group
+                )
                 occupancy_rows.append(
                     {
                         "activity_id": activity_id,

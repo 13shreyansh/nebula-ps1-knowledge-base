@@ -3083,6 +3083,46 @@ class PublicFixtureTests(unittest.TestCase):
             if expected[1] is not None:
                 self.assertEqual(record["score"], expected[1], case)
 
+    def test_scaled_coupled_b_oracle_requires_four_local_groups(self) -> None:
+        data = ROOT / "fixtures" / "independent_coupled_b_deadline_n4_v1"
+        oracle = (
+            ROOT / "fixtures" / "independent_coupled_b_deadline_n4_v1_oracle"
+        )
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, oracle, "B")
+        independent = independently_score(data, oracle)
+        access, occupancy, _ = load_submission(oracle)
+        self.assertEqual(
+            instance.dataset_hash,
+            "0c1a9a807ce48173037875e0e6e283fb800380a7f088ee179ef9627b99a8b608",
+        )
+        access_types = [
+            instance.projects[activity.contract_number].access_type
+            for activity in instance.activities.values()
+        ]
+        self.assertEqual(access_types.count("PC"), 4)
+        self.assertEqual(access_types.count("C"), 3)
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 196.0)
+        self.assertEqual(independent.objective_score, 196.0)
+        self.assertEqual(sum(row.eclo for row in access), 14)
+        self.assertEqual(evaluation.excess_access_nights_total, 18)
+        self.assertEqual(_scenario_b_workload_lower_bound_tenths(instance), 700)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        groups: dict[tuple[int, str], set[str]] = defaultdict(set)
+        for row in occupancy:
+            groups[(row.week, row.location_id)].add(row.co_share_group)
+        self.assertEqual(set(map(len, groups.values())), {4})
+        self.assertEqual(len(groups), 6)
+
     def test_official_a002_contract_score_is_reproduced(self) -> None:
         candidate = ROOT / "runs" / "a_official_a001_local_repair_pruned"
         evaluation = evaluate_submission(self.instance, candidate, scenario="A")

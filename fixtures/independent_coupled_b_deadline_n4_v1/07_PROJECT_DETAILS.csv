@@ -1,0 +1,8 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+KBPC1,Coupled deadline BPC1,2033-06-01,CoupledDeadline,Non-live (Consist),3,2034-01-29,2034-01-15,1,PC,1
+KBPC2,Coupled deadline BPC2,2033-06-01,CoupledDeadline,Non-live (Consist),3,2034-01-29,2034-01-15,1,PC,1
+KBPC3,Coupled deadline BPC3,2033-06-01,CoupledDeadline,Non-live (Consist),3,2034-01-29,2034-01-15,1,PC,1
+KBPC4,Coupled deadline BPC4,2033-06-01,CoupledDeadline,Non-live (Consist),3,2034-01-29,2034-01-15,1,PC,1
+KBC5,Coupled deadline BC5,2033-06-01,CoupledDeadline,Non-live (Consist),3,2034-01-29,2034-01-15,1,C,1
+KBC6,Coupled deadline BC6,2033-06-01,CoupledDeadline,Non-live (Consist),3,2034-01-29,2034-01-15,1,C,1
+KBC7,Coupled deadline BC7,2033-06-01,CoupledDeadline,Non-live (Consist),3,2034-01-29,2034-01-15,1,C,1
