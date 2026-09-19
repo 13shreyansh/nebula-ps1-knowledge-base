@@ -790,6 +790,15 @@ Confidence labels:
 - **Limitation:** The post-processor remains deliberately narrow; it does not replace general solver search for non-serialized selections.
 - **Confidence:** High in the identified pipeline gap, shared implementation, and fail-closed promotion boundary.
 
+### `R096` Final post-processing is a no-op on every retained C incumbent
+
+- **Status:** Confirmed across all 19 Scenario C rows in the executable benchmark matrix.
+- **Result:** The strict audit checks nine idle-shift candidates and zero ECLO candidates. It promotes nothing and preserves every submission hash. Main and independent scores agree for every selected artifact.
+- **Official protection:** Public C remains exactly `62.7` with hash `30247f57…`, zero strict conflicts, and no generated replacement.
+- **Runtime:** The complete retained audit takes 1.21 seconds; the slowest case takes 0.49 seconds on the current machine.
+- **Scope correction:** Two historical benchmark incumbents begin with strict-only diagnostic conflicts and remain byte-identical. This does not represent an unsafe promotion; production strict mode would not admit those sources as final incumbents.
+- **Confidence:** High in retained-corpus safety and measured overhead; medium in unseen large serialized candidates.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

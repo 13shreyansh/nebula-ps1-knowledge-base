@@ -930,6 +930,23 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(selected.objective_score, 62.7)
         self.assertEqual(selected.submission_hash, expected.submission_hash)
 
+    def test_final_postprocessor_retained_c_audit_is_hash_safe(self) -> None:
+        audit = json.loads(
+            (
+                ROOT / "runs" / "postselection_compaction_retained_c_audit.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(audit["case_count"], 19)
+        self.assertEqual(audit["promoted_count"], 0)
+        self.assertEqual(audit["hash_changed_count"], 0)
+        self.assertEqual(audit["total_idle_candidates_checked"], 9)
+        self.assertEqual(audit["total_eclo_candidates_checked"], 0)
+        public = next(case for case in audit["cases"] if case["case"] == "public_C")
+        self.assertEqual(public["source_score"], 62.7)
+        self.assertEqual(public["selected_score"], 62.7)
+        self.assertFalse(public["hash_changed"])
+        self.assertEqual(public["strict_conflicts"], 0)
+
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)

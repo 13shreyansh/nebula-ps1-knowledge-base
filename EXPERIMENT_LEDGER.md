@@ -1133,3 +1133,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Correction: a shared final Scenario C gate runs checked non-worsening idle normalization and repeated ECLO compaction after all solver, repair, and strict-hedge selection. Only a strict fully checked decrease replaces the final incumbent.
 - Result: both generic and A-to-C production controllers take the selected C=`23,660` artifact to dual-scored C=`22,760`, hash `c6ff70af…`, with zero strict conflicts. The official public C artifact is already structurally inapplicable and remains unchanged.
 - Regression status: 98 tests pass, including an exact-hash no-op check on the official C artifact. No official attempt was used.
+
+### E120: Retained-corpus final post-processing changes no incumbent
+
+- Timestamp: 2026-09-19 09:29:02 +08
+- Method: run the shared strict final post-processor on all 19 retained Scenario C benchmark artifacts, independently rescore the selected path, reapply the strict closure screen, and compare source/selected hashes.
+- Result: zero promotions and zero hash changes. Nine idle candidates are fully checked; ECLO checks zero because retained serializations are already compacted, at the objective floor, or structurally inapplicable. Total elapsed time is 1.210 seconds; maximum per case is 0.490 seconds.
+- Official protection: public C stays exactly `62.7`, hash `30247f57…`, with zero strict conflicts.
+- Scope note: `prefix040_C` and `structural_demand_C` already contain strict-only diagnostic conflicts and remain byte-identical. The audit distinguishes an unchanged historical source from a promoted unsafe candidate.
+- Regression status: 99 tests pass. No official attempt was used.
