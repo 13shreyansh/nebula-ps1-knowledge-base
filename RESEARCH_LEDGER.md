@@ -1170,6 +1170,15 @@ Confidence labels:
 - **Boundary:** Both scorers consume the same CSV files and published interpretation. This reduces implementation-correlation risk; it cannot reveal an organiser rule absent from the released materials or portal behavior.
 - **Confidence:** Very high in fail-closed invocation and mismatch detection; high in score-implementation diversity; low in unobserved portal-only semantics.
 
+### `R138` Precommitted Live-interchange holdout survives exact falsification
+
+- **Status:** Passed after input-only commit `26f928b`.
+- **Design:** Three synthetic lines share one two-station bridge. Two Live activities trigger derived cross-line blocking; six total activities mix PC/C/PM, both bounds, predecessor timing, buffers, capacities, deadlines, and maximum-access limits. The input and hash were frozen before any answer existed.
+- **Result:** Five one-worker heuristic seeds all reach C=`207.4`. Full bridge-safe verification proves score/bound `207.4` with full-instance scope. The primary and raw-CSV scorers agree on delay `197.4`, zero excess, two ECLO rows, and total `207.4`; standard and strict closure screens are clean. All 158 regressions pass.
+- **Policy differential:** Repeating the exact recipe under sample-consistent and strict buffer policies produces byte-identical output and the same exact proof. This case therefore finds no hidden gain from relaxing the conservative hedge.
+- **Interpretation:** The portfolio handles one non-public, topology-derived Live interaction without an oracle hint or public identifiers. This is evidence against direct public-topology memorization, not evidence that all topology regimes generalize.
+- **Confidence:** Very high in this fixture's local optimum and policy equivalence; medium-low in broader hidden-topology generalization; low in portal-only semantics.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

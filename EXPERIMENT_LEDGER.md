@@ -1572,3 +1572,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Precommit scope: input generator, eight raw input tables, structural regression, and dataset hash `29d70f7b…` only. No answer key, production output, target score, or solver-derived assertion exists at this point.
 - Structure: three lines share the H1-H2 interchange bridge; two Live activities trigger topology-derived cross-line effects. Six activities span PC/C/PM, both bounds, tight and loose deadlines, asymmetric maximum-access limits, one predecessor, Live one-sector buffers, and mixed supply capacities.
 - Purpose: falsify public-topology memorization and test strict closure, delay/ECLO trade-offs, mixed possession types, and predecessor handling on a non-public topology. Any subsequent result must be recorded after this commit and dual-scored; failure remains evidence rather than a reason to redesign the input.
+
+### E165: Precommitted interchange holdout proves C=`207.4`
+
+- Timestamp: 2026-09-19 12:07:00 +08.
+- Blind policy: input-only commit `26f928b`, no answer key or hint, five heuristic seeds, one worker, 3/2/5/10-second stage limits, and 1,000 closure rounds.
+- Result: every heuristic seed reaches `207.4`; seed 1 is selected. Full bridge-safe verification uses 528 variables and 1,444 constraints, then proves objective/bound `207.4` with full-instance scope in 0.020 seconds. Frozen-neighbourhood cost repair preserves it.
+- Independent decomposition: delay `197.4` + zero excess + two ECLO rows × 5 = `207.4`. The primary evaluator and raw-CSV scorer agree; standard and strict closure conflicts are both zero.
+- Adversarial policy comparison: rerunning the same recipe without strict buffer overlap produces byte-identical output, the same hash `5bd5b24b…`, and the same full proof. The strict hedge does not create the observed score on this fixture.
+- Regression correction: the first retained-output test compared the empty conflict tuple with an empty list and failed before its byte comparison. The expected type was corrected; the focused replay and all 158 regressions then passed in 9.833 seconds. Portable-validator isolation and all 30 release checks remain green.
+- Boundary: six activities and one fixed topology; fast exact proof does not establish scale behavior. This is a local synthetic result, not a portal score or a change to official A/B/C incumbents.

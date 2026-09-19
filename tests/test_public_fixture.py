@@ -106,6 +106,66 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(instance.activities["SCC"].predecessor_activity_id, "HLC")
         self.assertFalse((data / "RESULTS.csv").exists())
 
+    def test_interchange_holdout_c_is_exact_and_policy_stable(self) -> None:
+        data = ROOT / "fixtures" / "independent_interchange_holdout_v1"
+        instance = load_instance(data)
+        variants = (
+            (
+                ROOT / "runs" / "independent_interchange_holdout_v1_c_seed1_w1",
+                ROOT
+                / "runs"
+                / "independent_interchange_holdout_v1_c_seed1_w1_audit"
+                / "STAGED.json",
+            ),
+            (
+                ROOT
+                / "runs"
+                / "independent_interchange_holdout_v1_c_standard_seed1_w1",
+                ROOT
+                / "runs"
+                / "independent_interchange_holdout_v1_c_standard_seed1_w1_audit"
+                / "STAGED.json",
+            ),
+        )
+        outputs: list[Path] = []
+        for submission, report_path in variants:
+            with self.subTest(submission=submission.name):
+                evaluation = evaluate_submission(instance, submission, "C")
+                independent = independently_score(data, submission)
+                access, occupancy, _ = load_submission(submission)
+                report = json.loads(report_path.read_text(encoding="utf-8"))
+                self.assertEqual(evaluation.hard_violations, ())
+                self.assertEqual(evaluation.objective_score, 207.4)
+                self.assertEqual(independent.objective_score, 207.4)
+                self.assertEqual(evaluation.priority_weighted_score, 197.4)
+                self.assertEqual(evaluation.excess_access_nights_total, 0)
+                self.assertEqual(evaluation.eclo_nights_total, 2)
+                self.assertEqual(screen_closures(instance, access, occupancy), ())
+                self.assertEqual(
+                    screen_closures(
+                        instance,
+                        access,
+                        occupancy,
+                        forbid_buffer_overlap=True,
+                    ),
+                    (),
+                )
+                self.assertEqual(report["selected_objective_score"], 207.4)
+                self.assertEqual(report["verification_telemetry"]["best_bound"], 207.4)
+                self.assertTrue(
+                    report["verification_telemetry"]["primary_score_proven_optimal"]
+                )
+                self.assertEqual(
+                    report["verification_telemetry"]["primary_bound_scope"],
+                    "full_instance",
+                )
+                outputs.append(submission)
+        for name in SUBMISSION_FILES:
+            self.assertEqual(
+                (outputs[0] / name).read_bytes(),
+                (outputs[1] / name).read_bytes(),
+            )
+
     def test_independent_synthetic_oracle_is_valid_without_public_identifiers(self) -> None:
         synthetic_root = ROOT / "fixtures" / "independent_synthetic_v1"
         oracle = ROOT / "fixtures" / "independent_synthetic_v1_oracle"
