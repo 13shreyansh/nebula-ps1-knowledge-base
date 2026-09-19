@@ -936,6 +936,15 @@ Confidence labels:
 - **Verification:** All 66 supply/candidate pairs match these four policies, including zero supply and candidate counts below the available group limit.
 - **Confidence:** Very high in the domain calculation; solver search can still fail to find an incumbent within time.
 
+### `R113` Malformed output cannot improve the protected result silently
+
+- **Status:** Confirmed locally with ten isolated mutations of the protected A submission.
+- **Rejected access/occupancy forms:** duplicate activity-week access, non-chronological `access_seq`, missing required occupancy, duplicate occupancy, unexpected footprint occupancy, and an empty possession-group label.
+- **Rejected result forms:** missing contract, false completion date/overrun, scenario disagreement, and duplicate contract row.
+- **Method:** Each mutation starts from a fresh complete copy; the protected source is never edited. Assertions require the rule-specific hard diagnostic rather than merely checking a generic failure flag.
+- **Boundary:** CSV parser failures and unknown activity handling have separate tests. This is local evaluator evidence, not an official validator run.
+- **Confidence:** High in the covered anti-exploit gates.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

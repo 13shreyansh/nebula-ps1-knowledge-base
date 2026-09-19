@@ -1303,3 +1303,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Integrity boundary: only unrestricted bridge-safe B represents the published unlimited paid-excess domain. The smaller direct domain remains a non-certifying construction heuristic, and its comment and tests now state that boundary explicitly.
 - Regression status: all 112 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E138: Ten malformed-output mutations fail closed
+
+- Timestamp: 2026-09-19 10:17:49 +08
+- Method: mutate one schema/consistency boundary at a time in a temporary copy of the officially accepted A files and run the complete evaluator.
+- Access/occupancy results: duplicate activity-week, invalid chronological sequence, missing footprint row, duplicate footprint row, extra footprint row, and empty group label all emit their intended hard diagnostic.
+- RESULTS results: missing contract, false date/overrun, scenario mismatch, and duplicate contract all emit their intended hard diagnostic. The evaluator derives score/completion from the schedule and does not trust submitted summary values.
+- Integrity: tests match rule-specific messages, preventing a different incidental violation from masquerading as coverage. The protected source is unchanged.
+- Regression status: all 113 tests pass.
+- Official protection: no portal interaction or attempt was used.
