@@ -1,0 +1,12 @@
+{
+  "final_access_rows": 5,
+  "final_score": 4560.0,
+  "final_submission_hash": "7a64c550a2110b9e957c7d8b8c6e328fda10ce42b4c7696dbc18c837b8abe08c",
+  "initial_access_rows": 5,
+  "initial_score": 4560.0,
+  "initial_submission_hash": "7a64c550a2110b9e957c7d8b8c6e328fda10ce42b4c7696dbc18c837b8abe08c",
+  "reference_validator_confirmed": false,
+  "removed_accesses": [],
+  "scenario": "C",
+  "strict_buffer_overlap_checked": true
+}

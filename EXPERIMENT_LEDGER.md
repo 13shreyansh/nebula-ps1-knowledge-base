@@ -1785,3 +1785,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Focused falsification: mocked policies select valid C=`11432` over valid C=`12435.8`; a forged score-zero result missing `RESULTS.csv` is rejected and `12435.8` preserved; the public one-component C case preserves the exact incumbent on a tie and never calls decomposition.
 - Release replay: 186/186 regressions pass in 10.296 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true. No official package or portal state changed.
 - Remaining boundary: policy functions were fault-injected against real checked artifacts, but the new controller has not yet completed an unmocked multi-policy run. Its runtime is additive and may be inappropriate under a hard global deadline unless wrapped by an external budget.
+
+### E189: Unmocked portfolio preserves, rescues, and improves without unsafe replacement
+
+- Timestamp: 2026-09-19 12:58:13 +08.
+- B exact tie: on frozen hash `9f457c84…`, monolithic and decomposition independently prove B=`349` with different hashes in 0.480 and 5.314 seconds. The portfolio publishes the monolithic schedule by deterministic tie priority. Fresh external replay is strict-clean and dual-scored at `349`.
+- Heterogeneous C rescue: monolithic solving fails after 10.257 seconds without a safe incumbent. Decomposition proves C=`11432` in 12.401 seconds. The policy failure remains in the portfolio report; the decomposed result is published atomically and fresh replay is strict-clean and dual-scored at `11432`.
+- Scale C improvement: monolithic solving returns a valid but unproved C=`234780` in 18.035 seconds. Decomposition proves C=`145920` in 1.868 seconds. The lower proved schedule replaces the locally validated monolithic candidate only after both pass the same external gate; fresh replay confirms zero hard/strict conflicts and exact score agreement.
+- Coverage gained: the real controller now demonstrates all three selection states: equal-score preservation, one-policy failure recovery, and strict score improvement over a valid incumbent.
+- Integrity boundary: these are synthetic/frozen local fixtures. Runtime is sequentially additive, and the portfolio has no global cancellation deadline. No official A/B/C package, score, portal attempt, or portal counter changed.

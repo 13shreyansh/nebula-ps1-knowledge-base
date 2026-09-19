@@ -1,0 +1,4 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+FPDDIRECT,FPDKDIRECT,FootprintDependencyTradeoff,SEC:FPDLNX:FPDX2_FPDN3:EB,SEC:FPDLNX:FPDX2_FPDN3:EB,3,2040-01-09,,1
+FPDFOLLOW,FPDKFOLLOW,FootprintDependencyTradeoff,SEC:FPDLNY:FPDX2_FPDS3:WB,SEC:FPDLNY:FPDS3_FPDS4:WB,1,2040-01-02,FPDCOMP,1
+FPDCOMP,FPDKCOMP,FootprintDependencyTradeoff,SEC:FPDLNX:FPDX2_FPDN3:EB,SEC:FPDLNX:FPDX2_FPDN3:EB,1,2040-01-09,,1

@@ -1,0 +1,30 @@
+{
+  "attempts": [
+    {
+      "global_optimality_proved": false,
+      "objective_score": 234780.0,
+      "outer_wall_time_seconds": 18.03493112498836,
+      "policy": "monolithic",
+      "status": "accepted",
+      "submission_hash": "61e53ad1adaf63fc8b92b942e286928e4c50160977c8f891802ec7e373c70c90"
+    },
+    {
+      "global_optimality_proved": true,
+      "objective_score": 145920.0,
+      "outer_wall_time_seconds": 1.8681730829994194,
+      "policy": "decomposed",
+      "status": "accepted",
+      "submission_hash": "0dac01d987c652add80303cb415df79f671460b08ea438a156631e7fff7ccbed"
+    }
+  ],
+  "component_count": 32,
+  "dataset_hash": "7cdbc1984ff3e8192b0fa53f9f118c1546457f080604772fb02c8640eb210001",
+  "publication_status": "published",
+  "reference_validator_confirmed": false,
+  "scenario": "C",
+  "selected_global_optimality_proved": true,
+  "selected_objective_score": 145920.0,
+  "selected_policy": "decomposed",
+  "selected_submission_hash": "0dac01d987c652add80303cb415df79f671460b08ea438a156631e7fff7ccbed",
+  "selection_rule": "lowest fully gated objective; exact ties preserve initial incumbent, then monolithic, then decomposed"
+}

@@ -1,0 +1,29 @@
+{
+  "attempts": [
+    {
+      "error": "neither direct heuristic nor bridge-safe fallback produced a checked safe incumbent",
+      "error_type": "RuntimeError",
+      "outer_wall_time_seconds": 10.25723575000302,
+      "policy": "monolithic",
+      "status": "failed"
+    },
+    {
+      "global_optimality_proved": true,
+      "objective_score": 11432.0,
+      "outer_wall_time_seconds": 12.400510957988445,
+      "policy": "decomposed",
+      "status": "accepted",
+      "submission_hash": "8bd9625537d2f31ed9967f7bde38de6343b31c88f0446292d3f1e80ff4984be5"
+    }
+  ],
+  "component_count": 7,
+  "dataset_hash": "84a00bdbd9d4d51b24928cdbc3858e27ecded025961777f16dec2497215b81a7",
+  "publication_status": "published",
+  "reference_validator_confirmed": false,
+  "scenario": "C",
+  "selected_global_optimality_proved": true,
+  "selected_objective_score": 11432.0,
+  "selected_policy": "decomposed",
+  "selected_submission_hash": "8bd9625537d2f31ed9967f7bde38de6343b31c88f0446292d3f1e80ff4984be5",
+  "selection_rule": "lowest fully gated objective; exact ties preserve initial incumbent, then monolithic, then decomposed"
+}

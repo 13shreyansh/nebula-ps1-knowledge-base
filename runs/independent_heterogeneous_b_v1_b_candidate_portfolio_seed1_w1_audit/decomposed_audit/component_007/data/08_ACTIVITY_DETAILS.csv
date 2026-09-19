@@ -1,0 +1,4 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+SYNQ009,SYNK108,Synthetic,SEC:SYNLNX:SYNN3_SYNN4:WB,SEC:SYNLNX:SYNN3_SYNN4:WB,2,2040-01-23,,2
+SYNQ002,SYNK102,Synthetic,SEC:SYNLNX:SYNN3_SYNN4:WB,SEC:SYNLNX:SYNN3_SYNN4:WB,2,2040-01-23,,2
+SYNQ007,SYNK106,Synthetic,SEC:SYNLNX:SYNX2_SYNN3:WB,SEC:SYNLNX:SYNN3_SYNN4:WB,2,2040-03-19,,3

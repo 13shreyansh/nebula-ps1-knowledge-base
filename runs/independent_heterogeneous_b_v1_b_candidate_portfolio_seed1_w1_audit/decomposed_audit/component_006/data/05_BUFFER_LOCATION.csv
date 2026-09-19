@@ -1,0 +1,10 @@
+nature_of_works,up_to_buffer_sectors,opposite_bound_required
+CAP Non-live (Consist),0,0
+SYN Non-live (Consist),1,0
+CBD Non-live (Consist),0,0
+PCP Live,2,1
+PCP Non-live (Others),0,0
+ICB Non-live (Consist),0,0
+PCP Non-live (Consist),1,0
+SYN Non-live (Others),0,0
+SYN Live,2,1

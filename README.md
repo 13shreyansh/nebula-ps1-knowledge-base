@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.101
+version: 0.8.102
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -754,3 +754,4 @@ When sources conflict:
 | `0.8.99` | 2026-09-19 | Decomposed publication now uses checked same-parent staging and atomic rename; injected mid-copy and end-to-end failures expose no partial final output and retain an explicit staged report. |
 | `0.8.100` | 2026-09-19 | Equal summed nominal stage allowances preserve the 32-component C proof, weaken heterogeneous C, and fail heterogeneous B; component count and equal division are rejected as universal routing rules. |
 | `0.8.101` | 2026-09-19 | Added an incumbent-preserving monolithic/decomposed portfolio with independent candidate gates, deterministic tie protection, visible policy failures, one-component skip, and atomic publication. |
+| `0.8.102` | 2026-09-19 | Unmocked portfolio runs preserve a proved B=`349` tie, rescue heterogeneous C=`11432` after monolithic failure, and replace valid unproved C=`234780` with proved C=`145920`. |
