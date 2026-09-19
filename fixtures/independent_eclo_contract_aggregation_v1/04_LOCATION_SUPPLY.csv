@@ -1,0 +1,11 @@
+location_id,location_kind,line_code,bound,supply_capacity
+PLAT:LCZ:V1:EB,platform,LCZ,EB,1
+PLAT:LCZ:V1:WB,platform,LCZ,WB,1
+PLAT:LCZ:V2:EB,platform,LCZ,EB,1
+PLAT:LCZ:V2:WB,platform,LCZ,WB,1
+PLAT:LCZ:V3:EB,platform,LCZ,EB,1
+PLAT:LCZ:V3:WB,platform,LCZ,WB,1
+SEC:LCZ:V1_V2:EB,tunnel sector,LCZ,EB,1
+SEC:LCZ:V1_V2:WB,tunnel sector,LCZ,WB,1
+SEC:LCZ:V2_V3:EB,tunnel sector,LCZ,EB,1
+SEC:LCZ:V2_V3:WB,tunnel sector,LCZ,WB,1

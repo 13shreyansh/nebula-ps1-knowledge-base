@@ -1,0 +1,7 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+TC11,KC1,Synthetic,SEC:LCZ:V1_V2:EB,SEC:LCZ:V2_V3:EB,3,2034-01-02,,1
+TC12,KC1,Synthetic,SEC:LCZ:V1_V2:EB,SEC:LCZ:V2_V3:EB,3,2034-01-02,,3
+TC21,KC2,Synthetic,SEC:LCZ:V1_V2:EB,SEC:LCZ:V2_V3:EB,3,2034-01-02,,2
+TC22,KC2,Synthetic,SEC:LCZ:V1_V2:EB,SEC:LCZ:V2_V3:EB,3,2034-01-02,,1
+TC31,KC3,Synthetic,SEC:LCZ:V1_V2:EB,SEC:LCZ:V2_V3:EB,3,2034-01-02,,3
+TC32,KC3,Synthetic,SEC:LCZ:V1_V2:EB,SEC:LCZ:V2_V3:EB,3,2034-01-02,,2
