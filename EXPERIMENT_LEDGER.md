@@ -1178,3 +1178,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Runtime: 1.537 seconds in this local run. The accepted claim is measured practicality at this scale, not asymptotic safety or an unknown-instance guarantee.
 - Regression status: all 102 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E125: Two-line normalization branching finds no greedy counterexample
+
+- Timestamp: 2026-09-19 09:39:00 +08
+- Search space: all 256 ways to omit one week from each of four ordered four-week activity blocks across two independent lines. Each case exposes multiple internal-gap orders; the largest reachable non-worsening normalization graph has 16 states.
+- Oracle: enumerate every strict-clean non-worsening normalization state, run exhaustive repeated ECLO compaction from each, and compare the best score with the production greedy path. Independently rescore every production result.
+- Result: 256/256 final scores match the full branching oracle; mismatch count is zero.
+- Boundary: planned starts are common and block order is fixed, so this is bounded falsification rather than a completeness proof.
+- Regression status: all 103 tests pass.
+- Official protection: no portal interaction or attempt was used.

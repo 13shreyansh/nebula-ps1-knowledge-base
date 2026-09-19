@@ -1414,6 +1414,18 @@ class PublicFixtureTests(unittest.TestCase):
                 case["exhaustive"]["score"],
             )
 
+    def test_multiline_idle_branching_matches_full_normalization_graph(self) -> None:
+        audit = json.loads(
+            (ROOT / "runs" / "multiline_idle_branching_audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(audit["case_count"], 256)
+        self.assertEqual(audit["score_match_count"], 256)
+        self.assertEqual(audit["mismatch_count"], 0)
+        self.assertEqual(audit["mismatches"], [])
+        self.assertEqual(audit["max_reachable_normalization_states"], 16)
+
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"
         oracle = ROOT / "fixtures" / "independent_scaled_m20_oracle"

@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.47
+version: 0.8.48
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -681,3 +681,4 @@ When sources conflict:
 | `0.8.45` | 2026-09-19 | Stress-tested the complete final Scenario C post-processor on 120 activities: zero-score input remains byte-identical, while a reverse-order source improves by `15,530` through one checked candidate. |
 | `0.8.46` | 2026-09-19 | Preserved internal-gap tie preference even after a score-prediction mismatch forces exhaustive idle-candidate checking. |
 | `0.8.47` | 2026-09-19 | Added a 60-activity, 59-gap scale audit; final checked post-processing lowers C=`1,116,689` to `733,120` in about 1.54 seconds with zero prediction mismatch or strict conflict. |
+| `0.8.48` | 2026-09-19 | Exhaustively compared greedy normalization plus ECLO against every reachable normalization state across all 256 four-activity, two-line gap patterns; every final score matched. |

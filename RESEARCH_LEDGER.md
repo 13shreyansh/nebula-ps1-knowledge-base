@@ -835,6 +835,14 @@ Confidence labels:
 - **Integrity:** The generator uses only schema-derived activity ordering and complete candidate validation. This is a synthetic robustness result, not an official score change.
 - **Confidence:** High for the measured case; medium for much larger dense inputs.
 
+### `R101` Greedy normalization matches full branching search on two independent lines
+
+- **Status:** Confirmed on a complete 256-case family with four activities, two ECLO lines, and up to 16 reachable non-worsening normalization states per case.
+- **Method:** In each activity's four-week block, omit one of four positions, covering all `4^4` gap patterns. For every valid source, compare production's greedy checked normalization plus exhaustive ECLO sequence against every reachable strict-clean non-worsening normalization state followed by exhaustive ECLO composition.
+- **Result:** Production and full branching search return the same final score in 256/256 cases; both local scorers agree on every production result. No counterexample was found.
+- **Boundary:** Activities retain the fixture's common planned start and fixed block order. This materially widens the earlier one-line, two-activity audit but does not prove arbitrary precedence or planned-start structures.
+- **Confidence:** High for this bounded family; medium beyond it.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
