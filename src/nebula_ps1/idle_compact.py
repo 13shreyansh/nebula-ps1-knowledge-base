@@ -117,7 +117,7 @@ def _predicted_objective(
                     * contract_weight[project.contract_priority]
                     * (1.0 + activity_nudge[activity.activity_priority])
                 )
-    return round(delay_score + 20.0 * excess_total + 5.0 * eclo_total, 10)
+    return round(delay_score + 7.0 * excess_total + 5.0 * eclo_total, 10)
 
 
 def best_idle_week_compaction_sequence(

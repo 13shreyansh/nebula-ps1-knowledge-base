@@ -1225,3 +1225,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: this equals the commit already recorded for the locally verified PS1 pack. No new upstream problem-statement change requires reconciliation.
 - Boundary: this checks the public Git branch only; portal-only notices would require separate evidence.
 - Official protection: no validator or submission attempt was used.
+
+### E130: Correct stale Scenario C excess weight in idle prediction
+
+- Timestamp: 2026-09-19 09:47:48 +08
+- Finding: `idle_compact._predicted_objective` used `20 × excess_access_nights_total`; the official and dual-scorer coefficient is `7`.
+- Impact analysis: idle deletion cannot change the excess total. Full serialized evaluation gates every candidate, and the first discrepancy disables pruning, so no protected score, selected hash, or official artifact was wrong. The defect caused avoidable prediction distrust and exhaustive candidate checks when excess and removable gaps coexist.
+- Correction and test: coefficient `7` makes the no-shift prediction on the real excess-bearing irregular C incumbent equal both scorers at C=`31.0` with excess total 3. Fault-injected mismatch fallback still preserves the internal-gap tie rule.
+- Replay: retained, 59-gap scale, 120-activity scale, 256-case multiline, and 768-case constrained audits preserve all scores and mismatch counts after the correction.
+- Regression status: all 107 tests pass.
+- Official protection: no portal interaction or attempt was used.

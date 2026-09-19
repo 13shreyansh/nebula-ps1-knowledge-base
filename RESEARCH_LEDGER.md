@@ -869,6 +869,14 @@ Confidence labels:
 - **Boundary:** This detects local drift and packaging errors. It does not emulate undocumented validator behavior and does not contact the portal.
 - **Confidence:** Very high for artifact integrity; high for known validated semantics.
 
+### `R105` Idle score prediction retained an obsolete excess coefficient
+
+- **Status:** Confirmed and corrected.
+- **Failure:** The idle normalizer predicted Scenario C with `20 × excess`, while the published and officially confirmed objective uses `7 × excess`. On excess-bearing schedules every predicted candidate would differ from full evaluation by `13 × excess`.
+- **Safety boundary:** Global idle deletion preserves the excess count, and every serialized candidate is fully evaluated. The first mismatch already disabled prediction-based early stopping, so the error caused exhaustive fallback rather than an invalid promotion or wrong protected score.
+- **Correction:** Use coefficient `7`. On the retained irregular C incumbent with three excess nights, the predictor now reproduces evaluated C=`31.0` exactly. Every idle/ECLO retained, branching, constrained, and scale audit preserves its scores and hashes.
+- **Confidence:** Very high.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

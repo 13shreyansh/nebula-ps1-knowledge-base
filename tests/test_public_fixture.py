@@ -23,7 +23,10 @@ from nebula_ps1.eclo_compact import (
 from nebula_ps1.evaluate import evaluate_submission, load_submission
 from nebula_ps1.flexible_solver import solve_flexible_supply_relaxation
 from nebula_ps1.independent_score import independently_score
-from nebula_ps1.idle_compact import best_idle_week_compaction_sequence
+from nebula_ps1.idle_compact import (
+    _predicted_objective as predict_idle_compaction_objective,
+    best_idle_week_compaction_sequence,
+)
 from nebula_ps1.instance import load_instance
 from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_submission
 from nebula_ps1.postprocess import best_checked_c_postprocessing_sequence
@@ -1393,6 +1396,27 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertGreater(report["score_prediction_mismatches"], 0)
         self.assertEqual(report["rounds"][0]["selected_gap_week"], 5)
         self.assertEqual(idle.objective_score, 1820.0)
+
+    def test_idle_prediction_uses_confirmed_scenario_c_excess_weight(self) -> None:
+        data = ROOT / "fixtures" / "independent_irregular_partial_v1"
+        source = (
+            ROOT
+            / "runs"
+            / "independent_irregular_partial_v1_guarded_independent_c120_costrepair_w8"
+        )
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, source, "C")
+        access, _, _ = load_submission(source)
+        self.assertEqual(evaluation.excess_access_nights_total, 3)
+        predicted = predict_idle_compaction_objective(
+            instance,
+            access,
+            max(row.week for row in access),
+            excess_total=evaluation.excess_access_nights_total,
+            eclo_total=evaluation.eclo_nights_total,
+        )
+        self.assertEqual(predicted, evaluation.objective_score)
+        self.assertEqual(predicted, 31.0)
 
     def test_idle_gap_greedy_search_matches_exhaustive_composition(self) -> None:
         audit = json.loads(
