@@ -20,7 +20,12 @@ from unittest.mock import patch
 
 from nebula_ps1.cli import main as cli_main
 from nebula_ps1.candidate_portfolio import solve_candidate_portfolio
-from nebula_ps1.closure import _blocked_locations, _external_buffer_sectors, screen_closures
+from nebula_ps1.closure import (
+    _blocked_locations,
+    _buffer_locations,
+    _external_buffer_sectors,
+    screen_closures,
+)
 from nebula_ps1.eclo_compact import (
     best_serialized_eclo_compaction_sequence,
     best_single_lane_eclo_compaction,
@@ -886,6 +891,103 @@ class PublicFixtureTests(unittest.TestCase):
                 forbid_buffer_overlap=False,
             ),
         )
+
+    def test_decomposition_separates_every_encoded_cross_activity_family(self) -> None:
+        instances = {
+            "public": self.instance,
+            "heterogeneous_c": load_instance(
+                ROOT / "fixtures" / "independent_heterogeneous_nonlive_v1"
+            ),
+            "heterogeneous_b": load_instance(
+                ROOT / "fixtures" / "independent_heterogeneous_b_v1"
+            ),
+            "live_scale": load_instance(
+                ROOT / "fixtures" / "independent_interchange_scale8_v1"
+            ),
+            "multi_bridge": load_instance(
+                ROOT / "fixtures" / "independent_multi_bridge_scale_v1"
+            ),
+            "footprint_dependency": load_instance(
+                ROOT / "fixtures" / "independent_footprint_dependency_v1"
+            ),
+            "contract_precedence": load_instance(
+                ROOT / "fixtures" / "independent_post_contract_precedence_v1"
+            ),
+        }
+        for fixture_name, instance in instances.items():
+            activity_ids = sorted(instance.activities)
+            work = {
+                activity_id: set(
+                    activity_footprint(instance, instance.activities[activity_id])
+                )
+                for activity_id in activity_ids
+            }
+            blocked = {
+                activity_id: _blocked_locations(instance, {activity_id})
+                for activity_id in activity_ids
+            }
+            buffers = {
+                activity_id: _buffer_locations(instance, {activity_id})
+                for activity_id in activity_ids
+            }
+            lines = {
+                activity_id: split_sector_location(
+                    instance.activities[activity_id].start_location_id
+                )[0]
+                for activity_id in activity_ids
+            }
+            crossover = {
+                activity_id: affects_interchange_cross_line(
+                    instance, instance.activities[activity_id]
+                )
+                for activity_id in activity_ids
+            }
+            for scenario in ("A", "B", "C"):
+                for strict in (False, True):
+                    components = independent_activity_components(
+                        instance,
+                        scenario,
+                        forbid_buffer_overlap=strict,
+                    )
+                    component_of = {
+                        activity_id: index
+                        for index, component in enumerate(components)
+                        for activity_id in component
+                    }
+                    for first, second in itertools.combinations(activity_ids, 2):
+                        first_activity = instance.activities[first]
+                        second_activity = instance.activities[second]
+                        coupled_families = []
+                        if (
+                            first_activity.contract_number
+                            == second_activity.contract_number
+                        ):
+                            coupled_families.append("contract objective/workfront")
+                        if (
+                            first_activity.predecessor_activity_id == second
+                            or second_activity.predecessor_activity_id == first
+                        ):
+                            coupled_families.append("precedence")
+                        if work[first] & work[second]:
+                            coupled_families.append("local group/supply")
+                        if work[first] & blocked[second] or work[second] & blocked[first]:
+                            coupled_families.append("closure")
+                        if strict and buffers[first] & buffers[second]:
+                            coupled_families.append("strict buffer")
+                        if scenario == "C" and lines[first] == lines[second]:
+                            coupled_families.append("same-line ECLO window")
+                        if scenario == "C" and (crossover[first] or crossover[second]):
+                            coupled_families.append("Live all-line ECLO window")
+                        if coupled_families:
+                            self.assertEqual(
+                                component_of[first],
+                                component_of[second],
+                                msg=(
+                                    f"{fixture_name}/{scenario}/strict={strict}: "
+                                    f"{first} and {second} separated despite "
+                                    f"{coupled_families}"
+                                ),
+                            )
 
     def test_interchange_holdout_c_is_exact_and_policy_stable(self) -> None:
         data = ROOT / "fixtures" / "independent_interchange_holdout_v1"

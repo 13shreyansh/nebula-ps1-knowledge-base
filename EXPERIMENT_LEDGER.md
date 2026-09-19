@@ -1812,3 +1812,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Corrected replay: selected policy remains `initial_incumbent`, selected score remains C=`62.7`, proof source is `monolithic`, global optimality is true, and all three published CSVs are byte-for-byte identical to `deliverables/public/C`.
 - Independent replay: primary and raw-CSV scorers both return `62.7`; selected hash is unchanged; no decomposition, portal call, package replacement, or official-score change occurs.
 - Boundary: proof transfer is only across fully gated candidates at exactly equal primary objective. It does not transfer schedule-specific secondary properties, reference-validator confirmation, or organizer-only semantics.
+
+### E192: Cross-activity dependency audit covers every encoded coupling family
+
+- Timestamp: 2026-09-19 13:04:30 +08.
+- Independent audit scope: public, heterogeneous C, heterogeneous B, Live scale, multi-bridge, footprint-dependency, and contract/precedence fixtures; Scenarios A/B/C; standard and strict-buffer policies.
+- Pairwise invariants: activities must share a decomposition component whenever they share a contract objective/workfront cap, direct precedence, local work location and group/supply decision, directional work-versus-blocked closure, strict buffer intersection, Scenario C same-line ECLO window, or Scenario C Live all-line ECLO window.
+- Result: every coupled pair remains in one component across all 42 fixture/scenario/policy combinations. Transitive union then keeps predecessor and interaction chains together. The audit includes shared-location coupling separately rather than assuming closure code always subsumes supply/group interaction.
+- Release replay: 188/188 regressions pass in 10.317 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true.
+- Boundary: this proves coverage of currently encoded evaluator/solver families on selected structures, not completeness against an undisclosed organizer rule. Topology, blocked-location, and buffer calculations are reused from production helpers, so a shared semantic error remains possible.
