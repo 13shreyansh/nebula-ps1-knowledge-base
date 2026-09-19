@@ -1858,3 +1858,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: all six single-reason mutations are detected. The auditor is not merely passing the intact implementation; every declared edge family has a concrete failure witness.
 - Release replay: 191/191 regressions pass in 10.238 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true. No portal interaction occurred.
 - Boundary: single-reason deletion does not test combinations of simultaneous graph bugs, over-connection, or wrong topology semantics shared by baseline and witness construction.
+
+### E197: Organizer specification drift check remains clean
+
+- Timestamp: 2026-09-19 13:14:37 +08.
+- Read-only check: `refs/heads/main` of the organizer repository remains `966c976005db2e3e40a691cff268fdb8f396a5df`, the exact commit against which all 14 local PS1 source files were previously byte-compared.
+- Consequence: no new organizer change invalidates the encoded rules, public optimality certificates, release packages, or current robustness experiments.
+- Integrity boundary: this verifies published GitHub state only. It cannot detect an unpublished portal-side validator change or undisclosed hidden-data behavior.
+- Portal protection: no login, upload, validation run, or attempt-counter change occurred.
