@@ -2993,6 +2993,106 @@ class PublicFixtureTests(unittest.TestCase):
             predecessor_overlap.hard_violations,
         )
 
+        def exceed_workfront(rows) -> None:
+            next(
+                row
+                for row in rows
+                if row["activity_id"] == "A013" and row["week"] == "23"
+            )["access_night"] = "2"
+
+        workfront = evaluate_mutation("A", mutate_access=exceed_workfront)
+        self.assertTrue(
+            any(
+                "C002/Renewal week 23 night 2: workfront cap exceeded" in item
+                for item in workfront.hard_violations
+            ),
+            workfront.hard_violations,
+        )
+
+        def exceed_allocation_index(rows) -> None:
+            next(
+                row
+                for row in rows
+                if row["activity_id"] == "A013" and row["week"] == "23"
+            )["access_night"] = "4"
+
+        allocation = evaluate_mutation("A", mutate_access=exceed_allocation_index)
+        self.assertTrue(
+            any("access_night 4 outside contract cap" in item for item in allocation.hard_violations),
+            allocation.hard_violations,
+        )
+
+        def set_a_eclo(rows) -> None:
+            rows[0]["eclo"] = "1"
+
+        scenario_a_eclo = evaluate_mutation("A", mutate_access=set_a_eclo)
+        self.assertIn("Scenario A forbids ECLO", scenario_a_eclo.hard_violations)
+
+        def move_a003_before_start_access(rows) -> None:
+            next(
+                row
+                for row in rows
+                if row["activity_id"] == "A003" and row["week"] == "11"
+            )["week"] = "10"
+
+        def move_a003_before_start_occupancy(rows) -> None:
+            for row in rows:
+                if row["activity_id"] == "A003" and row["week"] == "11":
+                    row["week"] = "10"
+
+        early_start = evaluate_mutation(
+            "A",
+            mutate_access=move_a003_before_start_access,
+            mutate_occupancy=move_a003_before_start_occupancy,
+        )
+        self.assertTrue(
+            any("A003: starts in week 10 before week 11" in item for item in early_start.hard_violations),
+            early_start.hard_violations,
+        )
+
+        def move_a075_outside_horizon_access(rows) -> None:
+            next(row for row in rows if row["activity_id"] == "A075")["week"] = "31"
+
+        def move_a075_outside_horizon_occupancy(rows) -> None:
+            for row in rows:
+                if row["activity_id"] == "A075":
+                    row["week"] = "31"
+
+        outside_horizon = evaluate_mutation(
+            "A",
+            mutate_access=move_a075_outside_horizon_access,
+            mutate_occupancy=move_a075_outside_horizon_occupancy,
+        )
+        self.assertTrue(
+            any("A075: week 31 outside horizon" in item for item in outside_horizon.hard_violations),
+            outside_horizon.hard_violations,
+        )
+
+        def move_a001_past_b_deadline_access(rows) -> None:
+            next(
+                row
+                for row in rows
+                if row["activity_id"] == "A001" and row["week"] == "23"
+            )["week"] = "24"
+
+        def move_a001_past_b_deadline_occupancy(rows) -> None:
+            for row in rows:
+                if row["activity_id"] == "A001" and row["week"] == "23":
+                    row["week"] = "24"
+
+        scenario_b_late = evaluate_mutation(
+            "B",
+            mutate_access=move_a001_past_b_deadline_access,
+            mutate_occupancy=move_a001_past_b_deadline_occupancy,
+        )
+        self.assertTrue(
+            any(
+                "A001: Scenario B planned completion exceeded" in item
+                for item in scenario_b_late.hard_violations
+            ),
+            scenario_b_late.hard_violations,
+        )
+
     def test_missing_access_is_rejected_instead_of_scoring_well(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             copied = Path(temp_dir)
