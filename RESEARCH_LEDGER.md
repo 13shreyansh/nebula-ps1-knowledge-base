@@ -663,6 +663,14 @@ Confidence labels:
 - **Limitation:** Two activities make the analytical lower bound simple; this does not measure large congested search performance.
 - **Confidence:** High for the encoded interaction and full-instance proofs; medium for scaled transfer.
 
+### `R082` A safe Scenario C fallback can conceal a valuable global ECLO move
+
+- **Status:** Confirmed failure on a precommitted eight-activity interacting-Live fixture.
+- **Finding:** The protected controller returns safe C=`273.0` with a full-instance lower bound of `21.0` after ten seconds. Its first direct C candidate scores `115.0` but has 14 closure conflicts; two later candidates merely reproduce `273.0`. The bounded cost repair frees all eight activities yet also retains `273.0` after five seconds.
+- **Relevance:** Contributor-based neighborhood selection is no longer the bottleneck when every activity is selected. Search needs a structurally meaningful ECLO-window move or more effective full-instance sequencing, not further dependency expansion.
+- **Limitation:** The exact optimum is not yet known. A constructive one-week compression argument gives a feasible target below `273.0`, but it must be serialized and checked before becoming an incumbent.
+- **Confidence:** High in the measured controller failure and bound gap; medium in the proposed compression trajectory until file-validated.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

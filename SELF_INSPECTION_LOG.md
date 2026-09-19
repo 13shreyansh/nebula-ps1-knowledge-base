@@ -973,3 +973,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Falsification result: the controller does not merely parse multiple bridges; it selects different optimal levers across A versus B/C under cross-line congestion. The hypothesis that this interaction is mishandled is rejected at compact scale.
 - Confidence: very high in official incumbents; high in the compact trade-off proof; medium in multi-bridge semantic transfer; low-to-medium in dense multi-bridge runtime.
 - Immediate next action: preserve and commit the evidence, then scale repeated interacting-Live bridge modules under a fixed time budget to locate the feasibility/runtime failure knee without tuning on individual failures.
+
+## 2026-09-19 08:24:15 +08
+
+- Interval: 4 minutes 47 seconds since the previous inspection; triggered by the scaled interacting-Live failure.
+- Best independently validated public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No official artifact or portal attempt changed.
+- What improved: on the precommitted eight-job fixture, A=`273.0` and B=`80.0` are safe, dual-scored, strict-clean, and full-instance proved. B repeated `80.0` across all three construction seeds.
+- What failed: Scenario C retained the safe A-derived `273.0` incumbent with lower bound `21.0`; the first C candidate scored `115.0` but had 14 closure conflicts. Five-second repair already freed all eight activities and still retained `273.0`, so neighborhood coverage is not the immediate defect.
+- Adversarial interpretation: earlier compact multi-bridge success did not transfer to global ECLO-window sequencing. A safe fallback can hide a large score gap, and adding more activities to the repair set would falsely appear responsive while changing nothing.
+- Integrity risks checked: fixture was committed before solver exposure; all failed and safe candidates are retained; no internal lower bound or invalid `115.0` result is called an improvement; public scores remain separate from synthetic scores.
+- Strongest falsification: remove one early standard access, convert that activity's remaining two accesses into the shared two-week ECLO window, and shift the later one-job-per-week sequence left. This should yield a file-checkable C score below `273.0`; failure would disprove the current reasoning.
+- Confidence: very high in public incumbents; high in A/B scaled proofs and the C failure; medium in the manual compression argument; low in current C runtime robustness under global crossover congestion.
+- Immediate next action: commit the blind failure before constructing the candidate, then validate the transformed files with both scorers and both closure screens. If valid, turn the transformation into a schema-derived hint rather than an instance-specific patch.

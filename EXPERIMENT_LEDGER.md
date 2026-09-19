@@ -1017,3 +1017,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: unchanged one-worker production paths prove full-instance A=`700.0`, B=`10.0`, and C=`10.0` in under one second combined. Both scorers agree, both closure screens are clean, and the solver schedules two ECLO nights in B/C exactly as the bound requires.
 - Evidence update: the proof matrix grows from 40 to 43 cases; 37 are full-instance and six are restricted-neighborhood proofs. The suite passes 77 tests.
 - Boundary: this validates a nonzero topology/objective interaction on two activities, not runtime scaling or a dense hidden distribution.
+
+### E108: Eight interacting Live jobs expose a Scenario C global-move failure
+
+- Timestamp: 2026-09-19 08:24:15 +08
+- Precommit protocol: the eight-activity, 24-week fixture was committed as `52b9eb5` before solver exposure. Every activity spans both adjacent interchange bridges and derives ten cross-line locations. Dataset hash is `8a3be5829570b659a574cbad29e4b42712d2e3787376c2605f0b0cd8714ee58e`.
+- Fixed budget: one worker; three five-second heuristic attempts; five-second local repair; ten-second fallback and sound verification.
+- A result: heuristics returned attractive but conflicting scores `266`, `266`, and `259`; local repair produced safe `273.0`; full-instance sound verification proved `273.0` in 3.94 seconds.
+- B result: all three construction attempts safely reached `80.0`; full-instance verification proved `80.0`. Sixteen ECLO rows are required to compress eight three-unit activities into their two-week hard-date blocks.
+- C failure: the safe final remains `273.0` with zero ECLO while sound verification stops at lower bound `21.0`. The first direct candidate is invalid C=`115.0` with 14 closure conflicts; two later attempts are safe C=`273.0`. The cost neighborhood already includes all eight activities, so further dependency expansion cannot fix this result.
+- Integrity: all returned A/B/C artifacts are dual-scored and clean under both closure screens. C=`273.0` is a valid incumbent, not an optimality claim. The protected official public artifacts are unchanged.
+- Next falsification: serialize the predeclared global move that compresses one early activity into a two-week ECLO window and shifts the remaining unique weekly assignments one week earlier. Promote only if the files prove a score below `273.0`.
