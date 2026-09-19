@@ -1378,3 +1378,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Integrity gates: all 118 tests pass in 9.371 seconds and all 30 local readiness checks remain true. The original 0/3 run and input/oracle were committed before implementation.
 - Boundary: B's 12.321-second end-to-end time remains unexplained by its 0.033-second hint and 0.460-second verification; profile before optimizing.
 - Official protection: no portal interaction or attempt was used.
+
+### E145: Checked zero-floor fast path removes dense verification overhead
+
+- Timestamp: 2026-09-19 10:50:41 +08
+- Profile: dense B after E144 makes 19,238,451 calls in 14.095 seconds. Two full flexible-model constructions consume 13.322 seconds; `_add_sample_hints` adds 1,805,398 entries and consumes 3.651 seconds, while both CP-SAT solves total 0.481 seconds.
+- Rule: all official primary objective components are nonnegative. A complete hint that passes the evaluator and requested closure screen at exactly `0.0` is globally primary-optimal; only the subordinate row-count tie remains unproved.
+- Implementation: perform that complete check before model creation, rewrite the same rows and derived results, and return telemetry with score/bound zero, `primary_score_proven_optimal=true`, zero model variables/constraints/solve rounds, and explicit no-tie-proof scope.
+- Replay: A/B/C remain exact hashes `a524ccfd…`, `c6a153f4…`, and `a3cd3733…`, with scores zero and no strict conflicts. Runtime falls 1.070→0.580, 12.321→0.679, and 2.596→1.407 seconds; aggregate 15.988→2.666, or 6.00×.
+- Integrity gates: all 119 tests pass in 7.513 seconds; the dedicated fast-path test re-runs both scorers and asserts no model was built. All 30 local readiness checks remain true.
+- Boundary: positive-score public and synthetic cases cannot enter this path; no official score or artifact changed.
+- Official protection: no portal interaction or attempt was used.

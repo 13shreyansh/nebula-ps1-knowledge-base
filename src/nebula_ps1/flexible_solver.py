@@ -176,6 +176,70 @@ def solve_flexible_supply_relaxation(
     ):
         raise ValueError("max_deterministic_time_per_solve must be positive")
 
+    checked_hint_started = time.monotonic()
+    if sample_hint_dir is not None:
+        checked_hint_root = Path(sample_hint_dir)
+        checked_hint_evaluation = evaluate_submission(
+            instance, checked_hint_root, scenario
+        )
+        checked_hint_access, checked_hint_occupancy, _ = load_submission(
+            checked_hint_root
+        )
+        checked_hint_conflicts = screen_closures(
+            instance,
+            checked_hint_access,
+            checked_hint_occupancy,
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+        if (
+            checked_hint_evaluation.internally_feasible
+            and not checked_hint_conflicts
+            and checked_hint_evaluation.objective_score == 0.0
+        ):
+            _write_submission_rows(
+                instance,
+                output_dir,
+                scenario,
+                list(checked_hint_access),
+                list(checked_hint_occupancy),
+            )
+            telemetry = SolveTelemetry(
+                formulation=f"scenario_{scenario.lower()}_checked_zero_floor_incumbent",
+                status="PRIMARY_OPTIMAL_SAFE_INCUMBENT",
+                objective_score=0.0,
+                best_bound=0.0,
+                wall_time_seconds=time.monotonic() - checked_hint_started,
+                deterministic_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=seed,
+                workers=workers,
+                time_limit_seconds=time_limit_seconds,
+                model_variables=0,
+                model_constraints=0,
+                limitation=(
+                    "The complete input hint passed the full evaluator and selected "
+                    "closure policy at the global nonnegative primary-score floor. "
+                    "No CP-SAT model was built; row-count tie optimality is not claimed."
+                ),
+                closure_rounds=0,
+                remaining_closure_conflicts=0,
+                round_time_limit_seconds=effective_round_limit,
+                solve_rounds=0,
+                maximum_round_time_seconds=0.0,
+                unknown_retries=0,
+                primary_score_proven_optimal=True,
+                tie_break_proven_optimal=False,
+                primary_bound_scope="full_instance_nonnegative_floor",
+                max_deterministic_time_per_solve=max_deterministic_time_per_solve,
+                interleave_search=interleave_search,
+            )
+            output_root = Path(output_dir)
+            (output_root / "TELEMETRY.json").write_text(
+                telemetry.as_json() + "\n", encoding="utf-8"
+            )
+            return telemetry
+
     model = cp_model.CpModel()
     horizon = instance.horizon_weeks
     eligible: dict[str, range] = {}

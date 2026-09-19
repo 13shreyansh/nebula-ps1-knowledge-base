@@ -1728,12 +1728,24 @@ class PublicFixtureTests(unittest.TestCase):
                 / "SEED_MATRIX.json"
             ).read_text(encoding="utf-8")
         )
+        zero_floor = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m20_zero_floor_seed1_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
         self.assertEqual(failed["dataset_hash"], recovered["dataset_hash"])
         self.assertEqual(failed["policy"], recovered["policy"])
         self.assertEqual(failed["successes"], 0)
         self.assertEqual(failed["failures"], 3)
         self.assertEqual(recovered["successes"], 3)
         self.assertEqual(recovered["failures"], 0)
+        self.assertEqual(recovered["dataset_hash"], zero_floor["dataset_hash"])
+        self.assertEqual(recovered["policy"], zero_floor["policy"])
+        self.assertEqual(zero_floor["successes"], 3)
+        self.assertEqual(zero_floor["failures"], 0)
 
         oracle_access, _, _ = load_submission(
             ROOT / "fixtures" / "independent_dense_m20_oracle"
@@ -1742,15 +1754,28 @@ class PublicFixtureTests(unittest.TestCase):
             (row.activity_id, row.week, row.eclo, row.access_night)
             for row in oracle_access
         }
-        for row in recovered["runs"]:
+        recovered_runs = {row["scenario"]: row for row in recovered["runs"]}
+        for row in zero_floor["runs"]:
             scenario = row["scenario"]
             with self.subTest(scenario=scenario):
+                prior = recovered_runs[scenario]
+                for field in (
+                    "status",
+                    "score",
+                    "strict_conflicts",
+                    "selected_stage",
+                    "submission_hash",
+                ):
+                    self.assertEqual(prior[field], row[field])
+                self.assertGreaterEqual(
+                    prior["wall_seconds"] / row["wall_seconds"], 1.5
+                )
                 self.assertEqual(row["score"], 0.0)
                 self.assertEqual(row["strict_conflicts"], 0)
                 submission = (
                     ROOT
                     / "runs"
-                    / "independent_dense_m20_hint_candidate_seed1_w1"
+                    / "independent_dense_m20_zero_floor_seed1_w1"
                     / f"{scenario.lower()}_seed_1"
                 )
                 evaluation = evaluate_submission(instance, submission, scenario)
@@ -3776,6 +3801,41 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertIsNone(heuristic.best_bound)
         self.assertFalse(heuristic.primary_score_proven_optimal)
         self.assertFalse(heuristic.tie_break_proven_optimal)
+
+    def test_checked_zero_score_hint_returns_global_floor_without_model(self) -> None:
+        data = ROOT / "fixtures" / "independent_dense_m20"
+        source = (
+            ROOT
+            / "runs"
+            / "independent_dense_m20_hint_candidate_seed1_w1"
+            / "b_seed_1"
+        )
+        instance = load_instance(data)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            telemetry = solve_flexible_supply_relaxation(
+                instance,
+                temp_dir,
+                "B",
+                time_limit_seconds=10.0,
+                sample_hint_dir=source,
+                workers=1,
+            )
+            evaluation = evaluate_submission(instance, temp_dir, "B")
+            independent = independently_score(data, temp_dir)
+        self.assertEqual(telemetry.status, "PRIMARY_OPTIMAL_SAFE_INCUMBENT")
+        self.assertEqual(telemetry.objective_score, 0.0)
+        self.assertEqual(telemetry.best_bound, 0.0)
+        self.assertEqual(telemetry.model_variables, 0)
+        self.assertEqual(telemetry.model_constraints, 0)
+        self.assertEqual(telemetry.solve_rounds, 0)
+        self.assertTrue(telemetry.primary_score_proven_optimal)
+        self.assertFalse(telemetry.tie_break_proven_optimal)
+        self.assertEqual(
+            telemetry.primary_bound_scope, "full_instance_nonnegative_floor"
+        )
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 0.0)
+        self.assertEqual(independent.objective_score, 0.0)
 
     def test_frozen_access_telemetry_declares_conditional_bound_scope(self) -> None:
         source = ROOT / "deliverables" / "public" / "C"

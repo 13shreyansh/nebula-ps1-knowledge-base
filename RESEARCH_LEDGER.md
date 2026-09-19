@@ -990,6 +990,15 @@ Confidence labels:
 - **Boundary:** This improves feasible-incumbent delivery, not the constructor's completeness. Positive-score hints still require solver search for improvement, and local full-gate correctness remains bounded by implemented-rule coverage.
 - **Confidence:** High after retained-suite, malformed-output, fault-injection, independent-oracle, and readiness checks.
 
+### `R119` A checked zero objective needs no optimization model
+
+- **Status:** Confirmed with exact-output replay and a dedicated regression.
+- **Finding:** Dense Scenario B spent 14.095 profiled seconds after immediate hint recovery; two model builds dominated, including 1.8 million `add_hint` calls. The solver itself used 0.481 seconds.
+- **Correction:** Before model construction, fully evaluate a supplied incumbent and apply the requested closure policy. If its score is exactly zero, emit it unchanged as primary-optimal because every delay, excess, and ECLO term is nonnegative. Do not claim row-count tie optimality.
+- **Evidence:** Dense A/B/C retain exact hashes and scores while runtime improves `1.070→0.580`, `12.321→0.679`, and `2.596→1.407` seconds. A direct zero-floor test reports zero variables, constraints, and solve rounds, with both scorers agreeing.
+- **Boundary:** Only score zero qualifies. Positive-score incumbents, malformed hints, and strict-conflicting hints continue through rejection or full model search.
+- **Confidence:** Very high in primary-score optimality and gating; high in measured runtime removal.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
