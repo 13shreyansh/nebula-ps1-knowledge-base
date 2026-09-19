@@ -1294,3 +1294,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: 215/215 acceptance decisions match. This extends the artifact mutations beyond `5C` and `PC + 4C` to multiple-PM, multiple-PC, and every mixed boundary in the enumerated range.
 - Regression status: all 111 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E137: Scenario capacity-domain enumeration finds no off-by-one error
+
+- Timestamp: 2026-09-19 10:13:50 +08
+- Search space: every supply value zero through five crossed with zero through ten candidate activities, 66 pairs.
+- Result: A equals `min(candidates, supply)`; C equals `min(candidates, supply + 1)`; bridge-safe B equals `candidates`; direct-heuristic B equals `min(candidates, supply + 1)`.
+- Integrity boundary: only unrestricted bridge-safe B represents the published unlimited paid-excess domain. The smaller direct domain remains a non-certifying construction heuristic, and its comment and tests now state that boundary explicitly.
+- Regression status: all 112 tests pass.
+- Official protection: no portal interaction or attempt was used.

@@ -928,6 +928,14 @@ Confidence labels:
 - **Boundary:** This proves equivalence of the implemented count rules, not the organizer's hidden validator. Input parsing still controls which access-type strings can reach either implementation.
 - **Confidence:** Very high in solver/evaluator equivalence for the enumerated domain.
 
+### `R112` Exact scenario capacity domains match the published policy
+
+- **Status:** Confirmed over supply zero through five and zero through ten candidate activities.
+- **Result:** Scenario A exposes at most nominal supply groups; C exposes at most supply plus one; exact bridge-safe B exposes one group per candidate and therefore cannot remove paid excess solutions.
+- **Heuristic boundary:** Direct-heuristic B intentionally exposes at most supply plus one to control group-label symmetry. It cannot certify infeasibility or replace a protected incumbent without the unrestricted bridge-safe path.
+- **Verification:** All 66 supply/candidate pairs match these four policies, including zero supply and candidate counts below the available group limit.
+- **Confidence:** Very high in the domain calculation; solver search can still fail to find an incumbent within time.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
