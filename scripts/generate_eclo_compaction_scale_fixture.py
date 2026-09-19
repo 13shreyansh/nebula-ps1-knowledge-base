@@ -8,6 +8,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "fixtures" / "independent_eclo_compaction_scale_v1"
 SOURCE = ROOT / "fixtures" / "independent_eclo_compaction_scale_v1_source_c"
+REVERSE_SOURCE = (
+    ROOT / "fixtures" / "independent_eclo_compaction_scale_v1_reverse_source_c"
+)
 ACTIVITY_COUNT = 120
 HORIZON_START = date(2033, 1, 3)
 
@@ -27,6 +30,7 @@ def _completion_date(week: int) -> str:
 def main() -> None:
     DATA.mkdir(parents=True, exist_ok=True)
     SOURCE.mkdir(parents=True, exist_ok=True)
+    REVERSE_SOURCE.mkdir(parents=True, exist_ok=True)
     horizon_weeks = 3 * ACTIVITY_COUNT
     _write(
         DATA / "01_LINES.csv",
@@ -230,6 +234,64 @@ def main() -> None:
         SOURCE / "RESULTS.csv",
         ("scenario", "contract_number", "simulated_completion_date", "overrun_days"),
         results,
+    )
+
+    reverse_access: list[dict[str, object]] = []
+    reverse_occupancy: list[dict[str, object]] = []
+    reverse_results: list[dict[str, object]] = []
+    completion_by_index: dict[int, int] = {}
+    for position, index in enumerate(range(ACTIVITY_COUNT, 0, -1), 1):
+        activity = f"TS{index:03d}"
+        completion_week = 3 * position
+        completion_by_index[index] = completion_week
+        for sequence, week in enumerate(
+            range(completion_week - 2, completion_week + 1), 1
+        ):
+            reverse_access.append(
+                {
+                    "activity_id": activity,
+                    "access_seq": sequence,
+                    "week": week,
+                    "eclo": 0,
+                    "access_night": 1,
+                }
+            )
+            reverse_occupancy.extend(
+                {
+                    "activity_id": activity,
+                    "week": week,
+                    "location_id": location,
+                    "co_share_group": "g1",
+                }
+                for location in footprint
+            )
+    for index in range(1, ACTIVITY_COUNT + 1):
+        completion = HORIZON_START + timedelta(
+            days=7 * completion_by_index[index] - 1
+        )
+        planned = HORIZON_START + timedelta(days=7 * (3 * index) - 1)
+        reverse_results.append(
+            {
+                "scenario": "C",
+                "contract_number": f"KS{index:03d}",
+                "simulated_completion_date": completion.isoformat(),
+                "overrun_days": max(0, (completion - planned).days),
+            }
+        )
+    _write(
+        REVERSE_SOURCE / "SCHEDULE_ACCESS.csv",
+        ("activity_id", "access_seq", "week", "eclo", "access_night"),
+        reverse_access,
+    )
+    _write(
+        REVERSE_SOURCE / "SCHEDULE_OCCUPANCY.csv",
+        ("activity_id", "week", "location_id", "co_share_group"),
+        reverse_occupancy,
+    )
+    _write(
+        REVERSE_SOURCE / "RESULTS.csv",
+        ("scenario", "contract_number", "simulated_completion_date", "overrun_days"),
+        reverse_results,
     )
 
 
