@@ -680,6 +680,15 @@ Confidence labels:
 - **Limitation:** The operator is intentionally narrow. It does not solve schedules with simultaneous compatible work, idle gaps, dispersed ECLO windows, or multiple compressible lanes. The sound CP-SAT verifier retains `262.0` but still reports bound `21.0`; the exact proof here is the independent finite enumeration.
 - **Confidence:** High for this fixture and fail-safe integration; medium for transfer to other serialized bottlenecks; low outside the stated preconditions.
 
+### `R084` Candidate validation must preserve incumbent ECLO state
+
+- **Status:** Confirmed defect, fail-safe impact, corrected and replayed.
+- **Finding:** The first compactor implementation set every non-target access to standard while testing a target activity. Full workload and ECLO-window validation rejected the affected candidates, so no invalid schedule could be promoted, but a valid second compaction could be hidden. Non-target ECLO flags are now preserved exactly.
+- **Efficiency:** Equivalent removals inside one consecutive three-week block can produce identical files. Signature deduplication reduces the real scaled run from 20 materialized candidate directories to eight while retaining the same selected C=`262.0` hash; audit-directory size falls from 580 KB to 432 KB.
+- **Cross-regime result:** A reproducible strict-screen audit of all 19 retained Scenario C incumbents finishes in 0.19 seconds: 17 are structurally inapplicable, one has no legal candidate, and the already-optimal scaled case remains unchanged. No candidate is falsely promoted.
+- **Limitation:** Deduplication reduces redundant work but worst-case file generation remains proportional to the number of unique eligible transformations times submission size. Large serialized hidden instances still need a specific runtime stress test.
+- **Confidence:** High in state preservation, deduplication, and fail-safe selection; medium in worst-case scale.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

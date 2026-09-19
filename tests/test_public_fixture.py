@@ -244,10 +244,25 @@ class PublicFixtureTests(unittest.TestCase):
                 (),
             )
             self.assertTrue(report["applicable"])
-            self.assertEqual(report["candidates_checked"], 16)
-            self.assertEqual(report["feasible_candidates"], 16)
-            self.assertEqual(report["improving_candidates"], 13)
+            self.assertEqual(report["candidates_checked"], 8)
+            self.assertEqual(report["duplicate_candidates_skipped"], 8)
+            self.assertEqual(report["feasible_candidates"], 8)
+            self.assertEqual(report["improving_candidates"], 7)
             self.assertEqual(report["selected_score"], 262.0)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            second_dir, second, second_report = best_single_lane_eclo_compaction(
+                instance,
+                ROOT / "runs" / "independent_multi_bridge_scale_v1_c_compaction_controller",
+                Path(temp_dir) / "candidates",
+                forbid_buffer_overlap=True,
+            )
+        self.assertIsNone(second_dir)
+        self.assertIsNone(second)
+        self.assertEqual(second_report["source_score"], 262.0)
+        self.assertEqual(second_report["candidates_checked"], 7)
+        self.assertEqual(second_report["duplicate_candidates_skipped"], 10)
+        self.assertEqual(second_report["feasible_candidates"], 0)
 
         public_hashes = {
             name: hashlib.sha256(
@@ -599,6 +614,28 @@ class PublicFixtureTests(unittest.TestCase):
                 {"full_instance", "frozen_access_neighborhood", "fixed_access_schedule"},
                 row["case"],
             )
+
+    def test_eclo_compaction_retained_c_audit_has_no_false_improvement(self) -> None:
+        audit = json.loads(
+            (ROOT / "runs" / "eclo_compaction_retained_c_audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
+        retained_c = [row for row in matrix["cases"] if row["scenario"] == "C"]
+        self.assertEqual(audit["case_count"], len(retained_c))
+        self.assertEqual(audit["case_count"], 19)
+        self.assertEqual(audit["applicable_count"], 2)
+        self.assertEqual(audit["improved_count"], 0)
+        self.assertEqual(audit["total_candidates_checked"], 7)
+        self.assertEqual(audit["total_duplicate_candidates_skipped"], 8)
+        self.assertEqual(
+            {record["case"] for record in audit["cases"]},
+            {row["case"] for row in retained_c},
+        )
+        self.assertTrue(
+            all(record["selected_score"] is None for record in audit["cases"])
+        )
 
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"

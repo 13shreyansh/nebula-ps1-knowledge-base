@@ -6,7 +6,13 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .closure import screen_closures
-from .evaluate import Evaluation, evaluate_submission, load_submission
+from .evaluate import (
+    AccessRow,
+    Evaluation,
+    OccupancyRow,
+    evaluate_submission,
+    load_submission,
+)
 from .instance import Instance
 
 
@@ -21,12 +27,12 @@ def _write(
 
 def _write_candidate(
     instance: Instance,
-    source_dir: Path,
+    access: list[AccessRow],
+    occupancy: list[OccupancyRow],
     output_dir: Path,
     activity_id: str,
     removed_week: int,
 ) -> None:
-    access, occupancy, _ = load_submission(source_dir)
     occupied_weeks = sorted({row.week for row in access})
     week_map = {
         week: week - int(week > removed_week)
@@ -48,8 +54,10 @@ def _write_candidate(
                 "activity_id": row.activity_id,
                 "access_seq": row.access_seq,
                 "week": week_map[row.week],
-                "eclo": int(
-                    row.activity_id == activity_id and row.week in target_weeks
+                "eclo": (
+                    int(row.week in target_weeks)
+                    if row.activity_id == activity_id
+                    else row.eclo
                 ),
                 "access_night": row.access_night,
             }
@@ -112,6 +120,56 @@ def _write_candidate(
     )
 
 
+def _candidate_signature(
+    access: list[AccessRow],
+    occupancy: list[OccupancyRow],
+    activity_id: str,
+    removed_week: int,
+) -> tuple[tuple[object, ...], ...]:
+    occupied_weeks = sorted({row.week for row in access})
+    week_map = {
+        week: week - int(week > removed_week)
+        for week in occupied_weeks
+        if week != removed_week
+    }
+    target_weeks = {
+        row.week
+        for row in access
+        if row.activity_id == activity_id and row.week != removed_week
+    }
+    transformed_access = tuple(
+        sorted(
+            (
+                "access",
+                row.activity_id,
+                week_map[row.week],
+                (
+                    int(row.week in target_weeks)
+                    if row.activity_id == activity_id
+                    else row.eclo
+                ),
+                row.access_night,
+            )
+            for row in access
+            if not (row.activity_id == activity_id and row.week == removed_week)
+        )
+    )
+    transformed_occupancy = tuple(
+        sorted(
+            (
+                "occupancy",
+                row.activity_id,
+                week_map[row.week],
+                row.location_id,
+                row.co_share_group,
+            )
+            for row in occupancy
+            if not (row.activity_id == activity_id and row.week == removed_week)
+        )
+    )
+    return (*transformed_access, *transformed_occupancy)
+
+
 def best_single_lane_eclo_compaction(
     instance: Instance,
     source_dir: str | Path,
@@ -129,7 +187,7 @@ def best_single_lane_eclo_compaction(
 
     source = Path(source_dir)
     root = Path(candidates_dir)
-    access, _, _ = load_submission(source)
+    access, occupancy, _ = load_submission(source)
     source_evaluation = evaluate_submission(instance, source, "C")
     activities_by_week: dict[int, set[str]] = defaultdict(set)
     for row in access:
@@ -141,6 +199,7 @@ def best_single_lane_eclo_compaction(
         "applicable": False,
         "reason": "",
         "candidates_checked": 0,
+        "duplicate_candidates_skipped": 0,
         "feasible_candidates": 0,
         "improving_candidates": 0,
         "selected_activity": None,
@@ -168,6 +227,8 @@ def best_single_lane_eclo_compaction(
     best: Evaluation | None = None
     best_key: tuple[str, int] | None = None
     candidate_records: list[dict[str, object]] = []
+    seen_signatures: set[tuple[tuple[object, ...], ...]] = set()
+    duplicate_candidates_skipped = 0
     for activity_id in sorted(by_activity):
         rows = sorted(by_activity[activity_id], key=lambda row: row.week)
         if len(rows) != 3 or any(row.eclo for row in rows):
@@ -180,10 +241,21 @@ def best_single_lane_eclo_compaction(
             ]
             if max(retained_weeks) - min(retained_weeks) > 1:
                 continue
+            signature = _candidate_signature(
+                access,
+                occupancy,
+                activity_id,
+                removed.week,
+            )
+            if signature in seen_signatures:
+                duplicate_candidates_skipped += 1
+                continue
+            seen_signatures.add(signature)
             candidate_dir = root / f"{activity_id}_remove_week_{removed.week}"
             _write_candidate(
                 instance,
-                source,
+                access,
+                occupancy,
                 candidate_dir,
                 activity_id,
                 removed.week,
@@ -233,6 +305,7 @@ def best_single_lane_eclo_compaction(
                 best_dir = candidate_dir
                 best = evaluation
                 best_key = candidate_key
+    report["duplicate_candidates_skipped"] = duplicate_candidates_skipped
     report["candidates"] = candidate_records
     if best is not None and best_key is not None:
         report["selected_activity"] = best_key[0]
