@@ -625,6 +625,20 @@ Confidence labels:
 - **Integrity rule:** Never replace the official-rule incumbent with a higher-score hedge. Report strict status separately from official feasibility, preserve the original candidate, and label any repair proof as conditional on its frozen neighborhood.
 - **Confidence:** High in the counterexample and repair; medium in general usefulness; low that strict overlap is the official hidden rule.
 
+### `R077` Strict-hedge dependency closure can be broad but remains fail-safe
+
+- **Status:** Confirmed across six retained strict-conflicted outputs.
+- **Finding:** Contract/precedence closure from strict conflicts freed `[11,19,34,41,45,36]` activities out of 40–54. Four cases found equal-score strict-clean schedules in 0.29–2.68 seconds; two consumed the full ten-second cap and retained their original strict-conflicted incumbents.
+- **Relevance:** Describe the method as conflict-seeded, not necessarily small. A hard time cap and protected selection control runtime and score risk; they do not guarantee strict cleanliness.
+- **Confidence:** High for these six cases; medium for runtime transfer.
+
+### `R078` Post-attempt telemetry must describe the selected artifact
+
+- **Status:** Confirmed by a higher-score strict-clean counterexample.
+- **Finding:** A rejected hedge can be strict-clean while the retained lower-score incumbent remains strict-conflicted. Reporting the candidate's conflict count as the final “after” state falsely describes the selected output.
+- **Protection:** Keep candidate telemetry and prune evidence, but compute selected-state fields from the promoted artifact only. If promotion fails, final conflict status remains the incumbent's status.
+- **Confidence:** High.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

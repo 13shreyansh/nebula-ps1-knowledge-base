@@ -23,6 +23,7 @@ from nebula_ps1.portfolio import SUBMISSION_FILES, _candidate_is_better, _copy_s
 from nebula_ps1.prune import prune_submission
 from nebula_ps1.solver import SolveTelemetry, _contract_costs
 from nebula_ps1.staged import (
+    _run_strict_score_preserving_hedge,
     _scenario_b_cost_contributing_activities,
     _strict_conflict_repair_activities,
     solve_staged_scenario,
@@ -620,6 +621,65 @@ class PublicFixtureTests(unittest.TestCase):
             ),
             ["Z528", "Z572", "Z596"],
         )
+
+    def test_strict_hedge_rejects_higher_score_clean_candidate(self) -> None:
+        data = ROOT / "fixtures" / "independent_irregular_partial_v1_renamed_s3"
+        source = ROOT / "runs" / "c_irregular_renamed_s3_seed5_production"
+        higher = ROOT / "runs" / "c_irregular_renamed_s3_strict_higher112_pruned"
+        instance = load_instance(data)
+        selected = evaluate_submission(instance, source, "C")
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            _copy_submission(higher, Path(output_dir))
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="OPTIMAL",
+                objective_score=112.0,
+                best_bound=112.0,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=1,
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+                primary_score_proven_optimal=True,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation", side_effect=fake_solve
+        ):
+            (
+                returned_dir,
+                returned,
+                conflicts_before,
+                conflicts_after,
+                activities,
+                telemetry,
+                prune_report,
+                promoted,
+            ) = _run_strict_score_preserving_hedge(
+                instance,
+                source,
+                selected,
+                "C",
+                Path(temp_dir),
+                time_limit_seconds=1.0,
+                workers=1,
+                seed=7,
+                closure_round_limit=50,
+            )
+        self.assertFalse(promoted)
+        self.assertEqual(returned_dir, source)
+        self.assertEqual(returned.objective_score, 31.0)
+        self.assertEqual(len(conflicts_before), 1)
+        self.assertEqual(len(conflicts_after), 1)
+        self.assertEqual(activities, ["Z528", "Z572", "Z596"])
+        self.assertEqual(telemetry.objective_score, 112.0)
+        self.assertEqual(prune_report.final_score, 112.0)
 
     def test_post_contract_precedence_holdout_is_frozen_before_repair(self) -> None:
         data = ROOT / "fixtures" / "independent_post_contract_precedence_v1"

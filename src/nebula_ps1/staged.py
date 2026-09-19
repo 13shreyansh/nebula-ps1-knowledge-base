@@ -263,7 +263,7 @@ def _run_strict_score_preserving_hedge(
         )
         candidate = evaluate_submission(instance, pruned, scenario)
         candidate_access, candidate_occupancy, _ = load_submission(pruned)
-        conflicts_after = tuple(
+        candidate_conflicts = tuple(
             screen_closures(
                 instance,
                 candidate_access,
@@ -273,11 +273,12 @@ def _run_strict_score_preserving_hedge(
         )
         if (
             candidate.internally_feasible
-            and not conflicts_after
+            and not candidate_conflicts
             and candidate.objective_score <= selected.objective_score
         ):
             selected_dir = pruned
             selected = candidate
+            conflicts_after = candidate_conflicts
             promoted = True
     return (
         selected_dir,

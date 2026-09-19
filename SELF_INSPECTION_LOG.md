@@ -938,3 +938,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Falsification result: unconditional fixed-point expansion is rejected. The current narrow-first protected portfolio survives two identifier perturbations, including one with a much broader first repair set.
 - Confidence: very high in official incumbents and evidence boundaries; high in the two recorded metamorphic outcomes; medium in controller-level identifier robustness; low-to-medium in hidden structural generalization.
 - Immediate next action: run a third predeclared identifier permutation under the identical policy, preserve it regardless of outcome, then summarize the three-run distribution without converting feasibility into proof.
+
+## 2026-09-19 08:04:08 +08
+
+- Interval: 12 minutes 43 seconds since the previous inspection; within the active 15-minute requirement and triggered by completion of the strict-hedge cross-regime audit.
+- Best independently validated public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- What improved: a third identifier permutation also reached standard-feasible C=`31.0`, making the rename series 3/3 at the same final score with three hashes. Its strict-only conflict was preserved, then repaired at equal score. Both production controllers now implement the protected final hedge; 72 regressions pass.
+- What failed or contradicted expectations: permutation 3 was not strict-clean, so the series is only 2/3 strict-clean before hedging. The supposedly targeted hedge can free 34/40 or 45/54 activities after contract/precedence closure. Two of six retained strict-conflicted cases exhausted ten seconds without a strict-clean candidate.
+- Cross-regime falsification: repair sizes were `[11,19,34,41,45,36]`; four cases found equal-score strict-clean replacements in 0.29–2.68 seconds, while prefix C and structural B failed safely at the ten-second cap. No candidate worsened or displaced an incumbent improperly.
+- Integrity hardening: hedge telemetry is insufficient by itself. Raw and pruned files are independently screened; promotion requires standard feasibility, zero strict conflicts, and objective no higher than the incumbent. Solver mocks that contradicted their files exposed and fixed this gate.
+- Remaining uncertainty: strict overlap is not the validator-confirmed rule; runtime limits remain unknown; a broad ten-second hedge may reduce throughput; equal-score strict schedules are not reference-validator-confirmed on hidden-like fixtures.
+- Confidence: very high in official incumbents and fail-safe selection; high in implemented hedge behavior and measured runtime; medium in strict-hedge value; low that strict overlap governs hidden scoring.
+- Immediate next action: preserve the six-case timing distribution, verify that official public artifacts trigger no hedge and retain exact hashes, then add a regression that rejects a strict-clean candidate if its official score is worse.

@@ -970,3 +970,18 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Real replay: the permutation-3 conflict produced repair set `Z528`, `Z572`, `Z596`; conflicts changed `1→0`; both scorers remained C=`31.0`; the solver conditionally proved `31.0` for the frozen neighborhood. A fresh run produced hash `062d4db1e3455caa3fb57e9be58204c577b8ad369a5d736cf68c4f5b0de15516`.
 - Regression: both generic staged and guarded Scenario C controllers expose hedge telemetry and promotion state; contradictory mocked telemetry is rejected by raw-file screening. All 72 tests pass.
 - Boundary: strict closure remains an optional hedge because it contradicts organizer sample cases. This does not change official public artifacts or scores.
+
+### E102: Strict hedge succeeds on four of six conflicted retained cases
+
+- Timestamp: 2026-09-19 08:04:08 +08
+- Protocol: replay the integrated hedge from every strict-conflicted artifact in the 34-case proof matrix, using eight workers, distinct fixed seeds, ten seconds, and score-preserving promotion.
+- Results: prefix A `11` free, `0.289s`, promoted at `85.4`; prefix B `19`, `2.684s`, promoted at `20.0`; prefix C `34`, `10.023s`, not promoted at `52.7`; structural A `41`, `1.582s`, promoted at `39.9`; structural B `45`, `10.012s`, not promoted at `10.0`; structural C `36`, `2.063s`, promoted at `10.0`.
+- Integrity: all promotions preserve the official objective and end strict-clean. Both failures retain their original artifacts and scores. No official public artifact changed.
+- Conclusion: keep the ten-second cap and protected gate. Do not describe conflict-seeded closure as a small neighborhood or promise strict-clean output.
+
+### E103: Higher-score strict-clean hedge is rejected without false reporting
+
+- Timestamp: 2026-09-19 08:05:57 +08
+- Counterexample: the permutation-3 C=`31.0` incumbent has one strict-only conflict. A separately checked strict-clean C=`112.0` candidate, hash `b40235fb95bfdebdb71e8f21475f1ccdfb8cfd9b994d42ff3cf7bb1164a2d4a3`, conditionally proves its frozen-neighborhood score.
+- Result: the hedge gate rejects C=`112.0`, returns the original C=`31.0` directory and evaluation, keeps promotion false, and reports one final strict conflict. Candidate telemetry and prune evidence remain available.
+- Correction: `strict_hedge_conflicts_after` now describes the selected artifact, not a rejected candidate. The full suite passes 73 tests.
