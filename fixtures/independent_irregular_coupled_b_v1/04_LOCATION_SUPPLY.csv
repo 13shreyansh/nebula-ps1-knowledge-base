@@ -1,0 +1,14 @@
+location_id,location_kind,line_code,bound,supply_capacity
+SEC:LIB:I1_I2:EB,tunnel sector,LIB,EB,1
+SEC:LIB:I2_I3:EB,tunnel sector,LIB,EB,1
+SEC:LIB:I3_I4:EB,tunnel sector,LIB,EB,1
+SEC:LIB:I4_I5:EB,tunnel sector,LIB,EB,1
+SEC:LIB:I5_I6:EB,tunnel sector,LIB,EB,1
+SEC:LIB:I6_I7:EB,tunnel sector,LIB,EB,1
+PLAT:LIB:I1:EB,platform,LIB,EB,1
+PLAT:LIB:I2:EB,platform,LIB,EB,1
+PLAT:LIB:I3:EB,platform,LIB,EB,1
+PLAT:LIB:I4:EB,platform,LIB,EB,1
+PLAT:LIB:I5:EB,platform,LIB,EB,1
+PLAT:LIB:I6:EB,platform,LIB,EB,1
+PLAT:LIB:I7:EB,platform,LIB,EB,1

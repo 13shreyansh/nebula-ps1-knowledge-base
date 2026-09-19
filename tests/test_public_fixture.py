@@ -3211,6 +3211,61 @@ class PublicFixtureTests(unittest.TestCase):
             rejected_matrix["runs"][0]["wall_seconds"],
         )
 
+    def test_irregular_coupled_b_oracle_has_asymmetric_exact_bound(self) -> None:
+        data = ROOT / "fixtures" / "independent_irregular_coupled_b_v1"
+        oracle = ROOT / "fixtures" / "independent_irregular_coupled_b_v1_oracle"
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, oracle, "B")
+        independent = independently_score(data, oracle)
+        access, occupancy, _ = load_submission(oracle)
+        self.assertEqual(
+            instance.dataset_hash,
+            "2ceb2a7c769ea594e36d5b42a622626e9e512b03b5dea87179e6b77ab2a422da",
+        )
+        access_types = [
+            instance.projects[activity.contract_number].access_type
+            for activity in instance.activities.values()
+        ]
+        self.assertEqual(
+            {kind: access_types.count(kind) for kind in ("PC", "C", "PM")},
+            {"PC": 4, "C": 3, "PM": 1},
+        )
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 122.0)
+        self.assertEqual(independent.objective_score, 122.0)
+        self.assertEqual(sum(row.eclo for row in access), 16)
+        self.assertEqual(evaluation.excess_access_nights_total, 6)
+        self.assertEqual(_scenario_b_workload_lower_bound_tenths(instance), 800)
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        pm_weeks = {
+            row.week for row in access if row.activity_id == "IPM6"
+        }
+        self.assertEqual(pm_weeks, {3, 4})
+        groups: dict[tuple[int, str], set[str]] = defaultdict(set)
+        for row in occupancy:
+            groups[(row.week, row.location_id)].add(row.co_share_group)
+        congested = {
+            key: len(labels) for key, labels in groups.items() if len(labels) > 1
+        }
+        self.assertEqual(len(congested), 6)
+        self.assertEqual(set(congested.values()), {2})
+        self.assertEqual(
+            {location for _, location in congested},
+            {
+                "PLAT:LIB:I2:EB",
+                "PLAT:LIB:I3:EB",
+                "PLAT:LIB:I4:EB",
+            },
+        )
+
     def test_official_a002_contract_score_is_reproduced(self) -> None:
         candidate = ROOT / "runs" / "a_official_a001_local_repair_pruned"
         evaluation = evaluate_submission(self.instance, candidate, scenario="A")

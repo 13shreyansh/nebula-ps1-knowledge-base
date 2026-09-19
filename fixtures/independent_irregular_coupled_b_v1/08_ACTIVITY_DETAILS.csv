@@ -1,0 +1,9 @@
+activity_id,contract_number,activity_type,start_location_id,end_location_id,total_accesses,planned_start_date,predecessor_activity_id,activity_priority
+IPC1,KIPC1,IrregularCoupled,SEC:LIB:I1_I2:EB,SEC:LIB:I1_I2:EB,3,2035-01-01,,3
+IPC2,KIPC2,IrregularCoupled,SEC:LIB:I2_I3:EB,SEC:LIB:I2_I3:EB,3,2035-01-01,,3
+IPC3,KIPC3,IrregularCoupled,SEC:LIB:I3_I4:EB,SEC:LIB:I3_I4:EB,3,2035-01-01,,3
+IPC4,KIPC4,IrregularCoupled,SEC:LIB:I4_I5:EB,SEC:LIB:I4_I5:EB,3,2035-01-01,,3
+IC12,KIC12,IrregularCoupled,SEC:LIB:I1_I2:EB,SEC:LIB:I2_I3:EB,3,2035-01-01,,3
+IC23,KIC23,IrregularCoupled,SEC:LIB:I2_I3:EB,SEC:LIB:I3_I4:EB,3,2035-01-01,,3
+IC34,KIC34,IrregularCoupled,SEC:LIB:I3_I4:EB,SEC:LIB:I4_I5:EB,3,2035-01-01,,3
+IPM6,KIPM6,IrregularCoupled,SEC:LIB:I6_I7:EB,SEC:LIB:I6_I7:EB,3,2035-01-15,,3

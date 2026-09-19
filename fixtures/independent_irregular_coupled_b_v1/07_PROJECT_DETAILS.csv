@@ -1,0 +1,9 @@
+contract_number,contract_description,contract_award_date,activity_type,nature_of_activity,contract_priority,contract_completion_date,planned_completion_date,number_of_workfronts,access_type,number_of_maximum_access_per_week
+KIPC1,Irregular coupled IPC1,2034-06-01,IrregularCoupled,Non-live (Consist),3,2035-02-11,2035-01-14,1,PC,1
+KIPC2,Irregular coupled IPC2,2034-06-01,IrregularCoupled,Non-live (Consist),3,2035-02-11,2035-01-14,1,PC,1
+KIPC3,Irregular coupled IPC3,2034-06-01,IrregularCoupled,Non-live (Consist),3,2035-02-11,2035-01-14,1,PC,1
+KIPC4,Irregular coupled IPC4,2034-06-01,IrregularCoupled,Non-live (Consist),3,2035-02-11,2035-01-14,1,PC,1
+KIC12,Irregular coupled IC12,2034-06-01,IrregularCoupled,Non-live (Consist),3,2035-02-11,2035-01-14,1,C,1
+KIC23,Irregular coupled IC23,2034-06-01,IrregularCoupled,Non-live (Consist),3,2035-02-11,2035-01-14,1,C,1
+KIC34,Irregular coupled IC34,2034-06-01,IrregularCoupled,Non-live (Consist),3,2035-02-11,2035-01-14,1,C,1
+KIPM6,Irregular coupled IPM6,2034-06-01,IrregularCoupled,Non-live (Consist),3,2035-02-11,2035-01-28,1,PM,1
