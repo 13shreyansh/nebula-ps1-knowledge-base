@@ -3181,6 +3181,115 @@ class PublicFixtureTests(unittest.TestCase):
                         min(candidates, supply + 1),
                     )
 
+    def test_malformed_submission_mutations_are_rejected(self) -> None:
+        source = ROOT / "deliverables" / "public" / "A"
+
+        def evaluate_mutation(filename: str, mutation):
+            temporary = tempfile.TemporaryDirectory()
+            self.addCleanup(temporary.cleanup)
+            copied = Path(temporary.name)
+            for name in SUBMISSION_FILES:
+                shutil.copy(source / name, copied / name)
+            path = copied / filename
+            with path.open(newline="", encoding="utf-8") as handle:
+                rows = list(csv.DictReader(handle))
+                fieldnames = list(rows[0])
+            mutation(rows)
+            with path.open("w", newline="", encoding="utf-8") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(rows)
+            return evaluate_submission(self.instance, copied, scenario="A")
+
+        duplicate_access = evaluate_mutation(
+            "SCHEDULE_ACCESS.csv", lambda rows: rows.append(dict(rows[0]))
+        )
+        self.assertTrue(
+            any("more than one access in week" in item for item in duplicate_access.hard_violations),
+            duplicate_access.hard_violations,
+        )
+
+        def gap_sequence(rows) -> None:
+            rows[0]["access_seq"] = "99"
+
+        sequence = evaluate_mutation("SCHEDULE_ACCESS.csv", gap_sequence)
+        self.assertTrue(
+            any("access_seq does not follow chronological weeks" in item for item in sequence.hard_violations),
+            sequence.hard_violations,
+        )
+
+        missing_occupancy = evaluate_mutation(
+            "SCHEDULE_OCCUPANCY.csv", lambda rows: rows.pop()
+        )
+        self.assertTrue(
+            any("missing 1 required occupancy rows" in item for item in missing_occupancy.hard_violations),
+            missing_occupancy.hard_violations,
+        )
+
+        duplicate_occupancy = evaluate_mutation(
+            "SCHEDULE_OCCUPANCY.csv", lambda rows: rows.append(dict(rows[0]))
+        )
+        self.assertTrue(
+            any("duplicate occupancy row" in item for item in duplicate_occupancy.hard_violations),
+            duplicate_occupancy.hard_violations,
+        )
+
+        def add_unexpected_occupancy(rows) -> None:
+            extra = dict(rows[0])
+            extra["location_id"] = "PLAT:ALP:S01:EB"
+            rows.append(extra)
+
+        extra_occupancy = evaluate_mutation(
+            "SCHEDULE_OCCUPANCY.csv", add_unexpected_occupancy
+        )
+        self.assertTrue(
+            any("found 1 unexpected occupancy rows" in item for item in extra_occupancy.hard_violations),
+            extra_occupancy.hard_violations,
+        )
+
+        def empty_group(rows) -> None:
+            rows[0]["co_share_group"] = ""
+
+        empty_group_result = evaluate_mutation("SCHEDULE_OCCUPANCY.csv", empty_group)
+        self.assertTrue(
+            any("empty co_share_group" in item for item in empty_group_result.hard_violations),
+            empty_group_result.hard_violations,
+        )
+
+        missing_result = evaluate_mutation("RESULTS.csv", lambda rows: rows.pop())
+        self.assertTrue(
+            any("RESULTS contract mismatch" in item for item in missing_result.hard_violations),
+            missing_result.hard_violations,
+        )
+
+        def corrupt_result(rows) -> None:
+            rows[0]["simulated_completion_date"] = "2030-01-01"
+            rows[0]["overrun_days"] = "0"
+
+        wrong_result = evaluate_mutation("RESULTS.csv", corrupt_result)
+        self.assertTrue(
+            any("RESULTS expected" in item for item in wrong_result.hard_violations),
+            wrong_result.hard_violations,
+        )
+
+        def change_result_scenario(rows) -> None:
+            for row in rows:
+                row["scenario"] = "B"
+
+        wrong_scenario = evaluate_mutation("RESULTS.csv", change_result_scenario)
+        self.assertTrue(
+            any("RESULTS scenario ['B'] disagrees with A" in item for item in wrong_scenario.hard_violations),
+            wrong_scenario.hard_violations,
+        )
+
+        duplicate_result = evaluate_mutation(
+            "RESULTS.csv", lambda rows: rows.append(dict(rows[0]))
+        )
+        self.assertTrue(
+            any("duplicate RESULTS contract" in item for item in duplicate_result.hard_violations),
+            duplicate_result.hard_violations,
+        )
+
     def test_missing_access_is_rejected_instead_of_scoring_well(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             copied = Path(temp_dir)
