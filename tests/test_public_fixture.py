@@ -114,10 +114,63 @@ class PublicFixtureTests(unittest.TestCase):
             hashes.add(evaluation.submission_hash)
         self.assertEqual(len(hashes), 3)
 
+    def test_multi_bridge_fixture_proves_composed_cross_line_topology(self) -> None:
+        data = ROOT / "fixtures" / "independent_multi_bridge_v1"
+        oracle = ROOT / "fixtures" / "independent_multi_bridge_v1_oracle_a"
+        instance = load_instance(data)
+        oracle_evaluation = evaluate_submission(instance, oracle, "A")
+        oracle_independent = independently_score(data, oracle)
+        self.assertEqual(
+            instance.dataset_hash,
+            "68379defb1fb02785c1d4aa9ab88747faa395b5c888f6f1245d40df5d1b391e7",
+        )
+        self.assertEqual(oracle_evaluation.hard_violations, ())
+        self.assertEqual(oracle_evaluation.objective_score, 0.0)
+        self.assertEqual(oracle_independent.objective_score, 0.0)
+        first = interchange_cross_line_locations(instance, instance.activities["M001"])
+        second = interchange_cross_line_locations(instance, instance.activities["M003"])
+        self.assertEqual(len(first), 10)
+        self.assertEqual(len(second), 6)
+        self.assertIn("SEC:LNY:X1_X2:WB", first)
+        self.assertIn("SEC:LNY:X2_X3:EB", first)
+        self.assertIn("SEC:LNX:X2_X3:WB", second)
+
+        hashes = set()
+        for scenario in ("A", "B", "C"):
+            submission = ROOT / "runs" / f"independent_multi_bridge_v1_{scenario.lower()}"
+            audit = submission.with_name(f"{submission.name}_audit")
+            telemetry_root = (
+                audit / "verification_raw"
+                if scenario != "C"
+                else audit / "stages" / "scenario_c_verification_raw"
+            )
+            evaluation = evaluate_submission(instance, submission, scenario)
+            independent = independently_score(data, submission)
+            access, occupancy, _ = load_submission(submission)
+            telemetry = json.loads(
+                (telemetry_root / "TELEMETRY.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(evaluation.hard_violations, ())
+            self.assertEqual(evaluation.objective_score, 0.0)
+            self.assertEqual(independent.objective_score, 0.0)
+            self.assertEqual(
+                screen_closures(
+                    instance,
+                    access,
+                    occupancy,
+                    forbid_buffer_overlap=True,
+                ),
+                (),
+            )
+            self.assertEqual(telemetry["best_bound"], 0.0)
+            self.assertEqual(telemetry["primary_bound_scope"], "full_instance")
+            hashes.add(evaluation.submission_hash)
+        self.assertEqual(len(hashes), 3)
+
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 37)
+        self.assertEqual(len(matrix["cases"]), 40)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -152,6 +205,13 @@ class PublicFixtureTests(unittest.TestCase):
                     ROOT
                     / "runs"
                     / f"independent_three_line_v1_{row['scenario'].lower()}"
+                )
+            elif row["case"].startswith("independent_multi_bridge_"):
+                data = ROOT / "fixtures" / "independent_multi_bridge_v1"
+                submission = (
+                    ROOT
+                    / "runs"
+                    / f"independent_multi_bridge_v1_{row['scenario'].lower()}"
                 )
             elif row["case"].startswith("independent_dense_"):
                 if row["case"].startswith("independent_dense_holdout_"):

@@ -999,3 +999,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Independent oracle: A=`7.0`, dual-scored and hard-feasible. The Live bridge activity on `LNX` derives 12 crossover locations: sector and platform locations in both bounds on `LNY` and `LNZ`.
 - No-hint results: staged one-worker solves prove full-instance A=`7.0`, B=`10.0`, and C=`7.0`; all three finals are strict-clean. The proof matrix grows from 34 to 37 cases and the suite passes 75 tests.
 - Boundary: the fixture changes line cardinality but remains compact and structurally related to the independent two-line generator.
+
+### E106: Adjacent Live crossover bridges compose and solve from scratch
+
+- Timestamp: 2026-09-19 08:16:21 +08
+- Precommit protocol: generator, eight input CSVs, and a dual-scored score-zero oracle were committed as `9273d3d` before the solver saw the fixture. Dataset hash is `68379defb1fb02785c1d4aa9ab88747faa395b5c888f6f1245d40df5d1b391e7`.
+- Topology result: `M001` spans `X1–X2–X3` on `LNX` and derives ten unique crossover locations on `LNY`; `M003` works `X2–X3` on `LNY` and derives six on `LNX`.
+- No-hint result: one-worker staged production paths prove full-instance A=`0.0`, B=`0.0`, and C=`0.0` in under one second combined. All three outputs are dual-scored and clean under both closure screens; hashes are `4853d08d…`, `5e2adee3…`, and `a92fb00c…`.
+- Evidence update: the proof matrix grows from 37 to 40 cases; 34 are full-instance and six are restricted-neighborhood proofs. The suite passes 76 tests.
+- Boundary: this isolates topology composition rather than scale or congestion. Zero score is a correctness result, not evidence of difficult-search performance.

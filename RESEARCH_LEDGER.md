@@ -647,6 +647,14 @@ Confidence labels:
 - **Limitation:** One compact third-line extension does not cover arbitrary interchange graphs or large multi-line density.
 - **Confidence:** High in cardinality handling; medium in larger-network transfer.
 
+### `R080` Adjacent interchange bridges compose without public identifiers
+
+- **Status:** Confirmed on a precommitted public-independent fixture.
+- **Finding:** A Live activity spanning two adjacent interchange-to-interchange sectors derives ten unique cross-line locations on the other line: both sectors and all three platforms in both bounds. A Live activity on only the second bridge derives six. The production controller proves score `0.0` for A, B, and C from raw input with one worker.
+- **Relevance:** Crossover propagation is applied to every worked interchange bridge and deduplicated at their shared station; it is not hard-coded to one public endpoint pair.
+- **Limitation:** The fixture is compact, has only two lines, and does not test a branching interchange graph or simultaneous interacting Live jobs.
+- **Confidence:** High for adjacent bridge composition; medium for dense multi-bridge transfer.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

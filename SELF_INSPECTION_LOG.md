@@ -950,3 +950,15 @@ Append-only paranoid audits for the active score-improvement goal. All times use
 - Remaining uncertainty: strict overlap is not the validator-confirmed rule; runtime limits remain unknown; a broad ten-second hedge may reduce throughput; equal-score strict schedules are not reference-validator-confirmed on hidden-like fixtures.
 - Confidence: very high in official incumbents and fail-safe selection; high in implemented hedge behavior and measured runtime; medium in strict-hedge value; low that strict overlap governs hidden scoring.
 - Immediate next action: preserve the six-case timing distribution, verify that official public artifacts trigger no hedge and retain exact hashes, then add a regression that rejects a strict-clean candidate if its official score is worse.
+
+## 2026-09-19 08:16:21 +08
+
+- Interval: 12 minutes 13 seconds since the previous inspection; early after completion of a fresh topology falsification.
+- Best independently validated public scores remain A=`137.9`, B=`30.0`, C=`62.7`, combined=`230.6`; score change is zero. No protected artifact or portal attempt changed.
+- What improved: a precommitted two-line, two-adjacent-interchange-bridge fixture now proves full-instance A/B/C=`0.0` from raw input with one worker. The two Live activities derive ten and six cross-line locations respectively, and all outputs pass both scorers and both closure screens. The proof matrix is now 40 cases and 76 tests pass.
+- What failed or was corrected: an initial test command used the system Python and failed before collection because the package and OR-Tools were unavailable there. The project `.venv` is healthy, its editable metadata was refreshed from `pyproject.toml`, dependency checks pass, and the authoritative suite passes. This is invocation evidence, not a solver regression.
+- Adversarial interpretation: the new fixture proves adjacent-bridge composition but is small and has a zero-cost optimum. It does not stress dense simultaneous Live closures, branching interchange graphs, or runtime scaling. A correct ten-location set can still coexist with search failure under congestion.
+- Integrity risks checked: fixture and oracle were committed before solver exposure; no public identifiers or schedules are present; the oracle was not used as a hint; all three proof bounds are full-instance; official confirmation remains false for these rows.
+- Falsification result: the hypothesis that crossover logic only handles one bridge is rejected for two adjacent bridges. The broader hypothesis of arbitrary interchange-graph robustness remains unproved.
+- Confidence: very high in official incumbents; high in adjacent-bridge topology handling and artifact integrity; medium in unseen dense multi-bridge transfer.
+- Immediate next action: commit the complete evidence, then build a congested interacting-Live variant or, if model size grows too quickly, quantify that failure without modifying the protected controller.
