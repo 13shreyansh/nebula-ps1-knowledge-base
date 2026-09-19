@@ -1,0 +1,35 @@
+{
+  "case_count": 768,
+  "mismatch_count": 0,
+  "score_match_count": 768,
+  "variant_count": 3,
+  "variants": [
+    {
+      "case_count": 256,
+      "dataset_hash": "9dc1bd72689eeb2cc670e17c82ca285107f6165adecdb3266efb95258c70bc46",
+      "max_reachable_normalization_states": 5,
+      "mismatch_count": 0,
+      "mismatch_examples": [],
+      "score_match_count": 256,
+      "variant": "staggered_starts"
+    },
+    {
+      "case_count": 256,
+      "dataset_hash": "dbe0b4b1882573ba9aa5cd7b88c682cb21f098efe1f776ff2c21cd114bf6f9a9",
+      "max_reachable_normalization_states": 16,
+      "mismatch_count": 0,
+      "mismatch_examples": [],
+      "score_match_count": 256,
+      "variant": "precedence_chain"
+    },
+    {
+      "case_count": 256,
+      "dataset_hash": "f3369eba4448fc0114c334a8c53b2928337afe35b2b1ea23eb53fa65899aad7e",
+      "max_reachable_normalization_states": 5,
+      "mismatch_count": 0,
+      "mismatch_examples": [],
+      "score_match_count": 256,
+      "variant": "staggered_chain"
+    }
+  ]
+}

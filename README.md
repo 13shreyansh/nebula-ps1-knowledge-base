@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.48
+version: 0.8.49
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -682,3 +682,4 @@ When sources conflict:
 | `0.8.46` | 2026-09-19 | Preserved internal-gap tie preference even after a score-prediction mismatch forces exhaustive idle-candidate checking. |
 | `0.8.47` | 2026-09-19 | Added a 60-activity, 59-gap scale audit; final checked post-processing lowers C=`1,116,689` to `733,120` in about 1.54 seconds with zero prediction mismatch or strict conflict. |
 | `0.8.48` | 2026-09-19 | Exhaustively compared greedy normalization plus ECLO against every reachable normalization state across all 256 four-activity, two-line gap patterns; every final score matched. |
+| `0.8.49` | 2026-09-19 | Extended full branching comparison to 768 cases with staggered starts, a precedence chain, and both constraints together; every greedy final score matched the oracle. |

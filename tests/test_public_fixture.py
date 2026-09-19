@@ -1426,6 +1426,24 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(audit["mismatches"], [])
         self.assertEqual(audit["max_reachable_normalization_states"], 16)
 
+    def test_constrained_idle_branching_matches_full_normalization_graph(self) -> None:
+        audit = json.loads(
+            (ROOT / "runs" / "constrained_idle_branching_audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(audit["variant_count"], 3)
+        self.assertEqual(audit["case_count"], 768)
+        self.assertEqual(audit["score_match_count"], 768)
+        self.assertEqual(audit["mismatch_count"], 0)
+        self.assertEqual(
+            {row["variant"] for row in audit["variants"]},
+            {"staggered_starts", "precedence_chain", "staggered_chain"},
+        )
+        self.assertTrue(
+            all(row["mismatch_examples"] == [] for row in audit["variants"])
+        )
+
     def test_scaled_independent_oracle_is_valid_and_larger_than_public(self) -> None:
         data = ROOT / "fixtures" / "independent_scaled_m20"
         oracle = ROOT / "fixtures" / "independent_scaled_m20_oracle"

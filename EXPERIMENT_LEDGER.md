@@ -1188,3 +1188,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Boundary: planned starts are common and block order is fixed, so this is bounded falsification rather than a completeness proof.
 - Regression status: all 103 tests pass.
 - Official protection: no portal interaction or attempt was used.
+
+### E126: Constrained branching finds no greedy counterexample
+
+- Timestamp: 2026-09-19 09:40:56 +08
+- Search: repeat the complete 256 two-line gap-pattern family under three data variants: staggered planned starts, a four-activity precedence chain, and both together.
+- Oracle: compare production greedy normalization plus exhaustive repeated ECLO with all reachable strict-clean non-worsening normalization states and their exhaustive ECLO compositions; independently rescore each production result.
+- Result: 768/768 final scores match; no mismatch example exists. The largest reachable state count is five for each staggered-start family and 16 for the precedence-only family.
+- Interpretation: planned-start and precedence feasibility checks are active and did not expose a choice-order defect in this bounded family. This is not a proof for arbitrary schedules.
+- Regression status: all 104 tests pass.
+- Official protection: no portal interaction or attempt was used.

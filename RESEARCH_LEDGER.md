@@ -843,6 +843,15 @@ Confidence labels:
 - **Boundary:** Activities retain the fixture's common planned start and fixed block order. This materially widens the earlier one-line, two-activity audit but does not prove arbitrary precedence or planned-start structures.
 - **Confidence:** High for this bounded family; medium beyond it.
 
+### `R102` Planned starts and precedence did not break greedy normalization in 768 cases
+
+- **Status:** Confirmed across three complete 256-pattern variants of the two-line, four-activity branching family.
+- **Variants:** Staggered planned starts at block boundaries; a four-activity precedence chain; and both constraints together.
+- **Oracle:** For every source, enumerate every reachable strict-clean non-worsening normalization state and exhaustive repeated ECLO composition, then compare with the checked production greedy path and independently rescore it.
+- **Result:** Final scores match in 768/768 cases. Staggered starts reduce the largest reachable graph from 16 to five states, demonstrating that infeasible earlier shifts are actually excluded rather than ignored.
+- **Boundary:** Fixed activity block order and one omitted week per block remain controlled simplifications. Arbitrary overlapping access patterns are outside the normalizer's serialized ECLO precondition.
+- **Confidence:** High for the tested constrained family.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
