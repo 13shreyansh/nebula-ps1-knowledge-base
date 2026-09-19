@@ -1830,3 +1830,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Report provenance: every newly generated `DECOMPOSED.json` records the inventory version and sorted edge-reason set. Historical reports remain byte-unchanged and explicitly predate the field.
 - Release replay: 189/189 regressions pass in 10.309 seconds, 19 isolated-validator cases pass with archive hash `495d4ef7…`, and all 30 package-readiness checks are true.
 - Boundary: the inventory is a maintenance tripwire, not automatic static analysis of evaluator code. A developer could still add a new cross-activity rule without updating either the graph or inventory; review and differential tests remain necessary.
+
+### E194: Full input-corpus decomposition audit precommit
+
+- Timestamp: 2026-09-19 13:07:20 +08.
+- Frozen script: discover every immediate `fixtures/` directory containing all eight input CSVs, add the released public input, and audit A/B/C under standard and strict-buffer policies.
+- Independent coupling derivation: same contract, direct predecessor, shared work location, directional work-versus-blocked closure, strict buffer intersection, same-line Scenario C window, and Live all-line Scenario C window. Do not call `_activity_interaction_reasons` when deciding whether a pair must remain connected.
+- Recorded outputs: dataset hash/activity count, component-size vectors for six policies, coupling observation counts, repeated pair-check count, and every boundary violation. The script exits nonzero if any coupled pair crosses components and records `portal_used=false`.
+- Precommit boundary: script and protocol are committed before corpus counts or pass/fail are observed. A failure will be retained; fixtures, rules, and filtering will not be changed to make it pass.
