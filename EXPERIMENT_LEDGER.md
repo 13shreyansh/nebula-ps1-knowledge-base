@@ -1794,3 +1794,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Scale C improvement: monolithic solving returns a valid but unproved C=`234780` in 18.035 seconds. Decomposition proves C=`145920` in 1.868 seconds. The lower proved schedule replaces the locally validated monolithic candidate only after both pass the same external gate; fresh replay confirms zero hard/strict conflicts and exact score agreement.
 - Coverage gained: the real controller now demonstrates all three selection states: equal-score preservation, one-policy failure recovery, and strict score improvement over a valid incumbent.
 - Integrity boundary: these are synthetic/frozen local fixtures. Runtime is sequentially additive, and the portfolio has no global cancellation deadline. No official A/B/C package, score, portal attempt, or portal counter changed.
+
+### E190: Candidate portfolio distinguishes solver failure from system failure
+
+- Timestamp: 2026-09-19 12:59:32 +08.
+- Risk found: catching every `Exception` could convert a programming defect or filesystem failure into an apparently routine policy miss, then publish a different candidate and conceal the defect.
+- Correction: only explicit `RuntimeError` and `ValueError` policy/validation failures are retained as recoverable attempts. Unexpected `TypeError`, `KeyError`, `OSError`, and other system/programming failures propagate and block publication.
+- Fault injection: a monolithic `TypeError` aborts immediately, decomposition is never called, and no final output exists. The existing missing-CSV candidate still raises a recoverable validation `RuntimeError`, is recorded as failed, and cannot displace the safe monolithic result.
+- Release replay: 187/187 regressions pass in 10.120 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true. No portal interaction occurred.
+- Boundary: `RuntimeError` and `ValueError` can still originate from defects as well as expected solver refusal. Their complete type/message and retained audit reduce concealment, but typed domain-specific exceptions would be stronger.

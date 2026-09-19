@@ -739,6 +739,27 @@ class PublicFixtureTests(unittest.TestCase):
                     (incumbent / name).read_bytes(),
                 )
 
+    def test_candidate_portfolio_does_not_swallow_programming_errors(self) -> None:
+        data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with patch(
+                "nebula_ps1.candidate_portfolio.solve_staged_scenario",
+                side_effect=TypeError("injected programmer error"),
+            ), patch(
+                "nebula_ps1.candidate_portfolio.solve_decomposed_scenario",
+            ) as decomposed:
+                with self.assertRaisesRegex(TypeError, "injected programmer error"):
+                    solve_candidate_portfolio(
+                        data,
+                        root / "submission",
+                        "C",
+                        audit_output_dir=root / "audit",
+                        forbid_buffer_overlap=True,
+                    )
+            decomposed.assert_not_called()
+            self.assertFalse((root / "submission").exists())
+
     def test_decomposed_solver_matches_monolithic_exact_two_line_result(self) -> None:
         data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
         monolithic = (

@@ -182,7 +182,7 @@ def solve_candidate_portfolio(
                 "global_optimality_proved": monolithic_proved,
             }
         )
-    except Exception as error:
+    except (RuntimeError, ValueError) as error:
         attempts.append(
             {
                 "policy": "monolithic",
@@ -233,7 +233,7 @@ def solve_candidate_portfolio(
                     "global_optimality_proved": decomposed_proved,
                 }
             )
-        except Exception as error:
+        except (RuntimeError, ValueError) as error:
             attempts.append(
                 {
                     "policy": "decomposed",
