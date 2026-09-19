@@ -481,6 +481,12 @@ def solve_flexible_supply_relaxation(
                 successors_by_activity[successor.predecessor_activity_id].append(
                     successor_id
                 )
+        provisional_access_by_week: dict[int, list[AccessRow]] = defaultdict(list)
+        provisional_occupancy_by_week: dict[int, list[OccupancyRow]] = defaultdict(list)
+        for row in provisional_access:
+            provisional_access_by_week[row.week].append(row)
+        for row in provisional_occupancy:
+            provisional_occupancy_by_week[row.week].append(row)
         contract_week_activity_count: dict[tuple[str, int], int] = defaultdict(int)
         for row in provisional_access:
             contract = instance.activities[row.activity_id].contract_number
@@ -566,10 +572,14 @@ def solve_flexible_supply_relaxation(
                     ]
                     if screen_closures(
                         instance,
-                        [*provisional_access, *activity_access, candidate_access],
                         [
-                            *provisional_occupancy,
-                            *activity_occupancy,
+                            *provisional_access_by_week[week],
+                            *(row for row in activity_access if row.week == week),
+                            candidate_access,
+                        ],
+                        [
+                            *provisional_occupancy_by_week[week],
+                            *(row for row in activity_occupancy if row.week == week),
                             *candidate_occupancy,
                         ],
                         forbid_buffer_overlap=forbid_buffer_overlap,
@@ -594,6 +604,10 @@ def solve_flexible_supply_relaxation(
             hinted_weeks[activity_id] = sorted(selected_weeks)
             provisional_access.extend(activity_access)
             provisional_occupancy.extend(activity_occupancy)
+            for row in activity_access:
+                provisional_access_by_week[row.week].append(row)
+            for row in activity_occupancy:
+                provisional_occupancy_by_week[row.week].append(row)
             for row in activity_access:
                 contract_week_activity_count[(activity.contract_number, row.week)] += 1
             for (week, location_id), slot in selected_slots.items():
