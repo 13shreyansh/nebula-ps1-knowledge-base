@@ -1208,3 +1208,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Test correction: the first archive regression required the same member order as an unrelated tuple and failed all three archives. ZIP member order is not a submission rule; the corrected assertion requires exactly three unique required root names and preserves byte-hash verification.
 - Regression status: all 105 tests pass.
 - Authorization boundary: packaging is local and reversible; no portal interaction or attempt was used.
+
+### E128: Local pre-upload readiness passes for all official incumbents
+
+- Timestamp: 2026-09-19 09:44:18 +08
+- Audit: reload the current public dataset; verify each protected source and final ZIP using archive/member hashes, submission hash, exact root membership, primary score, independent score, hard feasibility, and strict buffered closure screening.
+- Result: every check is true for A=`137.9`/A-002, B=`30.0`/B-001, and C=`62.7`/C-001; aggregate `all_ready` is true.
+- Boundary: this is a local drift and packaging check, not an official validator call or a new score claim.
+- Regression status: all 106 tests pass.
+- Official protection: no portal interaction or attempt was used.

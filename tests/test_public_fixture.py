@@ -3785,6 +3785,29 @@ class PublicFixtureTests(unittest.TestCase):
                     expected["official_validator_run"],
                 )
 
+    def test_final_submission_readiness_audit_passes_every_check(self) -> None:
+        readiness = json.loads(
+            (
+                ROOT / "deliverables" / "final-submission" / "READINESS.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            readiness["scope"], "local pre-upload audit; no portal interaction"
+        )
+        self.assertTrue(readiness["reference_validator_confirmed_incumbents"])
+        self.assertTrue(readiness["all_ready"])
+        self.assertEqual(set(readiness["scenarios"]), {"A", "B", "C"})
+        for scenario, record in readiness["scenarios"].items():
+            with self.subTest(scenario=scenario):
+                self.assertTrue(record["ready"])
+                self.assertTrue(all(record["checks"].values()))
+                self.assertEqual(record["hard_violations"], [])
+                self.assertEqual(record["strict_conflicts"], 0)
+                self.assertEqual(record["local_score"], record["official_score"])
+                self.assertEqual(
+                    record["independent_score"], record["official_score"]
+                )
+
     def test_public_incumbents_bypass_strict_hedge_unchanged(self) -> None:
         manifest = json.loads(
             (ROOT / "deliverables" / "public" / "MANIFEST.json").read_text(

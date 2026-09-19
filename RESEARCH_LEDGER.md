@@ -861,6 +861,14 @@ Confidence labels:
 - **Boundary:** These are ready-to-inspect local packages. No portal upload is authorized or performed.
 - **Confidence:** Very high.
 
+### `R104` Pre-upload readiness must be recomputed, not inferred from filenames
+
+- **Status:** Implemented and currently passing for A/B/C.
+- **Control:** `scripts/audit_final_submission_readiness.py` reloads the current public dataset and protected artifacts, checks hard feasibility and strict closures, compares the primary and independent scores with the official scores, and verifies submission, archive, and per-member hashes plus the exact three-file root structure.
+- **Result:** All eight checks pass independently for A, B, and C; the machine-readable readiness report marks every scenario and the aggregate `all_ready` true.
+- **Boundary:** This detects local drift and packaging errors. It does not emulate undocumented validator behavior and does not contact the portal.
+- **Confidence:** Very high for artifact integrity; high for known validated semantics.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

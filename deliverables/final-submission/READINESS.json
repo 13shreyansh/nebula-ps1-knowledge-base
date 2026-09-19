@@ -1,0 +1,71 @@
+{
+  "all_ready": true,
+  "dataset_hash": "e6608a9b396df162a6cf9ed74527c493eb07edf1ff89cc81f6906771c82f2188",
+  "reference_validator_confirmed_incumbents": true,
+  "scenarios": {
+    "A": {
+      "archive_sha256": "d003c6f165a3bd3aa6addb03c5c16e691484b7ab442d09e3c7f12328e586b82d",
+      "checks": {
+        "archive_hash_matches": true,
+        "exact_three_root_members": true,
+        "hard_feasible": true,
+        "independent_score_matches": true,
+        "member_hashes_match": true,
+        "official_score_matches": true,
+        "strict_closure_clean": true,
+        "submission_hash_matches": true
+      },
+      "hard_violations": [],
+      "independent_score": 137.9,
+      "local_score": 137.9,
+      "official_score": 137.9,
+      "official_validator_run": "A-002",
+      "ready": true,
+      "strict_conflicts": 0,
+      "submission_hash": "8ecab02fa499d057b66faaec730698aa71d163297e3fe0e8c26c1693ace4f7eb"
+    },
+    "B": {
+      "archive_sha256": "25b87dc99014d5320c959f14154b8a8dcef6e62172805c89bc9047faaafde90b",
+      "checks": {
+        "archive_hash_matches": true,
+        "exact_three_root_members": true,
+        "hard_feasible": true,
+        "independent_score_matches": true,
+        "member_hashes_match": true,
+        "official_score_matches": true,
+        "strict_closure_clean": true,
+        "submission_hash_matches": true
+      },
+      "hard_violations": [],
+      "independent_score": 30.0,
+      "local_score": 30.0,
+      "official_score": 30.0,
+      "official_validator_run": "B-001",
+      "ready": true,
+      "strict_conflicts": 0,
+      "submission_hash": "0b38e83c94b9e9a1dfb9c33d3ab9c3a7a8cc00e08dba6b8a561570ad3ebfd373"
+    },
+    "C": {
+      "archive_sha256": "a3e3419f4f2cf9811548a7576109d2c6c108294dc75bd38d5fabb4c394373d91",
+      "checks": {
+        "archive_hash_matches": true,
+        "exact_three_root_members": true,
+        "hard_feasible": true,
+        "independent_score_matches": true,
+        "member_hashes_match": true,
+        "official_score_matches": true,
+        "strict_closure_clean": true,
+        "submission_hash_matches": true
+      },
+      "hard_violations": [],
+      "independent_score": 62.7,
+      "local_score": 62.7,
+      "official_score": 62.7,
+      "official_validator_run": "C-001",
+      "ready": true,
+      "strict_conflicts": 0,
+      "submission_hash": "30247f5773477ca3e26a0e0d1704ef2f7aecd1fb8efbda15c6f0aa9bb4047733"
+    }
+  },
+  "scope": "local pre-upload audit; no portal interaction"
+}
