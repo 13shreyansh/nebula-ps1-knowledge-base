@@ -1821,3 +1821,12 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Result: every coupled pair remains in one component across all 42 fixture/scenario/policy combinations. Transitive union then keeps predecessor and interaction chains together. The audit includes shared-location coupling separately rather than assuming closure code always subsumes supply/group interaction.
 - Release replay: 188/188 regressions pass in 10.317 seconds, 19 isolated-validator cases pass with unchanged archive hash `495d4ef7…`, and all 30 package-readiness checks are true.
 - Boundary: this proves coverage of currently encoded evaluator/solver families on selected structures, not completeness against an undisclosed organizer rule. Topology, blocked-location, and buffer calculations are reused from production helpers, so a shared semantic error remains possible.
+
+### E193: Decomposition coupling contract is machine-readable and versioned
+
+- Timestamp: 2026-09-19 13:06:13 +08.
+- Inventory `2026-09-19.v1` maps six edge reasons to ten encoded cross-activity families: contract delay/workfront/allocation, precedence, same-line and Live all-line Scenario C windows, local group/legal-mix/supply/excess, directional closure, and strict buffer closure.
+- Regression contract: the declared reason set must exactly match the graph implementation's six reason labels; underlying family names must be unique; every reason must be observed across public, heterogeneous, and Live fixtures.
+- Report provenance: every newly generated `DECOMPOSED.json` records the inventory version and sorted edge-reason set. Historical reports remain byte-unchanged and explicitly predate the field.
+- Release replay: 189/189 regressions pass in 10.309 seconds, 19 isolated-validator cases pass with archive hash `495d4ef7…`, and all 30 package-readiness checks are true.
+- Boundary: the inventory is a maintenance tripwire, not automatic static analysis of evaluator code. A developer could still add a new cross-activity rule without updating either the graph or inventory; review and differential tests remain necessary.

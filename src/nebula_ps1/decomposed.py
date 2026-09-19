@@ -20,6 +20,27 @@ from .topology import (
 )
 
 
+DECOMPOSITION_COUPLING_INVENTORY_VERSION = "2026-09-19.v1"
+DECOMPOSITION_COUPLING_INVENTORY: dict[str, tuple[str, ...]] = {
+    "same_contract": (
+        "contract_completion_delay_objective",
+        "contract_week_access_night_allocation",
+        "contract_week_night_workfront_cap",
+    ),
+    "predecessor": ("activity_precedence",),
+    "scenario_c_same_line_window": ("scenario_c_line_eclo_two_week_window",),
+    "scenario_c_live_all_line_window": (
+        "scenario_c_live_interchange_all_line_eclo_window",
+    ),
+    "resource_or_closure": (
+        "location_week_group_membership_and_legal_mix",
+        "location_week_supply_and_excess_objective",
+        "directional_work_versus_blocked_closure",
+    ),
+    "strict_buffer_overlap": ("strict_buffer_to_buffer_closure_hedge",),
+}
+
+
 def independent_activity_components(
     instance: Instance,
     scenario: str,
@@ -437,6 +458,8 @@ def solve_decomposed_scenario(
         "strict_buffer_overlap_checked": forbid_buffer_overlap,
         "selected_policy_conflicts": len(conflicts),
         "global_optimality_proved_by_additivity": globally_proven,
+        "coupling_inventory_version": DECOMPOSITION_COUPLING_INVENTORY_VERSION,
+        "coupling_edge_reasons": sorted(DECOMPOSITION_COUPLING_INVENTORY),
         "reference_validator_confirmed": False,
         "publication_status": "staged",
     }

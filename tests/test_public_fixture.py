@@ -31,6 +31,8 @@ from nebula_ps1.eclo_compact import (
     best_single_lane_eclo_compaction,
 )
 from nebula_ps1.decomposed import (
+    DECOMPOSITION_COUPLING_INVENTORY,
+    DECOMPOSITION_COUPLING_INVENTORY_VERSION,
     _activity_interaction_reasons,
     _publish_submission_atomically,
     _primary_proof_telemetry,
@@ -988,6 +990,87 @@ class PublicFixtureTests(unittest.TestCase):
                                     f"{coupled_families}"
                                 ),
                             )
+
+    def test_decomposition_coupling_inventory_is_complete_and_exercised(self) -> None:
+        self.assertEqual(DECOMPOSITION_COUPLING_INVENTORY_VERSION, "2026-09-19.v1")
+        self.assertEqual(
+            set(DECOMPOSITION_COUPLING_INVENTORY),
+            {
+                "same_contract",
+                "predecessor",
+                "scenario_c_same_line_window",
+                "scenario_c_live_all_line_window",
+                "resource_or_closure",
+                "strict_buffer_overlap",
+            },
+        )
+        self.assertEqual(
+            len(
+                {
+                    family
+                    for families in DECOMPOSITION_COUPLING_INVENTORY.values()
+                    for family in families
+                }
+            ),
+            sum(len(families) for families in DECOMPOSITION_COUPLING_INVENTORY.values()),
+        )
+        instances = (
+            self.instance,
+            load_instance(ROOT / "fixtures" / "independent_heterogeneous_nonlive_v1"),
+            load_instance(ROOT / "fixtures" / "independent_interchange_scale8_v1"),
+        )
+        observed: set[str] = set()
+        for instance in instances:
+            for scenario in ("A", "B", "C"):
+                for first, second in itertools.combinations(
+                    sorted(instance.activities), 2
+                ):
+                    observed.update(
+                        _activity_interaction_reasons(
+                            instance,
+                            scenario,
+                            first,
+                            second,
+                            forbid_buffer_overlap=True,
+                        )
+                    )
+        self.assertEqual(observed, set(DECOMPOSITION_COUPLING_INVENTORY))
+
+        report = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_nonlive_scale16_v1_c_candidate_portfolio_seed1_w1_audit"
+                / "decomposed_audit"
+                / "DECOMPOSED.json"
+            ).read_text(encoding="utf-8")
+        )
+        # Historical reports predate the inventory field; new reports are pinned
+        # end to end by the focused solve below instead of being rewritten.
+        self.assertNotIn("coupling_inventory_version", report)
+
+        data = ROOT / "fixtures" / "independent_eclo_multipass_v1"
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            generated = solve_decomposed_scenario(
+                data,
+                root / "submission",
+                "C",
+                audit_output_dir=root / "audit",
+                workers=1,
+                seed=1,
+                heuristic_attempts=1,
+                fallback_attempts=1,
+                forbid_buffer_overlap=True,
+            )
+        self.assertEqual(
+            generated["coupling_inventory_version"],
+            DECOMPOSITION_COUPLING_INVENTORY_VERSION,
+        )
+        self.assertEqual(
+            generated["coupling_edge_reasons"],
+            sorted(DECOMPOSITION_COUPLING_INVENTORY),
+        )
 
     def test_interchange_holdout_c_is_exact_and_policy_stable(self) -> None:
         data = ROOT / "fixtures" / "independent_interchange_holdout_v1"
