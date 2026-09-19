@@ -3154,6 +3154,63 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertTrue(fallback["primary_score_proven_optimal"])
         self.assertEqual(fallback["primary_bound_scope"], "full_instance")
 
+        baseline_root = (
+            ROOT
+            / "runs"
+            / "independent_coupled_b_deadline_n4_baseline_seed2_w1"
+        )
+        rejected_root = (
+            ROOT
+            / "runs"
+            / "independent_coupled_b_deadline_n4_forced_groups_seed2_w1"
+        )
+        baseline_matrix = json.loads(
+            (baseline_root / "SEED_MATRIX.json").read_text()
+        )
+        rejected_matrix = json.loads(
+            (rejected_root / "SEED_MATRIX.json").read_text()
+        )
+        baseline_report = json.loads(
+            (baseline_root / "b_seed_2_audit" / "STAGED.json").read_text()
+        )
+        rejected_report = json.loads(
+            (rejected_root / "b_seed_2_audit" / "STAGED.json").read_text()
+        )
+        for candidate_root in (baseline_root, rejected_root):
+            candidate = candidate_root / "b_seed_2"
+            candidate_evaluation = evaluate_submission(instance, candidate, "B")
+            candidate_independent = independently_score(data, candidate)
+            self.assertEqual(candidate_evaluation.hard_violations, ())
+            self.assertEqual(candidate_evaluation.objective_score, 196.0)
+            self.assertEqual(candidate_independent.objective_score, 196.0)
+        self.assertEqual(
+            baseline_matrix["runs"][0]["selected_stage"],
+            "bridge_safe_fallback",
+        )
+        self.assertEqual(
+            rejected_matrix["runs"][0]["selected_stage"],
+            "bridge_safe_local_repair",
+        )
+        self.assertEqual(
+            baseline_report["heuristic_attempts"][0]["status"], "INFEASIBLE"
+        )
+        self.assertEqual(
+            rejected_report["heuristic_attempts"][0]["remaining_closure_conflicts"],
+            28,
+        )
+        self.assertEqual(
+            baseline_report["bridge_safe_fallback_telemetry"]["model_variables"],
+            2200,
+        )
+        self.assertEqual(
+            rejected_report["bridge_safe_local_repair_telemetry"]["model_variables"],
+            4846,
+        )
+        self.assertLess(
+            baseline_matrix["runs"][0]["wall_seconds"],
+            rejected_matrix["runs"][0]["wall_seconds"],
+        )
+
     def test_official_a002_contract_score_is_reproduced(self) -> None:
         candidate = ROOT / "runs" / "a_official_a001_local_repair_pruned"
         evaluation = evaluate_submission(self.instance, candidate, scenario="A")

@@ -1486,3 +1486,13 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Blind result: fixed one-worker 2/1/3/2-second policy succeeds at B=`196` in 0.127 seconds, strict conflicts zero, hash `e295c9f4…`, distinct from the oracle.
 - Path evidence: the two-group direct heuristic is `INFEASIBLE` with a partial 4/7-activity, eight-row structural hint. The unrestricted fallback reaches `OPTIMAL` score/bound `196` after one closure-separation round, using 2,200 variables and 6,027 constraints. Full verification and frozen-neighborhood cost repair preserve `196`.
 - Integrity: no oracle path, public identifier, target score, portal signal, or relaxed checker enters production. No official artifact changed and no portal attempt was used.
+
+### E156: Workload-derived direct-group expansion is rejected
+
+- Timestamp: 2026-09-19 11:38:00 +08.
+- Candidate: raise the direct Scenario B heuristic's local group limit when deadlines and incompatible access types imply more simultaneous groups than `supply + 1`.
+- Candidate run: on the frozen seven-activity coupled fixture with seed 2 and the unchanged one-worker 2/1/3/2-second policy, the direct stage reaches numerical score `196` but retains 28 closure conflicts and returns `INFEASIBLE`. The ensuing all-activity local repair uses 4,846 variables and 13,986 constraints, proves the frozen-neighbourhood score, and produces a strict-clean, dual-scored `196` candidate in 0.244 seconds end to end.
+- Restored baseline: after reverting the production change, the exact same seed and policy again make the two-group direct heuristic fail early, then select the unrestricted bridge-safe fallback. It uses 2,200 variables and 6,027 constraints, proves full-instance score/bound `196`, and finishes in 0.123 seconds.
+- Decision: reject and revert the group-floor candidate. It neither lowers score nor strengthens proof; it converts an intended cheap failure into a larger conflicting model and a slower repair. Preserve both runs and their telemetry as regression evidence.
+- Integrity gates: all 128 regressions pass in 8.876 seconds, including dual rescoring and exact path/model-size checks for both retained runs. The final-readiness audit remains 30/30 true.
+- Official protection: no portal interaction, upload, or attempt occurred; A-002/B-001/C-001 and quotas remain unchanged.

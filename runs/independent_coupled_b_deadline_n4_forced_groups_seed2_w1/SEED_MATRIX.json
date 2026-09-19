@@ -1,0 +1,39 @@
+{
+  "data": "fixtures/independent_coupled_b_deadline_n4_v1",
+  "dataset_hash": "0c1a9a807ce48173037875e0e6e283fb800380a7f088ee179ef9627b99a8b608",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "production_c": false,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "B"
+  ],
+  "requested_seeds": [
+    2
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 196.0,
+      "seed": 2,
+      "selected_stage": "bridge_safe_local_repair",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "9aaecce94802f5970351b940d4236dce3b0052f85ccd051112a48fc3191137df",
+      "wall_seconds": 0.24368699999467935
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 1
+}

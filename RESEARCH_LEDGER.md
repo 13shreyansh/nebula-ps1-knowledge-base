@@ -1090,6 +1090,16 @@ Confidence labels:
 - **Boundary:** This is still seven activities, one footprint, two weeks, and a deliberately regular bridge chain. It validates fallback coverage, not large coupled scaling.
 - **Confidence:** Very high in the exact result and path selection; high in fallback correctness for this group-count regime; medium in large-instance runtime transfer.
 
+### `R130` A workload-implied group floor is not a valid closure shortcut
+
+- **Status:** Rejected by a same-input, same-seed comparison; the production change was reverted.
+- **Hypothesis:** When deadline-forced incompatible activities require more simultaneous groups than the direct Scenario B heuristic exposes, increase its group-label limit from `supply + 1` to a workload-derived minimum. This could avoid the larger unrestricted fallback.
+- **Result:** On the precommitted four-PC coupled fixture, the enlarged direct model finds the correct numerical score `196` but leaves 28 transitive closure conflicts after separation and returns no valid candidate. The controller then solves an all-activity frozen-neighbourhood repair with 4,846 variables and 13,986 constraints. It remains strict-clean and dual-scored at `196`, but takes 0.244 seconds end to end.
+- **Fair baseline:** Restoring the original code and rerunning the same fixture, seed 2, worker count, and 2/1/3/2-second policy selects the unrestricted bridge-safe fallback. That model uses 2,200 variables and 6,027 constraints, proves the same `196` optimum, and finishes in 0.123 seconds, about 1.98 times faster in this recorded pair.
+- **Conclusion:** Counting how many simultaneous local groups are required does not determine whether those groups can be assigned consistently through transitive multi-location closure relationships. Enlarging only the direct group domain moves work into a larger, slower repair without improving score, feasibility, or proof strength. Keep the conservative heuristic and sound fallback split.
+- **Boundary:** The timing comparison is one deterministic-policy host pair and is not a universal runtime law. The rejection rests more strongly on unchanged score, unresolved closure conflicts, and larger repair formulation.
+- **Confidence:** Very high that this change should not be adopted; medium in broader runtime ratios.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:
