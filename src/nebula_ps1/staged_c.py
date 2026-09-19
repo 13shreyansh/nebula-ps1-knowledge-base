@@ -5,6 +5,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .closure import screen_closures
+from .eclo_compact import best_single_lane_eclo_compaction
 from .evaluate import Evaluation, evaluate_submission, load_submission
 from .flexible_solver import solve_flexible_supply_relaxation
 from .instance import Instance
@@ -151,6 +152,10 @@ def solve_staged_c_portfolio(
             "scenario_c_strict_hedge_promoted": direct_report.get(
                 "strict_hedge_promoted", False
             ),
+            "scenario_c_eclo_compaction": direct_report.get("eclo_compaction"),
+            "scenario_c_eclo_compaction_promoted": direct_report.get(
+                "eclo_compaction_promoted", False
+            ),
         }
         (audit_output / "STAGED_C.json").write_text(
             json.dumps(report, indent=2, sort_keys=True) + "\n",
@@ -173,6 +178,7 @@ def solve_staged_c_portfolio(
     heuristic_attempt_records: list[dict[str, object]] = []
     heuristic_best: Evaluation = fallback
     heuristic_best_dir = fallback_pruned
+    heuristic_best_stage = "scenario_c_fallback"
     selected_heuristic_attempt: int | None = None
     for attempt in range(c_heuristic_attempts):
         attempt_number = attempt + 1
@@ -215,8 +221,28 @@ def solve_staged_c_portfolio(
             if _candidate_is_better(candidate, heuristic_best):
                 heuristic_best = candidate
                 heuristic_best_dir = attempt_pruned
+                heuristic_best_stage = "scenario_c_heuristic"
                 selected_heuristic_attempt = attempt_number
         heuristic_attempt_records.append(attempt_record)
+
+    compacted_dir, compacted, eclo_compaction_report = (
+        best_single_lane_eclo_compaction(
+            instance,
+            heuristic_best_dir,
+            stages / "scenario_c_eclo_compaction_candidates",
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+    )
+    eclo_compaction_promoted = False
+    if (
+        compacted_dir is not None
+        and compacted is not None
+        and _candidate_is_better(compacted, heuristic_best)
+    ):
+        heuristic_best = compacted
+        heuristic_best_dir = compacted_dir
+        heuristic_best_stage = "scenario_c_eclo_compaction"
+        eclo_compaction_promoted = True
 
     verification_telemetry = solve_flexible_supply_relaxation(
         instance,
@@ -244,7 +270,7 @@ def solve_staged_c_portfolio(
     selected_dir = fallback_pruned
     selected = fallback
     if _candidate_is_better(heuristic_best, selected):
-        selected_stage = "scenario_c_heuristic"
+        selected_stage = heuristic_best_stage
         selected_dir = heuristic_best_dir
         selected = heuristic_best
     if _candidate_is_better(verified, selected):
@@ -437,6 +463,8 @@ def solve_staged_c_portfolio(
         "fallback_prune": asdict(fallback_prune),
         "scenario_c_heuristic_attempts": heuristic_attempt_records,
         "scenario_c_heuristic_selected_attempt": selected_heuristic_attempt,
+        "scenario_c_eclo_compaction": eclo_compaction_report,
+        "scenario_c_eclo_compaction_promoted": eclo_compaction_promoted,
         "scenario_c_verification_telemetry": asdict(verification_telemetry),
         "scenario_c_verification_prune": asdict(verification_prune),
         "scenario_c_cost_repair_activities": cost_repair_activities,

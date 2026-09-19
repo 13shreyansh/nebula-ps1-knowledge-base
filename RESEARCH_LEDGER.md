@@ -671,6 +671,15 @@ Confidence labels:
 - **Limitation:** The exact optimum is not yet known. A constructive one-week compression argument gives a feasible target below `273.0`, but it must be serialized and checked before becoming an incumbent.
 - **Confidence:** High in the measured controller failure and bound gap; medium in the proposed compression trajectory until file-validated.
 
+### `R083` Checked ECLO compaction closes the scaled Scenario C gap
+
+- **Status:** Confirmed and integrated on the precommitted eight-activity fixture.
+- **Finding:** A data-derived operator enumerates every way to replace one activity's three standard rows with two adjacent ECLO rows in a gap-free, one-activity-per-week incumbent, shifts later work one week earlier, regenerates `RESULTS.csv`, and promotes only a strictly lower fully checked candidate. The unmocked strict-screened controller improves C from `273.0` to `262.0`; both scorers agree and both closure policies are clean.
+- **Lower bound:** All 28 activity pairs conflict as separate PM possessions, so at most one activity can work per week. Every activity needs three standard weeks. Because each Live activity affects both lines, Scenario C's shared two-week ECLO window can shorten at most one activity from three weeks to two. Enumerating all `8!` activity orders with each of the nine choices of compressed activity or none gives minimum `262.0`, matching the candidate.
+- **Integrity:** The fixture and blind C=`273.0` failure were committed before the operator was implemented. Candidate generation uses schema properties and checked files, not identifiers, oracle rows, or expected scores. The official public C artifact does not satisfy the operator's structural precondition and remains byte-identical.
+- **Limitation:** The operator is intentionally narrow. It does not solve schedules with simultaneous compatible work, idle gaps, dispersed ECLO windows, or multiple compressible lanes. The sound CP-SAT verifier retains `262.0` but still reports bound `21.0`; the exact proof here is the independent finite enumeration.
+- **Confidence:** High for this fixture and fail-safe integration; medium for transfer to other serialized bottlenecks; low outside the stated preconditions.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

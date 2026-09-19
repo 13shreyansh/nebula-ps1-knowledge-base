@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 import csv
 import hashlib
+import itertools
 import json
 import shutil
 import tempfile
@@ -15,6 +16,7 @@ from unittest.mock import patch
 
 from nebula_ps1.cli import main as cli_main
 from nebula_ps1.closure import _blocked_locations, _external_buffer_sectors, screen_closures
+from nebula_ps1.eclo_compact import best_single_lane_eclo_compaction
 from nebula_ps1.evaluate import evaluate_submission, load_submission
 from nebula_ps1.flexible_solver import solve_flexible_supply_relaxation
 from nebula_ps1.independent_score import independently_score
@@ -212,10 +214,271 @@ class PublicFixtureTests(unittest.TestCase):
             self.assertEqual(telemetry["best_bound"], score)
             self.assertEqual(telemetry["primary_bound_scope"], "full_instance")
 
+    def test_checked_single_lane_eclo_compaction_improves_scaled_c_only(self) -> None:
+        data = ROOT / "fixtures" / "independent_multi_bridge_scale_v1"
+        source = ROOT / "runs" / "independent_multi_bridge_scale_v1_c"
+        instance = load_instance(data)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            selected_dir, selected, report = best_single_lane_eclo_compaction(
+                instance,
+                source,
+                Path(temp_dir) / "candidates",
+            )
+            self.assertIsNotNone(selected_dir)
+            self.assertIsNotNone(selected)
+            assert selected_dir is not None
+            assert selected is not None
+            independent = independently_score(data, selected_dir)
+            access, occupancy, _ = load_submission(selected_dir)
+            self.assertEqual(selected.hard_violations, ())
+            self.assertEqual(selected.objective_score, 262.0)
+            self.assertEqual(independent.objective_score, 262.0)
+            self.assertEqual(selected.eclo_nights_total, 2)
+            self.assertEqual(
+                screen_closures(
+                    instance,
+                    access,
+                    occupancy,
+                    forbid_buffer_overlap=True,
+                ),
+                (),
+            )
+            self.assertTrue(report["applicable"])
+            self.assertEqual(report["candidates_checked"], 16)
+            self.assertEqual(report["feasible_candidates"], 16)
+            self.assertEqual(report["improving_candidates"], 13)
+            self.assertEqual(report["selected_score"], 262.0)
+
+        public_hashes = {
+            name: hashlib.sha256(
+                (ROOT / "deliverables" / "public" / "C" / name).read_bytes()
+            ).hexdigest()
+            for name in SUBMISSION_FILES
+        }
+        with tempfile.TemporaryDirectory() as temp_dir:
+            selected_dir, selected, report = best_single_lane_eclo_compaction(
+                self.instance,
+                ROOT / "deliverables" / "public" / "C",
+                Path(temp_dir) / "candidates",
+            )
+        self.assertIsNone(selected_dir)
+        self.assertIsNone(selected)
+        self.assertFalse(report["applicable"])
+        self.assertEqual(report["candidates_checked"], 0)
+        self.assertEqual(
+            public_hashes,
+            {
+                name: hashlib.sha256(
+                    (ROOT / "deliverables" / "public" / "C" / name).read_bytes()
+                ).hexdigest()
+                for name in SUBMISSION_FILES
+            },
+        )
+
+    def test_scaled_multi_bridge_c_compaction_matches_enumerated_lower_bound(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_multi_bridge_scale_v1"
+        candidate = ROOT / "runs" / "independent_multi_bridge_scale_v1_c_compact_t003"
+        instance = load_instance(data)
+        activity_ids = sorted(instance.activities)
+        self.assertEqual(
+            {
+                instance.projects[activity.contract_number].access_type
+                for activity in instance.activities.values()
+            },
+            {"PM"},
+        )
+        self.assertTrue(
+            all(
+                interchange_cross_line_locations(instance, activity)
+                for activity in instance.activities.values()
+            )
+        )
+        conflict_pairs = 0
+        for first_id, second_id in itertools.combinations(activity_ids, 2):
+            access = [
+                SimpleNamespace(activity_id=first_id, week=1),
+                SimpleNamespace(activity_id=second_id, week=1),
+            ]
+            occupancy = [
+                SimpleNamespace(
+                    activity_id=activity_id,
+                    week=1,
+                    location_id=location_id,
+                    co_share_group=f"group-{activity_id}",
+                )
+                for activity_id in (first_id, second_id)
+                for location_id in activity_footprint(
+                    instance, instance.activities[activity_id]
+                )
+            ]
+            if screen_closures(instance, access, occupancy):
+                conflict_pairs += 1
+        self.assertEqual(conflict_pairs, 28)
+
+        due_week = {
+            activity_id: instance.week_for_date(
+                instance.projects[
+                    instance.activities[activity_id].contract_number
+                ].planned_completion_date
+            )
+            for activity_id in activity_ids
+        }
+        contract_weight = {1: 100, 2: 10, 3: 1}
+        activity_nudge = {1: 1.3, 2: 1.2, 3: 1.0}
+        delay_weight = {
+            activity_id: (
+                contract_weight[
+                    instance.projects[
+                        instance.activities[activity_id].contract_number
+                    ].contract_priority
+                ]
+                * activity_nudge[instance.activities[activity_id].activity_priority]
+            )
+            for activity_id in activity_ids
+        }
+        best_score = float("inf")
+        for compressed_activity in [None, *activity_ids]:
+            for sequence in itertools.permutations(activity_ids):
+                completion_week = 0
+                delay_score = 0
+                for activity_id in sequence:
+                    completion_week += 2 if activity_id == compressed_activity else 3
+                    delay_score += (
+                        7
+                        * delay_weight[activity_id]
+                        * max(0, completion_week - due_week[activity_id])
+                    )
+                score = delay_score + (10 if compressed_activity is not None else 0)
+                best_score = min(best_score, score)
+        evaluation = evaluate_submission(instance, candidate, "C")
+        independent = independently_score(data, candidate)
+        self.assertEqual(best_score, 262)
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, best_score)
+        self.assertEqual(independent.objective_score, best_score)
+
+    def test_generic_staged_c_promotes_checked_eclo_compaction_before_verification(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_multi_bridge_scale_v1"
+        source = ROOT / "runs" / "independent_multi_bridge_scale_v1_c"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            selected_source = source if calls == 1 else Path(kwargs["sample_hint_dir"])
+            _copy_submission(selected_source, Path(output_dir))
+            evaluation = evaluate_submission(instance, output_dir, scenario)
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=evaluation.objective_score,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=kwargs["workers"],
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged.solve_flexible_supply_relaxation",
+            side_effect=fake_solve,
+        ) as solve:
+            report = solve_staged_scenario(
+                instance,
+                Path(temp_dir) / "submission",
+                "C",
+                audit_output_dir=Path(temp_dir) / "audit",
+                local_repair_time_limit_seconds=0.0,
+                heuristic_attempts=1,
+                fallback_attempts=1,
+                workers=1,
+                forbid_buffer_overlap=True,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+        self.assertEqual(solve.call_count, 2)
+        self.assertTrue(report["eclo_compaction_promoted"])
+        self.assertEqual(report["eclo_compaction"]["selected_score"], 262.0)
+        self.assertEqual(report["selected_stage"], "eclo_compaction_incumbent")
+        self.assertEqual(final.objective_score, 262.0)
+
+    def test_staged_c_portfolio_promotes_checked_eclo_compaction_before_verification(
+        self,
+    ) -> None:
+        data = ROOT / "fixtures" / "independent_multi_bridge_scale_v1"
+        source_a = ROOT / "runs" / "independent_multi_bridge_scale_v1_a"
+        source_c = ROOT / "runs" / "independent_multi_bridge_scale_v1_c"
+        instance = load_instance(data)
+        calls = 0
+
+        def fake_staged(instance, output_dir, scenario, **kwargs):
+            self.assertEqual(scenario, "A")
+            _copy_submission(source_a, Path(output_dir))
+            return {"selected_objective_score": 273.0}
+
+        def fake_c_solve(instance, output_dir, scenario, **kwargs):
+            nonlocal calls
+            calls += 1
+            selected_source = (
+                source_c if calls == 1 else Path(kwargs["sample_hint_dir"])
+            )
+            _copy_submission(selected_source, Path(output_dir))
+            evaluation = evaluate_submission(instance, output_dir, scenario)
+            return SolveTelemetry(
+                formulation=kwargs["separator_mode"],
+                status="FEASIBLE_SAFE_INCUMBENT",
+                objective_score=evaluation.objective_score,
+                best_bound=None,
+                wall_time_seconds=0.0,
+                conflicts=0,
+                branches=0,
+                seed=kwargs["seed"],
+                workers=kwargs["workers"],
+                time_limit_seconds=kwargs["time_limit_seconds"],
+                model_variables=0,
+                model_constraints=0,
+                limitation="test fixture",
+                remaining_closure_conflicts=0,
+            )
+
+        with tempfile.TemporaryDirectory() as temp_dir, patch(
+            "nebula_ps1.staged_c.solve_staged_scenario", side_effect=fake_staged
+        ), patch(
+            "nebula_ps1.staged_c.solve_flexible_supply_relaxation",
+            side_effect=fake_c_solve,
+        ) as solve:
+            report = solve_staged_c_portfolio(
+                instance,
+                Path(temp_dir) / "submission",
+                audit_output_dir=Path(temp_dir) / "audit",
+                a_local_repair_time_limit_seconds=0.0,
+                c_heuristic_attempts=1,
+                workers=1,
+                forbid_buffer_overlap=True,
+            )
+            final = evaluate_submission(instance, Path(temp_dir) / "submission", "C")
+        self.assertEqual(solve.call_count, 2)
+        self.assertTrue(report["scenario_c_eclo_compaction_promoted"])
+        self.assertEqual(
+            report["scenario_c_eclo_compaction"]["selected_score"], 262.0
+        )
+        self.assertEqual(report["selected_stage"], "scenario_c_eclo_compaction")
+        self.assertEqual(final.objective_score, 262.0)
+
     def test_benchmark_matrix_matches_recomputed_scores_and_feasibility(self) -> None:
         matrix = json.loads((ROOT / "BENCHMARK_MATRIX.json").read_text(encoding="utf-8"))
         self.assertEqual(matrix["schema_version"], 1)
-        self.assertEqual(len(matrix["cases"]), 43)
+        self.assertEqual(len(matrix["cases"]), 46)
         for row in matrix["cases"]:
             if row["case"].startswith("public_"):
                 data = PACK / "01_data"
@@ -252,12 +515,18 @@ class PublicFixtureTests(unittest.TestCase):
                     / f"independent_three_line_v1_{row['scenario'].lower()}"
                 )
             elif row["case"].startswith("independent_multi_bridge_"):
-                if row["case"].startswith("independent_multi_bridge_congestion_"):
+                if row["case"].startswith("independent_multi_bridge_scale_"):
+                    fixture = "independent_multi_bridge_scale_v1"
+                elif row["case"].startswith("independent_multi_bridge_congestion_"):
                     fixture = "independent_multi_bridge_congestion_v1"
                 else:
                     fixture = "independent_multi_bridge_v1"
                 data = ROOT / "fixtures" / fixture
-                submission = ROOT / "runs" / f"{fixture}_{row['scenario'].lower()}"
+                submission = ROOT / "runs" / (
+                    "independent_multi_bridge_scale_v1_c_compact_t003"
+                    if row["case"] == "independent_multi_bridge_scale_C"
+                    else f"{fixture}_{row['scenario'].lower()}"
+                )
             elif row["case"].startswith("independent_dense_"):
                 if row["case"].startswith("independent_dense_holdout_"):
                     data = ROOT / "fixtures" / "independent_dense_holdout_v1"

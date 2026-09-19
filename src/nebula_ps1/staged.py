@@ -5,6 +5,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .closure import screen_closures
+from .eclo_compact import best_single_lane_eclo_compaction
 from .evaluate import Evaluation, evaluate_submission, load_submission
 from .flexible_solver import solve_flexible_supply_relaxation
 from .instance import Instance
@@ -544,6 +545,27 @@ def solve_staged_scenario(
         incumbent_dir = best_fallback_dir
 
     incumbent = evaluate_submission(instance, incumbent_dir, scenario)
+    eclo_compaction_report: dict[str, object] | None = None
+    eclo_compaction_promoted = False
+    if scenario == "C":
+        compacted_dir, compacted, eclo_compaction_report = (
+            best_single_lane_eclo_compaction(
+                instance,
+                incumbent_dir,
+                audit_output / "eclo_compaction_candidates",
+                forbid_buffer_overlap=forbid_buffer_overlap,
+            )
+        )
+        if (
+            compacted_dir is not None
+            and compacted is not None
+            and _candidate_is_better(compacted, incumbent)
+        ):
+            incumbent_stage = "eclo_compaction_incumbent"
+            improvement_stage = "eclo_compaction_bridge_safe_improvement"
+            incumbent_dir = compacted_dir
+            incumbent = compacted
+            eclo_compaction_promoted = True
     verification = solve_flexible_supply_relaxation(
         instance,
         verification_raw,
@@ -780,6 +802,8 @@ def solve_staged_scenario(
         "bridge_safe_fallback_attempts": fallback_attempt_telemetry,
         "bridge_safe_fallback_selected_attempt": selected_fallback_attempt,
         "bridge_safe_fallback_prune": asdict(fallback_prune) if fallback_prune is not None else None,
+        "eclo_compaction": eclo_compaction_report,
+        "eclo_compaction_promoted": eclo_compaction_promoted,
         "verification_telemetry": asdict(verification) if verification is not None else None,
         "verification_round_time_limit_seconds": (
             verification_round_time_limit_seconds
