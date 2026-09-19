@@ -24,6 +24,7 @@ from nebula_ps1.eclo_compact import (
 from nebula_ps1.evaluate import _legal_possession_mix, evaluate_submission, load_submission
 from nebula_ps1.flexible_solver import (
     _group_limit,
+    _scenario_b_workload_lower_bound_tenths,
     _write_submission_rows,
     solve_flexible_supply_relaxation,
 )
@@ -2080,7 +2081,7 @@ class PublicFixtureTests(unittest.TestCase):
                     forbid_buffer_overlap=True,
                 )
 
-    def test_positive_dense_scale_holdout_preserves_b_eclo_failure(self) -> None:
+    def test_positive_dense_scale_preserves_failure_and_recovers_b_bound(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_m40_tradeoff"
         oracle = ROOT / "fixtures" / "independent_dense_m40_tradeoff_oracle"
         instance = load_instance(data)
@@ -2091,6 +2092,22 @@ class PublicFixtureTests(unittest.TestCase):
                 ROOT
                 / "runs"
                 / "independent_dense_m40_tradeoff_seed1_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
+        recovered = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m40_tradeoff_bound_seed3_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
+        full_recovery = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m40_tradeoff_recovered_seed4_w1"
                 / "SEED_MATRIX.json"
             ).read_text(encoding="utf-8")
         )
@@ -2112,6 +2129,64 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(runs["B"]["error_type"], "RuntimeError")
         self.assertEqual(runs["C"]["score"], 7.0)
         self.assertEqual(runs["C"]["strict_conflicts"], 0)
+        self.assertEqual(
+            _scenario_b_workload_lower_bound_tenths(instance), 100
+        )
+        self.assertEqual(recovered["dataset_hash"], instance.dataset_hash)
+        self.assertEqual(recovered["successes"], 1)
+        self.assertEqual(recovered["failures"], 0)
+        recovered_b = recovered["runs"][0]
+        self.assertEqual(recovered_b["scenario"], "B")
+        self.assertEqual(recovered_b["score"], 10.0)
+        self.assertEqual(recovered_b["strict_conflicts"], 0)
+        submission = (
+            ROOT
+            / "runs"
+            / "independent_dense_m40_tradeoff_bound_seed3_w1"
+            / "b_seed_3"
+        )
+        evaluation = evaluate_submission(instance, submission, "B")
+        independent = independently_score(data, submission)
+        report = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_dense_m40_tradeoff_bound_seed3_w1"
+                / "b_seed_3_audit"
+                / "STAGED.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 10.0)
+        self.assertEqual(independent.objective_score, 10.0)
+        self.assertTrue(report["verification_skipped_primary_proven"])
+        self.assertIsNone(report["verification_telemetry"])
+        self.assertTrue(
+            report["heuristic_telemetry"]["primary_score_proven_optimal"]
+        )
+        self.assertEqual(
+            report["heuristic_telemetry"]["primary_bound_scope"],
+            "full_instance_workload_eclo_lower_bound",
+        )
+        self.assertEqual(full_recovery["dataset_hash"], instance.dataset_hash)
+        self.assertEqual(full_recovery["successes"], 3)
+        self.assertEqual(full_recovery["failures"], 0)
+        expected_scores = {"A": 7.0, "B": 10.0, "C": 7.0}
+        for row in full_recovery["runs"]:
+            scenario = row["scenario"]
+            submission = (
+                ROOT
+                / "runs"
+                / "independent_dense_m40_tradeoff_recovered_seed4_w1"
+                / f"{scenario.lower()}_seed_4"
+            )
+            checked = evaluate_submission(instance, submission, scenario)
+            rescored = independently_score(data, submission)
+            self.assertEqual(row["score"], expected_scores[scenario])
+            self.assertEqual(row["strict_conflicts"], 0)
+            self.assertEqual(checked.hard_violations, ())
+            self.assertEqual(checked.objective_score, expected_scores[scenario])
+            self.assertEqual(rescored.objective_score, expected_scores[scenario])
 
     def test_invalid_complete_structural_hint_is_not_promoted(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_v1"
@@ -2190,8 +2265,11 @@ class PublicFixtureTests(unittest.TestCase):
             )
         self.assertTrue(telemetry.structural_hints_used)
         self.assertFalse(telemetry.structural_hint_complete)
-        self.assertEqual(telemetry.structural_hint_activity_count, 35)
-        self.assertEqual(telemetry.structural_hint_access_count, 108)
+        self.assertEqual(telemetry.structural_hint_activity_count, 36)
+        self.assertEqual(telemetry.structural_hint_access_count, 114)
+        self.assertEqual(
+            _scenario_b_workload_lower_bound_tenths(self.instance), 300
+        )
 
     def test_tradeoff_holdout_recovers_nonzero_a_b_c_optima(self) -> None:
         data = ROOT / "fixtures" / "independent_tradeoff_holdout_v1"
@@ -4511,7 +4589,7 @@ class PublicFixtureTests(unittest.TestCase):
                 model_constraints=0,
                 limitation="test fixture",
                 remaining_closure_conflicts=0,
-                primary_score_proven_optimal=True,
+                primary_score_proven_optimal=False,
             )
 
         with tempfile.TemporaryDirectory() as temp_dir, patch(
@@ -4566,7 +4644,7 @@ class PublicFixtureTests(unittest.TestCase):
                 model_constraints=0,
                 limitation="test fixture",
                 remaining_closure_conflicts=0,
-                primary_score_proven_optimal=True,
+                primary_score_proven_optimal=False,
             )
 
         with tempfile.TemporaryDirectory() as temp_dir, patch(

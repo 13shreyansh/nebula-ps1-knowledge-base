@@ -599,32 +599,42 @@ def solve_staged_scenario(
             incumbent_dir = compacted_dir
             incumbent = compacted
             eclo_compaction_promoted = True
-    verification = solve_flexible_supply_relaxation(
-        instance,
-        verification_raw,
-        scenario,
-        time_limit_seconds=verification_time_limit_seconds,
-        workers=workers,
-        seed=seed,
-        closure_round_limit=closure_round_limit,
-        sample_hint_dir=incumbent_dir,
-        round_time_limit_seconds=(
-            verification_round_time_limit_seconds
-            if verification_round_time_limit_seconds is not None
-            else (5.0 if scenario == "B" else None)
-        ),
-        forbid_buffer_overlap=forbid_buffer_overlap,
-        separator_mode="bridge_safe",
+    incumbent_primary_proven = bool(
+        incumbent_stage == "heuristic_incumbent"
+        and heuristic is not None
+        and heuristic.primary_score_proven_optimal
+        and heuristic.objective_score == incumbent.objective_score
     )
-    verification_prune = prune_submission(
-        instance,
-        verification_raw,
-        verification_pruned,
-        scenario,
-        report_path=audit_output / "VERIFICATION_PRUNE.json",
-        forbid_buffer_overlap=forbid_buffer_overlap,
-    )
-    verified = evaluate_submission(instance, verification_pruned, scenario)
+    verification: SolveTelemetry | None = None
+    verification_prune = None
+    verified = incumbent
+    if not incumbent_primary_proven:
+        verification = solve_flexible_supply_relaxation(
+            instance,
+            verification_raw,
+            scenario,
+            time_limit_seconds=verification_time_limit_seconds,
+            workers=workers,
+            seed=seed,
+            closure_round_limit=closure_round_limit,
+            sample_hint_dir=incumbent_dir,
+            round_time_limit_seconds=(
+                verification_round_time_limit_seconds
+                if verification_round_time_limit_seconds is not None
+                else (5.0 if scenario == "B" else None)
+            ),
+            forbid_buffer_overlap=forbid_buffer_overlap,
+            separator_mode="bridge_safe",
+        )
+        verification_prune = prune_submission(
+            instance,
+            verification_raw,
+            verification_pruned,
+            scenario,
+            report_path=audit_output / "VERIFICATION_PRUNE.json",
+            forbid_buffer_overlap=forbid_buffer_overlap,
+        )
+        verified = evaluate_submission(instance, verification_pruned, scenario)
 
     selected_stage = incumbent_stage
     selected_dir = incumbent_dir
@@ -640,7 +650,11 @@ def solve_staged_scenario(
     expanded_cost_repair: SolveTelemetry | None = None
     expanded_cost_repair_prune = None
     expanded_cost_repair_activities: list[str] = []
-    if scenario in {"B", "C"} and local_repair_time_limit_seconds > 0:
+    if (
+        scenario in {"B", "C"}
+        and local_repair_time_limit_seconds > 0
+        and not incumbent_primary_proven
+    ):
         cost_repair_activities = _scenario_b_cost_contributing_activities(
             instance,
             selected_dir,
@@ -862,6 +876,7 @@ def solve_staged_scenario(
         "eclo_compaction_promoted": eclo_compaction_promoted,
         "postselection_compaction": postselection_compaction_report,
         "postselection_compaction_promoted": postselection_compaction_promoted,
+        "verification_skipped_primary_proven": incumbent_primary_proven,
         "verification_telemetry": asdict(verification) if verification is not None else None,
         "verification_round_time_limit_seconds": (
             verification_round_time_limit_seconds

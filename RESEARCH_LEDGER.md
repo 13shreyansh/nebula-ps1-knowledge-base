@@ -1043,6 +1043,16 @@ Confidence labels:
 - **Boundary:** The added trade-off is spatially independent of the dense corridor. This isolates ECLO construction but does not yet test an ECLO activity coupled into the bottleneck.
 - **Confidence:** Very high in the recorded failure and analytical optimum; high in the diagnosis.
 
+### `R125` Deadline compression gives a resource-independent Scenario B ECLO bound
+
+- **Status:** Confirmed on the frozen positive dense holdout and pinned on the public instance.
+- **Finding:** For an activity with workload `d` and `r` release-to-deadline weeks, at most one row can run per week and each ECLO row adds half a unit. Using the maximum useful `min(d, r)` rows therefore forces at least `max(0, 2d - 2r)` ECLO rows. Summing this nonnegative requirement across activities gives a valid resource-independent B lower bound; congestion can only make the true optimum higher.
+- **Implementation:** The generic constructor applies that minimum ECLO count, preserves ECLO and access-night values in model hints, serializes any complete candidate, and runs the full evaluator plus requested closure policy. It skips CP-SAT verification and cost repair only when the checked score exactly equals the full-instance workload bound.
+- **Evidence:** The precommitted 325-activity B failure recovers at its analytical `10.0` bound in 0.155 seconds with 646 rows, zero strict conflicts, and independent rescoring. A separate production-path replay reaches A/B/C=`7.0/10.0/7.0`. The public workload calculation returns `30.0`, matching the protected official B score without using public identifiers in the formula.
+- **Falsification:** A proof-unaware intermediate constructed checked B=`10.0` in 0.445 seconds, then continued through a 13.18-million-variable verification path and later failed to terminate promptly; it was manually interrupted after more than two minutes. Two mock repair tests also exposed that a claimed global proof must be false whenever a lower later candidate exists.
+- **Boundary:** Equality with this bound proves only the B primary objective. A candidate above it is not proved optimal and must continue through the model path. The current dense trade-off is spatially independent, so interacting ECLO/capacity/closure cases remain the next test.
+- **Confidence:** High in the bound derivation and checked return; high in the recorded recovery; medium in construction reliability under coupled positive congestion.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

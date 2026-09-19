@@ -1,0 +1,39 @@
+{
+  "data": "fixtures/independent_dense_m40_tradeoff",
+  "dataset_hash": "d01e89da12a8ef549e474e0d7e6ce5b232a79369561e8974e9a3f97a61e63034",
+  "failures": 0,
+  "policy": {
+    "closure_round_limit": 500,
+    "fallback_attempts": 1,
+    "fallback_time_limit_seconds": 3.0,
+    "forbid_buffer_overlap": false,
+    "heuristic_attempts": 1,
+    "heuristic_time_limit_seconds": 2.0,
+    "local_repair_time_limit_seconds": 1.0,
+    "production_c": false,
+    "verification_time_limit_seconds": 2.0,
+    "workers": 1
+  },
+  "requested_scenarios": [
+    "B"
+  ],
+  "requested_seeds": [
+    3
+  ],
+  "runs": [
+    {
+      "reference_validator_confirmed": false,
+      "scenario": "B",
+      "score": 10.0,
+      "seed": 3,
+      "selected_stage": "heuristic_incumbent",
+      "status": "SUCCESS",
+      "strict_conflicts": 0,
+      "submission_hash": "749f814957ab19b06cc78a821e3cba017f8808984e51fec3e6fa54c6e40b3fbf",
+      "wall_seconds": 0.15463008300866932
+    }
+  ],
+  "schema_version": 1,
+  "success_rate": 1.0,
+  "successes": 1
+}

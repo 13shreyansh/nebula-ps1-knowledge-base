@@ -177,6 +177,20 @@ def _construct_structural_candidate(
     provisional_access: list[AccessRow] = []
     provisional_occupancy: list[OccupancyRow] = []
     occupied_groups: dict[tuple[int, str], set[int]] = defaultdict(set)
+    eclo_count_by_activity: dict[str, int] = {}
+
+    def row_plan(activity_id: str) -> tuple[int, int] | None:
+        activity = instance.activities[activity_id]
+        available_rows = len(eligible[activity_id])
+        if scenario == "B":
+            row_count = min(activity.total_accesses, available_rows)
+            eclo_count = max(0, 2 * activity.total_accesses - 2 * row_count)
+            if eclo_count > row_count:
+                return None
+            return row_count, eclo_count
+        if activity.total_accesses > available_rows:
+            return None
+        return activity.total_accesses, 0
 
     for footprint, activity_ids in sorted(by_footprint.items()):
         pc_ids = [
@@ -212,12 +226,13 @@ def _construct_structural_candidate(
             )
 
         def place_activity(activity_id: str, access_type: str) -> None:
-            activity = instance.activities[activity_id]
-            if activity.total_accesses > len(eligible[activity_id]):
+            plan = row_plan(activity_id)
+            if plan is None:
                 return
+            row_count, eclo_count = plan
             tentative_counts = dict(slot_counts)
             placements: list[tuple[int, int]] = []
-            for _ in range(activity.total_accesses):
+            for _ in range(row_count):
                 options: list[tuple[int, int, int]] = []
                 used_weeks = {week for week, _ in placements}
                 for week in eligible[activity_id]:
@@ -249,6 +264,7 @@ def _construct_structural_candidate(
             slot_counts.clear()
             slot_counts.update(tentative_counts)
             preferred[activity_id].extend(placements)
+            eclo_count_by_activity[activity_id] = eclo_count
 
         for activity_id in sorted(pc_ids, key=deadline_key):
             place_activity(activity_id, "PC")
@@ -258,11 +274,20 @@ def _construct_structural_candidate(
         for activity_id in sorted(preferred):
             selected = dict(preferred[activity_id])
             hinted_weeks[activity_id] = sorted(selected)
+            eclo_weeks = set(
+                sorted(selected)[: eclo_count_by_activity[activity_id]]
+            )
             for sequence, (week, slot) in enumerate(
                 sorted(selected.items()), start=1
             ):
                 provisional_access.append(
-                    AccessRow(activity_id, sequence, week, 0, 1)
+                    AccessRow(
+                        activity_id,
+                        sequence,
+                        week,
+                        int(week in eclo_weeks),
+                        1,
+                    )
                 )
                 for location_id in footprint:
                     provisional_occupancy.append(
@@ -329,7 +354,12 @@ def _construct_structural_candidate(
         selected_slots: dict[tuple[int, str], int] = {}
         activity_access: list[AccessRow] = []
         activity_occupancy: list[OccupancyRow] = []
-        for sequence in range(1, activity.total_accesses + 1):
+        plan = row_plan(activity_id)
+        if plan is None:
+            pending.remove(activity_id)
+            continue
+        row_count, eclo_count = plan
+        for sequence in range(1, row_count + 1):
             chosen: tuple[int, dict[str, int], list[OccupancyRow]] | None = None
             for week in reversed(list(eligible[activity_id])):
                 if week > latest or week in selected_weeks:
@@ -355,7 +385,13 @@ def _construct_structural_candidate(
                     slot_by_location[location_id] = slot
                 if len(slot_by_location) != len(footprints[activity_id]):
                     continue
-                candidate_access = AccessRow(activity_id, sequence, week, 0, 1)
+                candidate_access = AccessRow(
+                    activity_id,
+                    sequence,
+                    week,
+                    int(sequence <= eclo_count),
+                    1,
+                )
                 candidate_occupancy = [
                     OccupancyRow(
                         activity_id,
@@ -387,12 +423,18 @@ def _construct_structural_candidate(
             week, slot_by_location, candidate_occupancy = chosen
             selected_weeks.append(week)
             activity_access.append(
-                AccessRow(activity_id, sequence, week, 0, 1)
+                AccessRow(
+                    activity_id,
+                    sequence,
+                    week,
+                    int(sequence <= eclo_count),
+                    1,
+                )
             )
             activity_occupancy.extend(candidate_occupancy)
             for location_id, slot in slot_by_location.items():
                 selected_slots[(week, location_id)] = slot
-        if len(selected_weeks) != activity.total_accesses:
+        if len(selected_weeks) != row_count:
             pending.remove(activity_id)
             continue
 
@@ -410,6 +452,58 @@ def _construct_structural_candidate(
         pending.remove(activity_id)
 
     return hinted_weeks, provisional_access, provisional_occupancy
+
+
+def _canonical_structural_access(
+    access_rows: list[AccessRow],
+) -> list[AccessRow]:
+    by_activity: dict[str, list[AccessRow]] = defaultdict(list)
+    for row in access_rows:
+        by_activity[row.activity_id].append(row)
+    return [
+        AccessRow(
+            activity_id,
+            sequence,
+            row.week,
+            row.eclo,
+            row.access_night,
+        )
+        for activity_id in sorted(by_activity)
+        for sequence, row in enumerate(
+            sorted(by_activity[activity_id], key=lambda item: item.week), start=1
+        )
+    ]
+
+
+def _structural_candidate_is_complete(
+    instance: Instance,
+    access_rows: list[AccessRow],
+) -> bool:
+    workload_half_units: dict[str, int] = defaultdict(int)
+    for row in access_rows:
+        workload_half_units[row.activity_id] += 2 + row.eclo
+    return set(workload_half_units) == set(instance.activities) and all(
+        workload_half_units[activity_id] >= 2 * activity.total_accesses
+        for activity_id, activity in instance.activities.items()
+    )
+
+
+def _scenario_b_workload_lower_bound_tenths(instance: Instance) -> int:
+    """Return the resource-independent ECLO penalty forced by B deadlines."""
+
+    required_eclo_rows = 0
+    for activity in instance.activities.values():
+        project = instance.projects[activity.contract_number]
+        first_week = max(1, instance.week_for_date(activity.planned_start_date))
+        last_week = min(
+            instance.horizon_weeks,
+            instance.last_week_completing_by(project.planned_completion_date),
+        )
+        available_rows = max(0, last_week - first_week + 1)
+        required_eclo_rows += max(
+            0, 2 * activity.total_accesses - 2 * available_rows
+        )
+    return ECLO_COST_TENTHS * required_eclo_rows
 
 
 def solve_flexible_supply_relaxation(
@@ -549,23 +643,14 @@ def solve_flexible_supply_relaxation(
             forbid_buffer_overlap=forbid_buffer_overlap,
         )
         preflight_activity_count = len(preflight_hinted_weeks)
-        preflight_access_count = sum(map(len, preflight_hinted_weeks.values()))
-        preflight_complete = (
-            preflight_activity_count == len(instance.activities)
-            and preflight_access_count
-            == sum(
-                activity.total_accesses
-                for activity in instance.activities.values()
-            )
+        preflight_access_count = len(preflight_access_rows)
+        preflight_complete = _structural_candidate_is_complete(
+            instance, preflight_access_rows
         )
         if preflight_complete:
-            canonical_access_rows = [
-                AccessRow(activity_id, sequence, week, 0, 1)
-                for activity_id in sorted(preflight_hinted_weeks)
-                for sequence, week in enumerate(
-                    sorted(preflight_hinted_weeks[activity_id]), start=1
-                )
-            ]
+            canonical_access_rows = _canonical_structural_access(
+                preflight_access_rows
+            )
             with tempfile.TemporaryDirectory(
                 prefix="nebula-structural-preflight-"
             ) as preflight_dir:
@@ -585,10 +670,21 @@ def solve_flexible_supply_relaxation(
                 preflight_occupancy_rows,
                 forbid_buffer_overlap=forbid_buffer_overlap,
             )
+            preflight_score_tenths = int(
+                round(preflight_evaluation.objective_score * 10)
+            )
+            preflight_lower_bound_tenths = (
+                _scenario_b_workload_lower_bound_tenths(instance)
+                if scenario == "B"
+                else 0
+            )
+            preflight_matches_global_bound = (
+                preflight_score_tenths == preflight_lower_bound_tenths
+            )
             if (
                 preflight_evaluation.internally_feasible
                 and not preflight_conflicts
-                and preflight_evaluation.objective_score == 0.0
+                and preflight_matches_global_bound
             ):
                 _write_submission_rows(
                     instance,
@@ -600,11 +696,15 @@ def solve_flexible_supply_relaxation(
                 telemetry = SolveTelemetry(
                     formulation=(
                         f"scenario_{scenario.lower()}_checked_structural_"
-                        "zero_floor_candidate"
+                        + (
+                            "workload_lower_bound_candidate"
+                            if scenario == "B"
+                            else "zero_floor_candidate"
+                        )
                     ),
                     status="PRIMARY_OPTIMAL_SAFE_INCUMBENT",
-                    objective_score=0.0,
-                    best_bound=0.0,
+                    objective_score=preflight_evaluation.objective_score,
+                    best_bound=preflight_lower_bound_tenths / 10,
                     wall_time_seconds=(
                         time.monotonic() - structural_preflight_started
                     ),
@@ -618,9 +718,14 @@ def solve_flexible_supply_relaxation(
                     model_constraints=0,
                     limitation=(
                         "A complete deterministic structural candidate passed the "
-                        "full evaluator and selected closure policy at the global "
-                        "nonnegative primary-score floor before CP-SAT model "
-                        "construction. Row-count tie optimality is not claimed."
+                        "full evaluator and selected closure policy at a full-instance "
+                        + (
+                            "resource-independent Scenario B workload/ECLO lower bound"
+                            if scenario == "B"
+                            else "nonnegative primary-score floor"
+                        )
+                        + " before CP-SAT model construction. Row-count tie "
+                        "optimality is not claimed."
                     ),
                     closure_rounds=0,
                     remaining_closure_conflicts=0,
@@ -630,7 +735,11 @@ def solve_flexible_supply_relaxation(
                     unknown_retries=0,
                     primary_score_proven_optimal=True,
                     tie_break_proven_optimal=False,
-                    primary_bound_scope="full_instance_nonnegative_floor",
+                    primary_bound_scope=(
+                        "full_instance_workload_eclo_lower_bound"
+                        if scenario == "B"
+                        else "full_instance_nonnegative_floor"
+                    ),
                     max_deterministic_time_per_solve=(
                         max_deterministic_time_per_solve
                     ),
@@ -641,7 +750,9 @@ def solve_flexible_supply_relaxation(
                     structural_hint_complete=True,
                     structural_hint_checked=True,
                     structural_hint_feasible=True,
-                    structural_hint_objective_score=0.0,
+                    structural_hint_objective_score=(
+                        preflight_evaluation.objective_score
+                    ),
                 )
                 output_root = Path(output_dir)
                 (output_root / "TELEMETRY.json").write_text(
@@ -900,27 +1011,18 @@ def solve_flexible_supply_relaxation(
     if structural_hints_used:
         hinted_weeks = preflight_hinted_weeks
         structural_hint_activity_count = len(hinted_weeks)
-        structural_hint_access_count = sum(map(len, hinted_weeks.values()))
-        structural_hint_complete = (
-            structural_hint_activity_count == len(instance.activities)
-            and structural_hint_access_count
-            == sum(
-                activity.total_accesses
-                for activity in instance.activities.values()
-            )
+        structural_hint_access_count = len(preflight_access_rows)
+        structural_hint_complete = _structural_candidate_is_complete(
+            instance, preflight_access_rows
         )
         if structural_hint_complete:
-            structural_hint_access_rows = [
-                AccessRow(activity_id, sequence, week, 0, 1)
-                for activity_id in sorted(hinted_weeks)
-                for sequence, week in enumerate(
-                    sorted(hinted_weeks[activity_id]), start=1
-                )
-            ]
+            structural_hint_access_rows = _canonical_structural_access(
+                preflight_access_rows
+            )
             structural_hint_occupancy_rows = list(preflight_occupancy_rows)
 
         selected_access = {
-            (row.activity_id, row.week) for row in preflight_access_rows
+            (row.activity_id, row.week): row for row in preflight_access_rows
         }
         selected_groups = {
             (row.activity_id, row.week, row.location_id): int(
@@ -934,15 +1036,22 @@ def solve_flexible_supply_relaxation(
                 instance.activities[activity_id].contract_number
             ]
             for week in eligible[activity_id]:
-                is_selected = int((activity_id, week) in selected_access)
+                selected_row = selected_access.get((activity_id, week))
+                is_selected = int(selected_row is not None)
                 model.add_hint(access[(activity_id, week)], is_selected)
-                model.add_hint(eclo[(activity_id, week)], 0)
+                model.add_hint(
+                    eclo[(activity_id, week)],
+                    selected_row.eclo if selected_row is not None else 0,
+                )
                 for access_night in range(
                     1, project.number_of_maximum_access_per_week + 1
                 ):
                     model.add_hint(
                         night[(activity_id, week, access_night)],
-                        int(is_selected and access_night == 1),
+                        int(
+                            selected_row is not None
+                            and access_night == selected_row.access_night
+                        ),
                     )
                 for location_id in footprints[activity_id]:
                     selected_slot = selected_groups.get(
