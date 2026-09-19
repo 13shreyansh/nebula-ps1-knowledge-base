@@ -2834,6 +2834,165 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertEqual(evaluation.hard_violations, ())
         self.assertAlmostEqual(evaluation.objective_score, 137.9)
 
+    def test_public_boundary_mutations_pin_core_constraint_thresholds(self) -> None:
+        def evaluate_mutation(
+            scenario: str,
+            mutate_access=None,
+            mutate_occupancy=None,
+        ):
+            source = ROOT / "deliverables" / "public" / scenario
+            temporary = tempfile.TemporaryDirectory()
+            self.addCleanup(temporary.cleanup)
+            copied = Path(temporary.name)
+            for name in SUBMISSION_FILES:
+                shutil.copy(source / name, copied / name)
+            for filename, mutation in (
+                ("SCHEDULE_ACCESS.csv", mutate_access),
+                ("SCHEDULE_OCCUPANCY.csv", mutate_occupancy),
+            ):
+                if mutation is None:
+                    continue
+                path = copied / filename
+                with path.open(newline="", encoding="utf-8") as handle:
+                    rows = list(csv.DictReader(handle))
+                    fieldnames = list(rows[0])
+                mutation(rows)
+                with path.open("w", newline="", encoding="utf-8") as handle:
+                    writer = csv.DictWriter(handle, fieldnames=fieldnames)
+                    writer.writeheader()
+                    writer.writerows(rows)
+            return evaluate_submission(self.instance, copied, scenario=scenario)
+
+        def merge_five_c(rows) -> None:
+            for row in rows:
+                if (
+                    row["week"] == "14"
+                    and row["location_id"] == "PLAT:BET:S16:EB"
+                ):
+                    row["co_share_group"] = "g1"
+
+        five_c = evaluate_mutation("A", mutate_occupancy=merge_five_c)
+        self.assertTrue(
+            any("illegal mix PM=0 PC=0 C=5" in item for item in five_c.hard_violations),
+            five_c.hard_violations,
+        )
+
+        def merge_pc_plus_four_c(rows) -> None:
+            for row in rows:
+                if (
+                    row["week"] == "15"
+                    and row["location_id"] == "PLAT:BET:S15:EB"
+                ):
+                    row["co_share_group"] = "g2"
+
+        pc_plus_four_c = evaluate_mutation("A", mutate_occupancy=merge_pc_plus_four_c)
+        self.assertTrue(
+            any(
+                "illegal mix PM=0 PC=1 C=4" in item
+                for item in pc_plus_four_c.hard_violations
+            ),
+            pc_plus_four_c.hard_violations,
+        )
+
+        def split_c_capacity(rows, third_group: bool) -> None:
+            target = [
+                row
+                for row in rows
+                if row["week"] == "20"
+                and row["location_id"] == "PLAT:BET:H02:EB"
+            ]
+            target[0]["co_share_group"] = "capacity-g2"
+            if third_group:
+                target[1]["co_share_group"] = "capacity-g3"
+
+        c_plus_one = evaluate_mutation(
+            "C", mutate_occupancy=lambda rows: split_c_capacity(rows, False)
+        )
+        self.assertEqual(c_plus_one.excess_access_nights_total, 1)
+        self.assertFalse(
+            any("Scenario C capacity exceeded" in item for item in c_plus_one.hard_violations),
+            c_plus_one.hard_violations,
+        )
+        c_plus_two = evaluate_mutation(
+            "C", mutate_occupancy=lambda rows: split_c_capacity(rows, True)
+        )
+        self.assertEqual(c_plus_two.excess_access_nights_total, 2)
+        self.assertTrue(
+            any("Scenario C capacity exceeded by 2" in item for item in c_plus_two.hard_violations),
+            c_plus_two.hard_violations,
+        )
+
+        def split_a_capacity(rows) -> None:
+            target = [
+                row
+                for row in rows
+                if row["week"] == "23"
+                and row["location_id"] == "PLAT:BET:H02:EB"
+            ]
+            target[0]["co_share_group"] = "capacity-g2"
+
+        a_plus_one = evaluate_mutation("A", mutate_occupancy=split_a_capacity)
+        self.assertEqual(a_plus_one.excess_access_nights_total, 1)
+        self.assertTrue(
+            any("Scenario A capacity exceeded by 1" in item for item in a_plus_one.hard_violations),
+            a_plus_one.hard_violations,
+        )
+
+        def split_b_capacity(rows) -> None:
+            target = [
+                row
+                for row in rows
+                if row["week"] == "25"
+                and row["location_id"] == "PLAT:BET:H01:EB"
+            ]
+            for index, row in enumerate(target, 1):
+                row["co_share_group"] = f"capacity-g{index}"
+
+        b_plus_three = evaluate_mutation("B", mutate_occupancy=split_b_capacity)
+        self.assertEqual(b_plus_three.excess_access_nights_total, 3)
+        self.assertFalse(
+            any("Scenario B capacity exceeded" in item for item in b_plus_three.hard_violations),
+            b_plus_three.hard_violations,
+        )
+
+        def remove_half_unit(rows) -> None:
+            next(
+                row
+                for row in rows
+                if row["activity_id"] == "A036" and row["eclo"] == "1"
+            )["eclo"] = "0"
+
+        insufficient = evaluate_mutation("B", mutate_access=remove_half_unit)
+        self.assertTrue(
+            any("A036: workload 13/2 below 14/2" in item for item in insufficient.hard_violations),
+            insufficient.hard_violations,
+        )
+
+        def collapse_predecessor_gap_access(rows) -> None:
+            next(
+                row
+                for row in rows
+                if row["activity_id"] == "A004" and row["access_seq"] == "1"
+            )["week"] = "18"
+
+        def collapse_predecessor_gap_occupancy(rows) -> None:
+            for row in rows:
+                if row["activity_id"] == "A004" and row["week"] == "19":
+                    row["week"] = "18"
+
+        predecessor_overlap = evaluate_mutation(
+            "B",
+            mutate_access=collapse_predecessor_gap_access,
+            mutate_occupancy=collapse_predecessor_gap_occupancy,
+        )
+        self.assertTrue(
+            any(
+                "A004: starts week 18 before predecessor A003 finishes" in item
+                for item in predecessor_overlap.hard_violations
+            ),
+            predecessor_overlap.hard_violations,
+        )
+
     def test_missing_access_is_rejected_instead_of_scoring_well(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             copied = Path(temp_dir)
