@@ -980,6 +980,17 @@ class PublicFixtureTests(unittest.TestCase):
             ["full_instance"] * 3
             + ["full_instance_workload_eclo_lower_bound"] * 6,
         )
+        source_scores: dict[str, float] = defaultdict(float)
+        for component in report["components"]:
+            prefixes = {activity_id[:3] for activity_id in component["activities"]}
+            self.assertEqual(len(prefixes), 1)
+            source_scores[next(iter(prefixes))] += component[
+                "selected_objective_score"
+            ]
+        self.assertEqual(
+            source_scores,
+            {"CAP": 21.0, "CBD": 196.0, "ICB": 122.0, "PCP": 0.0, "SYN": 10.0},
+        )
         self.assertFalse(old_report["global_optimality_proved_by_additivity"])
         self.assertTrue((unproved_audit / "UNPROVED.md").exists())
         for name in SUBMISSION_FILES:
@@ -1009,6 +1020,47 @@ class PublicFixtureTests(unittest.TestCase):
         self.assertNotEqual(
             mono_evaluation.submission_hash,
             evaluation.submission_hash,
+        )
+
+    def test_permuted_heterogeneous_b_preserves_monolithic_optimum(self) -> None:
+        data = ROOT / "fixtures" / "independent_heterogeneous_b_v1_permuted_s23"
+        submission = (
+            ROOT
+            / "runs"
+            / "independent_heterogeneous_b_v1_permuted_s23_b_monolithic_seed1_w1"
+        )
+        audit = submission.with_name(f"{submission.name}_audit")
+        instance = load_instance(data)
+        evaluation = evaluate_submission(instance, submission, "B")
+        independent = independently_score(data, submission)
+        access, occupancy, _ = load_submission(submission)
+        report = json.loads(
+            (audit / "RUN_SUMMARY.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(evaluation.hard_violations, ())
+        self.assertEqual(evaluation.objective_score, 349.0)
+        self.assertEqual(independent.objective_score, 349.0)
+        self.assertEqual(evaluation.excess_access_nights_total, 27)
+        self.assertEqual(evaluation.eclo_nights_total, 32)
+        self.assertEqual((evaluation.access_rows, evaluation.occupancy_rows), (65, 219))
+        self.assertEqual(
+            screen_closures(
+                instance,
+                access,
+                occupancy,
+                forbid_buffer_overlap=True,
+            ),
+            (),
+        )
+        self.assertEqual(report["selected_stage"], "bridge_safe_fallback")
+        self.assertTrue(
+            report["verification_telemetry"]["primary_score_proven_optimal"]
+        )
+        self.assertEqual(report["verification_telemetry"]["best_bound"], 349.0)
+        self.assertEqual(report["heuristic_attempts"][0]["status"], "INFEASIBLE")
+        self.assertEqual(
+            report["bridge_safe_fallback_attempts"][0]["telemetry"]["status"],
+            "OPTIMAL",
         )
 
     def test_independent_synthetic_oracle_is_valid_without_public_identifiers(self) -> None:

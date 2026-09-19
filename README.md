@@ -1,6 +1,6 @@
 ---
 document_id: NH-PS1-KB
-version: 0.8.95
+version: 0.8.96
 last_verified: 2026-09-19
 research_status: reconciled
 implementation_status: active
@@ -748,3 +748,4 @@ When sources conflict:
 | `0.8.93` | 2026-09-19 | Corrected the B infeasibility explanation: one weekly ECLO row supplies at most 1.5 of three required workload units; the weekly-group limit was not the proof. |
 | `0.8.94` | 2026-09-19 | A frozen 42-activity B holdout proves B=`349` by both decomposition and monolithic solving; the monolith is faster, so decomposition remains selective rather than default. |
 | `0.8.95` | 2026-09-19 | A monolithic control independently proves heterogeneous A=`16850.4` with different bytes; decomposition is faster on this one run, supporting a scenario-aware fallback rather than a universal rule. |
+| `0.8.96` | 2026-09-19 | Permuting every identifier and input-row order in the 42-activity B holdout preserves strict, dual-scored, monolithically proved B=`349`. |

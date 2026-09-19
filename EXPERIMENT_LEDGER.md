@@ -1699,6 +1699,7 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - First run: all nine components merge into a valid, strict-clean, dual-scored B=`349` schedule, but aggregate proof remains false. Six components use the explicit `full_instance_workload_eclo_lower_bound` scope, which the aggregator did not yet recognize. The valid files and false proof flag are retained unchanged as an unproved result.
 - Correction: the aggregator now accepts that scope only when formulation is exactly the checked B incumbent or checked structural workload-lower-bound path, proof flag is true, and objective/bound equal the selected component score. Zero-floor scopes likewise require an exact zero-floor formulation; conditional and mismatched scopes remain rejected.
 - Corrected additive proof: component scores `21`, `196`, `112`, `10`, `0`, `10`, `0`, `0`, `0` sum to B=`349`. Three use full-instance CP-SAT proofs and six use full-instance workload/ECLO lower bounds. Merged scoring is 27 excess × 7 + 32 ECLO × 5 = `349`; both scorers agree, strict conflicts are zero, and 65 access/219 occupancy rows are complete.
+- Source-equivalence check: namespaced contributions are CAP=`21`, CBD=`196`, ICB=`112+10=122`, PCP=`0`, and SYN=`10`. These match the retained exact source results where available and show that date normalization/namespacing did not alter the B primary score of the composed motifs.
 - Monolithic control: the same one-worker 3/2/5/10-second policy independently proves B=`349` with a different valid schedule in 0.456 seconds, while decomposition takes 5.162 seconds. The direct heuristic itself is infeasible, but bridge-safe fallback and verification prove the optimum.
 - Decision: preserve decomposition for cases where it improves score/proof or isolates failures, but do not make it the default for B. The observed monolithic speed advantage is a single-host result, yet it decisively falsifies any blanket decomposition-speed claim on this input.
 - Official boundary: this is synthetic exactness, not an official score change. No portal interaction occurred.
@@ -1717,3 +1718,11 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Transform: the existing generic metamorphic tool bijectively permutes all line, station, sector, contract, and activity identifiers and shuffles every raw table with seed 23. Dates, constraints, types, priorities, supplies, and buffer rules are unchanged.
 - Frozen invariants: dataset hash `2aad7853…`, 42 activities, 40 contracts, seven lines, zero simple B workload-deadline deficits, and nine strict-B components sized 13/7/7/5/3/2/2/2/1.
 - Falsification target: the unchanged monolithic B policy must retain feasible/proved score `349` despite lexical and row-order changes. The transformed input is committed before its solver output; a different score, failure, or lost proof will be preserved.
+
+### E182: Permuted heterogeneous B preserves exact B=`349`
+
+- Timestamp: 2026-09-19 12:41:06 +08.
+- Policy: unchanged strict monolithic B, one worker, seed 1, one heuristic/fallback attempt, and 3/2/5/10-second limits on precommitted hash `2aad7853…`.
+- Result: direct heuristic reports infeasible; bridge-safe fallback reaches and proves `349`; verification independently reports full-instance score/bound `349`. Both scorers agree on 27 excess, 32 ECLO, 65 access rows, and 219 occupancy rows; strict conflicts are zero.
+- Metamorphic conclusion: lexical identifiers and raw CSV row order do not change the primary optimum, decomposition structure, or selected proof path on this 42-activity case. Output hash `f231a187…` changes as expected because identifiers changed.
+- Timing boundary: observed outer wall time is 0.380 seconds versus 0.456 seconds in the source-order run. This is run noise/order-sensitive and not claimed as an improvement.
