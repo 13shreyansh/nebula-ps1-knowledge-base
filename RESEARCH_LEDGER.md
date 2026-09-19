@@ -972,6 +972,15 @@ Confidence labels:
 - **Boundary:** Inputs are treated as immutable after loading. The cache adds memory proportional to distinct activities queried. Timings compare consecutive deterministic local replays and remain host-specific.
 - **Confidence:** Very high in semantic preservation across the current suite; high in the measured bottleneck removal.
 
+### `R117` Doubled modular scale requires the sound fallback for Scenario A
+
+- **Status:** Confirmed on a fixture frozen before solver execution.
+- **Fixture:** 720 activities, 640 contracts, 4,476 locations, 1,280 oracle access rows, and 4,480 oracle occupancy rows; the independently built A oracle is dual-scored and hard-feasible at `560.0`.
+- **Result:** Under the same one-worker fixed policy, A/B/C succeed at `560/800/560`, with zero strict conflicts, in 13.395/4.782/27.517 seconds. Total runtime is 2.94× the cached 360-activity replay for 2× the activities.
+- **Failure signal:** A's complete structural hint reaches a 148,402-variable, 344,881-constraint model but returns `UNKNOWN` after its two-second direct-heuristic budget. The unrestricted fallback reaches and proves `560.0` within three seconds; the incumbent is never taken from the failed stage.
+- **Boundary:** The fixture repeats independent modules and tests scale, not new topology or coupling. Its exact score scaling is not evidence for arbitrary hidden instances.
+- **Confidence:** High in fail-safe behavior and measured scale; low in extrapolation beyond modular structure.
+
 ## Current method candidates
 
 These are research candidates, not reconciled decisions:

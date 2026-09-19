@@ -1354,3 +1354,14 @@ No executable experiments have completed yet. The organiser-supplied Scenario A 
 - Integrity gates: every output hash and stage matches E139/E141, both scorers agree, strict conflicts are zero, all 115 tests pass, and all 30 local readiness checks remain true.
 - Boundary: local deterministic timing is not an official score or universal performance guarantee; mutable in-place edits to a loaded instance are outside the solver's data contract.
 - Official protection: no portal interaction or attempt was used.
+
+### E143: The 720-activity holdout succeeds but trips the direct-A budget
+
+- Timestamp: 2026-09-19 10:42:15 +08
+- Frozen-before-solve input: `independent_scaled_m80`, dataset hash `d006732ff7e879edcbaace50b04058da23045197380ed86ff2b0d031cc4b6fbf`, with 720 activities, 640 contracts, and 4,476 locations. Its separately generated A oracle has 1,280 access rows, 4,480 occupancy rows, zero hard violations, and dual-scored A=`560.0`.
+- Policy: identical to E139/E141/E142: one worker, seed 1, 2/1/3/2-second heuristic/repair/fallback/verification budgets, one attempt each, 500 closure rounds, production C.
+- Results: A=`560.0` in 13.395 seconds, B=`800.0` in 4.782, C=`560.0` in 27.517; 3/3 succeed, both scorers agree, and strict conflicts are zero.
+- Stage evidence: A's complete-hint direct model has 148,402 variables and 344,881 constraints but returns `UNKNOWN` after 2.048 seconds. The unrestricted fallback then returns `OPTIMAL` at `560.0` in 2.905 seconds; verification preserves it. B verification reaches matching score/bound `800.0`. C safely selects its A-derived fallback at `560.0`.
+- Scaling boundary: compared with the cached 360-activity replay, elapsed time grows 4.44× for A, 3.65× for B, 2.45× for C, and 2.94× overall when activities double. This modular fixture does not cover dense cross-module coupling.
+- Regression status: all 116 tests pass in 13.348 seconds, including independent re-evaluation of the oracle and all three generated submissions.
+- Official protection: no portal interaction or attempt was used.

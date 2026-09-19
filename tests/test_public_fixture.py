@@ -1628,6 +1628,53 @@ class PublicFixtureTests(unittest.TestCase):
                 self.assertEqual(evaluation.objective_score, after["score"])
                 self.assertEqual(independent.objective_score, after["score"])
 
+    def test_720_activity_scale_holdout_succeeds_without_oracle_input(self) -> None:
+        data = ROOT / "fixtures" / "independent_scaled_m80"
+        oracle = ROOT / "fixtures" / "independent_scaled_m80_oracle"
+        instance = load_instance(data)
+        oracle_evaluation = evaluate_submission(instance, oracle, scenario="A")
+        oracle_independent = independently_score(data, oracle)
+        self.assertEqual(len(instance.projects), 640)
+        self.assertEqual(len(instance.activities), 720)
+        self.assertEqual(oracle_evaluation.hard_violations, ())
+        self.assertEqual(oracle_evaluation.objective_score, 560.0)
+        self.assertEqual(oracle_independent.objective_score, 560.0)
+
+        matrix = json.loads(
+            (
+                ROOT
+                / "runs"
+                / "independent_scaled_m80_seed1_w1"
+                / "SEED_MATRIX.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(matrix["dataset_hash"], instance.dataset_hash)
+        self.assertEqual(matrix["successes"], 3)
+        self.assertEqual(matrix["failures"], 0)
+        runs = {row["scenario"]: row for row in matrix["runs"]}
+        self.assertEqual(
+            {scenario: row["score"] for scenario, row in runs.items()},
+            {"A": 560.0, "B": 800.0, "C": 560.0},
+        )
+        self.assertEqual(runs["A"]["selected_stage"], "bridge_safe_fallback")
+        self.assertEqual(runs["B"]["selected_stage"], "heuristic_incumbent")
+        self.assertEqual(runs["C"]["selected_stage"], "scenario_c_fallback")
+        for scenario, row in runs.items():
+            with self.subTest(scenario=scenario):
+                self.assertEqual(row["status"], "SUCCESS")
+                self.assertEqual(row["strict_conflicts"], 0)
+                submission = (
+                    ROOT
+                    / "runs"
+                    / "independent_scaled_m80_seed1_w1"
+                    / f"{scenario.lower()}_seed_1"
+                )
+                evaluation = evaluate_submission(instance, submission, scenario)
+                independent = independently_score(data, submission)
+                self.assertEqual(evaluation.hard_violations, ())
+                self.assertEqual(evaluation.objective_score, row["score"])
+                self.assertEqual(independent.objective_score, row["score"])
+
     def test_dense_independent_b_constructs_zero_without_oracle_hint(self) -> None:
         data = ROOT / "fixtures" / "independent_dense_v1"
         instance = load_instance(data)
